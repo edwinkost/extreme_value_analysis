@@ -6,6 +6,8 @@
 
 import os
 import sys
+import shutil
+
 import numpy as np
 
 from pcraster.framework import *
@@ -13,22 +15,71 @@ import pcraster as pcr
 
 import outputNetCDF
 import virtualOS as vos
-from monte_carlo_thickness import MonteCarloAquiferThickness
-import margat_correction 
 
-import logging
-logger = logging.getLogger("main_script") # get name for the logger
-from logger import Logger
+# input directory, file name
+input_directory  = "/nfsarchive/edwin-emergency-backup-DO-NOT-DELETE/cartesius/05min_runs_january_2016_merged/pcrglobwb_only_from_1958_4LCs_edwin_parameter_set_kinematic_wave/daily/"
+file_name_front  = "floodVolume_dailyTot_output_"          # example: floodVolume_dailyTot_output_2000.nc
+variable_name    = "flood_innundation_volume"
 
 # output directory: 
-output_directory = "/scratch/edwin/aquifer_thickness_5arcmin_world_final/" 
-cleanOutputDir   = True
+output_directory = "/nfsarchive/edwin-emergency-backup-DO-NOT-DELETE/cartesius/05min_runs_january_2016_merged/pcrglobwb_only_from_1958_4LCs_edwin_parameter_set_kinematic_wave/daily/maximum/" 
+cleanOutputDir = True
+if cleanOutputDir:
+    if os.path.exists(output_directory): shutil.rmtree(output_directory)
+    os.makedirs(output_directory)
 
-# clone map 
-#~ clone_map_file = "/data/hydroworld/others/RhineMeuse/RhineMeuse05min.clone.map"
-#~ clone_map_file = "/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
-#~ clone_map_file = "/scratch/edwin/tmp/Australia05min.clone.map"
-clone_map_file = "/scratch/edwin/processing_whymap/version_19september2014/water_polygon/water-polygons-split-4326/landmask_05min.map"
+# clone map
+clone_map_05min_file = "/data/hydroworld/others/RhineMeuse/RhineMeuse05min.clone.map"
+#~ clone_map_05min_file = "/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
+pcr.setclone(clone_map_05min_file)
+
+# start year and end year:
+start_year = 1958 
+end_year   = 2010
+
+# reporting objects
+# - for 5 arcmin resolution
+cloneMap = pcr.boolean(1.0)
+latlonDict05min = {}
+latlonDict05min['lat'] = np.unique(pcr.pcr2numpy(pcr.ycoordinate(cloneMap), vos.MV))[::-1] 
+latlonDict05min['lon'] = np.unique(pcr.pcr2numpy(pcr.xcoordinate(cloneMap), vos.MV))
+report_netcdf_05min = outputNetCDF.OutputNetCDF(latlonDict05min)
+# - for 30 arcmin resolution
+latlonDict30min = {}
+latlonDict30min['lat'] = np.arange(latlonDict05min['lat'][0], latlonDict05min['lat'][-1] - 0.5/2, -0.5)
+latlonDict30min['lon'] = np.arange(latlonDict05min['lon'][0], latlonDict05min['lon'][-1] + 0.5/2,  0.5)
+report_netcdf_30min = outputNetCDF.OutputNetCDF(latlonDict30min)
+# TODO: Make this module writes for CF convention (see Hessel's document)
+
+# preparing the file at  5 arcmin resolution:
+ncFileName = output_directory + "/" + file_name_front + "maximum_05min.nc"
+varName    = variable_name
+varUnit    = "m3"
+report_netcdf_05min.createNetCDF(ncFileName, varName, varUnit)
+
+# preparing the file at 30 arcmin resolution:
+ncFileName = output_directory + "/" + file_name_front + "maximum_30min.nc"
+varName    = variable_name
+varUnit    = "m3"
+report_netcdf_30min.createNetCDF(ncFileName, varName, varUnit)
+
+# loop for all year
+for year in range(start_year, end_year + 1, 1):
+    
+    # cdo for every year
+    inp_file_name =  input_directory + file_name_front + str(year) + ".nc"
+    out_file_name = output_directory + file_name_front + str(year) + "_maximum.nc"
+    cmd = 'cdo timmax ' + inp_file_name + " " + out_file_name 
+    
+    # read value and report it at 5 arcmin resolution
+    value_at_05_min = vos.netcdf2PCRobjClone(ncFile = out_file_name, varName = variable_name, dateInput = str(year) + "-12-31",\
+                                             useDoy = None,
+                                             cloneMapFileName  = clone_map,\
+                                             LatitudeLongitude = True,\
+                                             specificFillValue = None)
+    
+    # also upscale it to 30 arcmin resolution
+    
 
 # number_of_samples and option to include_percentile_report
 number_of_samples         = 1000

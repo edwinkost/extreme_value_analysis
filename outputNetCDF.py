@@ -12,9 +12,11 @@ import numpy as np
 import pcraster as pcr
 import virtualOS as vos
 
+# TODO: Make this module writes for CF convention (see Hessel's document)
+
 class OutputNetCDF():
     
-    def __init__(self, cloneMapFileName_or_latlonDict, attributeDictionary = None):
+    def __init__(self, cloneMapFileName_or_latlonDict, attributeDictionary = None, netcdf_format = 'NETCDF3_CLASSIC', netcdf_zlib = True):
         		
         # cloneMap
         if isinstance( cloneMapFileName_or_latlonDict, str):
@@ -36,7 +38,10 @@ class OutputNetCDF():
         if self.longitudes[-1] < self.longitudes[0]: self.longitudes = self.longitudes[::-1]
         
         # netcdf format:
-        self.format = 'NETCDF3_CLASSIC'
+        self.netcdf_format = netcdf_format
+        self.zlib = netcdf_zlib
+        
+        # TODO: Make this writer compatible to 
         
         self.attributeDictionary = {}
         if attributeDictionary == None:
@@ -52,7 +57,7 @@ class OutputNetCDF():
         
     def createNetCDF(self,ncFileName,varName,varUnit=None,varLongName=None,timeAttribute=None):
 
-        rootgrp= nc.Dataset(ncFileName,'w',format= self.format)
+        rootgrp = nc.Dataset(ncFileName, 'w', format = self.netcdf_format)
 
         #-create dimensions - time is unlimited, others are fixed
         rootgrp.createDimension('lat',len(self.latitudes))
@@ -94,9 +99,9 @@ class OutputNetCDF():
             unitVar      = varUnit[i]                                                                                                                                                  
             if unitVar == None: unitVar = 'undefined'                                                                                                                                                  
             if timeAttribute != None:                                                                                                                                                  
-                var= rootgrp.createVariable(shortVarName,'f4',('time','lat','lon',) ,fill_value=vos.MV,zlib=False)                                                                      
+                var= rootgrp.createVariable(shortVarName,'f4',('time','lat','lon',) , fill_value = vos.MV, zlib = self.zlib)                                                                      
             else:                                                                                                                                                                      
-                var= rootgrp.createVariable(shortVarName,'f4',('lat','lon',) ,fill_value=vos.MV,zlib=False)                                                                             
+                var= rootgrp.createVariable(shortVarName,'f4',('lat','lon',) , fill_value = vos.MV, zlib = self.zlib)                                                                             
             var.standard_name = shortVarName                                                                                                                                           
             var.long_name = longVarName                                                                                                                                                
             var.units = unitVar
@@ -106,9 +111,9 @@ class OutputNetCDF():
         rootgrp.sync()
         rootgrp.close()
 
-    def addNewVariable(self,ncFileName,varName,varUnit=None,varLongName=None,timeAttribute=None):
+    def addNewVariable(self, ncFileName, varName, varUnit = None, varLongName = None, timeAttribute = None):
 
-        rootgrp= nc.Dataset(ncFileName,'a',format= self.format)
+        rootgrp= nc.Dataset(ncFileName,'a',format= self.netcdf_format)
 
         # variable short and long names
         if isinstance(varName,list) == False: varName = [varName] 
@@ -125,9 +130,9 @@ class OutputNetCDF():
             unitVar      = varUnit[i]                                                                                                                                                  
             if unitVar == None: unitVar = 'undefined'                                                                                                                                                  
             if timeAttribute != None:                                                                                                                                                  
-                var = rootgrp.createVariable(shortVarName,'f4',('time','lat','lon',) ,fill_value=vos.MV,zlib=False)                                                                      
+                var = rootgrp.createVariable(shortVarName, 'f4', ('time','lat','lon',) ,fill_value = vos.MV, zlib = self.zlib)                                                                      
             else:                                                                                                                                                                      
-                var = rootgrp.createVariable(shortVarName,'f4',('lat','lon',) ,fill_value=vos.MV,zlib=False)                                                                             
+                var = rootgrp.createVariable(shortVarName, 'f4', ('lat','lon',) ,fill_value = vos.MV, zlib = self.zlib)                                                                             
             var.standard_name = shortVarName                                                                                                                                           
             var.long_name = longVarName                                                                                                                                                
             var.units = unitVar
@@ -137,7 +142,7 @@ class OutputNetCDF():
 
     def changeAtrribute(self,ncFileName,attributeDictionary):
 
-        rootgrp= nc.Dataset(ncFileName,'a',format= self.format)
+        rootgrp= nc.Dataset(ncFileName,'a',format= self.netcdf_format)
 
         for k, v in attributeDictionary.items():
           setattr(rootgrp,k,v)
@@ -168,3 +173,4 @@ class OutputNetCDF():
 
         rootgrp.sync()
         rootgrp.close()
+
