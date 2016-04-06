@@ -33,9 +33,9 @@ class OutputNetCDF():
             self.latitudes  = latlonDict['lat']
             self.longitudes = latlonDict['lon']
 
-        # make sure that latitudes are from high to low
-        if self.latitudes[-1]  >  self.latitudes[0]: self.latitudes = self.latitudes[::-1]
-        if self.longitudes[-1] < self.longitudes[0]: self.longitudes = self.longitudes[::-1]
+        #~ # make sure that latitudes are from high to low                 # TODO: Check if this one really works. 
+        #~ if self.latitudes[-1]  >  self.latitudes[0]: self.latitudes = self.latitudes[::-1]
+        #~ if self.longitudes[-1] < self.longitudes[0]: self.longitudes = self.longitudes[::-1]
         
         # netcdf format:
         self.netcdf_format = netcdf_format

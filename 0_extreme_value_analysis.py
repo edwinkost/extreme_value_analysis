@@ -26,7 +26,7 @@ start_year = 1958
 end_year   = 2010
 
 # output directory: 
-output_directory = "/nfsarchive/edwin-emergency-backup-DO-NOT-DELETE/cartesius/05min_runs_january_2016_merged/pcrglobwb_only_from_1958_4LCs_edwin_parameter_set_kinematic_wave/daily/maximum/" 
+output_directory =  "/nfsarchive/edwin-emergency-backup-DO-NOT-DELETE/cartesius/05min_runs_january_2016_merged/pcrglobwb_only_from_1958_4LCs_edwin_parameter_set_kinematic_wave/daily/maximum/" 
 cleanOutputDir = False
 if cleanOutputDir:
     if os.path.exists(output_directory): shutil.rmtree(output_directory)
@@ -38,7 +38,7 @@ os.makedirs(tmp_directory)
 
 # 5 min clone map
 clone_map_05min_file = "/data/hydroworld/others/RhineMeuse/RhineMeuse05min.clone.map"
-#~ clone_map_05min_file = "/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
+clone_map_05min_file = "/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
 pcr.setclone(clone_map_05min_file)
 
 # 5 min cell area (unit: m2) 
