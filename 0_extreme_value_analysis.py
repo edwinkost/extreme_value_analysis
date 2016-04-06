@@ -8,6 +8,8 @@ import os
 import sys
 import shutil
 
+import datetime
+
 import numpy as np
 
 from pcraster.framework import *
@@ -37,7 +39,7 @@ if os.path.exists(tmp_directory): shutil.rmtree(tmp_directory)
 os.makedirs(tmp_directory)
 
 # 5 min clone map
-clone_map_05min_file = "/data/hydroworld/others/RhineMeuse/RhineMeuse05min.clone.map"
+#~ clone_map_05min_file = "/data/hydroworld/others/RhineMeuse/RhineMeuse05min.clone.map"         # TODO: FIXME: Resampling seems NOT really working.  
 clone_map_05min_file = "/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
 pcr.setclone(clone_map_05min_file)
 
@@ -51,28 +53,29 @@ cell_ids_30min_file = "/data/hydroworld/others/irrigationZones/half_arc_degree/u
 cell_ids_30min = vos.readPCRmapClone(cell_ids_30min_file , clone_map_05min_file, \
                                      tmp_directory, \
                                      None, False, None, True)
+cell_ids_30min = pcr.nominal(cell_ids_30min)
 
 # reporting objects
 # - for 5 arcmin resolution
-cloneMap = pcr.boolean(1.0)
 latlonDict05min = {}
+cloneMap = pcr.boolean(1.0)
 latlonDict05min['lat'] = np.unique(pcr.pcr2numpy(pcr.ycoordinate(cloneMap), vos.MV))[::-1] 
 latlonDict05min['lon'] = np.unique(pcr.pcr2numpy(pcr.xcoordinate(cloneMap), vos.MV))
 report_netcdf_05min = outputNetCDF.OutputNetCDF(latlonDict05min)
 # - for 30 arcmin resolution
 latlonDict30min = {}
-latlonDict30min['lat'] = np.arange(latlonDict05min['lat'][0], latlonDict05min['lat'][-1] - 0.5/2, -0.5)
-latlonDict30min['lon'] = np.arange(latlonDict05min['lon'][0], latlonDict05min['lon'][-1] + 0.5/2,  0.5)
+latlonDict30min['lat'] = np.arange(np.round(latlonDict05min['lat'][0] + 2.5/60 - 0.25 , 2), latlonDict05min['lat'][-1] - 2.5/60, -0.5)
+latlonDict30min['lon'] = np.arange(np.round(latlonDict05min['lon'][0] - 2.5/60 + 0.25 , 2), latlonDict05min['lon'][-1] + 2.5/60,  0.5)
 report_netcdf_30min = outputNetCDF.OutputNetCDF(latlonDict30min)
 # TODO: Make this module writes for CF convention (see Hessel's document)
 
 # preparing the file at  5 arcmin resolution:
 output_file_05min = output_directory + "/" + file_name_front + "maximum_05min.nc"
-report_netcdf_05min.createNetCDF(output_file_05min, variable_name, "m3")
+report_netcdf_05min.createNetCDF(output_file_05min, variable_name, "m3", variable_name, True)
 
 # preparing the file at 30 arcmin resolution:
 output_file_30min = output_directory + "/" + file_name_front + "maximum_30min.nc"
-report_netcdf_30min.createNetCDF(output_file_30min, variable_name, "m3")
+report_netcdf_30min.createNetCDF(output_file_30min, variable_name, "m3", variable_name, True)
 
 # loop for all year
 for year in range(start_year, end_year + 1, 1):
@@ -84,6 +87,9 @@ for year in range(start_year, end_year + 1, 1):
     print(cmd)
     os.system(cmd)
     
+    # time stamp for netcdf reporting
+    timeStamp = datetime.datetime(year, 12, 31, 0)
+    
     # read value and report it at 5 arcmin resolution
     print("Reading values at 5 arcmin resolution.")
     value_at_05_min = vos.netcdf2PCRobjCloneWithoutTime(ncFile = out_file_name, varName = variable_name, \
@@ -92,14 +98,17 @@ for year in range(start_year, end_year + 1, 1):
     numpy_at_05_min = pcr.pcr2numpy(value_at_05_min, vos.MV)
     report_netcdf_05min.data2NetCDF(output_file_05min, \
                                     variable_name, \
-                                    numpy_at_05_min)
+                                    numpy_at_05_min, \
+                                    timeStamp)
     
     # upscale it to 30 arcmin resolution and report it
     print("Upscale to 30 arcmin resolution.")
     value_at_30_min = pcr.areatotal(value_at_05_min * cell_area_05min, cell_ids_30min) /\
                       pcr.areatotal(                  cell_area_05min, cell_ids_30min)
-    numpy_at_30_min = vos.regridToCoarse(value_at_30_min, \
+    value_at_30_min = pcr.cover(value_at_30_min, 0.0)
+    numpy_at_30_min = vos.regridToCoarse(pcr.pcr2numpy(value_at_30_min, vos.MV), \
                                          int(30./5.), "average", vos.MV)
     report_netcdf_30min.data2NetCDF(output_file_30min, \
                                     variable_name, \
-                                    numpy_at_30_min)
+                                    numpy_at_30_min, \
+                                    timeStamp)
