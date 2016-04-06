@@ -27,7 +27,7 @@ end_year   = 2010
 
 # output directory: 
 output_directory = "/nfsarchive/edwin-emergency-backup-DO-NOT-DELETE/cartesius/05min_runs_january_2016_merged/pcrglobwb_only_from_1958_4LCs_edwin_parameter_set_kinematic_wave/daily/maximum/" 
-cleanOutputDir = True
+cleanOutputDir = False
 if cleanOutputDir:
     if os.path.exists(output_directory): shutil.rmtree(output_directory)
     os.makedirs(output_directory)
