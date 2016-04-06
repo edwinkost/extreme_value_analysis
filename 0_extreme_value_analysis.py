@@ -50,7 +50,7 @@ cell_area_05min = vos.readPCRmapClone(cell_area_05min_file, clone_map_05min_file
 cell_ids_30min_file = "/data/hydroworld/others/irrigationZones/half_arc_degree/uniqueIds30min.nom.map"
 cell_ids_30min = vos.readPCRmapClone(cell_ids_30min_file , clone_map_05min_file, \
                                      tmp_directory, \
-                                     None, False, True)
+                                     None, False, None, True)
 
 # reporting objects
 # - for 5 arcmin resolution
