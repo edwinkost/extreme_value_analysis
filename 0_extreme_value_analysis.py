@@ -85,12 +85,9 @@ for year in range(start_year, end_year + 1, 1):
     os.system(cmd)
     
     # read value and report it at 5 arcmin resolution
-    print("Reading values at 5 arcmin resolution")
+    print("Reading values at 5 arcmin resolution.")
     value_at_05_min = vos.netcdf2PCRobjCloneWithoutTime(ncFile = out_file_name, varName = variable_name, \
-                                                         useDoy = None, \
-                                                         cloneMapFileName  = clone_map_05min_file, \
-                                                         LatitudeLongitude = True, \
-                                                         specificFillValue = None)
+                                                         cloneMapFileName  = clone_map_05min_file)
     value_at_05_min = pcr.cover(value_at_05_min, 0.0)
     numpy_at_05_min = pcr.pcr2numpy(value_at_05_min, vos.MV)
     report_netcdf_05min.data2NetCDF(output_file_05min, \
@@ -98,6 +95,7 @@ for year in range(start_year, end_year + 1, 1):
                                     numpy_at_05_min)
     
     # upscale it to 30 arcmin resolution and report it
+    print("Upscale to 30 arcmin resolution.")
     value_at_30_min = pcr.areatotal(value_at_05_min * cell_area_05min, cell_ids_30min) /\
                       pcr.areatotal(                  cell_area_05min, cell_ids_30min)
     numpy_at_30_min = vos.regridToCoarse(value_at_30_min, \

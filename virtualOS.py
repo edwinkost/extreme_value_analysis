@@ -16,10 +16,10 @@ import sys
 import types
 import calendar
 
+import pcraster as pcr
 import netCDF4 as nc
 import numpy as np
 import numpy.ma as ma
-import pcraster as pcr
 
 import logging
 logger = logging.getLogger(__name__)
@@ -110,7 +110,9 @@ def netcdf2PCRobjCloneWithoutTime(ncFile, varName,
         if xULClone != xULInput: sameClone = False
         if yULClone != yULInput: sameClone = False
 
-    cropData = f.variables[varName][:,:]       # still original data
+    if np.rank(f.variables[varName]) == 2: cropData = f.variables[varName][:,:]       # still original data
+    if np.rank(f.variables[varName]) == 3: cropData = f.variables[varName][0,:,:]       # still original data
+    
     factor = 1                                 # needed in regridData2FinerGrid
     if sameClone == False:
         # crop to cloneMap:
