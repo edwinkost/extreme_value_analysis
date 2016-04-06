@@ -22,10 +22,14 @@ import virtualOS as vos
 input_directory  = "/nfsarchive/edwin-emergency-backup-DO-NOT-DELETE/cartesius/05min_runs_january_2016_merged/pcrglobwb_only_from_1958_4LCs_edwin_parameter_set_kinematic_wave/daily/"
 file_name_front  = "floodVolume_dailyTot_output_"          # example: floodVolume_dailyTot_output_2000.nc
 variable_name    = "flood_innundation_volume"
+file_name_front  = str(sys.argv[1]) + "_"
+variable_name    = str(sys.argv[2])
 
 # start year and end year:
 start_year = 1958 
 end_year   = 2010
+start_year = int(sys.argv[3]) ; print(start_year)
+end_year   = int(sys.argv[4]) ; print(end_year)
 
 # output directory: 
 output_directory =  "/nfsarchive/edwin-emergency-backup-DO-NOT-DELETE/cartesius/05min_runs_january_2016_merged/pcrglobwb_only_from_1958_4LCs_edwin_parameter_set_kinematic_wave/daily/maximum/" 
@@ -70,11 +74,11 @@ report_netcdf_30min = outputNetCDF.OutputNetCDF(latlonDict30min)
 # TODO: Make this module writes for CF convention (see Hessel's document)
 
 # preparing the file at  5 arcmin resolution:
-output_file_05min = output_directory + "/" + file_name_front + "maximum_05min.nc"
+output_file_05min = output_directory + "/" + file_name_front + "maximum_05min_" + str(start_year) + "_to_" + str(end_year) + ".nc"
 report_netcdf_05min.createNetCDF(output_file_05min, variable_name, "m3", variable_name, True)
 
 # preparing the file at 30 arcmin resolution:
-output_file_30min = output_directory + "/" + file_name_front + "maximum_30min.nc"
+output_file_30min = output_directory + "/" + file_name_front + "maximum_30min_" + str(start_year) + "_to_" + str(end_year) + ".nc"
 report_netcdf_30min.createNetCDF(output_file_30min, variable_name, "m3", variable_name, True)
 
 # loop for all year
