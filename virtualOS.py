@@ -122,7 +122,7 @@ def netcdf2PCRobjCloneWithoutTime(ncFile, varName,
         minY    = min(abs(f.variables['lat'][:] - (yULClone - 0.5*cellsizeInput))) # ; print(minY)
         yIdxSta = int(np.where(abs(f.variables['lat'][:] - (yULClone - 0.5*cellsizeInput)) == minY)[0])
         yIdxEnd = int(math.ceil(yIdxSta + rowsClone /(cellsizeInput/cellsizeClone)))
-        cropData = f.variables[varName][yIdxSta:yIdxEnd,xIdxSta:xIdxEnd]
+        cropData = cropData[yIdxSta:yIdxEnd,xIdxSta:xIdxEnd]
         factor = int(round(float(cellsizeInput)/float(cellsizeClone)))
 
         if factor > 1: logger.debug('Resample: input cell size = '+str(float(cellsizeInput))+' ; output/clone cell size = '+str(float(cellsizeClone)))
