@@ -81,11 +81,13 @@ for year in range(start_year, end_year + 1, 1):
     inp_file_name =  input_directory + file_name_front + str(year) + ".nc"
     out_file_name = output_directory + file_name_front + str(year) + "_maximum.nc"
     cmd = 'cdo timmax ' + inp_file_name + " " + out_file_name 
+    print(cmd)
+    os.system(cmd)
     
     # read value and report it at 5 arcmin resolution
     value_at_05_min = vos.netcdf2PCRobjClone(ncFile = out_file_name, varName = variable_name, dateInput = str(year) + "-12-31", \
                                              useDoy = None, \
-                                             cloneMapFileName  = clone_map, \
+                                             cloneMapFileName  = clone_map_05min_file, \
                                              LatitudeLongitude = True, \
                                              specificFillValue = None)
     value_at_05_min = pcr.cover(value_at_05_min, 0.0)
