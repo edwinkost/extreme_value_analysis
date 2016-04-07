@@ -75,11 +75,11 @@ report_netcdf_30min = outputNetCDF.OutputNetCDF(latlonDict30min)
 
 # preparing the file at  5 arcmin resolution:
 output_file_05min = output_directory + "/" + file_name_front + "maximum_05min_" + str(start_year) + "_to_" + str(end_year) + ".nc"
-report_netcdf_05min.createNetCDF(output_file_05min, variable_name, "m3", variable_name, True)
+report_netcdf_05min.createNetCDF(output_file_05min, variable_name, "m", variable_name, True)
 
 # preparing the file at 30 arcmin resolution:
 output_file_30min = output_directory + "/" + file_name_front + "maximum_30min_" + str(start_year) + "_to_" + str(end_year) + ".nc"
-report_netcdf_30min.createNetCDF(output_file_30min, variable_name, "m3", variable_name, True)
+report_netcdf_30min.createNetCDF(output_file_30min, variable_name, "m", variable_name, True)
 
 # loop for all year
 for year in range(start_year, end_year + 1, 1):
