@@ -18,11 +18,10 @@ from currTimeStep import ModelTime
 import virtualOS as vos
 
 # variable dictionaries:
-import efas_variable_list_final as varDict
+import aqueduct_flood_analyzer_variable_list_final as varDict
 
 import logging
 logger = logging.getLogger(__name__)
-
 
 # input files
 input_files                           = {}
@@ -33,31 +32,80 @@ input_files['dynamicFracWatMonthMax'] = glob.glob(self.input_files['folder'] + "
 input_files['floodVolumeMonthMax']    = glob.glob(self.input_files['folder'] + "floodVolume_monthMax*.nc"   )                                     # unit: m3
 # - general input data
 input_files['cellarea_05min'] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/cellsize05min.correct.map"
+input_files['clone_05min']    = input_files['cellarea_05min']
+input_files['clone_30min']    = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/cellsize05min.correct.map"
 
 # type of hydrological year
-type_of_hydrological_year = 1         # hydrological year 
-
-# - number of 
+type_of_hydrological_year = 1         # hydrological year 1: October to September 
+# - number of months to be shifted
+num_of_shift_month = 2
+if type_of_hydrological_year == 2: num_of_shift_month = 6
 
 # start and end years for this analysis (PS: after shifted)
 start_year = 1960
 end_year   = 1999
 
+# netcdf setting and attribute:
+netcdf_attribute['institution'] = " "
+netcdf_attribute['title'      ] = " "
+netcdf_attribute['description'] = " "
+
 # output files
 output_files                      = {}
-output_files['folder']            = 
-# - variable names (that will be reported at 5 arc min resolution
-variable_name = ['channelStorage', 'dynamicFracWat', ]
+output_files['folder']            = "/scratch-shared/edwinsut/scratch_flood_analyzer/output/"
+# - preparing output folder
+try:
+    os.makedirs(output['folder'])
+except:
+    os.system('rm -r ' + output['folder'] + "/*")
+    pass
+# - temporary output folder (e.g. needed for resampling / gdalwarp)
+output_files['tmp_folder']        = output_files['folder'] + "/tmp/"
+# - preparing temporary output folder
+try:
+    os.makedirs(output_files['tmp_folder'])
+except:
+    os.system('rm -r ' + output_files['tmp_folder'] + "/*")
+    pass
+# - variables that will be reported at 5 arc min resolution
+variable_names = ['channelStorage', 'floodVolume', 'dynamicFracWat']
+for var_name in variable_names: 
+    output_files[var_name] = {}
+    output_files[var_name]['resolution'] = 5.        # unit: arc-minutes
+    output_files[var_name]
+   
+# - the variable 'surfaceWaterLevel' will be reported at 30 arc min resolution
+output_files['surfaceWaterlevel'] = {}
+output_files['surfaceWaterlevel']['resolution'] = varDict
 
-output_files['channelStorageMax'] = {}
-output_files['channelStorageMax']['file_name'] = 
-output_files['channelStorageMax']['variable_name'] = 
+output_files['surfaceWaterlevel']['file_name']     = output['folder'] + 
+output_files['surfaceWaterlevel']['variable_name'] = varDict
+
+
+output['variable_name']   = varDict.netcdf_short_name[efas_variable_name] 
+output['file_name']       = output['variable_name']+"_efas_rhine-meuse"+".nc"
+output['unit']            = varDict.netcdf_unit[efas_variable_name]
+output['long_name']       = varDict.netcdf_long_name[efas_variable_name] 
+
+output['description']     = 'The maximum flood event in the period starting from October of this given year until September of its following year.'
+if type_of_hydrological_year == 2:
+    output['description'] = 'The maximum flood event in the period starting from July of this given year until June of its following year.'
+       
+
+
+# - intermediate netcds files: the 'shifted' netcdf files (to consider the start of hydrological year)
+for var_name in variable_names:
+    intermediaoutput_files[var_name]['file_name']     = 
+
+
+
+
  
 
-# intermediate netcds files: for the 'shifted' netcdf files (to consider the start of hydrological year)
 
 
-# netcdf file attribute
+
+
 
 
 ###########################################################################################################
