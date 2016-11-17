@@ -8,14 +8,10 @@ import glob
 # pcraster dynamic framework is used.
 from pcraster.framework import DynamicFramework
 
-# The calculation script (engine) is imported from the following module.
-from dynamic_calc_framework import CalcFramework
-
-# time object
-from currTimeStep import ModelTime
-
-# utility modules:
+# netcdf reporting module:
 import outputNetCDF
+
+# utility module:
 import virtualOS as vos
 
 # variable dictionaries:
