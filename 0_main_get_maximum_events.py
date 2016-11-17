@@ -24,9 +24,9 @@ logger = logging.getLogger(__name__)
 input_files                           = {}
 # PCR-GLOBWB 5 arcmin results
 input_files['folder']                 = "/scratch/shared/edwinhs-last/scratch_flood_analyzer/watch_results/merged_1958-2001/global/netcdf/"
-input_files['channelStorageMonthMax'] = glob.glob(input_files['folder'] + "channelStorage_monthMax*.nc")                                     # unit: m3
-input_files['dynamicFracWatMonthMax'] = glob.glob(input_files['folder'] + "dynamicFracWat_monthMax*.nc")                                     # unit: dimensionless
-input_files['floodVolumeMonthMax']    = glob.glob(input_files['folder'] + "floodVolume_monthMax*.nc"   )                                     # unit: m3
+input_files['channelStorageMonthMax'] = glob.glob(input_files['folder'] + "channelStorage_monthMax*.nc")[0]                                     # unit: m3
+input_files['dynamicFracWatMonthMax'] = glob.glob(input_files['folder'] + "dynamicFracWat_monthMax*.nc")[0]                                     # unit: dimensionless
+input_files['floodVolumeMonthMax']    = glob.glob(input_files['folder'] + "floodVolume_monthMax*.nc"   )[0]                                     # unit: m3
 # - general input data
 input_files['cellarea_05min'] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/cellsize05min.correct.map"
 input_files['clone_05min']    = input_files['cellarea_05min']
