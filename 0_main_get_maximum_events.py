@@ -14,7 +14,8 @@ from dynamic_calc_framework import CalcFramework
 # time object
 from currTimeStep import ModelTime
 
-# utility module:
+# utility modules:
+import outputNetCDF
 import virtualOS as vos
 
 # variable dictionaries:
@@ -45,127 +46,81 @@ if type_of_hydrological_year == 2: num_of_shift_month = 6
 start_year = 1960
 end_year   = 1999
 
-# netcdf setting and attribute:
-netcdf_attribute['institution'] = " "
-netcdf_attribute['title'      ] = " "
-netcdf_attribute['description'] = " "
+# netcdf general setup:
+netcdf_setup = {}
+netcdf_setup['format']          = "NETCDF4"
+netcdf_setup['zlib']            = True
+netcdf_setup['institution']     = "Department of Physical Geography, Utrecht University"
+netcdf_setup['title'      ]     = "PCR-GLOBWB 2 output - post-processed for Aqueduct Flood Analyzer"
+netcdf_setup['created by' ]     = "Edwin H. Sutanudjaja (E.H.Sutanudjaja@uu.nl)"
+netcdf_setup['description']     = 'The annual flood maxima for each year/period starting from October of the year until September of its following year.'
+if type_of_hydrological_year == 2:
+    netcdf_setup['description'] = 'The annual flood maxima for each year/period starting from July of the year until June of its following year.'
 
 # output files
 output_files                      = {}
+# - output folder
 output_files['folder']            = "/scratch-shared/edwinsut/scratch_flood_analyzer/output/"
-# - preparing output folder
 try:
     os.makedirs(output['folder'])
 except:
     os.system('rm -r ' + output['folder'] + "/*")
     pass
-# - temporary output folder (e.g. needed for resampling / gdalwarp)
+# - temporary output folder (e.g. needed for resampling/gdalwarp)
 output_files['tmp_folder']        = output_files['folder'] + "/tmp/"
-# - preparing temporary output folder
 try:
     os.makedirs(output_files['tmp_folder'])
 except:
     os.system('rm -r ' + output_files['tmp_folder'] + "/*")
     pass
-# - variables that will be reported at 5 arc min resolution
-variable_names = ['channelStorage', 'floodVolume', 'dynamicFracWat']
+# - prepare logger and its directory
+log_file_location = output_files['folder'] + "/log/"
+try:
+    os.makedirs(log_file_location)
+except:
+    pass
+vos.initialize_logging(log_file_location)
+
+# object for reporting/making netcdf files
+netcdf_report = OutputNetcdf(cloneMapFileName, self.output['description'])
+
+# - variables that will be reported:
+variable_names = ['channelStorage', 'floodVolume', 'dynamicFracWat', 'surfaceWaterlevel']
+           
+
+
 for var_name in variable_names: 
     output_files[var_name] = {}
-    output_files[var_name]['resolution'] = 5.        # unit: arc-minutes
-    output_files[var_name]
-   
-# - the variable 'surfaceWaterLevel' will be reported at 30 arc min resolution
-output_files['surfaceWaterlevel'] = {}
-output_files['surfaceWaterlevel']['resolution'] = varDict
-
-output_files['surfaceWaterlevel']['file_name']     = output['folder'] + 
-output_files['surfaceWaterlevel']['variable_name'] = varDict
-
-
-output['variable_name']   = varDict.netcdf_short_name[efas_variable_name] 
-output['file_name']       = output['variable_name']+"_efas_rhine-meuse"+".nc"
-output['unit']            = varDict.netcdf_unit[efas_variable_name]
-output['long_name']       = varDict.netcdf_long_name[efas_variable_name] 
-
-output['description']     = 'The maximum flood event in the period starting from October of this given year until September of its following year.'
-if type_of_hydrological_year == 2:
-    output['description'] = 'The maximum flood event in the period starting from July of this given year until June of its following year.'
-       
-
-
-# - intermediate netcds files: the 'shifted' netcdf files (to consider the start of hydrological year)
-for var_name in variable_names:
-    intermediaoutput_files[var_name]['file_name']     = 
+    output_files[var_name]['short_name']        = varDict.netcdf_short_name[var_name]
+    output_files[var_name]['unit']              = varDict.netcdf_unit[var_name]
+    output_files[var_name]['long_name']         = varDict.netcdf_long_name[var_name]          
+    output_files[var_name]['comment']           = varDict.comment[var_name]               
+    output_files[var_name]['description']       = varDict.description[var_name]
+    # - add more information 
+    if output_files[var_name]['long_name']   == None: output_files[var_name]['long_name']   = output_files[var_name]['short_name']
+    if output_files[var_name]['comment']     == None: output_files[var_name]['comment'] = ""
+    if output_files[var_name]['description'] == None: output_files[var_name]['description'] = ""
+    output_files[var_name]['description'] = netcdf_setup['description'] + " " + output_files[var_name]['description']
+    output_files[var_name]['institution'] = netcdf_setup['institution']
+    output_files[var_name]['title'      ] = netcdf_setup['title'      ]
+    output_files[var_name]['created by' ] = netcdf_setup['created by' ]
+    output_files[var_name]['description'] = netcdf_setup['description']
+    # - resolution
+    output_files[var_name]['resolution_arcmin'] = 5. # unit: arc-minutes
+    # - the surfaceWaterLevel will be reported at 30 ar
+    if var_name == "surfaceWaterlevel": output_files[var_name]['resolution_arcmin'] = 30. 
+    # - preparing netcdf files:
+     
 
 
-
-
- 
-
-
-
-
-
-
-
-###########################################################################################################
-
-# efas_variable_code in a list
-efas_variable_name = ["pd","pr","rg","ta","ws"]
-
-# obtain efas_variable_code from the system argurment
-try:
-   efas_variable_name = sys.argv[1]
-except:
-   pass
-
-# file name of the clone map defining the scope of output
-cloneMapFileName = "/scratch/edwin/input/forcing/hyperhydro_wg1/EFAS/clone_maps/RhineMeuse3min.clone.map"
-
-# directory where the original pcraster files are stored
-pcraster_files = {}
-pcraster_files['directory'] = "/scratch/edwin/input/forcing/hyperhydro_wg1/EFAS/source/pcraster/"
-pcraster_files['file_name'] = efas_variable_name # "pr"
-
-# output folder
-output = {}
-output['folder']        = "/scratch/edwin/input/forcing/hyperhydro_wg1/EFAS/netcdf_latlon/3min/"
-output['variable_name'] = varDict.netcdf_short_name[efas_variable_name] 
-output['file_name']     = output['variable_name']+"_efas_rhine-meuse"+".nc"
-output['unit']          = varDict.netcdf_unit[efas_variable_name]
-output['long_name']     = varDict.netcdf_long_name[efas_variable_name] 
-output['description']   = varDict.description[efas_variable_name]      
-
-# put output at different folder
-output['folder'] += output['variable_name']+"/"
-
-# prepare the output directory
-try:
-    os.makedirs(output['folder'])
-except:
-    os.system('rm -r ')
-    pass
-
-startDate     = "1990-01-01" # YYYY-MM-DD
-endDate       = None
-nrOfTimeSteps = 9070         # based on the last file provided by Ad 
-
-# projection/coordinate sy
-inputEPSG  = "EPSG:3035" 
-outputEPSG = "EPSG:4326"
-resample_method = "near"
-
-###########################################################################################################
+    # make a netcdf file
+    self.netcdf_report.createNetCDF(self.output['file_name'],\
+                                    self.output['variable_name'],\
+                                    self.output['unit'],\
+                                    self.output['long_name'])
 
 def main():
     
-    # prepare logger and its directory
-    log_file_location = output['folder']+"/log/"
-    try:
-        os.makedirs(log_file_location)
-    except:
-        pass
-    vos.initialize_logging(log_file_location)
     
     # time object
     modelTime = ModelTime() # timeStep info: year, month, day, doy, hour, etc
