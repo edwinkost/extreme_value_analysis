@@ -1,29 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#
-# PCR-GLOBWB (PCRaster Global Water Balance) Global Hydrological Model
-#
-# Copyright (C) 2016, Ludovicus P. H. (Rens) van Beek, Edwin H. Sutanudjaja, Yoshihide Wada,
-# Joyce H. C. Bosmans, Niels Drost, Inge E. M. de Graaf, Kor de Jong, Patricia Lopez Lopez,
-# Stefanie Pessenteiner, Oliver Schmitz, Menno W. Straatsma, Niko Wanders, Dominik Wisser,
-# and Marc F. P. Bierkens,
-# Faculty of Geosciences, Utrecht University, Utrecht, The Netherlands
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-# EHS (20 March 2013): This is the list of general functions.
-#                      The list is continuation from Rens's and Dominik's.
 
 import shutil
 import subprocess
@@ -55,6 +31,66 @@ smallNumber = 1E-39
 
 # tuple of netcdf file suffixes (extensions) that can be used:
 netcdf_suffixes = ('.nc4','.nc')
+
+def initialize_logging(log_file_location, log_file_front_name = "log", debug_mode = True):
+    """
+    Initialize logging. Prints to both the console and a log file, at configurable levels
+    """
+
+    # timestamp of this run, used in logging file names, etc
+    timestamp = datetime.datetime.now()
+    
+    # set root logger to debug level        
+    logging.getLogger().setLevel(logging.DEBUG)
+
+    # logging format 
+    formatter = logging.Formatter('%(asctime)s %(name)s %(levelname)s %(message)s')
+
+    # default logging levels
+    log_level_console    = "INFO"
+    log_level_file       = "INFO"
+    # order: DEBUG, INFO, WARNING, ERROR, CRITICAL
+    
+    # log level for debug mode:
+    if debug_mode == True: 
+        log_level_console = "DEBUG"
+        log_level_file    = "DEBUG"
+    
+    console_level = getattr(logging, log_level_console.upper(), logging.INFO)
+    if not isinstance(console_level, int):
+        raise ValueError('Invalid log level: %s', log_level_console)
+    
+    # create handler, add to root logger
+    console_handler = logging.StreamHandler()
+    console_handler.setFormatter(formatter)
+    console_handler.setLevel(console_level)
+    logging.getLogger().addHandler(console_handler)
+
+    # log file name (and location)
+    log_filename = log_file_location + "/" + log_file_front_name + '_' + str(timestamp.isoformat()).replace(":",".") + '.log'
+
+    file_level = getattr(logging, log_level_file.upper(), logging.DEBUG)
+    if not isinstance(console_level, int):
+        raise ValueError('Invalid log level: %s', log_level_file)
+
+    # create handler, add to root logger
+    file_handler = logging.FileHandler(log_filename)
+    file_handler.setFormatter(formatter)
+    file_handler.setLevel(file_level)
+    logging.getLogger().addHandler(file_handler)
+    
+    # file name for debug log 
+    dbg_filename = log_file_location + "/" + log_file_front_name + '_' + str(timestamp.isoformat()).replace(":",".") + '.dbg'
+
+    # create handler, add to root logger
+    debug_handler = logging.FileHandler(dbg_filename)
+    debug_handler.setFormatter(formatter)
+    debug_handler.setLevel(logging.DEBUG)
+    logging.getLogger().addHandler(debug_handler)
+
+    logger.info('Run started at %s', timestamp)
+    logger.info('Logging output to %s', log_filename)
+    logger.info('Debugging output to %s', dbg_filename)
 
 def getFileList(inputDir, filePattern):
 	'''creates a dictionary of	files meeting the pattern specified'''
