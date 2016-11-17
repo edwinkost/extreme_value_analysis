@@ -104,7 +104,7 @@ for var_name in variable_names:
     # - resolution
     output_files[var_name]['resolution_arcmin'] = 5. # unit: arc-minutes
     # - the surfaceWaterLevel will be reported at 30 arc-minute resolution
-    if var_name == "surfaceWaterlevel": output_files[var_name]['resolution_arcmin'] = 30.0 
+    if var_name == "surfaceWaterLevel": output_files[var_name]['resolution_arcmin'] = 30.0 
     # - preparing netcdf files:
     output_files[var_name]['file_name']         = input_files['folder'] + "/" + \
                                                   varDict.netcdf_short_name[var_name] + \
