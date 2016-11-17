@@ -82,7 +82,7 @@ vos.initialize_logging(log_file_location)
 netcdf_report = outputNetCDF.OutputNetCDF()
 
 # - variables that will be reported:
-variable_names = ['channelStorage', 'floodVolume', 'dynamicFracWat', 'surfaceWaterlevel']
+variable_names = ['channelStorage', 'floodVolume', 'dynamicFracWat', 'surfaceWaterLevel']
 #
 for var_name in variable_names: 
     output_files[var_name] = {}
