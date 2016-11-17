@@ -18,8 +18,7 @@ class OutputNetCDF():
     def __init__(self, global_map = True, netcdf_y_orientation_follow_cf_convention = True, netcdf_format = 'NETCDF4', zlib = True):
         		
         # corner cordinates (lat/lon system)
-        self.global_map = global_map
-        if self.global_map == True:
+        if global_map == True:
             self.x_min = -180.
             self.y_min =  -90.
             self.x_max =  180. 
@@ -35,13 +34,18 @@ class OutputNetCDF():
         
     def set_netcdf_attributes(self, netcdf_setup_dictionary):
 
-        for k, v in netcdf_setup_dictionary.items(): setattr(attributeDictionary, k, v)
+        attributeDictionary['institution']  = netcdf_setup_dictionary['institution']
+        attributeDictionary['title'      ]  = netcdf_setup_dictionary['title'      ]
+        attributeDictionary['description']  = netcdf_setup_dictionary['description']
+        attributeDictionary['comment']      = netcdf_setup_dictionary['comment']         
+        attributeDictionary['description']  = netcdf_setup_dictionary['description']    
+        attributeDictionary['created by' ]  = netcdf_setup_dictionary['created by' ]
         attributeDictionary["history"]      = 'created on ' + datetime.datetime.today().isoformat(' ')
         attributeDictionary["date_created"] = datetime.datetime.today().isoformat(' ')
         
         return attributeDictionary
 
-    def createNetCDF(self, ncFileName, netcdf_setup_dictionary):
+    def createNetCDF(self, netcdf_setup_dictionary):
 
         # cell centres coordinates (lat/lon - arc degree)
         deltaLon = netcdf_setup_dictionary['resolution_arcmin'] / 60.
@@ -52,6 +56,8 @@ class OutputNetCDF():
         latitudes  = np.linspace(self.y_max - 0.5*deltaLat, self.y_min + 0.5*deltaLat, nrRows) 
         if self.netcdf_y_orientation_follow_cf_convention: latitudes = latitudes[::-1]
 
+        # prepare the file
+        ncFileName = netcdf_setup_dictionary['file_name']
         rootgrp = nc.Dataset(ncFileName, 'w', format = self.format)
 
         # create dimensions - time is unlimited, others are fixed
@@ -59,38 +65,45 @@ class OutputNetCDF():
         rootgrp.createDimension('lat', len(self.latitudes) )
         rootgrp.createDimension('lon', len(self.longitudes))
 
+        # time
         date_time = rootgrp.createVariable('time','f4',('time',))
         date_time.standard_name = 'time'
         date_time.long_name = 'Days since 1901-01-01'
-
         date_time.units = 'Days since 1901-01-01' 
         date_time.calendar = 'standard'
 
-        lat = rootgrp.createVariable('lat','f4',('lat',))
+        # latitude
+        lat = rootgrp.createVariable('lat', 'f4', ('lat',))
         lat.long_name = 'latitude'
         lat.units = 'degrees_north'
         lat.standard_name = 'latitude'
 
-        lon= rootgrp.createVariable('lon','f4',('lon',))
+        # longitude
+        lon = rootgrp.createVariable('lon','f4',('lon',))
         lon.standard_name = 'longitude'
         lon.long_name = 'longitude'
         lon.units = 'degrees_east'
 
-        lat[:]= self.latitudes
-        lon[:]= self.longitudes
+        # set latitude and and longitude values
+        lat[:] = latitudes
+        lon[:] = longitudes
 
-        shortVarName = varName
-        longVarName  = varName
+        # short and long variable names
+        shortVarName = netcdf_setup_dictionary['short_name']
+        longVarName  = netcdf_setup_dictionary['long_name']
         if longName != None: longVarName = longName
 
-        var = rootgrp.createVariable(shortVarName,'f4',('time','lat','lon',) ,fill_value=vos.MV,zlib=self.zlib)
-        var.standard_name = varName
+        # the variable
+        var = rootgrp.createVariable(shortVarName,' f4', ('time', 'lat', 'lon',), fill_value = vos.MV, zlib=self.zlib)
+        var.standard_name = shortVarName
         var.long_name = longVarName
-        var.units = varUnits
+        var.units = netcdf_setup_dictionary['unit']
 
-        attributeDictionary = self.attributeDictionary
+        # set netcdf attribute information
+        attributeDictionary = self.set_netcdf_attributes(netcdf_setup_dictionary)
         for k, v in attributeDictionary.items(): setattr(rootgrp,k,v)
 
+        # sync and close the file
         rootgrp.sync()
         rootgrp.close()
 
