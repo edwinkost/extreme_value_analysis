@@ -48,7 +48,7 @@ class OutputNetCDF():
     def createNetCDF(self, netcdf_setup_dictionary):
 
         # cell centres coordinates (lat/lon - arc degree)
-        deltaLon = netcdf_setup_dictionary['resolution_arcmin'] / 60.
+        deltaLon = netcdf_setup_dictionary['resolution_arcmin'] / 60.0
         deltaLat = deltaLon
         nrCols   = int((self.x_max - self.x_min) / deltaLon)
         nrRows   = int((self.y_max - self.y_min) / deltaLat)
