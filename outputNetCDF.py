@@ -63,8 +63,8 @@ class OutputNetCDF():
 
         # create dimensions - time is unlimited, others are fixed
         rootgrp.createDimension('time', None)
-        rootgrp.createDimension('lat', len(self.latitudes) )
-        rootgrp.createDimension('lon', len(self.longitudes))
+        rootgrp.createDimension('lat', len(latitudes) )
+        rootgrp.createDimension('lon', len(longitudes))
 
         # time
         date_time = rootgrp.createVariable('time','f4',('time',))
