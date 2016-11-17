@@ -79,7 +79,7 @@ except:
 vos.initialize_logging(log_file_location)
 
 # object for reporting/making netcdf files
-netcdf_report = outputNetcdf.OutputNetcdf()
+netcdf_report = outputNetCDF.OutputNetCDF()
 
 # - variables that will be reported:
 variable_names = ['channelStorage', 'floodVolume', 'dynamicFracWat', 'surfaceWaterlevel']
