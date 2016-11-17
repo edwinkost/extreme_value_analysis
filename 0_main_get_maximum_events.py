@@ -15,7 +15,7 @@ import outputNetCDF
 import virtualOS as vos
 
 # variable dictionaries:
-import aqueduct_flood_analyzer_variable_list_final as varDict
+import aqueduct_flood_analyzer_variable_list as varDict
 
 import logging
 logger = logging.getLogger(__name__)
