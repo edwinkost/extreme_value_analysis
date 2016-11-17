@@ -92,7 +92,6 @@ class OutputNetCDF():
         # short and long variable names
         shortVarName = netcdf_setup_dictionary['short_name']
         longVarName  = netcdf_setup_dictionary['long_name']
-        if longName != None: longVarName = longName
 
         # the variable
         var = rootgrp.createVariable(shortVarName,' f4', ('time', 'lat', 'lon',), fill_value = vos.MV, zlib=self.zlib)
