@@ -124,7 +124,7 @@ for var in ['channelStorageMonthMax', 'dynamicFracWatMonthMax', 'floodVolumeMont
     print input_files[var]
     
     out_file = shifted_input_files['folder'] + "/" + os.path.basename(input_files[var]) + "_shifted_hydrological_year_" + str(type_of_hydrological_year) + ".nc"
-    cmd = "cdo shiftime,-" + str(num_of_shift_month) + "mon " + inp_file + " " + out_file
+    cmd = "cdo shifttime,-" + str(num_of_shift_month) + "mon " + inp_file + " " + out_file
     print(cmd); os.system(cmd)
     # - cdo selyear
     inp_file = out_file
@@ -139,7 +139,7 @@ msg = "Find the annua maxima of channelStorage from the file " + str(shifted_inp
 logger.info(msg)
 inp_file = shifted_input_files['channelStorageMonthMax']
 out_file = shifted_input_files['channelStorageMonthMax'] + "_annual_maxima,nc"
-cmd = "cdo yearmax" + str(inp_file) + " " + str(out_file)
+cmd = "cdo yearmax " + str(inp_file) + " " + str(out_file)
 print(cmd); os.system(cmd)
 annual_maxima_channel_storage_file = out_file
 
