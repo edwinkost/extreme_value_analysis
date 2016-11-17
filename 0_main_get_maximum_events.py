@@ -102,14 +102,14 @@ for var_name in variable_names:
     output_files[var_name]['created by' ]       = netcdf_setup['created by' ]
     output_files[var_name]['description']       = netcdf_setup['description']
     # - resolution
-    output_files[var_name]['resolution_arcmin'] = float(5.0) # unit: arc-minutes
+    output_files[var_name]['resolution_arcmin'] = 5. # unit: arc-minutes
     # - the surfaceWaterLevel will be reported at 30 arc-minute resolution
-    if var_name == "surfaceWaterlevel": output_files[var_name]['resolution_arcmin'] = float(30.0) 
+    if var_name == "surfaceWaterlevel": output_files[var_name]['resolution_arcmin'] = 30.0 
     # - preparing netcdf files:
     output_files[var_name]['file_name']         = input_files['folder'] + "/" + \
                                                   varDict.netcdf_short_name[var_name] + \
                                                   "_annual_maxima_for_hydrological_year_" + str(type_of_hydrological_year) +  ".nc"
-    netcdf_report.createNetCDF(output_files[var_name]['file_name']) 
+    netcdf_report.createNetCDF(output_files) 
 
 
 # STEP 1: Using cdo shiftime to shift netcf file
