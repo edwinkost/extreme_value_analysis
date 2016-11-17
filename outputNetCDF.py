@@ -59,7 +59,7 @@ class OutputNetCDF():
 
         # prepare the file
         ncFileName = netcdf_setup_dictionary['file_name']
-        rootgrp = nc.Dataset(ncFileName, 'w', format = self.format)
+        rootgrp = nc.Dataset(ncFileName, 'w', format = self.netcdf_format)
 
         # create dimensions - time is unlimited, others are fixed
         rootgrp.createDimension('time', None)
