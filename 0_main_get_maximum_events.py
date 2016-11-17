@@ -59,9 +59,9 @@ output_files                      = {}
 # - output folder
 output_files['folder']            = "/scratch-shared/edwinhs-last/scratch_flood_analyzer/output/"
 try:
-    os.makedirs(output['folder'])
+    os.makedirs(output_files['folder'] )
 except:
-    os.system('rm -r ' + output['folder'] + "/*")
+    os.system('rm -r ' + output_files['folder']  + "/*")
     pass
 # - temporary output folder (e.g. needed for resampling/gdalwarp)
 output_files['tmp_folder']        = output_files['folder'] + "/tmp/"
