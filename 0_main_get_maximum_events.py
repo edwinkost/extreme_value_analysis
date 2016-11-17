@@ -122,7 +122,7 @@ logger.info(msg)
 # - shifted input files
 shifted_input_files                           = {}
 shifted_input_files['folder']                 = output_files['folder']
-for var in ['channelStorageMonthMax', 'dynamicFracWatMonthMax', 'floodVolumeMonthMax']  
+for var in ['channelStorageMonthMax', 'dynamicFracWatMonthMax', 'floodVolumeMonthMax']: 
     # - cdo shifttime
     inp_file = input_files[var]
     out_file = shifted_input_files['folder'] + "/" + os.path.basename(input_files[var]) + "_shifted_hydrological_year_" + str(type_of_hydrological_year) + ".nc"
