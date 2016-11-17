@@ -34,6 +34,7 @@ class OutputNetCDF():
         
     def set_netcdf_attributes(self, netcdf_setup_dictionary):
 
+        attributeDictionary                 = {}
         attributeDictionary['institution']  = netcdf_setup_dictionary['institution']
         attributeDictionary['title'      ]  = netcdf_setup_dictionary['title'      ]
         attributeDictionary['description']  = netcdf_setup_dictionary['description']
