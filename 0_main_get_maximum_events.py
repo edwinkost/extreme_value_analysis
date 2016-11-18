@@ -145,5 +145,5 @@ annual_maxima_channel_storage_file = out_file
 # STEP 3: Find the corresponding values to annual maxima of channelStorage
 # - set the clone map of pcraster
 pcr.setclone()
-for year in 
-
+for year in range(str_year, end_year, 1):
+    #
