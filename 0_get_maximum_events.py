@@ -30,7 +30,7 @@ input_files['dynamicFracWatMonthMax'] = input_files['folder'] + "/dynamicFracWat
 input_files['floodVolumeMonthMax']    = input_files['folder'] + "/floodVolume_monthMax_output_1958-01-31_to_2001-12-31.nc"                                       # unit: m3
 
 # type of hydrological year
-type_of_hydrological_year = 2         # hydrological year 1: October to September 
+type_of_hydrological_year = 1         # hydrological year 1: October to September 
 # - number of months to be shifted
 num_of_shift_month = 9
 if type_of_hydrological_year == 2:    # hydrological year 2: July to June
@@ -90,7 +90,7 @@ for var in ['channelStorageMonthMax', 'dynamicFracWatMonthMax', 'floodVolumeMont
     logger.info(msg)
     # - cdo yearmax
     inp_file = shifted_input_files[var]
-    out_file = shifted_input_files[var] + "_annual_maxima,nc"
+    out_file = shifted_input_files[var] + "_annual_maxima.nc"
     cmd = "cdo yearmax " + str(inp_file) + " " + str(out_file)
     print(""); print(cmd); os.system(cmd); print("")
     # - cdo selyear
