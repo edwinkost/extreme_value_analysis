@@ -32,15 +32,15 @@ input_files                           = {}
 #~ input_files['dynamicFracWatMonthMax'] = input_files['folder'] + "dynamicFracWat_monthMax_output_1958-01-31_to_2001-12-31.nc"                                    # unit: dimensionless
 #~ input_files['floodVolumeMonthMax']    = input_files['folder'] + "floodVolume_monthMax_output_1958-01-31_to_2001-12-31.nc"                                       # unit: m3
 #
-# - GCM historical: ipsl-cm5a-lr
-input_files['folder']                 = "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_oct_nov/pcrglobwb_4_land_covers_edwin_parameter_set_ipsl-cm5a-lr/no_correction/non-natural/merged_1951-2005/global/netcdf/"
+# - GCM historical: miroc-esm-chem 
+input_files['folder']                 = "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_oct_nov/pcrglobwb_4_land_covers_edwin_parameter_set_miroc-esm-chem/no_correction/non-natural/merged_1951-2005/global/netcdf/"
 input_files['channelStorageMonthMax'] = input_files['folder'] + "channelStorage_monthMax_output_1951-01-31_to_2005-12-31.nc"                                    # unit: m3
 input_files['dynamicFracWatMonthMax'] = input_files['folder'] + "dynamicFracWat_monthMax_output_1951-01-31_to_2005-12-31.nc"                                    # unit: dimensionless
 input_files['floodVolumeMonthMax']    = input_files['folder'] + "floodVolume_monthMax_output_1951-01-31_to_2005-12-31.nc"                                       # unit: m3
 
 
 # type of hydrological year
-type_of_hydrological_year = 2         # hydrological year 1: October to September 
+type_of_hydrological_year = 1         # hydrological year 1: October to September 
 # - number of months to be shifted
 num_of_shift_month = 9
 if type_of_hydrological_year == 2:    # hydrological year 2: July to June
@@ -59,8 +59,8 @@ output_files                      = {}
 #~ # - WATCH historical
 #~ output_files['folder']            = "/scratch-shared/edwinsut/flood_analyzer_analysis/maximum_events/watch_1960-1999/hydrological_year_" + str(type_of_hydrological_year) + "/"
 #
-# - GCM historical: ipsl-cm5a-lr
-output_files['folder']            = "/scratch-shared/edwinsut/flood_analyzer_analysis/maximum_events/ipsl-cm5a-lr_1960-1999/hydrological_year_" + str(type_of_hydrological_year) + "/"
+# - GCM historical: miroc-esm-chem
+output_files['folder']            = "/scratch-shared/edwinsut/flood_analyzer_analysis/maximum_events/miroc-esm-chem_1960-1999/hydrological_year_" + str(type_of_hydrological_year) + "/"
 #
 try:
     os.makedirs(output_files['folder'] )
