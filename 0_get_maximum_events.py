@@ -24,10 +24,10 @@ logger = logging.getLogger(__name__)
 # input files
 input_files                           = {}
 # PCR-GLOBWB 5 arcmin results
-input_files['folder']                 = "/scratch/shared/edwinhs-last/scratch_flood_analyzer/watch_results/merged_1958-2001/global/netcdf/"
-input_files['channelStorageMonthMax'] = input_files['folder'] + "/channelStorage_monthMax_output_1958-01-31_to_2001-12-31.nc"                                    # unit: m3
-input_files['dynamicFracWatMonthMax'] = input_files['folder'] + "/dynamicFracWat_monthMax_output_1958-01-31_to_2001-12-31.nc"                                    # unit: dimensionless
-input_files['floodVolumeMonthMax']    = input_files['folder'] + "/floodVolume_monthMax_output_1958-01-31_to_2001-12-31.nc"                                       # unit: m3
+input_files['folder']                 = "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_oct_nov/pcrglobwb_4_land_covers_edwin_parameter_set_watch_kinematicwave/no_correction/non-natural/merged_1958_to_2001/global/netcdf/"
+input_files['channelStorageMonthMax'] = input_files['folder'] + "channelStorage_monthMax_output_1958-01-31_to_2001-12-31.nc"                                    # unit: m3
+input_files['dynamicFracWatMonthMax'] = input_files['folder'] + "dynamicFracWat_monthMax_output_1958-01-31_to_2001-12-31.nc"                                    # unit: dimensionless
+input_files['floodVolumeMonthMax']    = input_files['folder'] + "floodVolume_monthMax_output_1958-01-31_to_2001-12-31.nc"                                       # unit: m3
 
 # type of hydrological year
 type_of_hydrological_year = 1         # hydrological year 1: October to September 
@@ -43,7 +43,7 @@ end_year = 1999
 # output files
 output_files                      = {}
 # - output folder
-output_files['folder']            = "/scratch-shared/edwinsut/scratch_flood_analyzer/output/hydrological_year_" + str(type_of_hydrological_year) + "/"
+output_files['folder']            = "/scratch-shared/edwinsut/flood_analyzer_analyzer/maximum_events/watch_1960-1999/hydrological_year_" + str(type_of_hydrological_year) + "/"
 try:
     os.makedirs(output_files['folder'] )
 except:
