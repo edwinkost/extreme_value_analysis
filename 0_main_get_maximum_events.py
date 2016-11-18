@@ -124,20 +124,21 @@ for var in ['channelStorageMonthMax', 'dynamicFracWatMonthMax', 'floodVolumeMont
     out_file = shifted_input_files['folder'] + "/" + os.path.basename(input_files[var]) + "_shifted_hydrological_year_" + str(type_of_hydrological_year) + ".nc"
     cmd = "cdo shifttime,-" + str(num_of_shift_month) + "mon " + inp_file + " " + out_file
     print(cmd); os.system(cmd)
-    # - cdo selyear
-    inp_file = out_file
-    out_file = inp_file + "_" + str(str_year) + "_to_" + str(end_year) + ".nc"
-    cmd = "cdo selyear," + str(str_year) + "/" + str(end_year) + " " + inp_file + " " + out_file
-    print(cmd); os.system(cmd)
     shifted_input_files[var] = out_file
 
 
 # STEP 2: Find the annual maxima of channelStorage
 msg = "Find the annua maxima of channelStorage from the file " + str(shifted_input_files['channelStorageMonthMax'])
 logger.info(msg)
+# - cdo yearmax
 inp_file = shifted_input_files['channelStorageMonthMax']
 out_file = shifted_input_files['channelStorageMonthMax'] + "_annual_maxima,nc"
 cmd = "cdo yearmax " + str(inp_file) + " " + str(out_file)
+print(cmd); os.system(cmd)
+# - cdo selyear
+inp_file = out_file
+out_file = inp_file + "_" + str(str_year) + "_to_" + str(end_year) + ".nc"
+cmd = "cdo setdate,31 -selyear," + str(str_year) + "/" + str(end_year) + " " + inp_file + " " + out_file
 print(cmd); os.system(cmd)
 annual_maxima_channel_storage_file = out_file
 
@@ -147,4 +148,5 @@ annual_maxima_channel_storage_file = out_file
 pcr.setclone(input_files['cellarea_05min'])
 for year in range(str_year, end_year, 1):
     print year
-    # open the netcdf file for 
+    # open the netcdf file for annual_maxima_channel_storage
+    
