@@ -25,11 +25,9 @@ logger = logging.getLogger(__name__)
 input_files                           = {}
 # PCR-GLOBWB 5 arcmin results
 input_files['folder']                 = "/scratch/shared/edwinhs-last/scratch_flood_analyzer/watch_results/merged_1958-2001/global/netcdf/"
-input_files['channelStorageMonthMax'] = glob.glob(input_files['folder'] + "channelStorage_monthMax*.nc")[0]                                     # unit: m3
-input_files['dynamicFracWatMonthMax'] = glob.glob(input_files['folder'] + "dynamicFracWat_monthMax*.nc")[0]                                     # unit: dimensionless
-input_files['floodVolumeMonthMax']    = glob.glob(input_files['folder'] + "floodVolume_monthMax*.nc"   )[0]                                     # unit: m3
-# - general input data
-input_files['cellarea_05min'] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/cellsize05min.correct.map"
+input_files['channelStorageMonthMax'] = input_files['folder'] + "/channelStorage_monthMax_output_1958-01-31_to_2001-12-31.nc"                                    # unit: m3
+input_files['dynamicFracWatMonthMax'] = input_files['folder'] + "/dynamicFracWat_monthMax_output_1958-01-31_to_2001-12-31.nc"                                    # unit: dimensionless
+input_files['floodVolumeMonthMax']    = input_files['folder'] + "/floodVolume_monthMax_output_1958-01-31_to_2001-12-31.nc"                                       # unit: m3
 
 # type of hydrological year
 type_of_hydrological_year = 1         # hydrological year 1: October to September 
@@ -45,7 +43,7 @@ end_year = 1999
 # output files
 output_files                      = {}
 # - output folder
-output_files['folder']            = "/scratch-shared/edwinsut/scratch_flood_analyzer/output/"
+output_files['folder']            = "/scratch-shared/edwinsut/scratch_flood_analyzer/output/hydrological_year_" + str(type_of_hydrological_year) + "/"
 try:
     os.makedirs(output_files['folder'] )
 except:
@@ -79,7 +77,7 @@ for var in ['channelStorageMonthMax', 'dynamicFracWatMonthMax', 'floodVolumeMont
     inp_file = input_files[var]
     out_file = output_files['folder'] + "/" + os.path.basename(input_files[var]) + "_shifted_hydrological_year_" + str(type_of_hydrological_year) + ".nc"
     cmd = "cdo shifttime,-" + str(num_of_shift_month) + "mon " + inp_file + " " + out_file
-    print(cmd); os.system(cmd)
+    print(""); print(cmd); os.system(cmd); print("")
     shifted_input_files[var] = out_file
 
 
@@ -94,18 +92,15 @@ for var in ['channelStorageMonthMax', 'dynamicFracWatMonthMax', 'floodVolumeMont
     inp_file = shifted_input_files[var]
     out_file = shifted_input_files[var] + "_annual_maxima,nc"
     cmd = "cdo yearmax " + str(inp_file) + " " + str(out_file)
-    print(cmd); os.system(cmd)
+    print(""); print(cmd); os.system(cmd); print("")
     # - cdo selyear
     inp_file = out_file
     out_file = inp_file + "_" + str(str_year) + "_to_" + str(end_year) + ".nc"
     cmd = "cdo selyear," + str(str_year) + "/" + str(end_year) + " " + inp_file + " " + out_file
-    print(cmd); os.system(cmd)
-    # - cdo
-    
-    annual_maxima_files[var] = out_file
+    print(""); print(cmd); os.system(cmd); print("")
 
 
-# STEP 3: Ignoring flood events with very small dynamicFracWat and calculating surfaceWaterLevel, as well as reporting to proper netcdf files
+
 
 
 
