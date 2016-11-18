@@ -5,8 +5,9 @@ import os
 import sys
 import glob
 
-# pcraster dynamic framework is used.
-from pcraster.framework import DynamicFramework
+import netCDF4 as nc
+import numpy as np
+import pcraster as pcr
 
 # netcdf reporting module:
 import outputNetCDF
@@ -138,7 +139,7 @@ print(cmd); os.system(cmd)
 # - cdo selyear
 inp_file = out_file
 out_file = inp_file + "_" + str(str_year) + "_to_" + str(end_year) + ".nc"
-cmd = "cdo setdate,31 -selyear," + str(str_year) + "/" + str(end_year) + " " + inp_file + " " + out_file
+cmd = "cdo selyear," + str(str_year) + "/" + str(end_year) + " " + inp_file + " " + out_file
 print(cmd); os.system(cmd)
 annual_maxima_channel_storage_file = out_file
 
@@ -147,6 +148,24 @@ annual_maxima_channel_storage_file = out_file
 # - set the clone map of pcraster
 pcr.setclone(input_files['cellarea_05min'])
 for year in range(str_year, end_year, 1):
-    print year
-    # open the netcdf file for annual_maxima_channel_storage
     
+    print year
+    
+    #~ # open the netcdf file for annual maxima channel_storage
+    #~ maximum_channel_storage = nc.Dataset()
+    # - find the time index belonging to this year
+    # - read the data
+    
+    # open the netcdf file for monthly maxima_channel_storage
+    # - find the time indices belonging to this year
+    # - loop through the time indices, find the index of the maximum event 
+    
+    #  
+    
+    # 
+
+netcdf2PCRobjClone(ncFile,varName,dateInput,\
+                   useDoy = None,
+                   cloneMapFileName  = None,\    
+                   LatitudeLongitude = True,\
+                   specificFillValue = None):
