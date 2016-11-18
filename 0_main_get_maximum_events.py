@@ -29,8 +29,6 @@ input_files['dynamicFracWatMonthMax'] = glob.glob(input_files['folder'] + "dynam
 input_files['floodVolumeMonthMax']    = glob.glob(input_files['folder'] + "floodVolume_monthMax*.nc"   )[0]                                     # unit: m3
 # - general input data
 input_files['cellarea_05min'] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/cellsize05min.correct.map"
-input_files['clone_05min']    = input_files['cellarea_05min']
-input_files['clone_30min']    = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/cellsize05min.correct.map"
 
 # type of hydrological year
 type_of_hydrological_year = 1         # hydrological year 1: October to September 
@@ -57,7 +55,7 @@ if type_of_hydrological_year == 2:
 # output files
 output_files                      = {}
 # - output folder
-output_files['folder']            = "/scratch-shared/edwinhs-last/scratch_flood_analyzer/output/"
+output_files['folder']            = "/scratch-shared/edwinsut/scratch_flood_analyzer/output/"
 try:
     os.makedirs(output_files['folder'] )
 except:
@@ -113,22 +111,22 @@ for var_name in variable_names:
 
 
 # STEP 1: Using cdo shiftime to shift netcf file
-msg = "Shifting netcdf time series to match the hydrological year " + str(type_of_hydrological_year) + ")"
-logger.info(msg)
+msg = "Shifting netcdf time series to match the hydrological year " + str(type_of_hydrological_year) + " "
+if type_of_hydrological_year == 1: msg = msg + "()"
+if type_of_hydrological_year == 1: msg = msg + "()"
+#
 # - shifted input files
-shifted_input_files                           = {}
-shifted_input_files['folder']                 = output_files['folder']
+shifted_input_files           = {}
+shifted_input_files['folder'] = output_files['folder']
 for var in ['channelStorageMonthMax', 'dynamicFracWatMonthMax', 'floodVolumeMonthMax']: 
     # - cdo shifttime
     inp_file = input_files[var]
-    print input_files[var]
-    
     out_file = shifted_input_files['folder'] + "/" + os.path.basename(input_files[var]) + "_shifted_hydrological_year_" + str(type_of_hydrological_year) + ".nc"
     cmd = "cdo shifttime,-" + str(num_of_shift_month) + "mon " + inp_file + " " + out_file
     print(cmd); os.system(cmd)
     # - cdo selyear
     inp_file = out_file
-    out_file = inp_file + "_" + str(str_year) + "_" + str(end_year) + ".nc"
+    out_file = inp_file + "_" + str(str_year) + "_to_" + str(end_year) + ".nc"
     cmd = "cdo selyear," + str(str_year) + "/" + str(end_year) + " " + inp_file + " " + out_file
     print(cmd); os.system(cmd)
     shifted_input_files[var] = out_file
@@ -143,4 +141,9 @@ cmd = "cdo yearmax " + str(inp_file) + " " + str(out_file)
 print(cmd); os.system(cmd)
 annual_maxima_channel_storage_file = out_file
 
+
+# STEP 3: Find the corresponding values to annual maxima of channelStorage
+# - set the clone map of pcraster
+pcr.setclone()
+for year in 
 
