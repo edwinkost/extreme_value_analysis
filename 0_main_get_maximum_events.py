@@ -104,7 +104,7 @@ for var_name in variable_names:
     # - the surfaceWaterLevel will be reported at 30 arc-minute resolution
     if var_name == "surfaceWaterLevel": output_files[var_name]['resolution_arcmin'] = 30.0 
     # - preparing netcdf files:
-    output_files[var_name]['file_name']         = input_files['folder'] + "/" + \
+    output_files[var_name]['file_name']         = output_files['folder'] + "/" + \
                                                   varDict.netcdf_short_name[var_name] + \
                                                   "_annual_maxima_for_hydrological_year_" + str(type_of_hydrological_year) +  ".nc"
     netcdf_report.createNetCDF(output_files[var_name]) 
