@@ -144,6 +144,7 @@ annual_maxima_channel_storage_file = out_file
 
 # STEP 3: Find the corresponding values to annual maxima of channelStorage
 # - set the clone map of pcraster
-pcr.setclone()
+pcr.setclone(input_files['cellarea_05min'])
 for year in range(str_year, end_year, 1):
-    #
+    print year
+    # open the netcdf file for 
