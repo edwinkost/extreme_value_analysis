@@ -43,7 +43,7 @@ end_year = 1999
 # output files
 output_files                      = {}
 # - output folder
-output_files['folder']            = "/scratch-shared/edwinsut/flood_analyzer_analyzer/maximum_events/watch_1960-1999/hydrological_year_" + str(type_of_hydrological_year) + "/"
+output_files['folder']            = "/scratch-shared/edwinsut/flood_analyzer_analysis/maximum_events/watch_1960-1999/hydrological_year_" + str(type_of_hydrological_year) + "/"
 try:
     os.makedirs(output_files['folder'] )
 except:
