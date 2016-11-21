@@ -56,7 +56,7 @@ output_files['folder']           = "/scratch-shared/edwinsut/flood_analyzer_anal
 try:
     os.makedirs(output_files['folder'])
 except:
-    os.system('rm -r ' + output_files['folder']  + "/*")
+    #~ os.system('rm -r ' + output_files['folder']  + "/*")
     pass
 # - temporary output folder (e.g. needed for resampling/gdalwarp)
 output_files['tmp_folder']        = output_files['folder'] + "/tmp/"
@@ -79,45 +79,45 @@ os.chdir(output_files['folder'])
 
 
 # using cdo selyear to select the years that we choose: 
-msg = "Selecting only the years " + str(str_year) + " to " + str(end_year) + " :"
+msg = "Selecting only the years " + str(str_year) + " to " + str(end_year) + ":"
 logger.info(msg)
 # - cdo selyear
 inp_file = input_files['dischargeMonthAvg']
 out_file = output_files['folder'] + "/monthly_discharge" + "_" + str(str_year) + "_to_" + str(end_year) + ".nc"
 cmd = "cdo selyear," + str(str_year) + "/" + str(end_year) + " " + inp_file + " " + out_file
-print(""); print(cmd); os.system(cmd); print("")
+#~ print(""); print(cmd); os.system(cmd); print("")
 
 
 # using cdo yearmax for calculating the climatology monthly discharge:
-msg = "Calculating the climatology monthly discharge " + str(str_year) + " to " + str(end_year) + " :"
+msg = "Calculating the climatology monthly discharge " + str(str_year) + " to " + str(end_year) + ":"
 logger.info(msg)
 # - cdo yearmax
 inp_file = out_file
 out_file = inp_file + "_climatology.nc"
 cmd = "cdo ymonavg " + inp_file + " " + out_file
-print(""); print(cmd); os.system(cmd); print("")
+#~ print(""); print(cmd); os.system(cmd); print("")
 input_files['climatologyDischargeMonthAvg'] = out_file
 
 
 # using cdo timmax and timmax for calculating the maximum and average climatology monthly discharge
-msg = "Calculating the maximum dicharge and average discharge from the climatology time series" + " :"
+msg = "Calculating the maximum dicharge and average discharge from the climatology time series" + ":"
 logger.info(msg)
 # - cdo timmax
 inp_file = input_files['climatologyDischargeMonthAvg']
 out_file = inp_file + "_climatology_maximum.nc"
 cmd = "cdo timmax " + inp_file + " " + out_file
-print(""); print(cmd); os.system(cmd); print("")
+#~ print(""); print(cmd); os.system(cmd); print("")
 input_files['maximumClimatologyDischargeMonthAvg'] = out_file
 # - cdo timavg
 inp_file = input_files['climatologyDischargeMonthAvg']
 out_file = inp_file + "_climatology_average.nc"
 cmd = "cdo timavg " + inp_file + " " + out_file
-print(""); print(cmd); os.system(cmd); print("")
+#~ print(""); print(cmd); os.system(cmd); print("")
 input_files['averageClimatologyDischargeMonthAvg'] = out_file
 
 
 # set the pcraster clone, ldd, landmask, and cell area map 
-msg = "Setting the clone, ldd, landmask, and cell area maps" + " :"
+msg = "Setting the clone, ldd, landmask, and cell area maps" + ":"
 logger.info(msg)
 # - clone 
 clone_map_file = input_files['clone_map_05min']
@@ -128,7 +128,7 @@ ldd = vos.readPCRmapClone(input_files['ldd_map_05min'],
                           output_files['tmp_folder'],
                           None,
                           True)
-ldd = pcr.lddrepair(pcr.ldd(self.lddMap))
+ldd = pcr.lddrepair(pcr.ldd(lddMap))
 ldd = pcr.lddrepair(ldd)
 # - landmask
 landmask = pcr.ifthen(pcr.defined(ldd_map), pcr.boolean(1.0))
@@ -159,7 +159,7 @@ pcr.aguila(basin_map)
 
 
 # finding the month that give the maximum discharge (from the climatology time series)
-msg = "Identifying the month with peak discharge (from climatology time series)"
+msg = "Identifying the month with peak discharge (from climatology time series):"
 logger.info(msg)
 # - read the maximum monthly discharge for every basin
 maximum_discharge = vos.netcdf2PCRobjClone(input_files['maximumClimatologyDischargeMonthAvg'], \
@@ -184,7 +184,9 @@ for i_month in range(1, 12 + 1):
     discharge_for_this_month = pcr.areamaximum(maximum_discharge, basin_map)
     maximum_month = pcr.ifthenelse(discharge_for_this_month == maximum_discharge, pcr.scalar(i_month +1), maximum_month)
     	
-# STEP 7: Defining hydrological years:
+# defining the hydrological year type
+msg = "Defining the type of hydrological year:"
+logger.info(msg)
 hydrological_year_type = pcr.spatial(pcr.nominal(1))
 hydrological_year_type = pcr.ifthenelse(maximum_month ==  9, pcr.nominal(2), hydrological_year_type)
 hydrological_year_type = pcr.ifthenelse(maximum_month == 10, pcr.nominal(2), hydrological_year_type)
