@@ -165,7 +165,7 @@ upstream_area = pcr.catchmenttotal(cell_area, ldd)
 # - Identify the outlet of every basin (in order to rederive the basin so that it is consistent with the ldd)
 outlet = pcr.nominal(pcr.uniqueid(pcr.ifthen(upstream_area == basin_area, pcr.boolean(1.0))))
 # - recalculate the basin
-basin_map = pcr.ifthen(landmask, pcr.subatchment(ldd, outlet))
+basin_map = pcr.ifthen(landmask, pcr.subcatchment(ldd, outlet))
 pcr.aguila(basin_map)
 
 
