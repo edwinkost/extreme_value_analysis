@@ -131,12 +131,16 @@ ldd = vos.readPCRmapClone(input_files['ldd_map_05min'],
 ldd = pcr.lddrepair(pcr.ldd(ldd))
 ldd = pcr.lddrepair(ldd)
 # - landmask
-landmask = pcr.ifthen(pcr.defined(ldd), pcr.boolean(1.0))
+landmask  = pcr.ifthen(pcr.defined(ldd), pcr.boolean(1.0))
 # - cell area
 cell_area = vos.readPCRmapClone(input_files['cell_area_05min'],
                           clone_map_file,
                           output_files['tmp_folder'])
-# - basin map
+
+
+# set the basin map
+msg = "Setting the basin map" + ":"
+logger.info(msg)
 basin_map = pcr.nominal(\
             vos.readPCRmapClone(input_files['basin_map_05min'],
                                 input_files['clone_map_05min'],
@@ -151,7 +155,14 @@ basin_map = pcr.cover(basin_map, pcr.windowmajority(basin_map, 1.0))
 basin_map = pcr.cover(basin_map, pcr.windowmajority(basin_map, 1.5))
 basin_map = pcr.ifthen(landmask, basin_map)
 pcr.aguila(basin_map)
-# - identify the outlet of every basin (in order to rederive the basin so that it is consistent with the ldd)
+
+msg = "Redefining the basin map" + ":"
+logger.info(msg)
+# - Calculate the catchment area of every basin:
+basin_area = pcr.areatotal(cell_area, basin_map)
+# - Calculate the upstream area of every pixeL:
+upstream_area = pcr.catchmenttotal(cell_area, ldd)
+# - Identify the outlet of every basin (in order to rederive the basin so that it is consistent with the ldd)
 outlet = pcr.nominal(pcr.uniqueid(pcr.ifthen(upstream_area == basin_area, pcr.boolean(1.0))))
 # - recalculate the basin
 basin_map = pcr.ifthen(landmask, pcr.subatchment(ldd, outlet))
