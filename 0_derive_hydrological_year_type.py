@@ -128,7 +128,7 @@ ldd = vos.readPCRmapClone(input_files['ldd_map_05min'],
                           output_files['tmp_folder'],
                           None,
                           True)
-ldd = pcr.lddrepair(pcr.ldd(lddMap))
+ldd = pcr.lddrepair(pcr.ldd(ldd))
 ldd = pcr.lddrepair(ldd)
 # - landmask
 landmask = pcr.ifthen(pcr.defined(ldd_map), pcr.boolean(1.0))
