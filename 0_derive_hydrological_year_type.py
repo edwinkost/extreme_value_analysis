@@ -56,10 +56,10 @@ output_files['folder']           = "/scratch-shared/edwinsut/flood_analyzer_anal
 try:
     os.makedirs(output_files['folder'])
 except:
-    #~ os.system('rm -r ' + output_files['folder']  + "/*")
+    os.system('rm -r ' + output_files['folder']  + "/*")
     pass
 # - temporary output folder (e.g. needed for resampling/gdalwarp)
-output_files['tmp_folder']        = output_files['folder'] + "/tmp/"
+output_files['tmp_folder']       = output_files['folder'] + "/tmp/"
 try:
     os.makedirs(output_files['tmp_folder'])
 except:
@@ -85,7 +85,7 @@ logger.info(msg)
 inp_file = input_files['dischargeMonthAvg']
 out_file = output_files['folder'] + "/monthly_discharge" + "_" + str(str_year) + "_to_" + str(end_year) + ".nc"
 cmd = "cdo selyear," + str(str_year) + "/" + str(end_year) + " " + inp_file + " " + out_file
-#~ print(""); print(cmd); os.system(cmd); print("")
+print(""); print(cmd); os.system(cmd); print("")
 
 
 # using cdo yearmax for calculating the climatology monthly discharge:
@@ -95,7 +95,7 @@ logger.info(msg)
 inp_file = out_file
 out_file = inp_file + "_climatology.nc"
 cmd = "cdo ymonavg " + inp_file + " " + out_file
-#~ print(""); print(cmd); os.system(cmd); print("")
+print(""); print(cmd); os.system(cmd); print("")
 input_files['climatologyDischargeMonthAvg'] = out_file
 
 
@@ -106,13 +106,13 @@ logger.info(msg)
 inp_file = input_files['climatologyDischargeMonthAvg']
 out_file = inp_file + "_climatology_maximum.nc"
 cmd = "cdo timmax " + inp_file + " " + out_file
-#~ print(""); print(cmd); os.system(cmd); print("")
+print(""); print(cmd); os.system(cmd); print("")
 input_files['maximumClimatologyDischargeMonthAvg'] = out_file
 # - cdo timavg
 inp_file = input_files['climatologyDischargeMonthAvg']
 out_file = inp_file + "_climatology_average.nc"
 cmd = "cdo timavg " + inp_file + " " + out_file
-#~ print(""); print(cmd); os.system(cmd); print("")
+print(""); print(cmd); os.system(cmd); print("")
 input_files['averageClimatologyDischargeMonthAvg'] = out_file
 
 
@@ -158,12 +158,16 @@ pcr.aguila(basin_map)
 
 msg = "Redefining the basin map (so that it is consistent with the ldd map used in PCR-GLOBWB):"
 logger.info(msg)
-# - Calculate the upstream area of every pixe:
+# - calculate the upstream area of every pixel:
 upstream_area = pcr.catchmenttotal(cell_area, ldd)
-# - Calculate the catchment area of every basin:
+# - calculate the catchment area of every basin:
 upstream_area_maximum = pcr.areamaximum(upstream_area, basin_map)
-# - Identify the outlet of every basin (in order to rederive the basin so that it is consistent with the ldd)
+# - identify the outlet of every basin (in order to rederive the basin so that it is consistent with the ldd)
 outlet = pcr.nominal(pcr.uniqueid(pcr.ifthen(upstream_area == upstream_area_maximum, pcr.boolean(1.0))))
+# - ignoring outlets with small upstream areas and/or small areas
+threshold = 25. * 1000. * 1000.                                                 # unit: m2
+outlet    = pcr.ifthen(upstream_area_maximum > threshold, outlet)
+outlet    = pcr.ifthen(pcr.areatotal(cell_area, basin_map) > threshold, outlet)
 pcr.aguila(outlet)
 outlet = pcr.cover(outlet, pcr.nominal(0.0))
 # - recalculate the basin
@@ -173,7 +177,7 @@ pcr.aguila(basin_map)
 
 # finding the month that give the maximum discharge (from the climatology time series)
 msg = "Identifying the month with peak discharge (from climatology time series):"
-logger.info(msg)
+logger.info(msg)	
 # - read the maximum monthly discharge for every basin
 maximum_discharge = vos.netcdf2PCRobjClone(input_files['maximumClimatologyDischargeMonthAvg'], \
                                            "discharge", 1,\
@@ -196,6 +200,7 @@ for i_month in range(1, 12 + 1):
     # upscale it to the basin scale
     discharge_for_this_month = pcr.areamaximum(discharge_for_this_month, basin_map)
     maximum_month = pcr.ifthenelse(discharge_for_this_month == maximum_discharge, pcr.scalar(i_month +1), maximum_month)
+pcr.report(maximum_month, "maximum_month.map")
     	
 # defining the hydrological year type
 msg = "Defining the type of hydrological year:"
