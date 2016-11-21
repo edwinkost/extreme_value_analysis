@@ -104,13 +104,13 @@ msg = "Calculating the maximum dicharge and average discharge from the climatolo
 logger.info(msg)
 # - cdo timmax
 inp_file = input_files['climatologyDischargeMonthAvg']
-out_file = inp_file + "_climatology.nc"
+out_file = inp_file + "_climatology_maximum.nc"
 cmd = "cdo timmax " + inp_file + " " + out_file
 print(""); print(cmd); os.system(cmd); print("")
 input_files['maximumClimatologyDischargeMonthAvg'] = out_file
 # - cdo timavg
 inp_file = input_files['climatologyDischargeMonthAvg']
-out_file = inp_file + "_climatology.nc"
+out_file = inp_file + "_climatology_average.nc"
 cmd = "cdo timavg " + inp_file + " " + out_file
 print(""); print(cmd); os.system(cmd); print("")
 input_files['averageClimatologyDischargeMonthAvg'] = out_file
@@ -158,12 +158,20 @@ basin_map = pcr.ifthen(landmask, pcr.subatchment(ldd, outlet))
 pcr.aguila(basin_map)
 
 
-#~ # STEP 5: Read the maximum monthly discharge for every basin
-#~ maximum_discharge = vos.netcdf2PCRobjClone(
-#~ 
-#~ maximum_discharge = pcr.areamaximum(pcr.cover(maximum_discharge, 0.0), basin_map)
-#~ 
-#~ # STEP 6: Finding the month that give the maximum discharge
+# finding the month that give the maximum discharge
+
+# -read the maximum monthly discharge for every basin
+maximum_discharge = vos.netcdf2PCRobjClone(input_files['maximumClimatologyDischargeMonthAvg'], \
+                                           discharge, 1,\
+                                           useDoy = "Yes",
+                                           cloneMapFileName  = clone_map_file,\
+                                           LatitudeLongitude = True,\
+                                           specificFillValue = None)
+maximum_discharge = pcr.areamaximum(\
+                  pcr.cover(maximum_discharge, 0.0), basin_map)
+
+
+
 #~ maximum_month = pcr.spatial(pcr.scalar(1.0))
 #~ 
 #~ for i_month in range(0, 12):
