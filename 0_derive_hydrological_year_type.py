@@ -194,7 +194,7 @@ for i_month in range(1, 12 + 1):
                                                       LatitudeLongitude = True,\
                                                       specificFillValue = None)
     # upscale it to the basin scale
-    discharge_for_this_month = pcr.areamaximum(maximum_discharge, basin_map)
+    discharge_for_this_month = pcr.areamaximum(discharge_for_this_month, basin_map)
     maximum_month = pcr.ifthenelse(discharge_for_this_month == maximum_discharge, pcr.scalar(i_month +1), maximum_month)
     	
 # defining the hydrological year type
