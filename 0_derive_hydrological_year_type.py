@@ -165,7 +165,7 @@ upstream_area_maximum = pcr.areamaximum(upstream_area, basin_map)
 # - identify the outlet of every basin (in order to rederive the basin so that it is consistent with the ldd)
 outlet = pcr.nominal(pcr.uniqueid(pcr.ifthen(upstream_area == upstream_area_maximum, pcr.boolean(1.0))))
 # - ignoring outlets with small upstream areas and/or small areas
-threshold = 25. * 1000. * 1000.                                                 # unit: m2
+threshold = 50. * 1000. * 1000.                                                 # unit: m2
 outlet    = pcr.ifthen(upstream_area_maximum > threshold, outlet)
 outlet    = pcr.ifthen(pcr.areatotal(cell_area, basin_map) > threshold, outlet)
 pcr.aguila(outlet)
