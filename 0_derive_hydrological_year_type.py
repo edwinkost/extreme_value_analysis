@@ -94,7 +94,7 @@ logger.info(msg)
 # - cdo yearmax
 inp_file = out_file
 out_file = inp_file + "_climatology.nc"
-cmd = "cdo yearmax " + inp_file + " " + out_file
+cmd = "cdo yearavg " + inp_file + " " + out_file
 print(""); print(cmd); os.system(cmd); print("")
 input_files['climatologyDischargeMonthAvg'] = out_file
 
@@ -157,7 +157,10 @@ outlet = pcr.nominal(pcr.uniqueid(pcr.ifthen(upstream_area == basin_area, pcr.bo
 basin_map = pcr.ifthen(landmask, pcr.subatchment(ldd, outlet))
 pcr.aguila(basin_map)
 
+
 #~ # STEP 5: Read the maximum monthly discharge for every basin
+#~ maximum_discharge = vos.netcdf2PCRobjClone(
+#~ 
 #~ maximum_discharge = pcr.areamaximum(pcr.cover(maximum_discharge, 0.0), basin_map)
 #~ 
 #~ # STEP 6: Finding the month that give the maximum discharge
