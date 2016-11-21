@@ -94,7 +94,7 @@ logger.info(msg)
 # - cdo yearmax
 inp_file = out_file
 out_file = inp_file + "_climatology.nc"
-cmd = "cdo yearavg " + inp_file + " " + out_file
+cmd = "cdo ymonavg " + inp_file + " " + out_file
 print(""); print(cmd); os.system(cmd); print("")
 input_files['climatologyDischargeMonthAvg'] = out_file
 
