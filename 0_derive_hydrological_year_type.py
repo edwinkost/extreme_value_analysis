@@ -209,6 +209,8 @@ hydrological_year_type = pcr.spatial(pcr.nominal(1))
 hydrological_year_type = pcr.ifthenelse(maximum_month ==  9, pcr.nominal(2), hydrological_year_type)
 hydrological_year_type = pcr.ifthenelse(maximum_month == 10, pcr.nominal(2), hydrological_year_type)
 hydrological_year_type = pcr.ifthenelse(maximum_month == 11, pcr.nominal(2), hydrological_year_type)
+hydrological_year_type = pcr.cover(hydrological_year_type, pcr.nominal(1))
+hydrological_year_type = pcr.ifthen(landmask, hydrological_year_type)
 pcr.aguila(hydrological_year_type)
 pcr.report(hydrological_year_type, "hydrological_year_type.map")
 
