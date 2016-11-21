@@ -49,9 +49,9 @@ str_year = 1960
 end_year = 1999
 
 # output files
-output_files                      = {}
+output_files                     = {}
 # - output folder
-output_files['folder']            = "/scratch-shared/edwinsut/flood_analyzer_analysis/hydrological_year/watch_1960-1999/"
+output_files['folder']           = "/scratch-shared/edwinsut/flood_analyzer_analysis/hydrological_year/watch_1960-1999/"
 #
 try:
     os.makedirs(output_files['folder'])
