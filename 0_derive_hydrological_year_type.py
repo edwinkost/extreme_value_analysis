@@ -158,9 +158,10 @@ basin_map = pcr.ifthen(landmask, pcr.subatchment(ldd, outlet))
 pcr.aguila(basin_map)
 
 
-# finding the month that give the maximum discharge
-
-# -read the maximum monthly discharge for every basin
+# finding the month that give the maximum discharge (from the climatology time series)
+msg = "Identifying the month with peak discharge (from climatology time series)"
+logger.info(msg)
+# - read the maximum monthly discharge for every basin
 maximum_discharge = vos.netcdf2PCRobjClone(input_files['maximumClimatologyDischargeMonthAvg'], \
                                            discharge, 1,\
                                            useDoy = "Yes",
@@ -169,23 +170,25 @@ maximum_discharge = vos.netcdf2PCRobjClone(input_files['maximumClimatologyDischa
                                            specificFillValue = None)
 maximum_discharge = pcr.areamaximum(\
                   pcr.cover(maximum_discharge, 0.0), basin_map)
-
-
-
-#~ maximum_month = pcr.spatial(pcr.scalar(1.0))
-#~ 
-#~ for i_month in range(0, 12):
-    #~ # S
-    #~ discharge_for_this_month = 
-    #~ # upscale it to the basin scale
-    #~ discharge_for_this_month = pcr.areamaximum(maximum_discharge, basin_map)
-    #~ #
-    #~ maximum_month = pcr.ifthenelse(discharge_for_this_month eq maximum_discharge, pcr.scalar(i_month +1), maximum_month)
-    	#~ 
-#~ # STEP 7: Defining hydrological years:
-#~ hydrological_year_type = pcr.spatial(pcr.nominal(1))
-#~ hydrological_year_type = pcr.ifthenelse(maximum_month ==  9, pcr.nominal(2), hydrological_year_type)
-#~ hydrological_year_type = pcr.ifthenelse(maximum_month == 10, pcr.nominal(2), hydrological_year_type)
-#~ hydrological_year_type = pcr.ifthenelse(maximum_month == 11, pcr.nominal(2), hydrological_year_type)
-
+# - find the month with maximum discharge
+maximum_month = pcr.spatial(pcr.scalar(1.0))
+for i_month in range(1, 12 + 1):
+    # read the climatology discharge time series
+    discharge_for_this_month = vos.netcdf2PCRobjClone(input_files['climatologyDischargeMonthAvg'], \
+                                                      discharge, i_month,\
+                                                      useDoy = "Yes",
+                                                      cloneMapFileName  = clone_map_file,\
+                                                      LatitudeLongitude = True,\
+                                                      specificFillValue = None)
+    # upscale it to the basin scale
+    discharge_for_this_month = pcr.areamaximum(maximum_discharge, basin_map)
+    maximum_month = pcr.ifthenelse(discharge_for_this_month eq maximum_discharge, pcr.scalar(i_month +1), maximum_month)
+    	
+# STEP 7: Defining hydrological years:
+hydrological_year_type = pcr.spatial(pcr.nominal(1))
+hydrological_year_type = pcr.ifthenelse(maximum_month ==  9, pcr.nominal(2), hydrological_year_type)
+hydrological_year_type = pcr.ifthenelse(maximum_month == 10, pcr.nominal(2), hydrological_year_type)
+hydrological_year_type = pcr.ifthenelse(maximum_month == 11, pcr.nominal(2), hydrological_year_type)
+pcr.aguila(hydrological_year_type)
+pcr.report(hydrological_year_type, "hydrological_year_type.map")
 
