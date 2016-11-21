@@ -131,7 +131,7 @@ ldd = vos.readPCRmapClone(input_files['ldd_map_05min'],
 ldd = pcr.lddrepair(pcr.ldd(ldd))
 ldd = pcr.lddrepair(ldd)
 # - landmask
-landmask = pcr.ifthen(pcr.defined(ldd_map), pcr.boolean(1.0))
+landmask = pcr.ifthen(pcr.defined(ldd), pcr.boolean(1.0))
 # - cell area
 cell_area = vos.readPCRmapClone(input_files['cell_area_05min'],
                           clone_map_file,
