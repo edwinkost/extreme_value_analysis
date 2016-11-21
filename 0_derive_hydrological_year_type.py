@@ -83,7 +83,7 @@ msg = "Selecting only the years " + str(str_year) + " to " + str(end_year) + " :
 logger.info(msg)
 # - cdo selyear
 inp_file = input_files['dischargeMonthAvg']
-out_file = inp_file + "_" + str(str_year) + "_to_" + str(end_year) + ".nc"
+out_file = output_files['folder'] + "/monthly_discharge" + "_" + str(str_year) + "_to_" + str(end_year) + ".nc"
 cmd = "cdo selyear," + str(str_year) + "/" + str(end_year) + " " + inp_file + " " + out_file
 print(""); print(cmd); os.system(cmd); print("")
 
