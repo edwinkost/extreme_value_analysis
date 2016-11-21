@@ -75,7 +75,7 @@ vos.initialize_logging(log_file_location)
 
 
 # change to the output folder (use it as the working folder 
-os.chidr(output_files['folder'])
+os.chdir(output_files['folder'])
 
 
 # using cdo selyear to select the years that we choose: 
