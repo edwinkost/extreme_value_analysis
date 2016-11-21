@@ -156,7 +156,7 @@ basin_map = pcr.cover(basin_map, pcr.windowmajority(basin_map, 1.5))
 basin_map = pcr.ifthen(landmask, basin_map)
 pcr.aguila(basin_map)
 
-msg = "Redefining the basin map" + ":"
+msg = "Redefining the basin map (so that it is consistent with the ldd map used in PCR-GLOBWB):"
 logger.info(msg)
 # - Calculate the catchment area of every basin:
 basin_area = pcr.areatotal(cell_area, basin_map)
@@ -164,6 +164,7 @@ basin_area = pcr.areatotal(cell_area, basin_map)
 upstream_area = pcr.catchmenttotal(cell_area, ldd)
 # - Identify the outlet of every basin (in order to rederive the basin so that it is consistent with the ldd)
 outlet = pcr.nominal(pcr.uniqueid(pcr.ifthen(upstream_area == basin_area, pcr.boolean(1.0))))
+pcr.aguila(outlet)
 # - recalculate the basin
 basin_map = pcr.ifthen(landmask, pcr.subcatchment(ldd, outlet))
 pcr.aguila(basin_map)
@@ -174,7 +175,7 @@ msg = "Identifying the month with peak discharge (from climatology time series):
 logger.info(msg)
 # - read the maximum monthly discharge for every basin
 maximum_discharge = vos.netcdf2PCRobjClone(input_files['maximumClimatologyDischargeMonthAvg'], \
-                                           discharge, 1,\
+                                           "discharge", 1,\
                                            useDoy = "Yes",
                                            cloneMapFileName  = clone_map_file,\
                                            LatitudeLongitude = True,\
@@ -186,7 +187,7 @@ maximum_month = pcr.spatial(pcr.scalar(1.0))
 for i_month in range(1, 12 + 1):
     # read the climatology discharge time series
     discharge_for_this_month = vos.netcdf2PCRobjClone(input_files['climatologyDischargeMonthAvg'], \
-                                                      discharge, i_month,\
+                                                      "discharge", i_month,\
                                                       useDoy = "Yes",
                                                       cloneMapFileName  = clone_map_file,\
                                                       LatitudeLongitude = True,\
