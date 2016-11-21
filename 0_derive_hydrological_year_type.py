@@ -158,12 +158,12 @@ pcr.aguila(basin_map)
 
 msg = "Redefining the basin map (so that it is consistent with the ldd map used in PCR-GLOBWB):"
 logger.info(msg)
-# - Calculate the catchment area of every basin:
-basin_area = pcr.areatotal(cell_area, basin_map)
-# - Calculate the upstream area of every pixeL:
+# - Calculate the upstream area of every pixe:
 upstream_area = pcr.catchmenttotal(cell_area, ldd)
+# - Calculate the catchment area of every basin:
+upstream_area_maximum = pcr.areamaximum(upstream_area, basin_map)
 # - Identify the outlet of every basin (in order to rederive the basin so that it is consistent with the ldd)
-outlet = pcr.nominal(pcr.uniqueid(pcr.ifthen(upstream_area == basin_area, pcr.boolean(1.0))) + 1.0)
+outlet = pcr.nominal(pcr.uniqueid(pcr.ifthen(upstream_area == upstream_area_maximum, pcr.boolean(1.0))))
 pcr.aguila(outlet)
 outlet = pcr.cover(outlet, pcr.nominal(0.0))
 # - recalculate the basin
