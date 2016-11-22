@@ -128,7 +128,7 @@ logger.info(msg)
 input_files['file_name']                           = {}
 for hydro_year in ["hydrological_year_1", "hydrological_year_2"]:
     input_files['file_name'][hydro_year]           = {} 
-    for var in ['channelStorage', 'dynamicFracWat', 'floodVolume']
+    for var in ['channelStorage', 'dynamicFracWat', 'floodVolume']:
         input_files['file_names'][hydro_year][var] = glob.glob(input_files['folder'] + "/" + str(hydro_year) + "/" + str(var) + "*" + str(str_year) + "_to_" + str(end_year) + "*.nc")[0]
         msg = input_files['file_names'][hydro_year][var]
         logger.info(msg)
