@@ -184,14 +184,14 @@ for i_year in range(str_year, end_year + 1):
         time_index_in_netcdf_file = i_year - str_year
         
         value_from_the_hydrological_year_1 = vos.netcdf2PCRobjClone(input_files['file_name']["hydrological_year_1"][var], \
-                                                                    var, time_index_in_netcdf_file,\
+                                                                    varDict.netcdf_short_name[var], time_index_in_netcdf_file,\
                                                                     useDoy = "Yes",
                                                                     cloneMapFileName  = clone_map_file,\
                                                                     LatitudeLongitude = True,\
                                                                     specificFillValue = None)
         
         value_from_the_hydrological_year_2 = vos.netcdf2PCRobjClone(input_files['file_name']["hydrological_year_2"][var], \
-                                                                    var, time_index_in_netcdf_file,\
+                                                                    varDict.netcdf_short_name[var], time_index_in_netcdf_file,\
                                                                     useDoy = "Yes",
                                                                     cloneMapFileName  = clone_map_file,\
                                                                     LatitudeLongitude = True,\
@@ -209,6 +209,6 @@ for i_year in range(str_year, end_year + 1):
         msg = "Saving to the netcdf file: " + str(ncFileName)
         logger.info(msg)
         time_stamp_used = datetime.datetime(i_year, 12, 31, 0)
-        netcdf_report.data2NetCDF(ncFileName, var, pcr.pcr2numpy(value_for_this_year, vos.MV), time_stamp_used)
+        netcdf_report.data2NetCDF(ncFileName, varDict.netcdf_short_name[var], pcr.pcr2numpy(value_for_this_year, vos.MV), time_stamp_used)
 
         
