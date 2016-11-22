@@ -165,7 +165,7 @@ upstream_area_maximum = pcr.areamaximum(upstream_area, basin_map)
 # - identify the outlet of every basin (in order to rederive the basin so that it is consistent with the ldd)
 outlet = pcr.nominal(pcr.uniqueid(pcr.ifthen(upstream_area == upstream_area_maximum, pcr.boolean(1.0))))
 # - ignoring outlets with small upstream areas
-threshold = 25. * 1000. * 1000.                                                 # unit: m2
+threshold = 50. * 1000. * 1000.                                                 # unit: m2
 outlet    = pcr.ifthen(upstream_area_maximum > threshold, outlet)
 pcr.aguila(outlet)
 outlet = pcr.cover(outlet, pcr.nominal(0.0))
@@ -217,6 +217,6 @@ hydrological_year_type = pcr.ifthenelse(maximum_month == 10, pcr.nominal(2), hyd
 hydrological_year_type = pcr.ifthenelse(maximum_month == 11, pcr.nominal(2), hydrological_year_type)
 hydrological_year_type = pcr.cover(hydrological_year_type, pcr.nominal(1))
 hydrological_year_type = pcr.ifthen(landmask, hydrological_year_type)
-pcr.aguila(hydrological_year_type)
 pcr.report(hydrological_year_type, "hydrological_year_type.map")
+pcr.aguila(hydrological_year_type)
 
