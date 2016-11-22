@@ -116,7 +116,7 @@ for var_name in variable_names:
     # - preparing netcdf files:
     output_files[var_name]['file_name']         = output_files['folder'] + "/" + \
                                                   varDict.netcdf_short_name[var_name] + \
-                                                  "_annual_maxima_for_hydrological_year_" + str(type_of_hydrological_year) +  ".nc"
+                                                  "_annual_flood_maxima.nc"
     msg = "Preparing the netcdf file: " + output_files[var_name]['file_name']
     logger.info(msg)
     netcdf_report.createNetCDF(output_files[var_name]) 
