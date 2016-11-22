@@ -81,7 +81,7 @@ netcdf_setup = {}
 netcdf_setup['format']          = "NETCDF4"
 netcdf_setup['zlib']            = True
 netcdf_setup['institution']     = "Department of Physical Geography, Utrecht University"
-netcdf_setup['title'      ]     = "PCR-GLOBWB 2 output - post-processed for Aqueduct Flood Analyzer : Annual flood maxima"
+netcdf_setup['title'      ]     = "PCR-GLOBWB 2 output (post-processed for the Aqueduct Flood Analyzer): Annual Flood Maxima"
 netcdf_setup['created by' ]     = "Edwin H. Sutanudjaja (E.H.Sutanudjaja@uu.nl)"
 netcdf_setup['description']     = 'The annual flood maxima for each year/period starting from October of the year until September of its following year (for normal hydrological years) or ' +\
                                                           'for each year/period starting from July of the year until June of its following year (for alternative hydrological years)."'
