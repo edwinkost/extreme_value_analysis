@@ -178,7 +178,7 @@ for i_year in range(str_year, end_year + 1):
     
     for var in ['channelStorage', 'dynamicFracWat', 'floodVolume']:
         
-        msg = "Merging for the variable " + str(var)
+        msg = "Merging for the variable " + str(var) + " for the year " + str(i_year)
         logger.info(msg)
         
         # time index for this year
