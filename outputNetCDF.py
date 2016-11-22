@@ -15,7 +15,7 @@ import virtualOS as vos
 
 class OutputNetCDF():
     
-    def __init__(self, global_map = True, netcdf_y_orientation_follow_cf_convention = False, netcdf_format = 'NETCDF4', zlib = True):
+    def __init__(self, global_map = True, netcdf_y_orientation_follow_cf_convention = True, netcdf_format = 'NETCDF4', zlib = True):
         		
         # corner cordinates (lat/lon system)
         if global_map == True:

@@ -54,6 +54,7 @@ end_year = 1999
 # output files
 output_files                    = {}
 # - output folder
+# - WATCH historical
 output_files['folder']          = "/scratch-shared/edwinsut/flood_analyzer_analysis/maximum_events_merged/watch_1960-1999/"
 #
 try:
@@ -213,3 +214,7 @@ for i_year in range(str_year, end_year + 1):
         netcdf_report.data2NetCDF(ncFileName, varDict.netcdf_short_name[var], pcr.pcr2numpy(value_for_this_year, vos.MV), time_stamp_used)
 
         
+# NEXT:
+# - get the gumbel fit parameters (derive_Gumbel)
+# - apply the gumbel fit
+
