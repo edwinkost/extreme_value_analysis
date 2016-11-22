@@ -160,7 +160,7 @@ cell_area = vos.readPCRmapClone(input_files['cell_area_05min'],
 msg = "Reading the hydrological year types" + ":"
 logger.info(msg)
 hydro_year_type = pcr.nominal(\
-                  vos.readPCRmapClone(input_files['basin_map_05min'],
+                  vos.readPCRmapClone(input_files['hydro_year_05min'],
                                       input_files['clone_map_05min'],
                                       output_files['tmp_folder'],
                                       None, False, None, True))
