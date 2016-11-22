@@ -178,6 +178,7 @@ pcr.aguila(basin_map)
 # - calculate the basin area
 basin_area = pcr.areatotal(cell_area, basin_map)
 pcr.report(basin_area, "basin_area.map")
+pcr.aguila(basin_area)
 
 
 # finding the month that give the maximum discharge (from the climatology time series)
