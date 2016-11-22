@@ -181,7 +181,7 @@ for i_year in range(str_year, end_year + 1):
         logger.info(msg)
         
         # time index for this year
-        time_index_in_netcdf_file = i_year - str_year
+        time_index_in_netcdf_file = i_year - str_year + 1
         
         value_from_the_hydrological_year_1 = vos.netcdf2PCRobjClone(input_files['file_name']["hydrological_year_1"][var], \
                                                                     varDict.netcdf_short_name[var], time_index_in_netcdf_file,\
@@ -205,7 +205,7 @@ for i_year in range(str_year, end_year + 1):
         if landmask_only: value_for_this_year = pcr.ifthen(landmask, value_for_this_year)
         
         # report to a netcdf file
-        ncFileName = output_files[name]['file_name']
+        ncFileName = output_files[var]['file_name']
         msg = "Saving to the netcdf file: " + str(ncFileName)
         logger.info(msg)
         time_stamp_used = datetime.datetime(i_year, 12, 31, 0)
