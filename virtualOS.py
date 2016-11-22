@@ -303,7 +303,7 @@ def netcdf2PCRobjClone(ncFile,varName,dateInput,\
     # date
     date = dateInput
     if useDoy == "Yes": 
-        logger.debug('Finding the date based on the given climatology doy index (1 to 366, or index 0 to 365)')
+        logger.debug('Finding the date based on the time index (e.g. the climatology doy indexes 1 to 365/366)')
         idx = int(dateInput) - 1
     elif useDoy == "month":  # PS: WE NEED THIS ONE FOR NETCDF FILES that contain only 12 monthly values (e.g. cropCoefficientWaterNC).
         logger.debug('Finding the date based on the given climatology month index (1 to 12, or index 0 to 11)')

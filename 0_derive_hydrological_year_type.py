@@ -170,13 +170,14 @@ outlet    = pcr.ifthen(upstream_area_maximum > threshold, outlet)
 pcr.aguila(outlet)
 outlet = pcr.cover(outlet, pcr.nominal(0.0))
 # - recalculate the basin
-basin_map  = pcr.nominal(pcr.ifthen(landmask, pcr.subcatchment(ldd, outlet)))
-# - calculate the basin area (m2)
-basin_area = pcr.areatotal(cell_area, basin_map)
-# TODO: merging small basins to their downstream 
-pcr.report(basin_area, "basin_area.map")
+basin_map  = pcr.nominal(pcr.subcatchment(ldd, outlet))
+basin_map  = pcr.clump(basin_map)
+basin_map  = pcr.ifthen(landmask, basin_map)
 pcr.report(basin_map , "basin_map.map")
 pcr.aguila(basin_map)
+# - calculate the basin area
+basin_area = pcr.areatotal(cell_area, basin_map)
+pcr.report(basin_area, "basin_area.map")
 
 
 # finding the month that give the maximum discharge (from the climatology time series)
