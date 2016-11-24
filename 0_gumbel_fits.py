@@ -27,8 +27,6 @@ logger = logging.getLogger(__name__)
 # The script to derive and apply gumbel fits to the Annual Flood Maxima time series
 ###################################################################################
 
-# IN PROGRESS
-
 # input files
 input_files                     = {}
 # The annual flood maxima based on the PCR-GLOBWB 5 arcmin results:
@@ -41,8 +39,6 @@ input_files['clone_map_05min']  = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20
 # - cell area, ldd maps
 input_files['cell_area_05min']  = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/cellsize05min.correct.map"
 input_files['ldd_map_05min']    = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
-# - hydrological year type (based on the WATCH data)
-input_files['hydro_year_05min'] = "/scratch-shared/edwinsut/flood_analyzer_analysis/hydrological_year/watch_1960-1999/hydrological_year_type.map"
 
 # option to save/present results at the landmask region only:
 landmask_only = True
@@ -77,14 +73,17 @@ except:
     pass
 vos.initialize_logging(log_file_location)
 
+
 # netcdf general setup:
 netcdf_setup = {}
 netcdf_setup['format']          = "NETCDF4"
 netcdf_setup['zlib']            = True
-netcdf_setup['institution']     = "Department of Physical Geography, Utrecht University"
+netcdf_setup['institution']     = "Utrecht University, Department of Physical Geography ; Deltares ; World Resources Institute"
 netcdf_setup['title'      ]     = "PCR-GLOBWB 2 output (post-processed for the Aqueduct Flood Analyzer): Gumbel Fit to Annual Flood Maxima"
 netcdf_setup['created by' ]     = "Edwin H. Sutanudjaja (E.H.Sutanudjaja@uu.nl)"
-netcdf_setup['description']     = 'The gumbel fit/analysis output for the annual flood maxima.'
+netcdf_setup['description']     = "The gumbel fit/analysis output for the annual flood maxima."
+netcdf_setup['source'     ]     = "Utrecht University, Department of Physical Geography - contact: Edwin H. Sutanudjaja (E.H.Sutanudjaja@uu.nl)"
+netcdf_setup['references' ]     = "Sutanudjaja et al., in prep."
 
 # change to the output folder (use it as the working folder) 
 os.chdir(output_files['folder'])
