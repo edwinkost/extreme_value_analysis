@@ -172,7 +172,7 @@ class OutputNetCDF():
 
     def close(self, ncFileName):
 
-        rootgrp = nc.Dataset(ncFileName, 'a')
+        rootgrp = nc.Dataset(ncFileName,'w')
 
         # closing the file 
         rootgrp.close()

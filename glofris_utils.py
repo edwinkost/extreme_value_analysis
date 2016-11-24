@@ -44,6 +44,8 @@ $Revision: 733 $
 $HeadURL: https://repos.deltares.nl/repos/Hydrology/trunk/GLOFRIS/src/GLOFRIS_utils.py $
 $Keywords: $
 
+# Modified/adopted by Edwin H. Sutanudjaja, starting on 24 November 2016
+
 """
 
 import netCDF4 as nc4

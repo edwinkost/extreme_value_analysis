@@ -44,6 +44,8 @@ $Revision: 1116 $
 $HeadURL: https://repos.deltares.nl/repos/Hydrology/trunk/GLOFRIS/src/GLOFRIS_postprocess.py $
 $Keywords: $
 
+# Modified/adopted by Edwin H. Sutanudjaja, starting on 24 November 2016
+
 """
 import glob, os
 import numpy as np
@@ -53,7 +55,7 @@ import datetime
 import scipy.stats as stats
 
 import pdb
-from GLOFRIS_utils import *
+from glofris_utils import *
 
 def get_date_comp(dateObj, comp='day'):
     """
