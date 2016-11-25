@@ -59,7 +59,7 @@ class OutputNetCDF():
         
         return attributeDictionary
 
-    def create_netcdf(self, netcdf_setup_dictionary):
+    def create_netcdf_file(self, netcdf_setup_dictionary):
 
         # cell centres coordinates (lat/lon - arc degree)
         deltaLon = netcdf_setup_dictionary['resolution_arcmin'] / 60.0
@@ -124,7 +124,7 @@ class OutputNetCDF():
         rootgrp.sync()
         rootgrp.close()
 
-    def create_variable(self, ncFileName, varName, varUnit, longName = None):
+    def create_variable(self, ncFileName, varName, varUnit, longName = None, comment = ""):
 
         rootgrp = nc.Dataset(ncFileName,'a')
 
@@ -137,6 +137,7 @@ class OutputNetCDF():
         var = rootgrp.createVariable(shortVarName, 'f4', ('time', 'lat', 'lon',), fill_value = vos.MV, zlib = self.zlib)
         var.standard_name = shortVarName
         var.long_name = longVarName
+        var.comment = comment
         
         # variable unit
         var.units = varUnit

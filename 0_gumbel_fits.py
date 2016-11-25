@@ -15,7 +15,7 @@ import virtualOS as vos
 import glofris_postprocess_edwin_modified.py as glofris
 
 # netcdf reporting module:
-import output_netcdf_cf_convention.py
+import output_netcdf_cf_convention
 
 # variable dictionaries:
 import aqueduct_flood_analyzer_variable_list as varDict
@@ -42,7 +42,7 @@ input_files['file_name']['dynamicFracWat'] = input_files['folder'] + "/" + "frac
 input_files['clone_map_05min'] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
 # - cell area, ldd maps
 input_files['cell_area_05min'] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/cellsize05min.correct.map"
-input_files['ldd_map_05min']   = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
+input_files['ldd_map_05min'  ] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
 
 # option to save/present results at the landmask region only:
 landmask_only = True
@@ -98,65 +98,61 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat', "surfaceWate
     #
     netcdf_file[var_name] = {}
     #
-    # return periods
-    return_period_in_year = ["2", "5", "10", "25", "50", "100", "250", "500", "1000"]
-    
-
-    
-    
-    
     # gumbel fits parameters
     # - probability of zero flood volume                             
     # - gumbel distribution location parameter of flood volume
     # - gumbel distribution scale parameter of flood volume
     gumbel_par_name = ['p_zero', 'location_parameter', 'scale_parameter']
     #
-    # all gumbel fit parameters in one netcdf file:
+    # return periods
+    return_period_in_year = ["2-year", "5-year", "10-year", "25-year", "50-year", "100-year", "250-year", "500-year", "1000-year"]
+    #
+    # all gumbel fit parameters and return period values in one netcdf file:
     # - file name
-    netcdf_file[var_name]['file_name'] = output_files['folder'] + "/" + "gumbel_fit_parameters_for_" + varDict.netcdf_short_name[var_name] + ".nc"
-    # - attribute information:
+    netcdf_file[var_name]['file_name'] = output_files['folder'] + "/" + "gumbel_analysis_ouput_for_" + varDict.netcdf_short_name[var_name] + ".nc"
+    #
+    # - general attribute information:
     netcdf_file[var_name]['description'] = netcdf_setup['description']
     netcdf_file[var_name]['institution'] = netcdf_setup['institution']
     netcdf_file[var_name]['title'      ] = netcdf_setup['title'      ]
     netcdf_file[var_name]['created by' ] = netcdf_setup['created by' ]
     netcdf_file[var_name]['source'     ] = netcdf_setup['source'     ]
     netcdf_file[var_name]['references' ] = netcdf_setup['references' ]
+    #
     # - resolution (unit: arc-minutes)
     netcdf_file[var_name]['resolution_arcmin'] = 5. 
-    if var_name == "surfaceWaterLevel":
-    
-    # 
-    
+    if var_name == "surfaceWaterLevel": netcdf_file[var_name]['resolution_arcmin'] = 30.
+    #
+    # - preparing netcdf file:
+    msg = "Preparing the netcdf file: " + netcdf_file[var_name]['file_name']
+    logger.info(msg)
+    netcdf_report.create_netcdf_file(netcdf_file[var_name]) 
+    #
+    # - creating all variables in the netcdf file:
+    for return_period in return_period_in_year: 
+        netcdf_report.create_variable(ncFileName = netcdf_file[var_name], \
+                                      varName    = str(return_period_in_year) + "_" + varDict.netcdf_short_name[var_name], \
+                                      varUnit    = varDict.netcdf_unit[var_name],
+                                      longName   = str(return_period_in_year) + "_" + varDict.netcdf_long_name[var_name] , \
+                                      comment    = varDict.comment[var_name])
     for par_name in gumbel_par_name:
-        
-        # attribute/information for netcdf file
-        netcdf_file[var_name][par_name] = {}
-        netcdf_file[var_name][par_name]['short_name'] = str() + varDict.netcdf_short_name[var_name]
-        
-        output_files[var_name]['par_name']['unit']              = varDict.netcdf_unit[var_name]
-        output_files[var_name]['par_name']['long_name']         = varDict.netcdf_long_name[var_name]          
-        output_files[var_name]['par_name']['comment']           = varDict.comment[var_name]               
-        output_files[var_name]['par_name']['description']       = varDict.description[var_name]
-        # - add more information 
-        if output_files[var_name]['par_name']['long_name']   == None: output_files[var_name]['long_name']   = output_files[var_name]['short_name']
-        if output_files[var_name]['par_name']['comment']     == None: output_files[var_name]['comment'] = ""
-        if output_files[var_name]['par_name']['description'] == None: output_files[var_name]['description'] = ""
-        output_files[var_name]['par_name']['description']       = netcdf_setup['description'] + " " + output_files[var_name]['description']
-        output_files[var_name]['par_name']['institution']       = netcdf_setup['institution']
-        output_files[var_name]['par_name']['title'      ]       = netcdf_setup['title'      ]
-        output_files[var_name]['par_name']['created by' ]       = netcdf_setup['created by' ]
-        output_files[var_name]['par_name']['description']       = netcdf_setup['description']
-        # - resolution (unit: arc-minutes)
-        output_files[var_name]['par_name']['resolution_arcmin'] = 5. 
-        if var == "surfaceWaterLevel": output_files[var_name]['par_name']['resolution_arcmin'] = 30.
-        # - preparing netcdf files:
-        output_files[var_name]['par_name']['file_name']         = output_files['folder'] + "/" + \
-                                                                  varDict.netcdf_short_name[var_name] + \
-                                                                  "_annual_flood_maxima.nc"
-        msg = "Preparing the netcdf file: " + output_files[var_name]['par_name']['file_name']
-        logger.info(msg)
-        netcdf_report.createNetCDF(output_files[var_name]) 
+        # gumbel fit parameters will not be calculated for the surfaceWaterLevel
+        if var_name != "surfaceWaterLevel":
+            netcdf_report.create_variable(\
+                                      ncFileName = netcdf_file[var_name], \
+                                      varName    = str(par_name) + "_of_" + varDict.netcdf_short_name[var_name], \
+                                      varUnit    = varDict.netcdf_unit[var_name],
+                                      longName   = str(par_name) + "_of_" + varDict.netcdf_long_name[var_name] , \
+                                      comment    = varDict.comment[var_name])
 
+    
+
+# NEXT: derive Gumbel
+for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']: 
+    
+    
+
+    
 
 # output of gumbel fits:
 #
