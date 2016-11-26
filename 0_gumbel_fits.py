@@ -33,6 +33,7 @@ input_files                    = {}
 # The annual flood maxima based on the PCR-GLOBWB 5 arcmin results:
 # - WATCH historical
 input_files['folder'] = "/scratch-shared/edwinsut/flood_analyzer_analysis/maximum_events_merged/watch_1960-1999/"
+input_files['file_name'] = {}
 input_files['file_name']['channelStorage'] = input_files['folder'] + "/" + "channel_storage_annual_flood_maxima.nc" 
 input_files['file_name']['floodVolume'   ] = input_files['folder'] + "/" + "flood_innundation_volume_annual_flood_maxima.nc" 
 input_files['file_name']['dynamicFracWat'] = input_files['folder'] + "/" + "fraction_of_surface_water_annual_flood_maxima.nc" 
