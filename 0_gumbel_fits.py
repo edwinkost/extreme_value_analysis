@@ -137,9 +137,9 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat', "surfaceWate
     for return_period in return_period_in_year: 
         
         netcdf_report.create_variable(ncFileName = netcdf_file[var_name]['file_name'], \
-                                      varName    = str(return_period_in_year) + "_" + varDict.netcdf_short_name[var_name], \
+                                      varName    = str(return_period) + "_" + varDict.netcdf_short_name[var_name], \
                                       varUnit    = varDict.netcdf_unit[var_name],
-                                      longName   = str(return_period_in_year) + "_" + varDict.netcdf_long_name[var_name] , \
+                                      longName   = str(return_period) + "_" + varDict.netcdf_long_name[var_name] , \
                                       comment    = varDict.comment[var_name])
     for par_name in gumbel_par_name:
         # gumbel fit parameters will not be calculated for the surfaceWaterLevel
