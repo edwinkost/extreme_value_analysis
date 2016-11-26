@@ -15,7 +15,7 @@ import virtualOS as vos
 import glofris_postprocess_edwin_modified as glofris
 
 # netcdf reporting module:
-import output_netcdf_cf_convention
+import output_netcdf_cf_convention as outputNetCDF
 
 # variable dictionaries:
 import aqueduct_flood_analyzer_variable_list as varDict
