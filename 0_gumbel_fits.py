@@ -160,6 +160,9 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     netcdf_input_file = nc.Dataset(input_files['file_name'][var_name], "r")
     
     # read data
+    
+    print varDict.netcdf_short_name[var_name]
+    
     input_data = netcdf_input_file.variable[varDict.netcdf_short_name[var_name]]
     
     # get gumbel paramaters
