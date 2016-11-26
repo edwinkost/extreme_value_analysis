@@ -94,7 +94,7 @@ netcdf_setup['references' ]     = "Sutanudjaja et al., in prep."
 # change to the output folder (use it as the working folder) 
 os.chdir(output_files['folder'])
 
-
+netcdf_file = {}
 for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat', "surfaceWaterLevel"]: 
     #
     netcdf_file[var_name] = {}
