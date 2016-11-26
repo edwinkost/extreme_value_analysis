@@ -34,7 +34,7 @@ input_files                    = {}
 # - WATCH historical
 input_files['folder'] = "/scratch-shared/edwinsut/flood_analyzer_analysis/maximum_events_merged/watch_1960-1999/"
 input_files['file_name']['channelStorage'] = input_files['folder'] + "/" + "channel_storage_annual_flood_maxima.nc" 
-input_files['file_name']['floodVolume']    = input_files['folder'] + "/" + "flood_innundation_volume_annual_flood_maxima.nc" 
+input_files['file_name']['floodVolume'   ] = input_files['folder'] + "/" + "flood_innundation_volume_annual_flood_maxima.nc" 
 input_files['file_name']['dynamicFracWat'] = input_files['folder'] + "/" + "fraction_of_surface_water_annual_flood_maxima.nc" 
 #
 # general input files
@@ -150,108 +150,18 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat', "surfaceWate
 # NEXT: derive Gumbel
 for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']: 
     
+    # open input file
+    netcdf_input_file = nc.Dataset(input_files['file_name'][var_name], "r")
     
-
+    # read data
+    input_data = netcdf_input_file.variable[varDict.netcdf_short_name[var_name]]
     
-
-# output of gumbel fits:
-#
-# PARAMETERS:
-#
-# For every return period
-# - channel_storage
-# - flood_innundation_volume
-# -                             
-
-# object for reporting/making netcdf files
-netcdf_report = outputNetCDF.OutputNetCDF()
-
-
-
-
-# the input (netcdf) file that will be used  
-msg = "Using the following annual flood maxima (netcdf) files:"
-logger.info(msg)
-input_files['file_name']                           = {}
-for var in ['channelStorage', 'dynamicFracWat', 'floodVolume']:
-    input_files['file_name'][var] = glob.glob(input_files['folder'] + "/" + str(hydro_year) + "/" + str(var) + "*" + str(str_year) + "_to_" + str(end_year) + "*.nc")[0]
-    msg = input_files['file_name'][var]
-    logger.info(msg)
-
-
-# set the pcraster clone, ldd, landmask, and cell area map 
-msg = "Setting the clone, ldd, landmask, and cell area maps" + ":"
-logger.info(msg)
-# - clone 
-clone_map_file = input_files['clone_map_05min']
-pcr.setclone(clone_map_file)
-# - ldd
-ldd = vos.readPCRmapClone(input_files['ldd_map_05min'],
-                          clone_map_file,
-                          output_files['tmp_folder'],
-                          None,
-                          True)
-ldd = pcr.lddrepair(pcr.ldd(ldd))
-ldd = pcr.lddrepair(ldd)
-# - landmask
-landmask  = pcr.ifthen(pcr.defined(ldd), pcr.boolean(1.0))
-# - cell area
-cell_area = vos.readPCRmapClone(input_files['cell_area_05min'],
-                          clone_map_file,
-                          output_files['tmp_folder'])
-
-
-
-# Get the gumbel fit parameters (derive_Gumbel)
-
-
-# 
-
-
-
-
-# loop through every year
-msg = "Merging two hydrologyical years for the following variables:"
-logger.info(msg)
-#
-for i_year in range(str_year, end_year + 1):
+    # get gumbel paramaters
+    zero_prob, gumbel_loc, gumbel_scale = glofris.get_gumbel_parameters(input_data)
     
-    for var in ['channelStorage', 'dynamicFracWat', 'floodVolume']:
-        
-        msg = "Merging for the variable " + str(var) + " for the year " + str(i_year)
-        logger.info(msg)
-        
-        # time index for this year
-        time_index_in_netcdf_file = i_year - str_year + 1
-        
-        value_from_the_hydrological_year_1 = vos.netcdf2PCRobjClone(input_files['file_name']["hydrological_year_1"][var], \
-                                                                    varDict.netcdf_short_name[var], time_index_in_netcdf_file,\
-                                                                    useDoy = "Yes",
-                                                                    cloneMapFileName  = clone_map_file,\
-                                                                    LatitudeLongitude = True,\
-                                                                    specificFillValue = None)
-        
-        value_from_the_hydrological_year_2 = vos.netcdf2PCRobjClone(input_files['file_name']["hydrological_year_2"][var], \
-                                                                    varDict.netcdf_short_name[var], time_index_in_netcdf_file,\
-                                                                    useDoy = "Yes",
-                                                                    cloneMapFileName  = clone_map_file,\
-                                                                    LatitudeLongitude = True,\
-                                                                    specificFillValue = None)
-        
-        # merging two hydrological years 
-        value_for_this_year = pcr.ifthenelse(pcr.scalar(hydro_year_type) == 1, value_from_the_hydrological_year_1, \
-                                                                               value_from_the_hydrological_year_2)
-        value_for_this_year = pcr.cover(value_for_this_year, 0.0)
-        
-        if landmask_only: value_for_this_year = pcr.ifthen(landmask, value_for_this_year)
-        
-        # report to a netcdf file
-        ncFileName = output_files[var]['file_name']
-        msg = "Saving to the netcdf file: " + str(ncFileName)
-        logger.info(msg)
-        time_stamp_used = datetime.datetime(i_year, 12, 31, 0)
-        netcdf_report.data2NetCDF(ncFileName, varDict.netcdf_short_name[var], pcr.pcr2numpy(value_for_this_year, vos.MV), time_stamp_used)
-
-        
-# - apply the gumbel fit
+    # write the gumbel parameter to netcdf file
+    
+    
+    netcdf_input_file.close()
+  
 

@@ -57,6 +57,8 @@ import scipy.stats as stats
 import pdb
 from glofris_utils import *
 
+import virtualOS as vos
+
 def get_date_comp(dateObj, comp='day'):
     """
     Returns a list of components of a date (e.g. the day, month or year)
@@ -517,6 +519,48 @@ def inv_gumbel(p_zero, loc, scale, return_period):
     np.seterr(divide='warn')
     np.seterr(invalid='warn')
     return flvol
+
+def get_gumbel_parameters(input_data):
+        
+            
+        # exclude pixels where the value is always the same by approximation
+        # estimate the location and scale parameters on non-zero values
+        # return zero probability, location and scale parameters
+        
+    # input data    
+    flvol = input_data
+    
+    # prepary the arrays:
+    row = flvol.shape[1]
+    col = flvol.shape[2]
+    zero_prob = zero_prob[1, row, col]   
+    gumbel_loc = gumbel_loc[1, row, col]  
+    gumbel_scale = gumbel_scale[1, row, col]
+
+    for row in range(flvol.shape[1]):
+        print 'row: ' + str(row)
+        
+        for col in range(flvol.shape[2]):
+            print 'col: ' + str(col)
+            rawdata = flvol[:,row,col]
+            if hasattr(rawdata, 'mask'):
+                if not(rawdata.mask.all()):
+                # cell apparently has sometimes missing values. Extract the non-missings
+                    data = rawdata.data[rawdata.mask]
+                else:
+                    data = []
+            else:
+                # all values are non-masked, use all data values
+                data = rawdata
+            if len(data) > 0:
+                p_zero, loc, scale = gumbel_fit(data)
+            else:
+                p_zero = -9999;loc   = -9999; scale = -9999
+            zero_prob[0, row, col]    = p_zero
+            gumbel_loc[0, row, col]   = loc
+            gumbel_scale[0, row, col] = scale
+
+    return zero_prob, gumbel_loc, gumbel_scale
 
 def derive_Gumbel(statsFile, startYear, endYear, gumbelFile, metadata, logger):
         
