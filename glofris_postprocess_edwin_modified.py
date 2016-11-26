@@ -533,9 +533,9 @@ def get_gumbel_parameters(input_data):
     # prepary the arrays:
     row = flvol.shape[1]
     col = flvol.shape[2]
-    zero_prob = zero_prob[1, row, col]   
-    gumbel_loc = gumbel_loc[1, row, col]  
-    gumbel_scale = gumbel_scale[1, row, col]
+    zero_prob = np.zeros([1, row, col]) + vos.MV  
+    gumbel_loc = np.zeros([1, row, col]) + vos.MV  
+    gumbel_scale = np.zeros([1, row, col]) + vos.MV
 
     for row in range(flvol.shape[1]):
         print 'row: ' + str(row)
