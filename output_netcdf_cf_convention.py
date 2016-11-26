@@ -135,6 +135,9 @@ class OutputNetCDF():
         # - comment
         if comment == None: comment = ''
 
+        print varName
+        print longVarName
+        
         # creating the variable
         var = rootgrp.createVariable(shortVarName, 'f4', ('time', 'lat', 'lon',), fill_value = vos.MV, zlib = self.zlib)
         var.standard_name = shortVarName
