@@ -124,7 +124,7 @@ class OutputNetCDF():
         rootgrp.sync()
         rootgrp.close()
 
-    def create_variable(self, ncFileName, varName, varUnit, longName = None, comment = ""):
+    def create_variable(self, ncFileName, varName, varUnit, longName = None, comment = None):
 
         rootgrp = nc.Dataset(ncFileName,'a')
 
@@ -132,6 +132,8 @@ class OutputNetCDF():
         shortVarName = varName
         longVarName  = longName
         if longVarName == None: longVarName = shortVarName
+        # - comment
+        if comment == None: comment = ''
 
         # creating the variable
         var = rootgrp.createVariable(shortVarName, 'f4', ('time', 'lat', 'lon',), fill_value = vos.MV, zlib = self.zlib)
