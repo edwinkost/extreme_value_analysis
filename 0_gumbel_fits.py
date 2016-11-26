@@ -12,7 +12,7 @@ import pcraster as pcr
 
 # utility module:
 import virtualOS as vos
-import glofris_postprocess_edwin_modified.py as glofris
+import glofris_postprocess_edwin_modified as glofris
 
 # netcdf reporting module:
 import output_netcdf_cf_convention
