@@ -531,6 +531,8 @@ def get_gumbel_parameters(input_data):
     # input data    
     flvol = input_data[:,:,:].copy()
     
+    mask = flvol == vos.MV 
+    
     flvol = np.ma.array(flvol, mask = mask)
     flvol = np.ma.filled(flvol, vos.MV)
     
