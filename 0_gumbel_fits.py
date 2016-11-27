@@ -167,7 +167,7 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     input_data = netcdf_input_file.variables[varDict.netcdf_short_name[var_name]]
     
     # get gumbel paramaters
-    zero_prob, gumbel_loc, gumbel_scale = glofris.get_gumbel_parameters(input_data)
+    # zero_prob, gumbel_loc, gumbel_scale = glofris.get_gumbel_parameters(input_data)
     
     # write the gumbel parameter to netcdf file
     
