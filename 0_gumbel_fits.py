@@ -41,6 +41,7 @@ input_files['file_name']['dynamicFracWat'] = input_files['folder'] + "/" + "frac
 # general input files
 # - clone map
 input_files['clone_map_05min'] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
+pcr.setclone(input_files['clone_map_05min'])
 # - cell area, ldd maps
 input_files['cell_area_05min'] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/cellsize05min.correct.map"
 input_files['ldd_map_05min'  ] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
