@@ -529,7 +529,7 @@ def get_gumbel_parameters(input_data):
         # return zero probability, location and scale parameters
         
     # input data    
-    flvol = input_data
+    flvol = input_data[:,:,:].copy()
     
     print flvol 
     
