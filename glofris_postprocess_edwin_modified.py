@@ -554,7 +554,7 @@ def get_gumbel_parameters(input_data):
         
         for col in range(flvol.shape[2]):
             rawdata = flvol[:,row,col]
-            mask = rawdata != vos.MV
+            mask = rawdata == vos.MV
             data = np.ma.array(rawdata, mask = mask)
             #~ print data
             if len(data) > 0:
