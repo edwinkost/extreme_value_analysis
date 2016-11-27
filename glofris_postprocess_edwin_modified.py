@@ -532,6 +532,10 @@ def get_gumbel_parameters(input_data):
     
     print flvol 
     
+    test_map = pcr.numpy2pcr(pcr.Scalar, \
+                             flvol, vos.MV)
+    pcr.aguila(test_map)                         
+    
     # prepary the arrays:
     row = flvol.shape[1]
     col = flvol.shape[2]
