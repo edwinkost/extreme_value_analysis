@@ -541,7 +541,7 @@ def get_gumbel_parameters(input_data):
         print 'row: ' + str(row)
         
         for col in range(flvol.shape[2]):
-            print 'row: ' + str(row) + ' col: ' + str(col)
+            #~ print 'row: ' + str(row) + ' col: ' + str(col)
             rawdata = flvol[:,row,col]
             if hasattr(rawdata, 'mask'):
                 if not(rawdata.mask.all()):
@@ -554,6 +554,7 @@ def get_gumbel_parameters(input_data):
                 data = rawdata
             if len(data) > 0:
                 p_zero, loc, scale = gumbel_fit(data)
+                print 'row: ' + str(row) + ' col: ' + str(col)
                 print p_zero
                 print loc
                 print scale
