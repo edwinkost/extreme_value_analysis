@@ -548,17 +548,9 @@ def get_gumbel_parameters(input_data):
         print 'row: ' + str(row)
         
         for col in range(flvol.shape[2]):
-            #~ print 'row: ' + str(row) + ' col: ' + str(col)
             rawdata = flvol[:,row,col]
-            if hasattr(rawdata, 'mask'):
-                if not(rawdata.mask.all()):
-                # cell apparently has sometimes missing values. Extract the non-missings
-                    data = rawdata.data[rawdata.mask]
-                else:
-                    data = []
-            else:
-                # all values are non-masked, use all data values
-                data = rawdata
+            data = rawdata
+            print data
             if len(data) > 0:
                 p_zero, loc, scale = gumbel_fit(data)
                 print 'row: ' + str(row) + ' col: ' + str(col)
