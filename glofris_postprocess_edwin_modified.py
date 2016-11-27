@@ -548,12 +548,14 @@ def get_gumbel_parameters(input_data):
     gumbel_loc = np.zeros([1, row, col]) + vos.MV  
     gumbel_scale = np.zeros([1, row, col]) + vos.MV
 
-    for row in range(flvol.shape[1]):
+    #~ for row in range(flvol.shape[1]):
+    for row in range(1000, flvol.shape[1], 1):
         print 'row: ' + str(row)
         
         for col in range(flvol.shape[2]):
             rawdata = flvol[:,row,col]
-            data = np.ma.array(rawdata, rawdata != vos.MV)
+            mask = rawdata != vos.MV
+            data = np.ma.array(rawdata, mask = mask)
             #~ print data
             if len(data) > 0:
                 p_zero, loc, scale = gumbel_fit(data)
