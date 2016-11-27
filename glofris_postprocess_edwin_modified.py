@@ -557,10 +557,6 @@ def get_gumbel_parameters(input_data):
             else:
                 p_zero = vos.MV; loc = vos.MV; scale = vos.MV
             
-            print p_zero
-            print loc
-            print scale
-            
             zero_prob[0, row, col]    = p_zero
             gumbel_loc[0, row, col]   = loc
             gumbel_scale[0, row, col] = scale
@@ -619,6 +615,9 @@ def derive_Gumbel(statsFile, startYear, endYear, gumbelFile, metadata, logger):
                 data = rawdata
             if len(data) > 0:
                 p_zero, loc, scale = gumbel_fit(data)
+                print p_zero
+                print loc
+                print scale
             else:
                 p_zero = -9999;loc   = -9999; scale = -9999
             zero_prob[0, row, col]    = p_zero
