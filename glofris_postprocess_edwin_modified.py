@@ -529,7 +529,7 @@ def get_gumbel_parameters(input_data):
         # return zero probability, location and scale parameters
         
     # input data    
-    flvol = input_data[:,:,:].copy()
+    flvol = input_data
     
     print flvol 
     
@@ -541,7 +541,7 @@ def get_gumbel_parameters(input_data):
     row = flvol.shape[1]
     col = flvol.shape[2]
     
-    flvol = np.random.rand(50, row, col)
+    #~ flvol = np.random.rand(50, row, col)
     
     zero_prob = np.zeros([1, row, col]) + vos.MV  
     gumbel_loc = np.zeros([1, row, col]) + vos.MV  
