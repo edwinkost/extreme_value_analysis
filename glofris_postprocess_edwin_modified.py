@@ -528,7 +528,7 @@ def get_gumbel_parameters(input_data):
         # return zero probability, location and scale parameters
         
     # input data    
-    flvol = input_data
+    flvol = input_data[:,:,:]
     
     # prepary the arrays:
     row = flvol.shape[1]
@@ -541,7 +541,7 @@ def get_gumbel_parameters(input_data):
         print 'row: ' + str(row)
         
         for col in range(flvol.shape[2]):
-            print 'col: ' + str(col)
+            print 'row: ' + str(row) + ' col: ' + str(col)
             rawdata = flvol[:,row,col]
             if hasattr(rawdata, 'mask'):
                 if not(rawdata.mask.all()):
