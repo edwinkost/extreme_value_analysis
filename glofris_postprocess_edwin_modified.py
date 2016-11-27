@@ -528,17 +528,13 @@ def get_gumbel_parameters(input_data):
         # estimate the location and scale parameters on non-zero values
         # return zero probability, location and scale parameters
         
-    #~ # input data    
-    #~ flvol = input_data[:,:,:].copy()
-    #~ 
-    #~ mask = flvol == vos.MV 
-    #~ 
-    #~ flvol = np.ma.array(flvol, mask = mask)
-    #~ flvol = np.ma.filled(flvol, vos.MV)
-    #~ 
-    #~ print flvol
+    # input data    
+    #~ flvol = input_data 
+    flvol = input_data[:,:,:].copy()
     
-    flvol = input_data 
+    mask = flvol == vos.MV 
+    flvol = np.ma.array(flvol, mask = mask)
+    flvol = np.ma.filled(flvol, vos.MV)
     
     #~ test_map = pcr.numpy2pcr(pcr.Scalar, \
                              #~ flvol[0,:,:], vos.MV)
@@ -558,7 +554,7 @@ def get_gumbel_parameters(input_data):
         print 'row: ' + str(row)
         
         for col in range(flvol.shape[2]):
-            rawdata = flvol[:,row,col].copy()
+            rawdata = flvol[:,row,col]
             data = rawdata
             print data
             if len(data) > 0:
