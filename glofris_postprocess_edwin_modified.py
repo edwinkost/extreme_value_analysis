@@ -57,6 +57,7 @@ import scipy.stats as stats
 import pdb
 #from glofris_utils import *
 
+import pcraster as pcr
 import virtualOS as vos
 
 def get_date_comp(dateObj, comp='day'):
