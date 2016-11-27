@@ -553,7 +553,7 @@ def get_gumbel_parameters(input_data):
         for col in range(flvol.shape[2]):
             rawdata = flvol[:,row,col]
             data = rawdata
-            print data
+            # print data
             if len(data) > 0:
                 p_zero, loc, scale = gumbel_fit(data)
                 print 'row: ' + str(row) + ' col: ' + str(col)
