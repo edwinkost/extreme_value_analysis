@@ -530,6 +530,8 @@ def get_gumbel_parameters(input_data):
     # input data    
     flvol = input_data[:,:,:].copy()
     
+    print flvol 
+    
     # prepary the arrays:
     row = flvol.shape[1]
     col = flvol.shape[2]
