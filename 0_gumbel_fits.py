@@ -154,7 +154,7 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat', "surfaceWate
 
     
 
-# NEXT: derive Gumbel
+# NEXT: derive and apply Gumbel
 for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']: 
     
     # open input file
@@ -170,9 +170,19 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     # get gumbel paramaters
     zero_prob, gumbel_loc, gumbel_scale = glofris.get_gumbel_parameters(input_data)
     
-    # write the gumbel parameter to netcdf file
+    # write the gumbel parameters to netcdf file
+    lowerTimeBound = datetime.datetime(str_year,  1,  1, 0)
+    upperTimeBound = datetime.datetime(end_year, 12, 31, 0)
     
-    
-    netcdf_input_file.close()
-  
+    for par_name in gumbel_par_name:
 
+        if par_name == 'p_zero'            : varField = zero_prob
+        if par_name == 'location_parameter': varField = gumbel_loc  
+        if par_name == 'scale_parameter'   : varField = gumbel_scale
+        
+        netcdf_report.data_to_netcdf(netcdf_file[var_name]['file_name'], \
+                                     str(par_name) + "_of_" + varDict.netcdf_short_name[var_name], \
+                                     varField, 
+                                     timeBounds)
+        
+    netcdf_input_file.close()
