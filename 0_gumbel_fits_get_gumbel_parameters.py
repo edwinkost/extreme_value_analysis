@@ -135,7 +135,7 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     netcdf_report.create_netcdf_file(netcdf_file[var_name]) 
 
 # number of cores used 
-n_cores = 2    
+n_cores = 4    
 
 # derive gumbel parameters
 msg = "Deriving gumbel parameters."
@@ -160,8 +160,8 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
             str_row = 0
         else:
             str_row = end_row
-        #~ end_row = str_row + number_of_rows / n_cores
-        end_row = str_row + 3
+        end_row = str_row + number_of_rows / n_cores
+        #~ end_row = str_row + 3
         input_data_splitted.append(input_data_all[:,str_row:end_row,:].copy()) 
         
     # start multiple process to get gumbel parameters
