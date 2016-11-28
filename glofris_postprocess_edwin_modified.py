@@ -604,8 +604,6 @@ def get_gumbel_parameters(input_data_dictionary):
     gumbel_parameters["gumbel_loc"] = gumbel_loc
     gumbel_parameters["gumbel_scale"] = gumbel_scale
     
-    print starting_row
-    
     return gumbel_parameters
 
 def derive_Gumbel(statsFile, startYear, endYear, gumbelFile, metadata, logger):
