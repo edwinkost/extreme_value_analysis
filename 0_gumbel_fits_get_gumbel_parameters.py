@@ -179,12 +179,16 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     print gumbel_parameter_list
     print len(gumbel_parameter_list)
     
-    #~ # merge all gumbel_parameter_list 
-    #~ zero_prob = np.zeros(number_of_rows, number_of_cols)
+    # merge all gumbel parameters 
+    zero_prob = np.zeros(number_of_rows, number_of_cols) + vos.MV
+    for i_list in range(len(gumbel_parameter_list))
+        str_row = gumbel_parameter_list[i_list]['starting_row']
+        end_row = str_row + gumbel_parameter_list[i_list]['p_zero'].shape[0]
+        zero_prob[str_row:end_row,:] = gumbel_parameter_list[i_list]['p_zero']
     #~ for 
     #~ zero_prob, 
     
-    gumbel_loc, gumbel_scale = (input_data)
+    print zero_prob
     
     # write the gumbel parameters to netcdf file
     lowerTimeBound = datetime.datetime(str_year,  1,  1, 0)
