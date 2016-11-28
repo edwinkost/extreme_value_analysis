@@ -599,7 +599,7 @@ def get_gumbel_parameters(input_data_dictionary):
 
     # put the results into a nice dictionary
     gumbel_parameters = {}
-    gumbel_parameters["starting_row"] = 
+    gumbel_parameters["starting_row"] = starting_row
     gumbel_parameters["p_zero"] = zero_prob
     gumbel_parameters["gumbel_loc"] = gumbel_loc
     gumbel_parameters["gumbel_scale"] = gumbel_sclae
