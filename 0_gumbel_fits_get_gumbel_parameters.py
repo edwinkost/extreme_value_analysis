@@ -155,14 +155,21 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     
     # split input data into several rows
     input_data_splitted = []
+    #
     for i_core in range(n_cores):
+        #
         if i_core == 0:
             str_row = 0
         else:
             str_row = end_row
         end_row = str_row + number_of_rows / n_cores
         #~ end_row = str_row + 3
-        input_data_splitted.append(input_data_all[:,str_row:end_row,:].copy()) 
+        #
+        # put the input in a dictionary
+        input_data = {}
+        input_data['1strow'] = str_row
+        input_data['values'] = input_data_all[:,str_row:end_row,:].copy()
+        input_data_splitted.append(input_data) 
         
     # start multiple process to get gumbel parameters
     pool = Pool(processes = n_cores)                                                              # start "ncores" of worker processes 

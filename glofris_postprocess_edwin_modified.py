@@ -544,13 +544,17 @@ def inv_gumbel_original(p_zero, loc, scale, return_period):
     np.seterr(invalid='warn')
     return flvol
 
-def get_gumbel_parameters(input_data):
+def get_gumbel_parameters(input_data_dictionary):
         
             
         # exclude pixels where the value is always the same by approximation
         # estimate the location and scale parameters on non-zero values
         # return zero probability, location and scale parameters
         
+    # the input_data_dictionary contains the following
+    starting_row = input_data_dictionary['1strow']
+    input_data   = input_data_dictionary['values']
+    
     # input data    
     #~ flvol = input_data 
     flvol = input_data[:,:,:].copy()
@@ -595,9 +599,10 @@ def get_gumbel_parameters(input_data):
 
     # put the results into a nice dictionary
     gumbel_parameters = {}
-    gumbel_parameters["p_zero"] = p_zero
-    gumbel_parameters["gumbel_loc"] = loc
-    gumbel_parameters["gumbel_scale"] = scale
+    gumbel_parameters["starting_row"] = 
+    gumbel_parameters["p_zero"] = zero_prob
+    gumbel_parameters["gumbel_loc"] = gumbel_loc
+    gumbel_parameters["gumbel_scale"] = gumbel_sclae
     
     return gumbel_parameters
 
