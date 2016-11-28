@@ -165,7 +165,7 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
         input_data_splitted.append(input_data_all[:,str_row:end_row,:].copy()) 
         
     # start multiple process to get gumbel parameters
-    pool = Pool(processes = ncores)                                       # start "ncores" of worker processes 
+    pool = Pool(processes = n_cores)                                                              # start "ncores" of worker processes 
     gumbel_parameter_list = pool.map(glofris.get_gumbel_parameters, input_data_splitted)          # multicore processing
     
     #~ # get gumbel paramaters
