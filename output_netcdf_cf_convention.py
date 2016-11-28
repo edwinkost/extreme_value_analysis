@@ -154,7 +154,7 @@ class OutputNetCDF():
         
         lowerTimeBound = timeBounds[0]
         upperTimeBound = timeBounds[1]
-        if timeStamp == None: timeStamp = (lowerTimeBound + upperTimeBound) / 2
+        if timeStamp == None: timeStamp = lowerTimeBound + (upperTimeBound - lowerTimeBound) / 2
 
         # time
         date_time = rootgrp.variables['time']
