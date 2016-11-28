@@ -600,9 +600,9 @@ def get_gumbel_parameters(input_data_dictionary):
     # put the results into a nice dictionary
     gumbel_parameters = {}
     gumbel_parameters["starting_row"] = starting_row
-    gumbel_parameters["p_zero"] = zero_prob
-    gumbel_parameters["gumbel_loc"] = gumbel_loc
-    gumbel_parameters["gumbel_scale"] = gumbel_scale
+    gumbel_parameters["p_zero"] = zero_prob[0, :, :].copy()
+    gumbel_parameters["gumbel_loc"] = gumbel_loc[0, :, :].copy()
+    gumbel_parameters["gumbel_scale"] = gumbel_scale[0, :, :].copy()
     
     return gumbel_parameters
 
