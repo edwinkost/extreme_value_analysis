@@ -592,7 +592,13 @@ def get_gumbel_parameters(input_data):
             gumbel_loc[0, row, col]   = loc
             gumbel_scale[0, row, col] = scale
 
-    return zero_prob, gumbel_loc, gumbel_scale
+    # put the results into a nice dictionary
+    gumbel_parameters = {}
+    gumbel_parameters["p_zero"] = p_zero
+    gumbel_parameters["gumbel_loc"] = loc
+    gumbel_parameters["gumbel_scale"] = scale
+    
+    return gumbel_parameters
 
 def derive_Gumbel(statsFile, startYear, endYear, gumbelFile, metadata, logger):
         
