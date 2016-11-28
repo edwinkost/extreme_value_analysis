@@ -186,7 +186,7 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     for i_list in range(len(gumbel_parameter_list)):
         str_row = gumbel_parameter_list[i_list]['starting_row']
         end_row = str_row + gumbel_parameter_list[i_list]['p_zero'].shape[0]
-        zero_prob[0, str_row:end_row,:] = gumbel_parameter_list[i_list]['p_zero']
+        zero_prob[0, str_row:end_row,:] = gumbel_parameter_list[i_list]['p_zero'][0,:,:]
     #~ for 
     #~ zero_prob, 
     
