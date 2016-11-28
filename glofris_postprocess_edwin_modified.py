@@ -577,16 +577,16 @@ def get_gumbel_parameters(input_data_dictionary):
 
     for row in range(flvol.shape[1]):
     #~ for row in range(1000, flvol.shape[1], 1):
-        print 'row: ' + str(row)
+        print 'row: ' + str(row + starting_row) 
         
         for col in range(flvol.shape[2]):
             rawdata = flvol[:,row,col]
             data = rawdata[rawdata != vos.MV]
-            print 'row: ' + str(row) + ' col: ' + str(col)
+            print 'row: ' + str(row + starting_row) + ' col: ' + str(col)
             #~ print data
             if len(data) > 0:
                 p_zero, loc, scale = gumbel_fit(data)
-                print 'row: ' + str(row) + ' col: ' + str(col)
+                print 'row: ' + str(row + starting_row) + ' col: ' + str(col)
                 #~ print data 
                 msg = 'p_zero: ' + str(p_zero) + ' ; loc: ' + str(loc) + ' ; scale: ' + str(scale)
                 logger.debug(msg)
