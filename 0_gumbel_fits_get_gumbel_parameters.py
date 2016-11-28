@@ -180,7 +180,7 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     print len(gumbel_parameter_list)
     
     # merge all gumbel parameters 
-    zero_prob = np.zeros(number_of_rows, number_of_cols) + vos.MV
+    zero_prob = np.zeros([number_of_rows, number_of_cols]) + vos.MV
     for i_list in range(len(gumbel_parameter_list)):
         str_row = gumbel_parameter_list[i_list]['starting_row']
         end_row = str_row + gumbel_parameter_list[i_list]['p_zero'].shape[0]
