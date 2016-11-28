@@ -200,7 +200,8 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     msg = "Writing the gumbel parameters to a netcdf file: " + str(netcdf_file[var_name]['file_name'])
     logger.info(msg)
 
-    for par_name in gumbel_par_name:
+    #~ for par_name in gumbel_par_name:
+    for par_name in ['p_zero']:
 
         # preparing the variable in a netcdf file:
         netcdf_report.create_variable(\
