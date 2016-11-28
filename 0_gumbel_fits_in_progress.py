@@ -29,7 +29,7 @@ logger = logging.getLogger(__name__)
 ###################################################################################
 
 # input files
-input_files           = {}
+input_files                    = {}
 # The annual flood maxima based on the PCR-GLOBWB 5 arcmin results:
 # - WATCH historical
 input_files['folder'] = "/scratch-shared/edwinsut/flood_analyzer_analysis/maximum_events_merged/watch_1960-1999/"
@@ -42,6 +42,9 @@ input_files['file_name']['dynamicFracWat'] = input_files['folder'] + "/" + "frac
 # - clone map
 input_files['clone_map_05min'] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
 pcr.setclone(input_files['clone_map_05min'])
+# - cell area, ldd maps
+input_files['cell_area_05min'] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/cellsize05min.correct.map"
+input_files['ldd_map_05min'  ] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
 
 # option to save/present results at the landmask region only:
 landmask_only = True
@@ -84,7 +87,7 @@ netcdf_setup['zlib']            = True
 netcdf_setup['institution']     = "Utrecht University, Department of Physical Geography ; Deltares ; World Resources Institute"
 netcdf_setup['title'      ]     = "PCR-GLOBWB 2 output (post-processed for the Aqueduct Flood Analyzer): Gumbel Fit to Annual Flood Maxima"
 netcdf_setup['created by' ]     = "Edwin H. Sutanudjaja (E.H.Sutanudjaja@uu.nl)"
-netcdf_setup['description']     = "The gumbel fit parameters based on the annual flood maxima."
+netcdf_setup['description']     = "The gumbel fit/analysis output for the annual flood maxima."
 netcdf_setup['source'     ]     = "Utrecht University, Department of Physical Geography - contact: Edwin H. Sutanudjaja (E.H.Sutanudjaja@uu.nl)"
 netcdf_setup['references' ]     = "Sutanudjaja et al., in prep."
 
@@ -97,9 +100,7 @@ netcdf_report = outputNetCDF.OutputNetCDF()
 # - dictionary for netcdf output files 
 netcdf_file = {}
 
-msg = "Preparing netcdf output files."
-logger.info(msg)
-for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']: 
+for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat', "surfaceWaterLevel"]: 
     #
     netcdf_file[var_name] = {}
     #
@@ -109,7 +110,10 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     # - gumbel distribution scale parameter of flood volume
     gumbel_par_name = ['p_zero', 'location_parameter', 'scale_parameter']
     #
-    # all gumbel fit parameters and return period values in a netcdf file:
+    # return periods
+    return_period_in_year = ["2-year", "5-year", "10-year", "25-year", "50-year", "100-year", "250-year", "500-year", "1000-year"]
+    #
+    # all gumbel fit parameters and return period values in one netcdf file:
     # - file name
     netcdf_file[var_name]['file_name'] = output_files['folder'] + "/" + "gumbel_analysis_ouput_for_" + varDict.netcdf_short_name[var_name] + ".nc"
     #
@@ -123,24 +127,33 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     #
     # - resolution (unit: arc-minutes)
     netcdf_file[var_name]['resolution_arcmin'] = 5. 
+    if var_name == "surfaceWaterLevel": netcdf_file[var_name]['resolution_arcmin'] = 30.
     #
     # - preparing netcdf file:
     msg = "Preparing the netcdf file: " + netcdf_file[var_name]['file_name']
     logger.info(msg)
     netcdf_report.create_netcdf_file(netcdf_file[var_name]) 
-
+    #
+    # - creating all variables in the netcdf file:
+    for return_period in return_period_in_year: 
+        
+        netcdf_report.create_variable(ncFileName = netcdf_file[var_name]['file_name'], \
+                                      varName    = str(return_period) + "_" + varDict.netcdf_short_name[var_name], \
+                                      varUnit    = varDict.netcdf_unit[var_name],
+                                      longName   = str(return_period) + "_" + varDict.netcdf_long_name[var_name] , \
+                                      comment    = varDict.comment[var_name])
 
 # derive gumbel parameters
-msg = "Deriving gumbel parameters."
-logger.info(msg)
-#
 for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']: 
     
-    msg = "Deriving gumbel parameters based on the annual flood maxima file: " + str(input_files['file_name'][var_name])
-    logger.info(msg)
-
     # open input file
     netcdf_input_file = nc.Dataset(input_files['file_name'][var_name], "r")
+    
+    # read data
+    
+    print
+    print varDict.netcdf_short_name[var_name]
+    
     input_data = netcdf_input_file.variables[varDict.netcdf_short_name[var_name]]
     
     # get gumbel paramaters
@@ -150,19 +163,15 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     lowerTimeBound = datetime.datetime(str_year,  1,  1, 0)
     upperTimeBound = datetime.datetime(end_year, 12, 31, 0)
     
-    msg = "Writing the gumbel parameters to a netcdf file: " + str(netcdf_file[var_name]['file_name'])
-    logger.info(msg)
-
     for par_name in gumbel_par_name:
 
         # preparing the variable in a netcdf file:
         netcdf_report.create_variable(\
                                       ncFileName = netcdf_file[var_name]['file_name'], \
                                       varName    = str(par_name) + "_of_" + varDict.netcdf_short_name[var_name], \
-                                      varUnit    = varDict.netcdf_unit[var_name], \
+                                      varUnit    = varDict.netcdf_unit[var_name],
                                       longName   = str(par_name) + "_of_" + varDict.netcdf_long_name[var_name] , \
-                                      comment    = varDict.comment[var_name]
-                                      )
+                                      comment    = varDict.comment[var_name])
 
         if par_name == 'p_zero'            : varField = zero_prob
         if par_name == 'location_parameter': varField = gumbel_loc  
@@ -174,6 +183,18 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
                                      varField, 
                                      timeBounds)
 
+
     netcdf_input_file.close()
 
+
+#~ # calculate extreme values for all return periods
+#~ # - load 
+#~ 
+#~ for i_return_period in range(0, length(return_period_in_year)):
+    #~ 
+    #~ return_period = float(return_period_in_year[i_return_period].split("-")[0])
+    #~ return_period_vals = glofris.inverse_gumbel(zero_prob, loc, scale, return_period)
+    #~ 
+    #~ if i_return_period == 0: previous_vals = return_period_vals
+    #~ return_period_vals = np.maximum(previous_vals, return_period_vals)
 

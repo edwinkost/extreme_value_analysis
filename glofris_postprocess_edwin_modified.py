@@ -498,7 +498,30 @@ def gumbel_fit(vals, sigma_mu_tolerance=0.002, sample_limit=5.):
         scale = 0.
     return p_zero, loc, scale
 
-def inv_gumbel(p_zero, loc, scale, return_period):
+def inverse_gumbel(p_zero, loc, scale, return_period):
+    """
+    This function computes values for a given return period using the zero probability, location and shape
+    parameters given. 
+    """
+
+    p = 1 - 1./return_period
+    
+    # p_residual is the probability density function of the population consisting of any values above zero
+    p_residual = np.minimum(np.maximum((p - p_zero) / (1 - p_zero), 0), 1) 
+
+    reduced_variate = -log(-log(p_residual))
+
+    flvol = reduced_variate * scale + loc
+
+    # infinite numbers can occur. reduce these to zero!
+    flvol[isinf(flvol)] = 0.
+
+    # if any values become negative due to the statistical extrapolation, fix them to zero (may occur if the sample size for fitting was small and a small return period is requested)
+    flvol = np.maximum(flvol, 0.)
+
+    return flvol
+
+def inv_gumbel_original(p_zero, loc, scale, return_period):
     """
     This function computes values for a given return period using the zero probability, location and shape
     parameters given. 
@@ -559,10 +582,9 @@ def get_gumbel_parameters(input_data):
             if len(data) > 0:
                 p_zero, loc, scale = gumbel_fit(data)
                 print 'row: ' + str(row) + ' col: ' + str(col)
-                print data 
-                print p_zero
-                print loc
-                print scale
+                #~ print data 
+                msg = 'p_zero: ' + str(p_zero) + ' ; loc: ' + str(loc) + ' ; scale: ' + str(scale)
+                logger.debug(msg)
             else:
                 p_zero = vos.MV; loc = vos.MV; scale = vos.MV
             
@@ -632,7 +654,7 @@ def derive_Gumbel(statsFile, startYear, endYear, gumbelFile, metadata, logger):
     nc_trg.sync()
     nc_trg.close()
             
-def apply_Gumbel(gumbelFile, trgFolder, prefix, return_periods, cellArea, logger):
+def apply_Gumbel_original(gumbelFile, trgFolder, prefix, return_periods, cellArea, logger):
     # read gumbel file
     nc_src = nc4.Dataset(gumbelFile, 'r')
     # read axes and revert the y-axis
