@@ -152,6 +152,7 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     # read data
     input_data_all = netcdf_input_file.variables[varDict.netcdf_short_name[var_name]]
     number_of_rows = input_data_all.shape[1]
+    number_of_cols = input_data_all.shape[2]
     
     # split input data into several rows
     input_data_splitted = []
@@ -176,9 +177,14 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     gumbel_parameter_list = pool.map(glofris.get_gumbel_parameters, input_data_splitted)          # multicore processing
     
     print gumbel_parameter_list
+    print len(gumbel_parameter_list)
     
-    #~ # get gumbel paramaters
-    #~ zero_prob, gumbel_loc, gumbel_scale = (input_data)
+    #~ # merge all gumbel_parameter_list 
+    #~ zero_prob = np.zeros(number_of_rows, number_of_cols)
+    #~ for 
+    #~ zero_prob, 
+    
+    gumbel_loc, gumbel_scale = (input_data)
     
     # write the gumbel parameters to netcdf file
     lowerTimeBound = datetime.datetime(str_year,  1,  1, 0)
