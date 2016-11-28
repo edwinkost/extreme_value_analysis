@@ -195,6 +195,7 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     # write the gumbel parameters to netcdf file
     lowerTimeBound = datetime.datetime(str_year,  1,  1, 0)
     upperTimeBound = datetime.datetime(end_year, 12, 31, 0)
+    timeBounds = [lowerTimeBound, upperTimeBound]
     
     msg = "Writing the gumbel parameters to a netcdf file: " + str(netcdf_file[var_name]['file_name'])
     logger.info(msg)
