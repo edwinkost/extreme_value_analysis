@@ -135,7 +135,7 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     netcdf_report.create_netcdf_file(netcdf_file[var_name]) 
 
 # number of cores used 
-n_cores = 20    
+n_cores = 24    
 
 # derive gumbel parameters
 msg = "Deriving gumbel parameters."
@@ -163,8 +163,8 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
             str_row = 0
         else:
             str_row = end_row
-        end_row = str_row + number_of_rows / n_cores
-        #~ end_row = str_row + 150                                      # for testing only
+        #~ end_row = str_row + number_of_rows / n_cores
+        end_row = str_row + 10                                      # for testing only
         #
         # put the input in a dictionary
         input_data = {}
@@ -188,6 +188,7 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     for i_list in range(len(gumbel_parameter_list)):
         str_row = gumbel_parameter_list[i_list]['starting_row']
         end_row = str_row + gumbel_parameter_list[i_list]['p_zero'].shape[0]
+        
         zero_prob[str_row:end_row,:]    = gumbel_parameter_list[i_list]['p_zero']
         gumbel_loc[str_row:end_row,:]   = gumbel_parameter_list[i_list]['gumbel_loc']
         gumbel_scale[str_row:end_row,:] = gumbel_parameter_list[i_list]['gumbel_scale']    
@@ -214,9 +215,10 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
                                       comment    = varDict.comment[var_name]
                                       )
 
-        if par_name == 'p_zero'            : varField = zero_prob
-        if par_name == 'location_parameter': varField = gumbel_loc  
-        if par_name == 'scale_parameter'   : varField = gumbel_scale
+        # note that we have to flip the variable 
+        if par_name == 'p_zero'            : varField = np.flipud(zero_prob)
+        if par_name == 'location_parameter': varField = np.flipud(gumbel_loc)  
+        if par_name == 'scale_parameter'   : varField = np.flipud(gumbel_scale)
         
         # save it to a netcdf file
         netcdf_report.data_to_netcdf(netcdf_file[var_name]['file_name'], \
