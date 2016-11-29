@@ -142,6 +142,8 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
 
     netcdf_input_file = input_files['file_name']
     
+    print netcdf_input_file
+    
     # read gumbel parameters: ['p_zero', 'location_parameter', 'scale_parameter']
     #
     variable_name = str('p_zero') + "_of_" + varDict.netcdf_short_name[var_name]
