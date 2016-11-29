@@ -146,21 +146,21 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     #
     variable_name = str('p_zero') + "_of_" + varDict.netcdf_short_name[var_name]
     p_zero   = vos.netcdf2PCRobjClone(netcdf_input_file,\
-                                      varName,\
+                                      variable_name,\
                                       1,\
                                       "Yes",\
                                       input_files['clone_map_05min'])
     #
     variable_name = str('location_parameter') + "_of_" + varDict.netcdf_short_name[var_name]
     location = vos.netcdf2PCRobjClone(netcdf_input_file,\
-                                      varName,\
+                                      variable_name,\
                                       1,\
                                       "Yes",\
                                       input_files['clone_map_05min'])
     #
     variable_name = str('scale_parameter') + "_of_" + varDict.netcdf_short_name[var_name]
     scale    = vos.netcdf2PCRobjClone(netcdf_input_file,\
-                                      varName,\
+                                      variable_name,\
                                       1,\
                                       "Yes",\
                                       input_files['clone_map_05min'])
