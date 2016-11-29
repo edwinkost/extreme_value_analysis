@@ -175,7 +175,7 @@ class OutputNetCDF():
         rootgrp.sync()
         rootgrp.close()
 
-    def list_of_data_to_netcdf(self, ncFileName, shortVarNameList, varFieldList, timeBounds, timeStamp = None, posCnt = None):
+    def dictionary_of_data_to_netcdf(self, ncFileName, dataDictionary, timeBounds, timeStamp = None, posCnt = None):
 
         rootgrp = nc.Dataset(ncFileName, 'a')
 
@@ -193,9 +193,10 @@ class OutputNetCDF():
         time_bounds[posCnt, 0] = nc.date2num(lowerTimeBound, date_time.units, date_time.calendar)
         time_bounds[posCnt, 1] = nc.date2num(upperTimeBound, date_time.units, date_time.calendar)
 
+        shortVarnameList = dataDictionary.keys()
         for shortVarName in shortVarNameList:
             
-            varField = varFieldList[shortVarName]
+            varField = dataDictionary[shortVarName]
             # flip variable if necessary (to follow cf_convention)
             if self.netcdf_y_orientation_follow_cf_convention: varField = np.flipud(varField)
             

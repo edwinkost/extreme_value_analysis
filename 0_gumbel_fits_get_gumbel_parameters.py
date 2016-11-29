@@ -215,20 +215,24 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
                                       )
 
     # put the variables in the netcdf file:
-    shortVarNameList = []
-    varFieldList = []
+    data_dictionary = {}
     for par_name in ['location_parameter']:
-        shortVarNameList.append(str(par_name) + "_of_" + varDict.netcdf_short_name[var_name])
         
-        # note that we have to flip the variable 
-        if par_name == 'p_zero'            : varFieldList.append(np.flipud(zero_prob))
-        if par_name == 'location_parameter': varFieldList.append(np.flipud(gumbel_loc))  
-        if par_name == 'scale_parameter'   : varFieldList.append(np.flipud(gumbel_scale))
+        # variable names
+        variable_name = str(par_name) + "_of_" + varDict.netcdf_short_name[var_name]
+        
+        # variable fields 
+        # - note that we have to flip the variable 
+        if par_name == 'p_zero'            : data_dictionary[variable_name] = np.flipud(zero_prob)
+        if par_name == 'location_parameter': data_dictionary[variable_name] = np.flipud(gumbel_loc)  
+        if par_name == 'scale_parameter'   : data_dictionary[variable_name] = np.flipud(gumbel_scale)
+    #
     # save the variables to a netcdf file
-    netcdf_report.list_of_data_to_netcdf(netcdf_file[var_name]['file_name'], \
-                                         shortVarNameList, \
-                                         varFieldList, \
-                                         timeBounds)
-
+    netcdf_report.dictionary_of_data_to_netcdf(netcdf_file[var_name]['file_name'], \
+                                               data_dictionary, \
+                                               timeBounds)
     netcdf_input_file.close()
+
+
+
 
