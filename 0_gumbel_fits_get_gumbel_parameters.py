@@ -216,7 +216,7 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
 
     # put the variables in the netcdf file:
     data_dictionary = {}
-    for par_name in ['location_parameter']:
+    for par_name in gumbel_par_name:
         
         # variable names
         variable_name = str(par_name) + "_of_" + varDict.netcdf_short_name[var_name]
