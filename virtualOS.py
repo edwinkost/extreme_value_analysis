@@ -239,11 +239,11 @@ def netcdf2PCRobjClone(ncFile,varName,dateInput,\
     
     if LatitudeLongitude == True:
         try:
-            lat = f.variables['latitude']
-            lon = f.variables['longitude']
+            lat = f.variables['latitude'][:].copy()
+            lon = f.variables['longitude'][:].copy()
         except:
-            lat = f.variables['lat']
-            lon = f.variables['lon']
+            lat = f.variables['lat'][:].copy()
+            lon = f.variables['lon'][:].copy()
     
     varName = str(varName)
 
@@ -383,7 +383,7 @@ def netcdf2PCRobjClone(ncFile,varName,dateInput,\
     # for pcraster, the default orientation is "yt2b"
     if lat[0] < lat[1]:
         lat = np.flipud(lat)
-        cropData = np.flipud(cropData[:,:])[:,:].copy()
+        cropData = np.flipud(cropData)
     
     sameClone = True
     # check whether clone and input maps have the same attributes:
@@ -437,6 +437,8 @@ def netcdf2PCRobjClone(ncFile,varName,dateInput,\
                   regridData2FinerGrid(factor,cropData,MV), \
                   float(f.variables[varName]._FillValue))
                   
+    pcr.aguila(outPCR)
+    
     #f.close();
     f = None ; cropData = None 
     # PCRaster object
