@@ -176,11 +176,6 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     pool = Pool(processes = n_cores)                                                              # start "ncores" of worker processes 
     gumbel_parameter_list = pool.map(glofris.get_gumbel_parameters, input_data_splitted)          # multicore processing
     
-    print gumbel_parameter_list
-    print len(gumbel_parameter_list)
-    
-    print gumbel_parameter_list[0]['p_zero']
-    
     # merge all gumbel parameters 
     zero_prob    = np.zeros([number_of_rows, number_of_cols]) + vos.MV
     gumbel_loc   = np.zeros([number_of_rows, number_of_cols]) + vos.MV
@@ -193,9 +188,9 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
         gumbel_loc[str_row:end_row,:]   = gumbel_parameter_list[i_list]['gumbel_loc']
         gumbel_scale[str_row:end_row,:] = gumbel_parameter_list[i_list]['gumbel_scale']    
     
-    print zero_prob
-    print gumbel_loc
-    print gumbel_scale
+    print "zero_prob " + zero_prob
+    print "gumbel_loc " + gumbel_loc
+    print "gumbel_scale " gumbel_scale
     
     # write the gumbel parameters to netcdf file
     lowerTimeBound = datetime.datetime(str_year,  1,  1, 0)
@@ -205,10 +200,8 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     msg = "Writing the gumbel parameters to a netcdf file: " + str(netcdf_file[var_name]['file_name'])
     logger.info(msg)
 
-    #~ for par_name in gumbel_par_name:
-    for par_name in ['location_parameter']:
-
-        # preparing the variable in a netcdf file:
+    # preparing the variable in a netcdf file:
+    for par_name in gumbel_par_name:
         netcdf_report.create_variable(\
                                       ncFileName = netcdf_file[var_name]['file_name'], \
                                       varName    = str(par_name) + "_of_" + varDict.netcdf_short_name[var_name], \
@@ -216,6 +209,8 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
                                       longName   = str(par_name) + "_of_" + varDict.netcdf_long_name[var_name] , \
                                       comment    = varDict.comment[var_name]
                                       )
+
+    #~ for par_name in ['location_parameter']:
 
         # note that we have to flip the variable 
         if par_name == 'p_zero'            : varField = np.flipud(zero_prob)
