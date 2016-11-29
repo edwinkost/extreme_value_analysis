@@ -210,5 +210,4 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     netcdf_report.dictionary_of_data_to_netcdf(netcdf_file[var_name]['file_name'], \
                                                data_dictionary, \
                                                timeBounds)
-    netcdf_input_file.close()
 
