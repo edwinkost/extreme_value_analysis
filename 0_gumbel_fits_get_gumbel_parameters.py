@@ -174,6 +174,7 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
         
     # start multiple process to get gumbel parameters
     pool = Pool(processes = n_cores)                                                              # start "ncores" of worker processes 
+    gumbel_parameter_list = []
     gumbel_parameter_list = pool.map(glofris.get_gumbel_parameters, input_data_splitted)          # multicore processing
     
     # merge all gumbel parameters 
@@ -203,7 +204,7 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     msg = "Writing the gumbel parameters to a netcdf file: " + str(netcdf_file[var_name]['file_name'])
     logger.info(msg)
 
-    # preparing the variable in a netcdf file:
+    # preparing the variables in the netcdf file:
     for par_name in gumbel_par_name:
         netcdf_report.create_variable(\
                                       ncFileName = netcdf_file[var_name]['file_name'], \
@@ -213,19 +214,21 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
                                       comment    = varDict.comment[var_name]
                                       )
 
-    #~ for par_name in ['location_parameter']:
-
-        # note that we have to flip the variable 
-        if par_name == 'p_zero'            : varField = np.flipud(zero_prob)
-        if par_name == 'location_parameter': varField = np.flipud(gumbel_loc)  
-        if par_name == 'scale_parameter'   : varField = np.flipud(gumbel_scale)
+    # put the variables in the netcdf file:
+    shortVarNameList = []
+    varFieldList = []
+    for par_name in ['location_parameter']:
+        shortVarNameList.append(str(par_name) + "_of_" + varDict.netcdf_short_name[var_name])
         
-        # save it to a netcdf file
-        netcdf_report.data_to_netcdf(netcdf_file[var_name]['file_name'], \
-                                     str(par_name) + "_of_" + varDict.netcdf_short_name[var_name], \
-                                     varField, 
-                                     timeBounds)
+        # note that we have to flip the variable 
+        if par_name == 'p_zero'            : varFieldList.append(np.flipud(zero_prob))
+        if par_name == 'location_parameter': varFieldList.append(np.flipud(gumbel_loc))  
+        if par_name == 'scale_parameter'   : varFieldList.append(np.flipud(gumbel_scale))
+    # save the variables to a netcdf file
+    netcdf_report.list_of_data_to_netcdf(netcdf_file[var_name]['file_name'], \
+                                         shortVarNameList, \
+                                         varFieldList, \
+                                         timeBounds)
 
     netcdf_input_file.close()
-
 

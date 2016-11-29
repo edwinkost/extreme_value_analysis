@@ -175,3 +175,31 @@ class OutputNetCDF():
         rootgrp.sync()
         rootgrp.close()
 
+    def list_of_data_to_netcdf(self, ncFileName, shortVarNameList, varFieldList, timeBounds, timeStamp = None, posCnt = None):
+
+        rootgrp = nc.Dataset(ncFileName, 'a')
+
+        lowerTimeBound = timeBounds[0]
+        upperTimeBound = timeBounds[1]
+        if timeStamp == None: timeStamp = lowerTimeBound + (upperTimeBound - lowerTimeBound) / 2
+
+        # time
+        date_time = rootgrp.variables['time']
+        if posCnt == None: posCnt = len(date_time)
+        date_time[posCnt] = nc.date2num(timeStamp, date_time.units, date_time.calendar)
+        
+        # time bounds
+        time_bounds = rootgrp.variables['time_bounds']
+        time_bounds[posCnt, 0] = nc.date2num(lowerTimeBound, date_time.units, date_time.calendar)
+        time_bounds[posCnt, 1] = nc.date2num(upperTimeBound, date_time.units, date_time.calendar)
+
+        for shortVarName in shortVarNameList:
+            
+            varField = varFieldList[shortVarName]
+            if self.netcdf_y_orientation_follow_cf_convention: varField = np.flipud(varField)
+            
+            the variable
+            rootgrp.variables[shortVarName][posCnt,:,:] = varField
+
+        rootgrp.sync()
+        rootgrp.close()
