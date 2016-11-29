@@ -193,7 +193,7 @@ class OutputNetCDF():
         time_bounds[posCnt, 0] = nc.date2num(lowerTimeBound, date_time.units, date_time.calendar)
         time_bounds[posCnt, 1] = nc.date2num(upperTimeBound, date_time.units, date_time.calendar)
 
-        shortVarnameList = dataDictionary.keys()
+        shortVarNameList = dataDictionary.keys()
         for shortVarName in shortVarNameList:
             
             varField = dataDictionary[shortVarName]
