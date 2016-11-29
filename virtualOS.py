@@ -382,8 +382,8 @@ def netcdf2PCRobjClone(ncFile,varName,dateInput,\
 
     # for pcraster, the default orientation is "yt2b"
     if lat[0] < lat[1]:
-        lat = lat[::-1]
-        cropData = cropData[::-1,:]
+        lat = lat[::-1].copy()
+        cropData = cropData[::-1,:].copy()
     
     sameClone = True
     # check whether clone and input maps have the same attributes:
