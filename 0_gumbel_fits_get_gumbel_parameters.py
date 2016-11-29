@@ -26,9 +26,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-###################################################################################
-# The script to derive and apply gumbel fits to the Annual Flood Maxima time series
-###################################################################################
+#######################################################################################
+# The script to derive gumbel parameters based on the Annual Flood Maxima time series #
+#######################################################################################
 
 # input files
 input_files                    = {}
@@ -116,7 +116,7 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     #
     # all gumbel fit parameters in a netcdf file:
     # - file name
-    netcdf_file[var_name]['file_name'] = output_files['folder'] + "/" + "gumbel_analysis_ouput_for_" + varDict.netcdf_short_name[var_name] + ".nc"
+    netcdf_file[var_name]['file_name'] = output_files['folder'] + "/" + "gumbel_analysis_output_for_" + varDict.netcdf_short_name[var_name] + ".nc"
     #
     # - general attribute information:
     netcdf_file[var_name]['description'] = netcdf_setup['description']
@@ -206,19 +206,25 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
 
     # preparing the variables in the netcdf file:
     for par_name in gumbel_par_name:
+        # variable names and unit 
+        variable_name = str(par_name) + "_of_" + varDict.netcdf_short_name[var_name]
+        variable_unit = varDict.netcdf_unit[var_name]
+        if par_name == "p_zero": variable_unit = "1"
+        var_long_name = str(par_name) + "_of_" + varDict.netcdf_long_name[var_name]
+        # 
         netcdf_report.create_variable(\
                                       ncFileName = netcdf_file[var_name]['file_name'], \
-                                      varName    = str(par_name) + "_of_" + varDict.netcdf_short_name[var_name], \
-                                      varUnit    = varDict.netcdf_unit[var_name], \
-                                      longName   = str(par_name) + "_of_" + varDict.netcdf_long_name[var_name] , \
+                                      varName    = variable_name, \
+                                      varUnit    = variable_unit, \
+                                      longName   = var_long_name, \
                                       comment    = varDict.comment[var_name]
                                       )
 
-    # put the variables in the netcdf file:
+    # store the variables in the netcdf file:
     data_dictionary = {}
     for par_name in gumbel_par_name:
         
-        # variable names
+        # variable name
         variable_name = str(par_name) + "_of_" + varDict.netcdf_short_name[var_name]
         
         # variable fields 

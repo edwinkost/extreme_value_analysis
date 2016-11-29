@@ -216,7 +216,8 @@ def netcdf2PCRobjClone(ncFile,varName,dateInput,\
                        useDoy = None,
                        cloneMapFileName  = None,\
                        LatitudeLongitude = True,\
-                       specificFillValue = None):
+                       specificFillValue = None,\
+                       automaticMatchingVariableName = True):
     # 
     # EHS (19 APR 2013): To convert netCDF (tss) file to PCR file.
     # --- with clone checking
@@ -226,7 +227,7 @@ def netcdf2PCRobjClone(ncFile,varName,dateInput,\
     
     #~ print ncFile
     
-    logger.debug('reading variable: '+str(varName)+' from the file: '+str(ncFile))
+    logger.debug('reading variable: ' + str(varName) + ' from the file: ' +str(ncFile))
     
     if ncFile in filecache.keys():
         f = filecache[ncFile]
@@ -236,69 +237,71 @@ def netcdf2PCRobjClone(ncFile,varName,dateInput,\
         filecache[ncFile] = f
         #~ print "New: ", ncFile
     
-    varName = str(varName)
-    
     if LatitudeLongitude == True:
         try:
-            f.variables['lat'] = f.variables['latitude']
-            f.variables['lon'] = f.variables['longitude']
+            lat = f.variables['latitude']
+            lon = f.variables['longitude']
         except:
-            pass
+            lat = f.variables['lat']
+            lon = f.variables['lon']
     
-    if varName == "evapotranspiration":        
-        try:
-            f.variables['evapotranspiration'] = f.variables['referencePotET']
-        except:
-            pass
+    varName = str(varName)
 
-    if varName == "kc":   # the variable name in PCR-GLOBWB     
-       try:
-           f.variables['kc'] = \
-                f.variables['Cropcoefficient']  # the variable name in the netcdf file
-       except:
-           pass
-
-    if varName == "interceptCapInput":   # the variable name in PCR-GLOBWB     
-       try:
-           f.variables['interceptCapInput'] = \
-                f.variables['Interceptioncapacity']  # the variable name in the netcdf file
-       except:
-           pass
-
-    if varName == "coverFractionInput":   # the variable name in PCR-GLOBWB     
-       try:
-           f.variables['coverFractionInput'] = \
-                f.variables['Coverfraction']  # the variable name in the netcdf file
-       except:
-           pass
-
-    if varName == "fracVegCover":   # the variable name in PCR-GLOBWB     
-       try:
-           f.variables['fracVegCover'] = \
-                f.variables['vegetation_fraction']  # the variable name in the netcdf file
-       except:
-           pass
-
-    if varName == "minSoilDepthFrac":   # the variable name in PCR-GLOBWB     
-       try:
-           f.variables['minSoilDepthFrac'] = \
-                f.variables['minRootDepthFraction']  # the variable name in the netcdf file
-       except:
-           pass
-
-    if varName == "maxSoilDepthFrac":   # the variable name in PCR-GLOBWB     
-       try:
-           f.variables['maxSoilDepthFrac'] = \
-                f.variables['maxRootDepthFraction']  # the variable name in the netcdf file
-       except:
-           pass
-
-    if varName == "arnoBeta":   # the variable name in PCR-GLOBWB     
-       try:
-           f.variables['arnoBeta'] = \
-                f.variables['arnoSchemeBeta']  # the variable name in the netcdf file
-       except:
-           pass
+    if automaticMatchingVariableName:
+        if varName == "evapotranspiration":        
+            try:
+                f.variables['evapotranspiration'] = f.variables['referencePotET']
+            except:
+                pass
+        
+        if varName == "kc":   # the variable name in PCR-GLOBWB     
+           try:
+               f.variables['kc'] = \
+                    f.variables['Cropcoefficient']  # the variable name in the netcdf file
+           except:
+               pass
+        
+        if varName == "interceptCapInput":   # the variable name in PCR-GLOBWB     
+           try:
+               f.variables['interceptCapInput'] = \
+                    f.variables['Interceptioncapacity']  # the variable name in the netcdf file
+           except:
+               pass
+        
+        if varName == "coverFractionInput":   # the variable name in PCR-GLOBWB     
+           try:
+               f.variables['coverFractionInput'] = \
+                    f.variables['Coverfraction']  # the variable name in the netcdf file
+           except:
+               pass
+        
+        if varName == "fracVegCover":   # the variable name in PCR-GLOBWB     
+           try:
+               f.variables['fracVegCover'] = \
+                    f.variables['vegetation_fraction']  # the variable name in the netcdf file
+           except:
+               pass
+        
+        if varName == "minSoilDepthFrac":   # the variable name in PCR-GLOBWB     
+           try:
+               f.variables['minSoilDepthFrac'] = \
+                    f.variables['minRootDepthFraction']  # the variable name in the netcdf file
+           except:
+               pass
+        
+        if varName == "maxSoilDepthFrac":   # the variable name in PCR-GLOBWB     
+           try:
+               f.variables['maxSoilDepthFrac'] = \
+                    f.variables['maxRootDepthFraction']  # the variable name in the netcdf file
+           except:
+               pass
+        
+        if varName == "arnoBeta":   # the variable name in PCR-GLOBWB     
+           try:
+               f.variables['arnoBeta'] = \
+                    f.variables['arnoSchemeBeta']  # the variable name in the netcdf file
+           except:
+               pass
 
     # date
     date = dateInput
@@ -374,6 +377,14 @@ def netcdf2PCRobjClone(ncFile,varName,dateInput,\
     idx = int(idx)                                                  
     logger.debug('Using the date index '+str(idx))
 
+    cropData = f.variables[varName][int(idx),:,:].copy()                # still original data
+    factor = 1                                                          # needed in regridData2FinerGrid
+
+    # for pcraster, the default orientation is "yt2b"
+    if lat[0] < lat[1]:
+        lat = np.flipud(lat)
+        cropData = np.flipud(cropData)
+    
     sameClone = True
     # check whether clone and input maps have the same attributes:
     if cloneMapFileName != None:
@@ -385,12 +396,12 @@ def netcdf2PCRobjClone(ncFile,varName,dateInput,\
         xULClone = attributeClone['xUL']
         yULClone = attributeClone['yUL']
         # get the attributes of input (netCDF) 
-        cellsizeInput = f.variables['lat'][0]- f.variables['lat'][1]
+        cellsizeInput = lat[0] - lat[1]
         cellsizeInput = float(cellsizeInput)
-        rowsInput = len(f.variables['lat'])
-        colsInput = len(f.variables['lon'])
-        xULInput = f.variables['lon'][0]-0.5*cellsizeInput
-        yULInput = f.variables['lat'][0]+0.5*cellsizeInput
+        rowsInput = len(lat)
+        colsInput = len(lon)
+        xULInput = lon[0] - 0.5 * cellsizeInput
+        yULInput = lat[0] + 0.5 * cellsizeInput
         # check whether both maps have the same attributes 
         if cellsizeClone != cellsizeInput: sameClone = False
         if rowsClone != rowsInput: sameClone = False
@@ -398,20 +409,18 @@ def netcdf2PCRobjClone(ncFile,varName,dateInput,\
         if xULClone != xULInput: sameClone = False
         if yULClone != yULInput: sameClone = False
 
-    cropData = f.variables[varName][int(idx),:,:]       # still original data
-    factor = 1                          # needed in regridData2FinerGrid
 
     if sameClone == False:
         
         logger.debug('Crop to the clone map with lower left corner (x,y): '+str(xULClone)+' , '+str(yULClone))
         # crop to cloneMap:
-        #~ xIdxSta = int(np.where(f.variables['lon'][:] == xULClone + 0.5*cellsizeInput)[0])
-        minX    = min(abs(f.variables['lon'][:] - (xULClone + 0.5*cellsizeInput))) # ; print(minX)
-        xIdxSta = int(np.where(abs(f.variables['lon'][:] - (xULClone + 0.5*cellsizeInput)) == minX)[0])
+        #~ xIdxSta = int(np.where(lon[:] == xULClone + 0.5*cellsizeInput)[0])
+        minX    = min(abs(lon[:] - (xULClone + 0.5*cellsizeInput))) # ; print(minX)
+        xIdxSta = int(np.where(abs(lon[:] - (xULClone + 0.5*cellsizeInput)) == minX)[0])
         xIdxEnd = int(math.ceil(xIdxSta + colsClone /(cellsizeInput/cellsizeClone)))
-        #~ yIdxSta = int(np.where(f.variables['lat'][:] == yULClone - 0.5*cellsizeInput)[0])
-        minY    = min(abs(f.variables['lat'][:] - (yULClone - 0.5*cellsizeInput))) # ; print(minY)
-        yIdxSta = int(np.where(abs(f.variables['lat'][:] - (yULClone - 0.5*cellsizeInput)) == minY)[0])
+        #~ yIdxSta = int(np.where(lat[:] == yULClone - 0.5*cellsizeInput)[0])
+        minY    = min(abs(lat[:] - (yULClone - 0.5*cellsizeInput))) # ; print(minY)
+        yIdxSta = int(np.where(abs(lat[:] - (yULClone - 0.5*cellsizeInput)) == minY)[0])
         yIdxEnd = int(math.ceil(yIdxSta + rowsClone /(cellsizeInput/cellsizeClone)))
         cropData = f.variables[varName][idx,yIdxSta:yIdxEnd,xIdxSta:xIdxEnd]
 

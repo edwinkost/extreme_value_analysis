@@ -504,20 +504,18 @@ def inverse_gumbel(p_zero, loc, scale, return_period):
     parameters given. 
     """
 
-    p = 1 - 1./return_period
+    p = pcr.scalar(1. - 1./return_period)
     
     # p_residual is the probability density function of the population consisting of any values above zero
-    p_residual = np.minimum(np.maximum((p - p_zero) / (1 - p_zero), 0), 1) 
+    p_residual = pcr.min(pcr.max((p - p_zero) / (1.0 - p_zero), 0.0), 1.0) 
 
-    reduced_variate = -log(-log(p_residual))
+    reduced_variate = -pcr.ln(-pcr.ln(p_residual))
 
     flvol = reduced_variate * scale + loc
 
     # infinite numbers can occur. reduce these to zero!
-    flvol[isinf(flvol)] = 0.
-
     # if any values become negative due to the statistical extrapolation, fix them to zero (may occur if the sample size for fitting was small and a small return period is requested)
-    flvol = np.maximum(flvol, 0.)
+    flvol = pcr.max(0.0, pcr.cover(flvol, 0.0))
 
     return flvol
 
