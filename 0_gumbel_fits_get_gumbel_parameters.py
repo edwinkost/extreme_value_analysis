@@ -194,6 +194,8 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
         gumbel_scale[str_row:end_row,:] = gumbel_parameter_list[i_list]['gumbel_scale']    
     
     print zero_prob
+    print gumbel_loc
+    print gumbel_scale
     
     # write the gumbel parameters to netcdf file
     lowerTimeBound = datetime.datetime(str_year,  1,  1, 0)
@@ -203,8 +205,8 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     msg = "Writing the gumbel parameters to a netcdf file: " + str(netcdf_file[var_name]['file_name'])
     logger.info(msg)
 
-    for par_name in gumbel_par_name:
-    #~ for par_name in ['p_zero']:
+    #~ for par_name in gumbel_par_name:
+    for par_name in ['location_parameter']:
 
         # preparing the variable in a netcdf file:
         netcdf_report.create_variable(\
