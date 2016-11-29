@@ -382,8 +382,8 @@ def netcdf2PCRobjClone(ncFile,varName,dateInput,\
 
     # for pcraster, the default orientation is "yt2b"
     if lat[0] < lat[1]:
-        lat = lat[::-1].copy()
-        #~ cropData = cropData[::-1,:].copy()
+        lat = lat[::-1]
+        cropData = cropData[::-1,:]
     
     sameClone = True
     # check whether clone and input maps have the same attributes:
@@ -422,7 +422,7 @@ def netcdf2PCRobjClone(ncFile,varName,dateInput,\
         minY    = min(abs(lat[:] - (yULClone - 0.5*cellsizeInput))) # ; print(minY)
         yIdxSta = int(np.where(abs(lat[:] - (yULClone - 0.5*cellsizeInput)) == minY)[0])
         yIdxEnd = int(math.ceil(yIdxSta + rowsClone /(cellsizeInput/cellsizeClone)))
-        cropData = f.variables[varName][idx,yIdxSta:yIdxEnd,xIdxSta:xIdxEnd]
+        cropData = cropData[idx,yIdxSta:yIdxEnd,xIdxSta:xIdxEnd]
 
         factor = int(round(float(cellsizeInput)/float(cellsizeClone)))
         if factor > 1: logger.debug('Resample: input cell size = '+str(float(cellsizeInput))+' ; output/clone cell size = '+str(float(cellsizeClone)))
