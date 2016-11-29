@@ -135,7 +135,7 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     netcdf_report.create_netcdf_file(netcdf_file[var_name]) 
 
 # number of cores used 
-n_cores = 4    
+n_cores = 20    
 
 # derive gumbel parameters
 msg = "Deriving gumbel parameters."
@@ -163,8 +163,8 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
             str_row = 0
         else:
             str_row = end_row
-        #~ end_row = str_row + number_of_rows / n_cores
-        end_row = str_row + 150
+        end_row = str_row + number_of_rows / n_cores
+        #~ end_row = str_row + 150                                      # for testing only
         #
         # put the input in a dictionary
         input_data = {}
@@ -182,13 +182,15 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     print gumbel_parameter_list[0]['p_zero']
     
     # merge all gumbel parameters 
-    zero_prob = np.zeros([number_of_rows, number_of_cols]) + vos.MV
+    zero_prob    = np.zeros([number_of_rows, number_of_cols]) + vos.MV
+    gumbel_loc   = np.zeros([number_of_rows, number_of_cols]) + vos.MV
+    gumbel_scale = np.zeros([number_of_rows, number_of_cols]) + vos.MV
     for i_list in range(len(gumbel_parameter_list)):
         str_row = gumbel_parameter_list[i_list]['starting_row']
         end_row = str_row + gumbel_parameter_list[i_list]['p_zero'].shape[0]
-        zero_prob[str_row:end_row,:] = gumbel_parameter_list[i_list]['p_zero']
-    #~ for 
-    #~ zero_prob, 
+        zero_prob[str_row:end_row,:]    = gumbel_parameter_list[i_list]['p_zero']
+        gumbel_loc[str_row:end_row,:]   = gumbel_parameter_list[i_list]['gumbel_loc']
+        gumbel_scale[str_row:end_row,:] = gumbel_parameter_list[i_list]['gumbel_scale']    
     
     print zero_prob
     
@@ -200,8 +202,8 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     msg = "Writing the gumbel parameters to a netcdf file: " + str(netcdf_file[var_name]['file_name'])
     logger.info(msg)
 
-    #~ for par_name in gumbel_par_name:
-    for par_name in ['p_zero']:
+    for par_name in gumbel_par_name:
+    #~ for par_name in ['p_zero']:
 
         # preparing the variable in a netcdf file:
         netcdf_report.create_variable(\

@@ -593,7 +593,6 @@ def get_gumbel_parameters(input_data_dictionary):
             else:
                 p_zero = vos.MV; loc = vos.MV; scale = vos.MV
             
-            p_zero = np.random.rand(1)
             zero_prob[0, row, col]    = p_zero
             gumbel_loc[0, row, col]   = loc
             gumbel_scale[0, row, col] = scale
