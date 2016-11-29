@@ -576,7 +576,6 @@ def get_gumbel_parameters(input_data_dictionary):
     gumbel_scale = np.zeros([1, row, col]) + vos.MV
 
     for row in range(flvol.shape[1]):
-    #~ for row in range(1000, flvol.shape[1], 1):
         print 'row: ' + str(row + starting_row) 
         
         for col in range(flvol.shape[2]):
