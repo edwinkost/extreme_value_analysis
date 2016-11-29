@@ -196,9 +196,10 @@ class OutputNetCDF():
         for shortVarName in shortVarNameList:
             
             varField = varFieldList[shortVarName]
+            # flip variable if necessary (to follow cf_convention)
             if self.netcdf_y_orientation_follow_cf_convention: varField = np.flipud(varField)
             
-            the variable
+            # the variable
             rootgrp.variables[shortVarName][posCnt,:,:] = varField
 
         rootgrp.sync()
