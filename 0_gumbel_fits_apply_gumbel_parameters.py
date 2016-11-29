@@ -140,9 +140,7 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     msg = "Applying gumbel parameters from the file: " + str(input_files['file_name'][var_name])
     logger.info(msg)
 
-    netcdf_input_file = input_files['file_name']
-    
-    print netcdf_input_file
+    netcdf_input_file = input_files['file_name'][var_name]
     
     # read gumbel parameters: ['p_zero', 'location_parameter', 'scale_parameter']
     #
