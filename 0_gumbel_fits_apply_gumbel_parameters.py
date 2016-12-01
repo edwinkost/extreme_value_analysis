@@ -196,18 +196,24 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
                                       comment    = varDict.comment[var_name]
                                       )
 
-    # store the variables in the netcdf file:
+    # store the variables to pcraster map and netcdf files:
     data_dictionary = {}
     for return_period in return_periods:
         
         # variable name
         variable_name = str(return_period) + "_of_" + varDict.netcdf_short_name[var_name]
         
-        # variable field 
+        # put it into a dictionary
         data_dictionary[variable_name] = pcr.pcr2numpy(extreme_values[return_period], vos.MV)
-    #
+
+        # report to a pcraster map
+        pcr.report(data_dictionary[variable_name], variable_name + ".map")
+
     # save the variables to a netcdf file
     netcdf_report.dictionary_of_data_to_netcdf(netcdf_file[var_name]['file_name'], \
                                                data_dictionary, \
                                                timeBounds)
+
+
+
 
