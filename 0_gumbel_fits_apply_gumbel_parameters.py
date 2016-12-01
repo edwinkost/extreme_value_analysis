@@ -135,7 +135,7 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
 msg = "Applying gumbel parameters."
 logger.info(msg)
 #
-for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']: 
+for var_name in ['channelStorage', 'floodVolume']: 
     
     msg = "Applying gumbel parameters from the file: " + str(input_files['file_name'][var_name])
     logger.info(msg)
