@@ -203,11 +203,11 @@ for var_name in ['channelStorage', 'floodVolume']:
         # variable name
         variable_name = str(return_period) + "_of_" + varDict.netcdf_short_name[var_name]
         
+        # report to a pcraster map
+        pcr.report(extreme_values[return_period], variable_name + ".map")
+
         # put it into a dictionary
         data_dictionary[variable_name] = pcr.pcr2numpy(extreme_values[return_period], vos.MV)
-
-        # report to a pcraster map
-        pcr.report(data_dictionary[variable_name], variable_name + ".map")
 
     # save the variables to a netcdf file
     netcdf_report.dictionary_of_data_to_netcdf(netcdf_file[var_name]['file_name'], \
