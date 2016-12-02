@@ -32,8 +32,10 @@ logger = logging.getLogger(__name__)
 # input files
 input_files                     = {}
 # PCR-GLOBWB 5 arcmin results
-# - WATCH historical
-input_files['folder']           = "/scratch-shared/edwinsut/flood_analyzer_analysis/maximum_events/watch_1960-1999/"
+#~ # - WATCH historical
+#~ input_files['folder']           = "/scratch-shared/edwinsut/flood_analyzer_analysis/maximum_events/watch_1960-1999/"
+# - gfdl-esm2m historical
+input_files['folder']           = "/scratch-shared/edwinsut/flood_analyzer_analysis/maximum_events/gfdl-esm2m_1960-1999/"
 #
 # general input files
 # - clone map
@@ -54,8 +56,10 @@ end_year = 1999
 # output files
 output_files                    = {}
 # - output folder
-# - WATCH historical
-output_files['folder']          = "/scratch-shared/edwinsut/flood_analyzer_analysis/maximum_events_merged/watch_1960-1999/"
+#~ # - WATCH historical
+#~ output_files['folder']       = "/scratch-shared/edwinsut/flood_analyzer_analysis/maximum_events_merged/watch_1960-1999/"
+# - gfdl-esm2m historical
+input_files['folder']           = "/scratch-shared/edwinhs/flood_analyzer_analysis/maximum_events_merged/gfdl-esm2m_1960-1999/"
 #
 try:
     os.makedirs(output_files['folder'])
@@ -212,9 +216,4 @@ for i_year in range(str_year, end_year + 1):
         logger.info(msg)
         time_stamp_used = datetime.datetime(i_year, 12, 31, 0)
         netcdf_report.data2NetCDF(ncFileName, varDict.netcdf_short_name[var], pcr.pcr2numpy(value_for_this_year, vos.MV), time_stamp_used)
-
-        
-# NEXT:
-# - get the gumbel fit parameters (derive_Gumbel)
-# - apply the gumbel fit
 

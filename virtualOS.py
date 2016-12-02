@@ -437,7 +437,7 @@ def netcdf2PCRobjClone(ncFile,varName,dateInput,\
                   regridData2FinerGrid(factor,cropData,MV), \
                   float(f.variables[varName]._FillValue))
                   
-    pcr.aguila(outPCR)
+    #~ pcr.aguila(outPCR)
     
     #f.close();
     f = None ; cropData = None 
