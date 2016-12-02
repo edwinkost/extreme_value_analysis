@@ -59,7 +59,7 @@ output_files                    = {}
 #~ # - WATCH historical
 #~ output_files['folder']       = "/scratch-shared/edwinsut/flood_analyzer_analysis/maximum_events_merged/watch_1960-1999/"
 # - gfdl-esm2m historical
-output_files['folder']          = "/scratch-shared/edwinhs/flood_analyzer_analysis/maximum_events_merged/gfdl-esm2m_1960-1999/"
+output_files['folder']          = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/gfdl-esm2m_1960-1999/"
 #
 try:
     os.makedirs(output_files['folder'])
