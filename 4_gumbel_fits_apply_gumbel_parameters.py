@@ -36,7 +36,7 @@ input_files                    = {}
 #~ # - WATCH historical
 #~ input_files['folder'] = "/scratch-shared/edwinsut/flood_analyzer_analysis/gumbel_fits/watch_1960-1999_example"
 # - gfdl-esm2m historical
-input_files['folder']          = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/gfdl-esm2m_1960-1999/"
+input_files['folder']          = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/gfdl-esm2m_1960-1999/"
 input_files['file_name'] = {}
 input_files['file_name']['channelStorage'] = input_files['folder'] + "/" + "gumbel_analysis_output_for_channel_storage.nc" 
 input_files['file_name']['floodVolume'   ] = input_files['folder'] + "/" + "gumbel_analysis_output_for_flood_innundation_volume.nc" 
