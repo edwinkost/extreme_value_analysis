@@ -33,8 +33,10 @@ logger = logging.getLogger(__name__)
 # input files
 input_files                    = {}
 # The gumbel fit parameters based on the annual flood maxima based on the PCR-GLOBWB 5 arcmin results:
-# - WATCH historical
-input_files['folder'] = "/scratch-shared/edwinsut/flood_analyzer_analysis/gumbel_fits/watch_1960-1999_example"
+#~ # - WATCH historical
+#~ input_files['folder'] = "/scratch-shared/edwinsut/flood_analyzer_analysis/gumbel_fits/watch_1960-1999_example"
+# - gfdl-esm2m historical
+input_files['folder']          = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/gfdl-esm2m_1960-1999/"
 input_files['file_name'] = {}
 input_files['file_name']['channelStorage'] = input_files['folder'] + "/" + "gumbel_analysis_output_for_channel_storage.nc" 
 input_files['file_name']['floodVolume'   ] = input_files['folder'] + "/" + "gumbel_analysis_output_for_flood_innundation_volume.nc" 
@@ -57,9 +59,11 @@ end_year = 1999
 
 # output files
 output_files                   = {}
-# - WATCH historical
 # output folder
-output_files['folder']         = "/scratch-shared/edwinsut/flood_analyzer_analysis/extreme_values/watch_1960-1999/"
+#~ # - WATCH historical
+#~ output_files['folder']      = "/scratch-shared/edwinsut/flood_analyzer_analysis/extreme_values/watch_1960-1999/"
+# - gfdl-esm2m historical
+output_files['folder']         = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values/gfdl-esm2m_1960-1999/"
 #
 try:
     os.makedirs(output_files['folder'])
