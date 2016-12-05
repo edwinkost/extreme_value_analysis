@@ -9,7 +9,6 @@ import glob
 import datetime
 import numpy as np
 
-import configuration
 import virtualOS as vos
 
 import logging
