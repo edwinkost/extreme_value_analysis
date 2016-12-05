@@ -42,7 +42,7 @@ if os.path.exists(log_file_folder) == False:
 vos.initialize_logging(log_file_folder)
 
 # make tmp folder:
-tmp_folder = general_output_folder + "/tmp/"
+tmp_folder = output_folder + "/tmp/"
 os.makedirs(tmp_folder)
 
 # change the working directory to the output folder 
