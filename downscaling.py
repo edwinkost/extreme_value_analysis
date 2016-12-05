@@ -141,7 +141,7 @@ cmd = 'mapattr -s -R ' + str(num_of_rows) + \
                 ' -B -P yb2t ' + \
                 ' -x ' + str(x_min) + \
                 ' -y ' + str(y_max) + \
-                ' -l ' + str() + \
+                ' -l ' + str(cell_length) + \
                 ' clone_high_resolution.map'
 vos.cmd_line(cmd, using_subprocess = False)
 #
