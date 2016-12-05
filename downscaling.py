@@ -13,16 +13,15 @@ import pcraster as pcr
 import logging
 logger = logging.getLogger(__name__)
 
-# print disclaimer
-disclaimer.print_disclaimer()
-
 # from the system arguments, read the following:
 # - input folder that contain extreme values (in pcraster format):
-input_folder = 
-# - globa; output folder
-global_output_folder = 
+input_folder         = os.path.abspath(sys.argv[1])
+# - global output folder
+global_output_folder = os.path.abspath(sys.argv[2])
+# - master ini file
+ini_file             = os.path.abspath(sys.argv[3])
 # - mask/code for this clone
-mask_code = 
+mask_code            = str(sys.argv[4])
 
 # output folder for this mask only
 output_folder = global_output_folder + "/" + str(mask_code) + "/"
@@ -31,7 +30,7 @@ output_folder = global_output_folder + "/" + str(mask_code) + "/"
 clean_previous_output = True
 if clean_previous_output and os.path.exists(general_output_folder): shutil.rmtree(general_output_folder)
 
-# make log folder and initialize logging
+# make output and log folders, and initialize logging:
 log_file_folder = general_output_folder + "/log/"
 if os.path.exists(log_file_folder) and clean_previous_output:  
     shutil.rmtree(log_file_folder)
@@ -40,17 +39,32 @@ if os.path.exists(log_file_folder) == False:
     os.makedirs(log_file_folder)
 vos.initialize_logging(log_file_folder)
 
-# change the working directory to the output folder 
+# make tmp folder:
+tmp_folder = general_output_folder + "/tmp/"
+os.makedirs(tmp_folder)
 
-# clone and landmask files at low resolution (5 arc minute)
-clone_map_file    = 
-# - set clone map:
+# change the working directory to the output folder 
+os.chdir(output_folder)
+
+# copy ini file 
+cmd = "cp " + str(ini_file) + " downscaling.ini" 
+vos.cmd_line(cmd, using_subprocess = False)
+
+# clone and landmask files at low resolution (e.g. 5 arc-minutes)
+# - set clone map
+clone_map_file    = "/projects/0/dfguu/data/hydroworld/others/05ArcMinCloneMaps/new_masks_from_top/clone_" + str(mask_code) + ".map" 
+msg = "Set the pcraster clone map to : " + str(clone_map_file)
+logger.info(msg)
 pcr.setclone(clone_map_file)
 # - set the landmask
-landmask_map_file = 
+landmask_map_file = "/projects/0/dfguu/data/hydroworld/others/05ArcMinCloneMaps/new_masks_from_top/mask_"  + str(mask_code) + ".map"
+msg = "Set the landmask to : " + str(landmask_map_file)
+logger.info(msg)
 landmask = pcr.readmap(landmask_map_file)
 
-# read all extreme value maps (5 arc-min maps), resample them, and save them to the output folder
+# read all extreme value maps (low resolution maps), resample them, and save them to the output folder
+msg = "Resampling extreme value maps."
+logger.info(msg)
 file_names = [   2-year_of_flood_innundation_volume.map,
                  5-year_of_flood_innundation_volume.map,
                 10-year_of_flood_innundation_volume.map,
@@ -61,79 +75,118 @@ file_names = [   2-year_of_flood_innundation_volume.map,
                500-year_of_flood_innundation_volume.map,
               1000-year_of_flood_innundation_volume.map]
 for file_name in file_names:
-    complete_file_name = "/" + file_name
-    extreme_value_map = 
-    # - focus only to the landmask area
+    complete_file_name = input_folder + "/" + file_name
+    extreme_value_map = vos.readPCRmapClone(complete_file_name, \
+                                            clone_map_file, \
+                                            tmp_folder, \
+                                            None, False, None, False)
+    # - focus only to the landmask area. We have to do this so that only flood in the landmask that will be downscaled/routed. 
     extreme_value_map = pcr.ifthen(landmask, extreme_value_map)
     # - cover the rests to zero (so they will not contribute to any flood/inundation)
     extreme_value_map = pcr.cover(extreme_value_map, 0.0)
-    pcr.report(complete_file_name, file_name)
+    pcr.report(extreme_value_map, file_name)
+
+# resampling low resolution ldd map
+msg = "Resample the low resolution ldd map."
+logger.info(msg)
+ldd_map_low_resolution_file_name = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
+ldd_map_low_resolution = vos.readPCRmapClone(ldd_map_low_resolution_file_name, \
+                                             clone_map_file, \
+                                             tmp_folder, \
+                                             None, True, None, False)
+#~ ldd_map_low_resolution = pcr.ifthen(landmask, ldd_map_low_resolution)  # NOTE THAT YOU SHOULD NOT MASK-OUT THE LDD.
+ldd_map_low_resolution = pcr.lddrepair(pcr.ldd(ldd_map_low_resolution))
+ldd_map_low_resolution = pcr.lddrepair(ldd_map_low_resolution)
+pcr.report(ldd_map_low_resolution, "resampled_low_resolution_ldd.map")
+
+# resampling river length and width files (actually, we don't need these):
+msg = "Resample the low resolution river length and width maps."
+logger.info(msg)
+# - river length
+river_length_file_name = "/projects/0/dfguu/users/edwin/data/data_for_glofris_downscaling/input_data/maps_05min/celldiagonal05min.map"
+river_length_low_resolution = vos.readPCRmapClone(river_length_file_name, \
+                                                  clone_map_file, \
+                                                  tmp_folder, \
+                                                  True, False, None, False)
+river_length_low_resolution = pcr.ifthen(landmask, river_length_low_resolution)
+river_length_low_resolution = pcr.cover(river_length_low_resolution, 0.0)
+pcr.report(river_length_low_resolution, "resampled_low_resolution_channel_length.map") 
+# - river width
+river_width_file_name = "/projects/0/dfguu/users/edwin/data/data_for_glofris_downscaling/input_data/maps_05min/celldiagonal05min.map"
+river_width_low_resolution = vos.readPCRmapClone(river_width_file_name, \
+                                                 clone_map_file, \
+                                                 tmp_folder, \
+                                                 True, False, None, False)
+river_width_low_resolution = pcr.ifthen(landmask, river_width_low_resolution)
+river_width_low_resolution = pcr.cover(river_width_low_resolution, 0.0)
+pcr.report(river_width_low_resolution, "resampled_low_resolution_bankfull_width.map") 
 
 
-
-# clone and landmask files at high resolution (30 arc second)
-    
-
-
-# copy 
-
-# pcr-globwb clone areas (for pcr-globwb multiple runs)
-clone_codes = list(set(generalConfiguration.globalOptions['cloneAreas'].split(",")))
+# clone at high resolution (e.g. 30 arc-seconds)
+msg = "Set the clone map at high resolution."
+logger.info(msg)
+num_of_rows = pcr.clone().nrRows() * 10
+num_of_cols = pcr.clone().nrCols() * 10
+x_min       = pcr.clone().west()
+y_max       = pcr.clone().north()
+cell_length = pcr.clone().cellSize() / 10.
+# set the cell length manually
+cell_length = 0.00833333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
 #
-# - for one global run (that should be using a fat node):
-if clone_codes[0] == "Global": 
-    clone_codes = ['M%02d'%i for i in range(1,54,1)]
+# - make the map using 'mapattr' command 
+cmd = 'mapattr -s -R ' + str(num_of_rows) + \
+                ' -C ' + str(num_of_cols) + \
+                ' -B -P yb2t ' + \
+                ' -x ' + str(x_min) + \
+                ' -y ' + str(y_max) + \
+                ' -l ' + str() + \
+                ' clone_high_resolution.map'
+vos.cmd_line(cmd, using_subprocess = False)
 #
-# - using two (thick) nodes:
-if clone_codes[0] == "part_one": 
-     # the relative big ones
-    clone_codes  = ["M17","M19","M26","M13","M18","M20","M05","M03","M21","M46","M27","M49","M16","M44","M52","M25","M09","M08","M11","M42","M12","M39"]
-    #~ # - and plus one of the two smallest ones
-    #~ clone_codes += ["M29"]
-    #~ # - and plus two of the smallest ones 
-    #~ clone_codes += ["M30","M29"]
-if clone_codes[0] == "part_two": 
-    # the relative small ones
-    clone_codes = ["M07","M15","M38","M48","M40","M41","M22","M14","M23","M51","M04","M06","M10","M02","M45","M35","M47","M50","M24","M01","M36","M53","M33","M43","M34","M37","M31","M32","M28","M30","M29"]
-    #~ # the relative small ones minus one of the the two smallest ones
-    #~ clone_codes = ["M07","M15","M38","M48","M40","M41","M22","M14","M23","M51","M04","M06","M10","M02","M45","M35","M47","M50","M24","M01","M36","M53","M33","M43","M34","M37","M31","M32","M28","M30"]
-    #~ # the relative small ones minus two of the smallest ones
-    #~ clone_codes = ["M07","M15","M38","M48","M40","M41","M22","M14","M23","M51","M04","M06","M10","M02","M45","M35","M47","M50","M24","M01","M36","M53","M33","M43","M34","M37","M31","M32","M28"]
-    # the execution of merging and modflow processes are done in another node
-    with_merging_or_modflow = False
+# - set the clone map
+clone_map_file = os.path.abspath("clone_high_resolution.map")
+msg = "Set the clone map at high resolution to the file: " + str(clone_map_file)
+logger.info(msg)
+pcr.setclone(clone_map_file)
+ 
+
+# resampling high resolution dem and ldd maps
+msg = "Resampling high resolution dem and ldd maps."
+logger.info(msg)
+# - dem map
+dem_map_high_resolution_file_name = ""
+dem_map_high_resolution = vos.readPCRmapClone(dem_map_high_resolution_file_name, \
+                                              clone_map_file, \
+                                              tmp_folder, \
+                                              None, True, None, False)
+dem_map_high_resolution = pcr.demrepair(pcr.dem(dem_map_high_resolution))
+dem_map_high_resolution = pcr.demrepair(dem_map_high_resolution)
+pcr.report(dem_map_high_resolution, "resampled_high_resolution_dem.map")
+# - ldd map
+ldd_map_high_resolution_file_name = ""
+ldd_map_high_resolution = vos.readPCRmapClone(ldd_map_high_resolution_file_name, \
+                                              clone_map_file, \
+                                              tmp_folder, \
+                                              None, True, None, False)
+ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
+ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
+pcr.report(ldd_map_high_resolution, "resampled_high_resolution_ldd.map")
 
 
-# command line(s) for PCR-GLOBWB 
-logger.info('Running transient PCR-GLOBWB with/without MODFLOW ')
-i_clone = 0
-cmd = ''
-for clone_code in clone_codes:
-
-   cmd += "python deterministic_runner_glue_with_parallel_and_modflow_options.py " + iniFileName  + " " + debug_option + " " + clone_code + " "
-   cmd = cmd + " & "
-   i_clone += 1
+# calculating high resolution stream order maps
+msg = "Calculating a high resolution stream order map."
+logger.info(msg)
+stream_order_map = pcr.streamorder(ldd_map_high_resolution)
+pcr.report(stream_order_map, "resampled_high_resolution_ldd.map")
 
 
-# Note that for runs with spin-up, we should not combine it with modflow 
-
-
-# command line(s) for merging and MODFLOW processes:       
-if with_merging_or_modflow:
-
-   logger.info('Also with merging and/or MODFLOW processes ')
-   
-   cmd += "python deterministic_runner_for_monthly_modflow_and_merging.py " + iniFileName +" "+debug_option +" transient"
-
-   cmd = cmd + " & "       
-
-
-# don't foget to add the following line
-cmd = cmd + "wait"       
-
-print cmd
-msg = "Call: "+str(cmd)
-logger.debug(msg)
-
-
-# execute PCR-GLOBWB and MODFLOW
-vos.cmd_line(cmd, using_subprocess = False)      
+# execute downscaling scripts for every return period
+msg = "Downscaling for every return period."
+logger.info(msg)
+for i_file in range(1, length(file_names)):
+    file_name = file_name[i_file]
+    cmd = ' python /home/edwin/github/edwinkost/wflow/wflow-py/Scripts/wflow_flood.py ' + \
+          ' -i downscaling.ini ' + \
+          ' -f ' + str(file_name) + \
+          ' -b 2-year_of_flood_innundation_volume.map -c 4 -d output_folder'
+    vos.cmd_line(cmd, using_subprocess = False)      
