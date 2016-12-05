@@ -96,6 +96,7 @@ ldd_map_low_resolution = vos.readPCRmapClone(ldd_map_low_resolution_file_name, \
                                              tmp_folder, \
                                              None, True, None, False)
 #~ ldd_map_low_resolution = pcr.ifthen(landmask, ldd_map_low_resolution)  # NOTE THAT YOU SHOULD NOT MASK-OUT THE LDD.
+ldd_map_low_resolution = pcr.cover(ldd_map_low_resolution, pcr.ldd(5))
 ldd_map_low_resolution = pcr.lddrepair(pcr.ldd(ldd_map_low_resolution))
 ldd_map_low_resolution = pcr.lddrepair(ldd_map_low_resolution)
 pcr.report(ldd_map_low_resolution, "resampled_low_resolution_ldd.map")
@@ -168,6 +169,7 @@ ldd_map_high_resolution = vos.readPCRmapClone(ldd_map_high_resolution_file_name,
                                               clone_map_file, \
                                               tmp_folder, \
                                               None, True, None, False)
+ldd_map_high_resolution = pcr.cover(ldd_map_high_resolution, pcr.ldd(5))
 ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
 ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
 pcr.report(ldd_map_high_resolution, "resampled_high_resolution_ldd.map")
