@@ -36,7 +36,7 @@ logger.info(msg)
 #
 # - the first part: the relative big ones
 clone_codes  = ["M17","M19","M26","M13","M18","M20","M05","M03","M21","M46","M27","M49","M16","M44","M52","M25","M09","M08","M11","M42","M12","M39"]
-msg = "Run the downscaling scripts for " + clone_codes
+msg = "Run the downscaling scripts for " + str(clone_codes)
 logger.info(msg)
 i_clone = 0
 # - command lines for running the downscling script parallely
@@ -53,7 +53,7 @@ logger.debug(msg)
 #
 # - the second part: # the relative small ones
 clone_codes = ["M07","M15","M38","M48","M40","M41","M22","M14","M23","M51","M04","M06","M10","M02","M45","M35","M47","M50","M24","M01","M36","M53","M33","M43","M34","M37","M31","M32","M28","M30","M29"]
-msg = "Run the downscaling scripts for " + clone_codes
+msg = "Run the downscaling scripts for " + str(clone_codes)
 logger.info(msg)
 i_clone = 0
 # - command lines for running the downscling script parallely
