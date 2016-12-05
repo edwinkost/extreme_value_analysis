@@ -178,7 +178,7 @@ pcr.report(ldd_map_high_resolution, "resampled_high_resolution_ldd.map")
 msg = "Calculating a high resolution stream order map."
 logger.info(msg)
 stream_order_map = pcr.streamorder(ldd_map_high_resolution)
-pcr.report(stream_order_map, "resampled_high_resolution_ldd.map")
+pcr.report(stream_order_map, "high_resolution_stream_order.map")
 
 
 # execute downscaling scripts for every return period
