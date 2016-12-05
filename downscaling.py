@@ -10,6 +10,8 @@ import datetime
 
 import pcraster as pcr
 
+import virtualOS as vos
+
 import logging
 logger = logging.getLogger(__name__)
 
