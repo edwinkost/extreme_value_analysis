@@ -184,7 +184,7 @@ pcr.report(stream_order_map, "resampled_high_resolution_ldd.map")
 # execute downscaling scripts for every return period
 msg = "Downscaling for every return period."
 logger.info(msg)
-for i_file in range(1, length(file_names)):
+for i_file in range(1, len(file_names)):
     file_name = file_name[i_file]
     cmd = ' python /home/edwin/github/edwinkost/wflow/wflow-py/Scripts/wflow_flood.py ' + \
           ' -i downscaling.ini ' + \
