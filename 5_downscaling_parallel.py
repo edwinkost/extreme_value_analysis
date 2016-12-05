@@ -75,9 +75,11 @@ print cmd
 msg = "Call: "+str(cmd)
 logger.debug(msg)
 vos.cmd_line(cmd, using_subprocess = False)
-
-
-# merging the results and save them in netcdf files
+#
+# wait until all downscaling processes are done:
+status = False
+while status == False:
+   status = check_downscaling_status(clone_codes)
 
 
 
