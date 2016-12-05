@@ -35,15 +35,13 @@ if clean_previous_output and os.path.exists(output_folder): shutil.rmtree(output
 
 # make output and log folders, and initialize logging:
 log_file_folder = output_folder + "/log/"
-if os.path.exists(log_file_folder) and clean_previous_output:  
-    shutil.rmtree(log_file_folder)
-    os.makedirs(log_file_folder)
-if os.path.exists(log_file_folder) == False: 
-    os.makedirs(log_file_folder)
+if os.path.exists(log_file_folder): shutil.rmtree(log_file_folder)
+os.makedirs(log_file_folder)
 vos.initialize_logging(log_file_folder)
 
 # make tmp folder:
 tmp_folder = output_folder + "/tmp/"
+if os.path.exists(tmp_folder): shutil.rmtree(tmp_folder)
 os.makedirs(tmp_folder)
 
 # change the working directory to the output folder 
