@@ -7,6 +7,7 @@ import sys
 import shutil
 import glob
 import datetime
+import numpy as np
 
 import pcraster as pcr
 

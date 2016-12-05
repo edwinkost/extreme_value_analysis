@@ -7,6 +7,7 @@ import sys
 import shutil
 import glob
 import datetime
+import numpy as np
 
 import pcraster as pcr
 
@@ -127,11 +128,11 @@ pcr.report(river_width_low_resolution, "resampled_low_resolution_bankfull_width.
 # clone at high resolution (e.g. 30 arc-seconds)
 msg = "Set the clone map at high resolution."
 logger.info(msg)
-num_of_rows = pcr.clone().nrRows() * 10
-num_of_cols = pcr.clone().nrCols() * 10
-x_min       = pcr.clone().west()
-y_max       = pcr.clone().north()
-cell_length = pcr.clone().cellSize() / 10.
+num_of_rows = np.round(pcr.clone().nrRows() * 10   , 2)
+num_of_cols = np.round(pcr.clone().nrCols() * 10   , 2)
+x_min       = np.round(pcr.clone().west()          , 2)
+y_max       = np.round(pcr.clone().north()         , 2)
+cell_length = np.round(pcr.clone().cellSize() / 10., 2)
 # set the cell length manually
 cell_length = 0.00833333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
 #
