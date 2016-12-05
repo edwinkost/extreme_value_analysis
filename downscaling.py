@@ -156,11 +156,12 @@ pcr.setclone(clone_map_file)
 msg = "Resampling high resolution dem and ldd maps."
 logger.info(msg)
 # - dem map
-dem_map_high_resolution_file_name = "/projects/0/dfguu/users/edwin/data/data_for_glofris_downscaling/input_data/maps_30sec/SRTM_1km_merge_gtopo_masked_ldd.map"
+dem_map_high_resolution_file_name = "/projects/0/dfguu/users/edwin/data/data_for_glofris_downscaling/input_data/maps_30sec/SRTM_1km_merge_gtopo_masked.map"
 dem_map_high_resolution = vos.readPCRmapClone(dem_map_high_resolution_file_name, \
                                               clone_map_file, \
                                               tmp_folder, \
                                               None, False, None, False)
+dem_map_high_resolution = pcr.cover(dem_map_high_resolution, 0.0)
 pcr.report(dem_map_high_resolution, "resampled_high_resolution_dem.map")
 # - ldd map
 ldd_map_high_resolution_file_name = "/projects/0/dfguu/users/edwin/data/data_for_glofris_downscaling/input_data/maps_30sec/worldHydroSHEDS.used.ldd"
