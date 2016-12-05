@@ -67,15 +67,15 @@ landmask = pcr.readmap(landmask_map_file)
 # read all extreme value maps (low resolution maps), resample them, and save them to the output folder
 msg = "Resampling extreme value maps."
 logger.info(msg)
-file_names = [   2-year_of_flood_innundation_volume.map,
-                 5-year_of_flood_innundation_volume.map,
-                10-year_of_flood_innundation_volume.map,
-                25-year_of_flood_innundation_volume.map,
-                50-year_of_flood_innundation_volume.map,
-               100-year_of_flood_innundation_volume.map,
-               250-year_of_flood_innundation_volume.map,
-               500-year_of_flood_innundation_volume.map,
-              1000-year_of_flood_innundation_volume.map]
+file_names = [   '2-year_of_flood_innundation_volume.map',
+                 '5-year_of_flood_innundation_volume.map',
+                '10-year_of_flood_innundation_volume.map',
+                '25-year_of_flood_innundation_volume.map',
+                '50-year_of_flood_innundation_volume.map',
+               '100-year_of_flood_innundation_volume.map',
+               '250-year_of_flood_innundation_volume.map',
+               '500-year_of_flood_innundation_volume.map',
+              '1000-year_of_flood_innundation_volume.map']
 for file_name in file_names:
     complete_file_name = input_folder + "/" + file_name
     extreme_value_map = vos.readPCRmapClone(complete_file_name, \
