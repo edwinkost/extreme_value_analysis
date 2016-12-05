@@ -109,7 +109,7 @@ river_length_file_name = "/projects/0/dfguu/users/edwin/data/data_for_glofris_do
 river_length_low_resolution = vos.readPCRmapClone(river_length_file_name, \
                                                   clone_map_file, \
                                                   tmp_folder, \
-                                                  True, False, None, False)
+                                                  None, False, None, False)
 river_length_low_resolution = pcr.ifthen(landmask, river_length_low_resolution)
 river_length_low_resolution = pcr.cover(river_length_low_resolution, 0.0)
 pcr.report(river_length_low_resolution, "resampled_low_resolution_channel_length.map") 
@@ -118,7 +118,7 @@ river_width_file_name = "/projects/0/dfguu/users/edwin/data/data_for_glofris_dow
 river_width_low_resolution = vos.readPCRmapClone(river_width_file_name, \
                                                  clone_map_file, \
                                                  tmp_folder, \
-                                                 True, False, None, False)
+                                                 None, False, None, False)
 river_width_low_resolution = pcr.ifthen(landmask, river_width_low_resolution)
 river_width_low_resolution = pcr.cover(river_width_low_resolution, 0.0)
 pcr.report(river_width_low_resolution, "resampled_low_resolution_bankfull_width.map") 
