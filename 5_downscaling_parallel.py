@@ -42,7 +42,7 @@ i_clone = 0
 # - command lines for running the downscling script parallely
 cmd = ''
 for clone_code in clone_codes:
-   cmd += "python downscaling.py " + input_folder  + " " + general_ouput_folder + " " + "downscaling.ini" + " " + clone_code + " "
+   cmd += "python downscaling.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " "
    cmd = cmd + " & "
    i_clone += 1
 cmd = cmd + " wait "
@@ -59,7 +59,7 @@ i_clone = 0
 # - command lines for running the downscling script parallely
 cmd = ''
 for clone_code in clone_codes:
-   cmd += "python downscaling.py " + input_folder  + " " + general_ouput_folder + " " + "downscaling.ini" + " " + clone_code + " "
+   cmd += "python downscaling.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " "
    cmd = cmd + " & "
    i_clone += 1
 cmd = cmd + " wait "
