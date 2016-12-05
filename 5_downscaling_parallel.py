@@ -52,6 +52,12 @@ msg = "Call: "+str(cmd)
 logger.debug(msg)
 vos.cmd_line(cmd, using_subprocess = False)
 #
+# wait until all downscaling processes are done:
+status = False
+while status == False:
+   status = check_downscaling_status(clone_codes)
+
+
 # - the second part: # the relative small ones
 clone_codes = ["M07","M15","M38","M48","M40","M41","M22","M14","M23","M51","M04","M06","M10","M02","M45","M35","M47","M50","M24","M01","M36","M53","M33","M43","M34","M37","M31","M32","M28","M30","M29"]
 msg = "Run the downscaling scripts for " + str(clone_codes)
@@ -72,3 +78,22 @@ vos.cmd_line(cmd, using_subprocess = False)
 
 
 # merging the results and save them in netcdf files
+
+
+
+
+def check_downscaling_status(clone_codes):
+
+    # waiting until all downscaling processes are done
+    count_check = 0
+    for clone_code in clone_codes:
+        status_file = str(general_output_folder) + "/" +str(clone_code) + "/downscaling_is_done.txt"
+        msg = 'Waiting for the file: '+status_file
+        if count_check == 1: logger.info(msg)
+        if count_check < 10: count_check += 1
+        status = os.path.exists(status_file)
+        if status == False: return status
+        if status: count_check = 0            
+    
+    print status
+    return status

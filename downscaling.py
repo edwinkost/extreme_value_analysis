@@ -191,4 +191,12 @@ for i_file in range(1, len(file_names)):
           ' -i downscaling.ini ' + \
           ' -f ' + str(file_name) + \
           ' -b 2-year_of_flood_innundation_volume.map -c 4 -d output_folder'
-    vos.cmd_line(cmd, using_subprocess = False)      
+    vos.cmd_line(cmd, using_subprocess = False)
+
+
+# make an empty file to indicate that this downscaling script is done      
+filename = "downscaling_is_done.txt"
+if os.path.exists(filename): os.remove(filename)
+open(filename, "w").close()    
+
+
