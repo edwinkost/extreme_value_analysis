@@ -31,7 +31,7 @@ clean_previous_output = True
 if clean_previous_output and os.path.exists(output_folder): shutil.rmtree(output_folder)
 
 # make output and log folders, and initialize logging:
-log_file_folder = general_output_folder + "/log/"
+log_file_folder = output_folder + "/log/"
 if os.path.exists(log_file_folder) and clean_previous_output:  
     shutil.rmtree(log_file_folder)
     os.makedirs(log_file_folder)
