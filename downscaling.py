@@ -26,9 +26,9 @@ mask_code            = str(sys.argv[4])
 # output folder for this mask only
 output_folder = global_output_folder + "/" + str(mask_code) + "/"
 
-# clean any files exists on the ouput directory (this can be done for global runs)
+# clean any files exists on the ouput directory
 clean_previous_output = True
-if clean_previous_output and os.path.exists(general_output_folder): shutil.rmtree(general_output_folder)
+if clean_previous_output and os.path.exists(output_folder): shutil.rmtree(output_folder)
 
 # make output and log folders, and initialize logging:
 log_file_folder = general_output_folder + "/log/"
