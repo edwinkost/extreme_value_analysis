@@ -160,9 +160,7 @@ dem_map_high_resolution_file_name = ""
 dem_map_high_resolution = vos.readPCRmapClone(dem_map_high_resolution_file_name, \
                                               clone_map_file, \
                                               tmp_folder, \
-                                              None, True, None, False)
-dem_map_high_resolution = pcr.demrepair(pcr.dem(dem_map_high_resolution))
-dem_map_high_resolution = pcr.demrepair(dem_map_high_resolution)
+                                              None, False, None, False)
 pcr.report(dem_map_high_resolution, "resampled_high_resolution_dem.map")
 # - ldd map
 ldd_map_high_resolution_file_name = ""
