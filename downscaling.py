@@ -130,9 +130,9 @@ num_of_rows = np.round(pcr.clone().nrRows() * 10   , 2)
 num_of_cols = np.round(pcr.clone().nrCols() * 10   , 2)
 x_min       = np.round(pcr.clone().west()          , 2)
 y_max       = np.round(pcr.clone().north()         , 2)
-cell_length = np.round(pcr.clone().cellSize() / 10., 2)
+cell_length = pcr.clone().cellSize() / 10., 2
 # set the cell length manually
-cell_length = 0.00833333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
+cell_length = '0.00833333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333'
 #
 # - make the map using 'mapattr' command 
 cmd = 'mapattr -s -R ' + str(num_of_rows) + \
