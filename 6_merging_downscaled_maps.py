@@ -204,7 +204,7 @@ inputDirRoot = str(sys.argv[1])
 outputDir = inputDirRoot + "/global/maps/"
 try:
 	outputDir = sys.argv[2]
-	if sys.argv[3] == "default": outputDir = inputDirRoot + "/global/maps/"
+	if sys.argv[2] == "default": outputDir = inputDirRoot + "/global/maps/"
 except:
 	outputDir = str(sys.argv[2])
 try:
