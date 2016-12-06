@@ -1669,3 +1669,18 @@ def plot_variable(pcr_variable, filename = "test.map"):
     os.system(cmd)
     
     
+def check_downscaling_status(clone_codes):
+
+    # waiting until all downscaling processes are done
+    count_check = 0
+    for clone_code in clone_codes:
+        status_file = str(general_output_folder) + "/" +str(clone_code) + "/downscaling_is_done.txt"
+        msg = 'Waiting for the file: '+status_file
+        if count_check == 1: logger.info(msg)
+        if count_check < 10: count_check += 1
+        status = os.path.exists(status_file)
+        if status == False: return status
+        if status: count_check = 0            
+    
+    print status
+    return status
