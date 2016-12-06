@@ -248,7 +248,8 @@ setclone(tempCloneMap)
 # get a list of input files that will be merged
 inputDir = os.path.join(inputDirRoot,areas[0], 'maps')
 if sys.argv[3] == "default": inputDir = os.path.join(inputDirRoot, areas[0], 'output_folder')
-files = getFileList(inputDir, '*/*-year*.map')
+print inputDir
+files = getFileList(inputDir, '/*/*-year*.map')
 
 print files
 
