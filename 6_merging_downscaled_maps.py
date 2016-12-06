@@ -165,10 +165,15 @@ def joinMaps(inputTuple):
 			print sampleArray
 			
 			sampleNrRows, sampleNrCols= sampleArray.shape
+
 			#-create mask
-			mask= (variableArray[variableRow0:variableRow1,variableCol0:variableCol1] == MV) &\
-				(sampleArray[sampleRow0:sampleRow1,sampleCol0:sampleCol1] <> MV)
+
+			#~ mask= (variableArray[variableRow0:variableRow1,variableCol0:variableCol1] == MV) &\
+				#~ (sampleArray[sampleRow0:sampleRow1,sampleCol0:sampleCol1] <> MV)
 	
+			mask= (variableArray[variableRow0:variableRow1,variableCol0:variableCol1] <> MV) &\
+				(sampleArray[sampleRow0:sampleRow1,sampleCol0:sampleCol1] <> MV)
+
 			#-add values
 			print ' adding values in %d, %d rows, columns from (x, y) %.3f, %.3f and %.3f, %.3f to position (row, col) %d, %d and %d, %d' %\
 				(sampleNrRows, sampleNrCols,sampleXMin,sampleYMin,sampleXMax,sampleYMax,variableRow0,variableCol0,variableRow1,variableCol1)
