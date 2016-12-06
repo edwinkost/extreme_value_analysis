@@ -26,9 +26,9 @@ if clean_previous_output and os.path.exists(general_output_folder): shutil.rmtre
 
 # make log folder and initialize logging
 log_file_folder = general_output_folder + "/global/log/"
-if os.path.exists(log_file_folder) and clean_previous_output: 
+if clean_previous_output: 
     shutil.rmtree(log_file_folder)
-    os.makedirs(log_file_folder)
+if os.path.exists(log_file_folder) == False: os.makedirs(log_file_folder)
 vos.initialize_logging(log_file_folder)
 
 
