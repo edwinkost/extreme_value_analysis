@@ -275,8 +275,7 @@ for fileName in files.keys():
 	for area in areas:
 		#~ print area
 		inputFileName = os.path.join(inputDirRoot, area, 'output_folder')
-		inputFileName = glob.glob(inputFileName + "/*/" + fileName)
-		
+		inputFileName = glob.glob(inputFileName + "/*/" + fileName)[0]
 		ll.append(inputFileName)
 	files[fileName]= tuple((outputFileName,nrRows,nrCols,lonMin,latMax,deltaLat,MV,ll[:],tempCloneMap))
 
