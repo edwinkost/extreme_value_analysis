@@ -1669,7 +1669,7 @@ def plot_variable(pcr_variable, filename = "test.map"):
     os.system(cmd)
     
     
-def check_downscaling_status(clone_codes):
+def check_downscaling_status(general_output_folder, clone_codes):
 
     # waiting until all downscaling processes are done
     count_check = 0
