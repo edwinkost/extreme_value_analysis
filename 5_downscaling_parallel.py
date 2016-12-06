@@ -57,7 +57,7 @@ clone_codes  = ["M17","M19","M26","M13","M18","M20","M05","M03","M21","M46","M27
 # wait until all downscaling processes are done:
 status = False
 while status == False:
-   status = vos.check_downscaling_status(clone_codes)
+   status = vos.check_downscaling_status(general_output_folder, clone_codes)
 
 
 # - the second part: # the relative small ones
@@ -81,5 +81,5 @@ vos.cmd_line(cmd, using_subprocess = False)
 # wait until all downscaling processes are done:
 status = False
 while status == False:
-   status = vos.check_downscaling_status(clone_codes)
+   status = vos.check_downscaling_status(general_output_folder, clone_codes)
 
