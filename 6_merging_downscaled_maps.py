@@ -124,59 +124,58 @@ def joinMaps(inputTuple):
 	#-iterate over maps
 	for fileName in fileNames:
 		
-		try:
 		
-			print fileName
-			attributeClone= getMapAttributesALL(fileName)
-			cellLengthClone= attributeClone['cellsize']
-			rowsClone= attributeClone['rows']
-			colsClone= attributeClone['cols']
-			xULClone= attributeClone['xUL']
-			yULClone= attributeClone['yUL']
-			# check whether both maps have the same attributes and process
-			process, nd= checkResolution(cellLength,cellLengthClone)
-			
-			if process:
-				#-get coordinates and locations
-				sampleXMin= xULClone
-				sampleXMax= xULClone+colsClone*cellLengthClone
-				sampleYMin= yULClone-rowsClone*cellLengthClone
-				sampleYMax= yULClone
-				sampleXCoordinates= sampleXMin+np.arange(colsClone+1)*cellLengthClone
-				sampleYCoordinates= sampleYMin+np.arange(rowsClone+1)*cellLengthClone
-				sampleYCoordinates= np.flipud(sampleYCoordinates)
-				sampleXMin= getMax(xMin,sampleXMin)
-				sampleXMax= getMin(xMax,sampleXMax)
-				sampleYMin= getMax(yMin,sampleYMin)
-				sampleYMax= getMin(yMax,sampleYMax)
-				sampleRow0= getPosition(sampleYMin,sampleYCoordinates,nd)
-				sampleRow1= getPosition(sampleYMax,sampleYCoordinates,nd)			
-				sampleCol0= getPosition(sampleXMin,sampleXCoordinates,nd)
-				sampleCol1= getPosition(sampleXMax,sampleXCoordinates,nd)
-				sampleRow0, sampleRow1= checkRowPosition(sampleRow0,sampleRow1)
-				variableRow0= getPosition(sampleYMin,yCoordinates,nd)
-				variableRow1= getPosition(sampleYMax,yCoordinates,nd)
-				variableCol0= getPosition(sampleXMin,xCoordinates,nd)
-				variableCol1= getPosition(sampleXMax,xCoordinates,nd)
-				variableRow0,variableRow1= checkRowPosition(variableRow0,variableRow1)
-				#-read sample array
-				setclone(fileName)
-				sampleArray= pcr2numpy(readmap(fileName),MV)
-				sampleNrRows, sampleNrCols= sampleArray.shape
-				#-create mask
-				mask= (variableArray[variableRow0:variableRow1,variableCol0:variableCol1] == MV) &\
-					(sampleArray[sampleRow0:sampleRow1,sampleCol0:sampleCol1] <> MV)
+		print fileName
+		attributeClone= getMapAttributesALL(fileName)
+		cellLengthClone= attributeClone['cellsize']
+		rowsClone= attributeClone['rows']
+		colsClone= attributeClone['cols']
+		xULClone= attributeClone['xUL']
+		yULClone= attributeClone['yUL']
+		# check whether both maps have the same attributes and process
+		process, nd= checkResolution(cellLength,cellLengthClone)
+		
+		if process:
+			#-get coordinates and locations
+			sampleXMin= xULClone
+			sampleXMax= xULClone+colsClone*cellLengthClone
+			sampleYMin= yULClone-rowsClone*cellLengthClone
+			sampleYMax= yULClone
+			sampleXCoordinates= sampleXMin+np.arange(colsClone+1)*cellLengthClone
+			sampleYCoordinates= sampleYMin+np.arange(rowsClone+1)*cellLengthClone
+			sampleYCoordinates= np.flipud(sampleYCoordinates)
+			sampleXMin= getMax(xMin,sampleXMin)
+			sampleXMax= getMin(xMax,sampleXMax)
+			sampleYMin= getMax(yMin,sampleYMin)
+			sampleYMax= getMin(yMax,sampleYMax)
+			sampleRow0= getPosition(sampleYMin,sampleYCoordinates,nd)
+			sampleRow1= getPosition(sampleYMax,sampleYCoordinates,nd)			
+			sampleCol0= getPosition(sampleXMin,sampleXCoordinates,nd)
+			sampleCol1= getPosition(sampleXMax,sampleXCoordinates,nd)
+			sampleRow0, sampleRow1= checkRowPosition(sampleRow0,sampleRow1)
+			variableRow0= getPosition(sampleYMin,yCoordinates,nd)
+			variableRow1= getPosition(sampleYMax,yCoordinates,nd)
+			variableCol0= getPosition(sampleXMin,xCoordinates,nd)
+			variableCol1= getPosition(sampleXMax,xCoordinates,nd)
+			variableRow0,variableRow1= checkRowPosition(variableRow0,variableRow1)
+			#-read sample array
+			setclone(fileName)
+			sampleArray= pcr2numpy(readmap(fileName),MV)
+			sampleNrRows, sampleNrCols= sampleArray.shape
+			#-create mask
+			mask= (variableArray[variableRow0:variableRow1,variableCol0:variableCol1] == MV) &\
+				(sampleArray[sampleRow0:sampleRow1,sampleCol0:sampleCol1] <> MV)
 	
-				#-add values
-				print ' adding values in %d, %d rows, columns from (x, y) %.3f, %.3f and %.3f, %.3f to position (row, col) %d, %d and %d, %d' %\
-					(sampleNrRows, sampleNrCols,sampleXMin,sampleYMin,sampleXMax,sampleYMax,variableRow0,variableCol0,variableRow1,variableCol1)
+			#-add values
+			print ' adding values in %d, %d rows, columns from (x, y) %.3f, %.3f and %.3f, %.3f to position (row, col) %d, %d and %d, %d' %\
+				(sampleNrRows, sampleNrCols,sampleXMin,sampleYMin,sampleXMax,sampleYMax,variableRow0,variableCol0,variableRow1,variableCol1)
 	
-				#~ variableArray[variableRow0:variableRow1,variableCol0:variableCol1][mask]= \
-					#~ sampleArray[sampleRow0:sampleRow1,sampleCol0:sampleCol1][mask]
+			#~ variableArray[variableRow0:variableRow1,variableCol0:variableCol1][mask]= \
+				#~ sampleArray[sampleRow0:sampleRow1,sampleCol0:sampleCol1][mask]
 	
-				variableArray[variableRow0:variableRow1,variableCol0:variableCol1][mask] += sampleArray[sampleRow0:sampleRow1,sampleCol0:sampleCol1][mask]
+			variableArray[variableRow0:variableRow1,variableCol0:variableCol1][mask] += sampleArray[sampleRow0:sampleRow1,sampleCol0:sampleCol1][mask]
 
-		except:
+		else:
 
 			print '%s does not match resolution and is not processed' % fileName
 
