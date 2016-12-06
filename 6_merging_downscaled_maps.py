@@ -36,6 +36,10 @@ def getMin(x,a):
 def getFileList(inputDir, filePattern):
 	'''creates a dictionary of	files meeting the pattern specified'''
 	#~ fileNameList = glob.glob(os.path.join(inputDir, filePattern))
+	
+	print inputDir
+	print filePattern
+	
 	fileNameList = glob.glob(inputDir + filePattern)
 	ll= {}
 	for fileName in fileNameList:
