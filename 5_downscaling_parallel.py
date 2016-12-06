@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 input_folder = "/scratch-shared/edwinsut/flood_analyzer_analysis/extreme_values/watch_1960-1999/"
 
 # output folder
-general_output_folder = "/scratch-shared/edwinhs-last/test_global_final/"
+general_output_folder = "/scratch-shared/edwinhs-last/test_global_final_corrected/"
 
 # clean any files exists on the ouput directory (this can be done for global runs)
 clean_previous_output = True

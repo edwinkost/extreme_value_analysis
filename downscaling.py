@@ -95,8 +95,8 @@ ldd_map_low_resolution = vos.readPCRmapClone(ldd_map_low_resolution_file_name, \
                                              clone_map_file, \
                                              tmp_folder, \
                                              None, True, None, False)
-#~ ldd_map_low_resolution = pcr.ifthen(landmask, ldd_map_low_resolution)  # NOTE THAT YOU SHOULD NOT MASK-OUT THE LDD.
-ldd_map_low_resolution = pcr.cover(ldd_map_low_resolution, pcr.ldd(5))
+#~ ldd_map_low_resolution = pcr.ifthen(landmask, ldd_map_low_resolution)    # NOTE THAT YOU SHOULD NOT MASK-OUT THE LDD.
+#~ ldd_map_low_resolution = pcr.cover(ldd_map_low_resolution, pcr.ldd(5))   # YOU SHOULD NOT DO THIS
 ldd_map_low_resolution = pcr.lddrepair(pcr.ldd(ldd_map_low_resolution))
 ldd_map_low_resolution = pcr.lddrepair(ldd_map_low_resolution)
 pcr.report(ldd_map_low_resolution, "resampled_low_resolution_ldd.map")
@@ -155,14 +155,6 @@ pcr.setclone(clone_map_file)
 # resampling high resolution dem and ldd maps
 msg = "Resampling high resolution dem and ldd maps."
 logger.info(msg)
-# - dem map
-dem_map_high_resolution_file_name = "/projects/0/dfguu/users/edwin/data/data_for_glofris_downscaling/input_data/maps_30sec/SRTM_1km_merge_gtopo_masked.map"
-dem_map_high_resolution = vos.readPCRmapClone(dem_map_high_resolution_file_name, \
-                                              clone_map_file, \
-                                              tmp_folder, \
-                                              None, False, None, False)
-dem_map_high_resolution = pcr.cover(dem_map_high_resolution, 0.0)
-pcr.report(dem_map_high_resolution, "resampled_high_resolution_dem.map")
 # - ldd map
 ldd_map_high_resolution_file_name = "/projects/0/dfguu/users/edwin/data/data_for_glofris_downscaling/input_data/maps_30sec/worldHydroSHEDS.used.ldd"
 ldd_map_high_resolution = vos.readPCRmapClone(ldd_map_high_resolution_file_name, \
@@ -173,6 +165,16 @@ ldd_map_high_resolution = pcr.cover(ldd_map_high_resolution, pcr.ldd(5))
 ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
 ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
 pcr.report(ldd_map_high_resolution, "resampled_high_resolution_ldd.map")
+# - dem map
+dem_map_high_resolution_file_name = "/projects/0/dfguu/users/edwin/data/data_for_glofris_downscaling/input_data/maps_30sec/SRTM_1km_merge_gtopo_masked.map"
+dem_map_high_resolution = vos.readPCRmapClone(dem_map_high_resolution_file_name, \
+                                              clone_map_file, \
+                                              tmp_folder, \
+                                              None, False, None, False)
+dem_map_high_resolution = pcr.cover(dem_map_high_resolution, 0.0)
+# - use dem only where ldd are defined
+dem_map_high_resolution = pcr.ifthen(pcr.defined(ldd_map_high_resolution) , dem_map_high_resolution)
+pcr.report(dem_map_high_resolution, "resampled_high_resolution_dem.map")
 
 
 # calculating high resolution stream order maps
