@@ -161,6 +161,9 @@ def joinMaps(inputTuple):
 			#-read sample array
 			setclone(fileName)
 			sampleArray= pcr2numpy(readmap(fileName),MV)
+			
+			print sampleArray
+			
 			sampleNrRows, sampleNrCols= sampleArray.shape
 			#-create mask
 			mask= (variableArray[variableRow0:variableRow1,variableCol0:variableCol1] == MV) &\
