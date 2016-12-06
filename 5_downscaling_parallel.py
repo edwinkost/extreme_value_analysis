@@ -60,26 +60,26 @@ while status == False:
    status = vos.check_downscaling_status(general_output_folder, clone_codes)
 
 
-# - the second part: # the relative small ones
-clone_codes = ["M07","M15","M38","M48","M40","M41","M22","M14","M23","M51","M04","M06","M10","M02","M45","M35","M47","M50","M24","M01","M36","M53","M33","M43","M34","M37","M31","M32","M28","M30","M29"]
-msg = "Run the downscaling scripts for " + str(clone_codes)
-logger.info(msg)
-i_clone = 0
-# - command lines for running the downscling script parallely
-cmd = ''
-for clone_code in clone_codes:
-   cmd += "python downscaling.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " "
-   cmd = cmd + " & "
-   i_clone += 1
-cmd = cmd + " wait "
-# - execute the command
-print cmd
-msg = "Call: "+str(cmd)
-logger.debug(msg)
-vos.cmd_line(cmd, using_subprocess = False)
-#
-# wait until all downscaling processes are done:
-status = False
-while status == False:
-   status = vos.check_downscaling_status(general_output_folder, clone_codes)
+#~ # - the second part: # the relative small ones
+#~ clone_codes = ["M07","M15","M38","M48","M40","M41","M22","M14","M23","M51","M04","M06","M10","M02","M45","M35","M47","M50","M24","M01","M36","M53","M33","M43","M34","M37","M31","M32","M28","M30","M29"]
+#~ msg = "Run the downscaling scripts for " + str(clone_codes)
+#~ logger.info(msg)
+#~ i_clone = 0
+#~ # - command lines for running the downscling script parallely
+#~ cmd = ''
+#~ for clone_code in clone_codes:
+   #~ cmd += "python downscaling.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " "
+   #~ cmd = cmd + " & "
+   #~ i_clone += 1
+#~ cmd = cmd + " wait "
+#~ # - execute the command
+#~ print cmd
+#~ msg = "Call: "+str(cmd)
+#~ logger.debug(msg)
+#~ vos.cmd_line(cmd, using_subprocess = False)
+#~ #
+#~ # wait until all downscaling processes are done:
+#~ status = False
+#~ while status == False:
+   #~ status = vos.check_downscaling_status(general_output_folder, clone_codes)
 

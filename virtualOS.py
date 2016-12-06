@@ -1676,8 +1676,8 @@ def check_downscaling_status(general_output_folder, clone_codes):
     for clone_code in clone_codes:
         status_file = str(general_output_folder) + "/" +str(clone_code) + "/downscaling_is_done.txt"
         msg = 'Waiting for the file: '+status_file
-        if count_check == 1: logger.info(msg)
-        if count_check < 10: count_check += 1
+        if count_check < 2: logger.info(msg)
+        if count_check < 9: count_check += 1
         status = os.path.exists(status_file)
         if status == False: return status
         if status: count_check = 0            
