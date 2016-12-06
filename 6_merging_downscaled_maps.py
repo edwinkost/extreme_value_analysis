@@ -169,7 +169,7 @@ def joinMaps(inputTuple):
 				#~ variableArray[variableRow0:variableRow1,variableCol0:variableCol1][mask]= \
 					#~ sampleArray[sampleRow0:sampleRow1,sampleCol0:sampleCol1][mask]
 	
-				variableArray[variableRow0:variableRow1,variableCol0:variableCol1][mask] = + sampleArray[sampleRow0:sampleRow1,sampleCol0:sampleCol1][mask]
+				variableArray[variableRow0:variableRow1,variableCol0:variableCol1][mask] += sampleArray[sampleRow0:sampleRow1,sampleCol0:sampleCol1][mask]
 
 		except:
 
@@ -185,36 +185,23 @@ def joinMaps(inputTuple):
 
 MV = 1e20
 
-# chosen date
-year = 1960
-chosenDate = datetime.date(int(year),12,31) # datetime.date(1979,12,31)
-try:
-    chosenDate = str(sys.argv[1])
-except:
-    pass
-
 # map coordinates and resolution (at 30 arc-second resolution)
-deltaLat = 5.0/60.0
-deltaLon = 5.0/60.0
-latMin = -90.
-latMax = 90.0
-lonMin = -180.
-lonMax = 180.0
+deltaLat = 0.5/60.0
+deltaLon = 0.5/60.0
+latMin =  -90.0
+latMax =   90.0
+lonMin = -180.0
+lonMax =  180.0
 
-inputDirRoot = ''  
-try:
-    inputDirRoot = str(sys.argv[2])
-except:
-    pass
 
-outputDir = inputDirRoot+"/global/maps/"
+inputDirRoot = str(sys.argv[1])
+
+outputDir = inputDirRoot + "/global/maps/"
 try:
-	outputDir = sys.argv[3]
+	outputDir = sys.argv[2]
 	if sys.argv[3] == "default": outputDir = inputDirRoot + "/global/maps/"
-	if sys.argv[3] == "maps"   : outputDir = inputDirRoot + "/global/maps/"
-	if sys.argv[3] == "states" : outputDir = inputDirRoot + "/global/states/"
 except:
-	outputDir = str(sys.argv[3])
+	outputDir = str(sys.argv[2])
 try:
 	os.makedirs(outputDir)
 except:
@@ -222,13 +209,13 @@ except:
 
 ncores = 8
 try:
-    ncores = int(sys.argv[4])
+    ncores = int(sys.argv[3])
 except:
     pass
 
 number_of_clone_maps = 53
 try:
-    number_of_clone_maps = int(sys.argv[5])
+    number_of_clone_maps = int(sys.argv[4])
 except:
     pass
 areas = ['M%02d'%i for i in range(1,number_of_clone_maps+1,1)]
@@ -242,7 +229,8 @@ try:
 except:
     pass
 
-#-main script
+
+# main script
 #-get clone
 nrRows= int((latMax-latMin)/deltaLat)
 nrCols= int((lonMax-lonMin)/deltaLon)
@@ -256,12 +244,11 @@ setclone(tempCloneMap)
 #~ print areas
 #~ print areas[0]
 
-# input files where unmerged maps are saved
+
+# get a list of input files that will be merged
 inputDir = os.path.join(inputDirRoot,areas[0], 'maps')
-if sys.argv[3] == "default": inputDir = os.path.join(inputDirRoot,areas[0], 'maps')
-if sys.argv[3] == "maps"   : inputDir = os.path.join(inputDirRoot,areas[0], 'maps')
-if sys.argv[3] == "states" : inputDir = os.path.join(inputDirRoot,areas[0], 'states')
-files = getFileList(inputDir, '*%s.map' % chosenDate)
+if sys.argv[3] == "default": inputDir = os.path.join(inputDirRoot, areas[0], 'output_folder')
+files = getFileList(inputDir, '*/*-year*.map')
 
 
 ncores = min(len(files), ncores)
@@ -271,17 +258,17 @@ print 'Using %d cores to process' % ncores,
 print
 print
 
+
 for fileName in files.keys():
 	#~ print fileName,
 	files[fileName]= {}
 	ll= []
-	outputFileName= os.path.join(outputDir,fileName)
+	outputFileName= os.path.join(outputDir, fileName)
 	for area in areas:
 		#~ print area
-		inputFileName= os.path.join(inputDirRoot, area, 'maps', fileName)
-		if sys.argv[3] == "default": inputFileName = os.path.join(inputDirRoot, area, 'maps',   fileName)
-		if sys.argv[3] == "maps"   : inputFileName = os.path.join(inputDirRoot, area, 'maps',   fileName)
-		if sys.argv[3] == "states" : inputFileName = os.path.join(inputDirRoot, area, 'states', fileName)
+		inputFileName = os.path.join(inputDirRoot, area, 'output_folder')
+		inputFileName = glob.glob(inputFileName + "/*/" + fileName)
+		
 		ll.append(inputFileName)
 	files[fileName]= tuple((outputFileName,nrRows,nrCols,lonMin,latMax,deltaLat,MV,ll[:],tempCloneMap))
 
