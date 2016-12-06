@@ -211,6 +211,7 @@ try:
 	os.makedirs(outputDir)
 except:
 	pass
+print outputDir	
 
 ncores = 8
 try:
