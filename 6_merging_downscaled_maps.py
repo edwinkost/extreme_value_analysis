@@ -235,6 +235,7 @@ try:
 except:
     pass
 
+print areas
 
 # main script
 #-get clone
