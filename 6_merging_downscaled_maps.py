@@ -250,6 +250,7 @@ inputDir = os.path.join(inputDirRoot,areas[0], 'maps')
 if sys.argv[3] == "default": inputDir = os.path.join(inputDirRoot, areas[0], 'output_folder')
 files = getFileList(inputDir, '*/*-year*.map')
 
+print files
 
 ncores = min(len(files), ncores)
 print
