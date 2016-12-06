@@ -37,7 +37,7 @@ vos.initialize_logging(log_file_folder)
 #~ logger.info(msg)
 #~ #
 #~ # - the first part: the relative big ones
-#~ clone_codes  = ["M17","M19","M26","M13","M18","M20","M05","M03","M21","M46","M27","M49","M16","M44","M52","M25","M09","M08","M11","M42","M12","M39"]
+clone_codes  = ["M17","M19","M26","M13","M18","M20","M05","M03","M21","M46","M27","M49","M16","M44","M52","M25","M09","M08","M11","M42","M12","M39"]
 #~ msg = "Run the downscaling scripts for " + str(clone_codes)
 #~ logger.info(msg)
 #~ i_clone = 0
