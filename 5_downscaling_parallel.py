@@ -86,4 +86,7 @@ while status == False:
    status = vos.check_downscaling_status(general_output_folder, clone_codes)
 
 
+# Finish
+msg = "All downscaling calculations are done. "
+logger.info(msg)
 
