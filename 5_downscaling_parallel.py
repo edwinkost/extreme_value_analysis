@@ -38,55 +38,35 @@ logger.info(msg)
 number_of_clone_maps = 53
 all_clone_codes = ['M%02d'%i for i in range(1,number_of_clone_maps+1,1)]
 #
-#
-# - the first part: the relative big ones
-clone_codes  = ["M17","M19","M26","M13","M18","M20","M05","M03","M21","M46","M27","M49","M16","M44","M52","M25","M09","M08","M11","M42","M12","M39"]
-# - and plus two of the smallest ones 
-#~ clone_codes += ["M30","M29"]
-msg = "Run the downscaling scripts for " + str(clone_codes)
-logger.info(msg)
-i_clone = 0
-# - command lines for running the downscling script parallely
-cmd = ''
-for clone_code in clone_codes:
-   cmd += "python downscaling.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " "
-   cmd = cmd + " & "
-   i_clone += 1
-cmd = cmd + " wait "
-# - execute the command
-print cmd
-msg = "Call: "+str(cmd)
-logger.debug(msg)
-vos.cmd_line(cmd, using_subprocess = False)
-#
-# wait until all downscaling processes are done:
-status = False
-while status == False:
-   status = vos.check_downscaling_status(general_output_folder, clone_codes)
-#
-#
-# - the second part: # the relative small ones minus two of the smallest ones
-clone_codes = ["M07","M15","M38","M48","M40","M41","M22","M14","M23","M51","M04","M06","M10","M02","M45","M35","M47","M50","M24","M01","M36","M53","M33","M43","M34","M37","M31","M32","M28"]
-msg = "Run the downscaling scripts for " + str(clone_codes)
-logger.info(msg)
-i_clone = 0
-# - command lines for running the downscling script parallely
-cmd = ''
-for clone_code in clone_codes:
-   cmd += "python downscaling.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " "
-   cmd = cmd + " & "
-   i_clone += 1
-cmd = cmd + " wait "
-# - execute the command
-print cmd
-msg = "Call: "+str(cmd)
-logger.debug(msg)
-vos.cmd_line(cmd, using_subprocess = False)
-#
-# wait until all downscaling processes are done:
-status = False
-while status == False:
-   status = vos.check_downscaling_status(general_output_folder, clone_codes)
+# - due to limited memory, we have to split the runs into several groups (assumption: a process takes maximum about 3.5 GB RAM and we will use normal nodes)
+num_of_clones_in_a_grp = np.int(np.floor(64 / 3.5))
+number_of_clone_groups = np.int(np.ceil(number_of_clone_maps / num_of_clones_in_a_grp))
+start_clone = 0
+for i_group in range(number_of_clone_groups):
+    if i_group > 0: start_clone = last_clone
+    last_clone = np.minimum(number_of_clone_maps, start_clone + num_of_clones_in_a_grp)
+    clone_codes = all_clone_codes[start_clone:last_clone]
+    print clone_codes
+    msg = "Run the downscaling scripts for " + str(clone_codes)
+    logger.info(msg)
+    i_clone = 0
+    # - command lines for running the downscling script parallely
+    cmd = ''
+    for clone_code in clone_codes:
+       cmd += "python downscaling.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " "
+       cmd = cmd + " & "
+       i_clone += 1
+    cmd = cmd + " wait "
+    # - execute the command
+    print cmd
+    msg = "Call: "+str(cmd)
+    logger.debug(msg)
+    vos.cmd_line(cmd, using_subprocess = False)
+    #
+    # wait until all downscaling processes are done:
+    status = False
+    while status == False:
+       status = vos.check_downscaling_status(general_output_folder, clone_codes)
 
 
 # Finish
