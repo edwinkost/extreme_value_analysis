@@ -39,8 +39,8 @@ number_of_clone_maps = 53
 all_clone_codes = ['M%02d'%i for i in range(1,number_of_clone_maps+1,1)]
 #
 # - due to limited memory, we have to split the runs into several groups (assumption: a process takes maximum about 3.5 GB RAM and we will use normal nodes)
-num_of_clones_in_a_grp = np.int(np.floor(64 / 3.5))
-number_of_clone_groups = np.int(np.ceil(number_of_clone_maps / num_of_clones_in_a_grp))
+num_of_clones_in_a_grp = np.int(np.floor(64.0 / 3.5))
+number_of_clone_groups = np.int(np.ceil(float(number_of_clone_maps)/ num_of_clones_in_a_grp))
 start_clone = 0
 for i_group in range(number_of_clone_groups):
     if i_group > 0: start_clone = last_clone
