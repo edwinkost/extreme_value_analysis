@@ -35,11 +35,14 @@ vos.initialize_logging(log_file_folder)
 msg = "Run the downscaling scripts."
 logger.info(msg)
 #
+number_of_clone_maps = 53
+all_clone_codes = ['M%02d'%i for i in range(1,number_of_clone_maps+1,1)]
+#
 #
 # - the first part: the relative big ones
 clone_codes  = ["M17","M19","M26","M13","M18","M20","M05","M03","M21","M46","M27","M49","M16","M44","M52","M25","M09","M08","M11","M42","M12","M39"]
 # - and plus two of the smallest ones 
-clone_codes += ["M30","M29"]
+#~ clone_codes += ["M30","M29"]
 msg = "Run the downscaling scripts for " + str(clone_codes)
 logger.info(msg)
 i_clone = 0
