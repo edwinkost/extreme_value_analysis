@@ -304,3 +304,6 @@ os.remove(tempCloneMap)
 print ' all done'
 print
 print
+
+
+# TODO: convert pcraster files to a netcdt file:
