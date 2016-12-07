@@ -220,7 +220,7 @@ except:
 	pass
 print outputDir	
 
-ncores = 8
+ncores = 3
 try:
     ncores = int(sys.argv[3])
 except:
