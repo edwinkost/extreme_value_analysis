@@ -238,7 +238,7 @@ except:
 vos.initialize_logging(log_file_location)
 
 # number of cores that will be used
-ncores = 2
+ncores = 3
 
 # clone/mask maps
 number_of_clone_maps = 53
