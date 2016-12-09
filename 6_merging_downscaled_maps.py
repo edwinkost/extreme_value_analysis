@@ -19,7 +19,7 @@ from pcraster import setclone, Scalar, readmap, report, pcr2numpy, numpy2pcr
 import virtualOS as vos
 
 # reporting module
-import output_netcdf_cf_convention
+import output_netcdf_cf_convention as outputNetCDF
 
 # variable dictionaries
 import aqueduct_flood_analyzer_variable_list_corrected as varDict
