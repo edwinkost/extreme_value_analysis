@@ -344,7 +344,7 @@ netcdf_setup['description']     = "The extreme values of flood inundation depth 
 netcdf_setup['source'     ]     = "Utrecht University, Department of Physical Geography - contact: Edwin H. Sutanudjaja (E.H.Sutanudjaja@uu.nl)"
 netcdf_setup['references' ]     = "Sutanudjaja et al., in prep."
 
-# netcdf output folder
+# netcdf output folderls -lah 
 netcdf_output_folder = inputDirRoot + "/global/netcdf/"
 try:
 	os.makedirs(netcdf_output_folder)
@@ -424,7 +424,7 @@ for return_period in return_periods:
     variable_name = str(return_period) + "_of_" + varDict.netcdf_short_name[var_name]
 
     # read from pcraster files
-    inundation_map = pcr.readmap(inputDirRoot + "/global/maps/" + "inun_" + str(return_period) + "-year_of_flood_innundation_volume_catch_04.tif.map")
+    inundation_map = pcr.readmap(inputDirRoot + "/global/maps/" + "inun_" + str(return_period) + "_of_flood_innundation_volume_catch_04.tif.map")
     
     # put it in a data dictionary
     data_dictionary[variable_name] = pcr.pcr2numpy(inundation_map, vos.MV)
