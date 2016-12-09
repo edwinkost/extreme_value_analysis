@@ -238,7 +238,7 @@ except:
 vos.initialize_logging(log_file_location)
 
 # number of cores that will be used
-ncores = 3
+ncores = 5
 
 # clone/mask maps
 number_of_clone_maps = 53
@@ -354,6 +354,7 @@ var_name = 'floodDepth'
 return_periods = ["2-year", "5-year", "10-year", "25-year", "50-year", "100-year", "250-year", "500-year", "1000-year"]
 
 # - the dictionary for attribute information in a netcdf file
+netcdf_file = {}
 netcdf_file[var_name] = {}
 #
 # - all return periods in one file: file name (format from Philip: inunriver_rcp4p5_0000GFDL-ESM2M_2030_rp00000.nc)
