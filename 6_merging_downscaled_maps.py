@@ -15,6 +15,8 @@ import glob
 from multiprocessing import Pool
 from pcraster import setclone, Scalar, readmap, report, pcr2numpy, numpy2pcr
 
+import pcraster as pcr
+
 # utility module
 import virtualOS as vos
 
