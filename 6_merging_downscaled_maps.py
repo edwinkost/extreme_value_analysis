@@ -331,6 +331,8 @@ netcdf_setup['institution']     = "Department of Physical Geography, Utrecht Uni
 netcdf_setup['title'      ]     = "PCR-GLOBWB 2 output (post-processed for the Aqueduct Flood Analyzer): Flood Inundation Depth (above surface level)."
 netcdf_setup['created by' ]     = "Edwin H. Sutanudjaja (E.H.Sutanudjaja@uu.nl)"
 netcdf_setup['description']     = "The extreme values of flood inundation depth (above surface level)."
+netcdf_setup['source'     ]     = "Utrecht University, Department of Physical Geography - contact: Edwin H. Sutanudjaja (E.H.Sutanudjaja@uu.nl)"
+netcdf_setup['references' ]     = "Sutanudjaja et al., in prep."
 
 # netcdf output folder
 netcdf_output_folder = inputDirRoot + "/global/netcdf/"
