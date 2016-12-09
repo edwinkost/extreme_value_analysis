@@ -15,6 +15,20 @@ import glob
 from multiprocessing import Pool
 from pcraster import setclone, Scalar, readmap, report, pcr2numpy, numpy2pcr
 
+# utility module
+import virtualOS as vos
+
+# reporting module
+import outputNetCDF
+
+# variable dictionaries
+import aqueduct_flood_analyzer_variable_list_corrected as varDict
+
+# logger
+import logging
+logger = logging.getLogger(__name__)
+
+
 def getMax(x,a):
 	if not isinstance(a,np.ndarray):
 		a= np.array(a)		
@@ -106,15 +120,17 @@ def joinMaps(inputTuple):
 	MV= inputTuple[6]
 	fileNames= inputTuple[7]
 	cloneFileName= inputTuple[8]
-	#-echo to screen
-	print 'combining files for %s' % outputFileName,
+	#-echo to screen/logger
+	msg = 'combining files for %s' % outputFileName,
+	logger.info(msg)
 	#-get extent
 	xMax= xMin+nrCols*cellLength
 	yMin= yMax-nrRows*cellLength
 	xCoordinates= xMin+np.arange(nrCols+1)*cellLength
 	yCoordinates= yMin+np.arange(nrRows+1)*cellLength
 	yCoordinates= np.flipud(yCoordinates)
-	print 'between %.2f, %.2f and %.2f, %.2f' % (xMin,yMin,xMax,yMax)
+	msg = 'between %.2f, %.2f and %.2f, %.2f' % (xMin,yMin,xMax,yMax)
+	logger.info(msg)
 
 	#~ #-set output array
 	#~ variableArray= np.ones((nrRows,nrCols))*MV
@@ -123,7 +139,6 @@ def joinMaps(inputTuple):
 
 	#-iterate over maps
 	for fileName in fileNames:
-		
 		
 		print fileName
 		attributeClone= getMapAttributesALL(fileName)
@@ -166,17 +181,16 @@ def joinMaps(inputTuple):
 			
 			sampleNrRows, sampleNrCols= sampleArray.shape
 
-			#-create mask
-
+			# -create mask
 			#~ mask= (variableArray[variableRow0:variableRow1,variableCol0:variableCol1] == MV) &\
 				#~ (sampleArray[sampleRow0:sampleRow1,sampleCol0:sampleCol1] <> MV)
-	
 			mask= (variableArray[variableRow0:variableRow1,variableCol0:variableCol1] <> MV) &\
 				(sampleArray[sampleRow0:sampleRow1,sampleCol0:sampleCol1] <> MV)
 
 			#-add values
-			print ' adding values in %d, %d rows, columns from (x, y) %.3f, %.3f and %.3f, %.3f to position (row, col) %d, %d and %d, %d' %\
+			msg = ' adding values in %d, %d rows, columns from (x, y) %.3f, %.3f and %.3f, %.3f to position (row, col) %d, %d and %d, %d' %\
 				(sampleNrRows, sampleNrCols,sampleXMin,sampleYMin,sampleXMax,sampleYMax,variableRow0,variableCol0,variableRow1,variableCol1)
+			logger.info(msg)	
 	
 			#~ variableArray[variableRow0:variableRow1,variableCol0:variableCol1][mask]= \
 				#~ sampleArray[sampleRow0:sampleRow1,sampleCol0:sampleCol1][mask]
@@ -185,11 +199,13 @@ def joinMaps(inputTuple):
 
 		else:
 
-			print '%s does not match resolution and is not processed' % fileName
+			msg = '%s does not match resolution and is not processed' % fileName
+			logger.warning(msg)
 
 	#-report output map
 	setclone(cloneFileName)
 	report(numpy2pcr(Scalar,variableArray,MV),outputFileName)
+
 
 ##################################
 ######## user input ##############
@@ -205,54 +221,48 @@ latMax =   90.0
 lonMin = -180.0
 lonMax =  180.0
 
-
 inputDirRoot = str(sys.argv[1])
 
 outputDir = inputDirRoot + "/global/maps/"
 try:
-	outputDir = sys.argv[2]
-	if sys.argv[2] == "default": outputDir = inputDirRoot + "/global/maps/"
-except:
-	outputDir = str(sys.argv[2])
-try:
 	os.makedirs(outputDir)
 except:
 	pass
-print outputDir	
 
-ncores = 3
+# - prepare logger and its directory
+log_file_location = outputDir + "/log/"
 try:
-    ncores = int(sys.argv[3])
+    os.makedirs(log_file_location)
 except:
     pass
+vos.initialize_logging(log_file_location)
 
+# number of cores that will be used
+ncores = 2
+
+# clone/mask maps
 number_of_clone_maps = 53
-try:
-    number_of_clone_maps = int(sys.argv[4])
-except:
-    pass
 areas = ['M%02d'%i for i in range(1,number_of_clone_maps+1,1)]
 
-# set clone maps based on the system argument
-#~ areas = ["M47","M48"]   ### only fot TEST CASE
-try:
-    areas = str(sys.argv[4])
-    areas = list(set(areas.split(",")))
-    if areas[0] == "Global": areas = ['M%02d'%i for i in range(1,number_of_clone_maps+1,1)] 
-except:
-    pass
 
-print areas
 
-# main script
-#-get clone
-nrRows= int((latMax-latMin)/deltaLat)
-nrCols= int((lonMax-lonMin)/deltaLon)
+########################################################################
+# MAIN SCRIPT
+########################################################################
 
+
+# get clone 
+msg = "Make and set the clone map."
+logger.info(msg)
+# - number of rows and clones
+nrRows = int((latMax-latMin)/deltaLat)
+nrCols = int((lonMax-lonMin)/deltaLon)
+# - make and set the clone map
 tempCloneMap = outputDir+'/temp_clone.map'
-command= 'mapattr -s -R %d -C %d -P "yb2t"	-B -x %f -y %f -l %f %s' %\
+command = 'mapattr -s -R %d -C %d -P "yb2t"	-B -x %f -y %f -l %f %s' %\
 	(nrRows,nrCols,lonMin,latMax,deltaLat,tempCloneMap)
-os.system(command)
+vos.cmd_line(command, using_subprocess = False)
+# - set the clone map. 
 setclone(tempCloneMap)
 
 #~ print areas
@@ -260,18 +270,17 @@ setclone(tempCloneMap)
 
 
 # get a list of input files that will be merged
+msg = "Get the list of input files that will be merged."
+logger.info(msg)
 inputDir = inputDirRoot + "/" + areas[0] + "/output_folder/"
-print inputDir
 files = getFileList(inputDir, '/*/*-year*.map')
+msg = "The files that will be merged: " + str(files)
+logger.info(msg)
 
-print files
-
+# number of cores that will be used
 ncores = min(len(files), ncores)
-print
-print
-print 'Using %d cores to process' % ncores,
-print
-print
+msg = 'Using %d cores to process' % ncores,
+logger.info(msg)
 
 
 for fileName in files.keys():
@@ -294,6 +303,8 @@ for fileName in files.keys():
 
 print
 print
+msg = "Start merging."
+logger.info(msg)
 pool = Pool(processes=ncores)		# start "ncores" of worker processes
 pool.map(joinMaps,files.values())
 print
@@ -301,9 +312,110 @@ print
 
 #-remove temporary file
 os.remove(tempCloneMap)
-print ' all done'
+msg =' all done'
+logger.info(msg)
 print
 print
 
 
-# TODO: convert pcraster files to a netcdt file:
+
+# Convert pcraster files to a netcdt file:
+msg = "Convert pcraster maps to a netcdf file".
+logger.info(msg)
+
+# netcdf general setup:
+netcdf_setup = {}
+netcdf_setup['format']          = "NETCDF4"
+netcdf_setup['zlib']            = True
+netcdf_setup['institution']     = "Department of Physical Geography, Utrecht University"
+netcdf_setup['title'      ]     = "PCR-GLOBWB 2 output (post-processed for the Aqueduct Flood Analyzer): Flood Inundation Depth (above surface level)."
+netcdf_setup['created by' ]     = "Edwin H. Sutanudjaja (E.H.Sutanudjaja@uu.nl)"
+netcdf_setup['description']     = "The extreme values of flood inundation depth (above surface level)."
+
+# netcdf output folder
+netcdf_output_folder = inputDirRoot + "/global/netcdf/"
+try:
+	os.makedirs(netcdf_output_folder)
+except:
+	pass
+print outputDir	
+
+
+# object for reporting/making netcdf files
+netcdf_report = outputNetCDF.OutputNetCDF()
+
+msg = "Preparing the netcdf output file."
+logger.info(msg)
+#
+# - PCR-GLOBWB variable name
+var_name = 'floodDepth' 
+#
+# - return periods
+return_periods = ["2-year", "5-year", "10-year", "25-year", "50-year", "100-year", "250-year", "500-year", "1000-year"]
+
+# - the dictionary for attribute information in a netcdf file
+netcdf_file[var_name] = {}
+#
+# - all return periods in one file: file name (format from Philip: inunriver_rcp4p5_0000GFDL-ESM2M_2030_rp00000.nc)
+netcdf_file[var_name]['file_name']  = netcdf_output_folder + "/" + "inunriver_historical_WATCH_1999.nc"
+#
+# - general attribute information:
+netcdf_file[var_name]['description'] = netcdf_setup['description']
+netcdf_file[var_name]['institution'] = netcdf_setup['institution']
+netcdf_file[var_name]['title'      ] = netcdf_setup['title'      ]
+netcdf_file[var_name]['created by' ] = netcdf_setup['created by' ]
+netcdf_file[var_name]['source'     ] = netcdf_setup['source'     ]
+netcdf_file[var_name]['references' ] = netcdf_setup['references' ]
+#
+# - resolution (unit: arc-minutes)
+netcdf_file[var_name]['resolution_arcmin'] = 0.5 
+#
+# - preparing netcdf file:
+msg = "Preparing the netcdf file: " + netcdf_file[var_name]['file_name']
+logger.info(msg)
+netcdf_report.create_netcdf_file(netcdf_file[var_name]) 
+#
+#
+# time bounds in a netcdf file
+str_year = 1960
+end_year = 1999
+lowerTimeBound = datetime.datetime(str_year,  1,  1, 0)
+upperTimeBound = datetime.datetime(end_year, 12, 31, 0)
+timeBounds = [lowerTimeBound, upperTimeBound]
+#
+#
+msg = "Writing extreme values to a netcdf file: " + str(netcdf_file[var_name]['file_name'])
+logger.info(msg)
+#
+#
+# preparing the variables in the netcdf file:
+for return_period in return_periods:
+    # variable names and unit 
+    variable_name = str(return_period) + "_of_" + varDict.netcdf_short_name[var_name]
+    variable_unit = varDict.netcdf_unit[var_name]
+    var_long_name = str(return_period) + "_of_" + varDict.netcdf_long_name[var_name]
+    # 
+    netcdf_report.create_variable(\
+                                  ncFileName = netcdf_file[var_name]['file_name'], \
+                                  varName    = variable_name, \
+                                  varUnit    = variable_unit, \
+                                  longName   = var_long_name, \
+                                  comment    = varDict.comment[var_name]
+                                  )
+
+# store the pcraster map to netcdf files:
+data_dictionary = {}
+for return_period in return_periods:
+    
+    # read from pcraster files
+    inundation_map = pcr.readmap(inputDirRoot + "/global/maps/" + "inun_" + str(return_period) + "-year_of_flood_innundation_volume_catch_04.tif.map")
+    
+    # put it in a data dictionary
+    data_dictionary[return_period] = pcr.pcr2numpy(extreme_values[inundation_map, vos.MV)
+
+# save the variables to a netcdf file
+netcdf_report.dictionary_of_data_to_netcdf(netcdf_file[var_name]['file_name'], \
+                                           data_dictionary, \
+                                           timeBounds)
+
+

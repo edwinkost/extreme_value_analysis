@@ -112,9 +112,6 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     #
     netcdf_file[var_name] = {}
     #
-    # return periods
-    return_periods = ["2-year", "5-year", "10-year", "25-year", "50-year", "100-year", "250-year", "500-year", "1000-year"]
-    #
     # all gumbel fit parameters in a netcdf file:
     # - file name
     netcdf_file[var_name]['file_name'] = output_files['folder'] + "/" + "extreme_values_based_on_gumbel_fit_for_" + varDict.netcdf_short_name[var_name] + ".nc"
@@ -135,9 +132,15 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     logger.info(msg)
     netcdf_report.create_netcdf_file(netcdf_file[var_name]) 
 
-# derive gumbel parameters
+
+
+
+# applying gumbel parameters to get extrme values for every return period:
 msg = "Applying gumbel parameters."
 logger.info(msg)
+#
+# return periods
+return_periods = ["2-year", "5-year", "10-year", "25-year", "50-year", "100-year", "250-year", "500-year", "1000-year"]
 #
 for var_name in ['channelStorage', 'floodVolume']: 
     
@@ -177,7 +180,7 @@ for var_name in ['channelStorage', 'floodVolume']:
         
         extreme_values[return_period] = glofris.inverse_gumbel(p_zero, location, scale, return_period_in_year)
     
-    # write the extreme values to a netcdf file
+    # time bounds in a netcdf file
     lowerTimeBound = datetime.datetime(str_year,  1,  1, 0)
     upperTimeBound = datetime.datetime(end_year, 12, 31, 0)
     timeBounds = [lowerTimeBound, upperTimeBound]
