@@ -316,7 +316,7 @@ if with_merging:
     pool.map(joinMaps,files.values())
 else:
     msg = "It seems that merging has been done; we only have to convert the merged pcraster maps to a netcdf file."
-    logger.info(msg)t
+    logger.info(msg)
 print
 print
 
