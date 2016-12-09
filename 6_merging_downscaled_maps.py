@@ -300,15 +300,23 @@ for fileName in files.keys():
 			pass
 	files[fileName]= tuple((outputFileName,nrRows,nrCols,lonMin,latMax,deltaLat,MV,ll[:],tempCloneMap))
 
+
 #~ # this is for testing
 #~ joinMaps(files[fileName])
 
+
+# MERGING PCRASTER MAPS
 print
 print
-msg = "Start merging."
-logger.info(msg)
-pool = Pool(processes=ncores)		# start "ncores" of worker processes
-pool.map(joinMaps,files.values())
+with_merging = False
+if with_merging:
+    msg = "Start merging."
+    logger.info(msg)
+    pool = Pool(processes=ncores)		# start "ncores" of worker processes
+    pool.map(joinMaps,files.values())
+else:
+    msg = "It seems that merging has been done; we only have to convert the merged pcraster maps to a netcdf file."
+    logger.info(msg)t
 print
 print
 
