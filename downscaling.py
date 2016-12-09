@@ -155,7 +155,7 @@ pcr.setclone(clone_map_file)
 msg = "Resampling high resolution dem and ldd maps."
 logger.info(msg)
 # - ldd map
-ldd_map_high_resolution_file_name = "/projects/0/dfguu/users/edwin/data/data_for_glofris_downscaling/input_data/maps_30sec/worldHydroSHEDS.used.ldd"
+ldd_map_high_resolution_file_name = "/projects/0/dfguu/users/edwinhs/data/HydroSHEDS/hydro_basin_without_lakes/integrating_ldd/version_9_december_2016/merged_ldd.map"
 ldd_map_high_resolution = vos.readPCRmapClone(ldd_map_high_resolution_file_name, \
                                               clone_map_file, \
                                               tmp_folder, \
@@ -165,7 +165,7 @@ ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
 ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
 pcr.report(ldd_map_high_resolution, "resampled_high_resolution_ldd.map")
 # - dem map
-dem_map_high_resolution_file_name = "/projects/0/dfguu/users/edwin/data/data_for_glofris_downscaling/input_data/maps_30sec/SRTM_1km_merge_gtopo_masked.map"
+dem_map_high_resolution_file_name = "/projects/0/dfguu/users/edwinhs/data/HydroSHEDS/hydro_basin_without_lakes/integrating_ldd/version_9_december_2016/cover_SRTM_1km_merge_gtopo_masked.map"
 dem_map_high_resolution = vos.readPCRmapClone(dem_map_high_resolution_file_name, \
                                               clone_map_file, \
                                               tmp_folder, \
