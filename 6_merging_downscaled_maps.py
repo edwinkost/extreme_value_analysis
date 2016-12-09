@@ -417,21 +417,18 @@ for return_period in return_periods:
                                   )
 
 # store the pcraster map to netcdf files:
-data_dictionary = {}
 for return_period in return_periods:
     
     # variable name
     variable_name = str(return_period) + "_of_" + varDict.netcdf_short_name[var_name]
 
+    msg = "Writing " + str(variable_name)
+    logger.info(msg)
+    
     # read from pcraster files
     inundation_map = pcr.readmap(inputDirRoot + "/global/maps/" + "inun_" + str(return_period) + "_of_flood_innundation_volume_catch_04.tif.map")
     
     # put it in a data dictionary
-    data_dictionary[variable_name] = pcr.pcr2numpy(inundation_map, vos.MV)
-
-# save the variables to a netcdf file
-netcdf_report.dictionary_of_data_to_netcdf(netcdf_file[var_name]['file_name'], \
-                                           data_dictionary, \
-                                           timeBounds)
+    netcdf_report.data_to_netcdf(netcdf_file[var_name]['file_name'], variable_name, pcr.pcr2numpy(inundation_map, vos.MV), timeBounds, timeStamp = None, posCnt = 0)
 
 
