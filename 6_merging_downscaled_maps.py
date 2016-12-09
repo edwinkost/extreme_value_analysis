@@ -351,7 +351,7 @@ logger.info(msg)
 var_name = 'floodDepth' 
 #
 # - return periods
-return_periods = ["2-year", "5-year", "10-year", "25-year", "50-year", "100-year", "250-year", "500-year", "1000-year"]
+return_periods = ["5-year", "10-year", "25-year", "50-year", "100-year", "250-year", "500-year", "1000-year"]
 
 # - the dictionary for attribute information in a netcdf file
 netcdf_file = {}
