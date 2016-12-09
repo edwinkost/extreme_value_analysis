@@ -320,7 +320,7 @@ print
 
 
 # Convert pcraster files to a netcdt file:
-msg = "Convert pcraster maps to a netcdf file".
+msg = "Convert pcraster maps to a netcdf file."
 logger.info(msg)
 
 # netcdf general setup:
