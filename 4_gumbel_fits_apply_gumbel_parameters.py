@@ -39,7 +39,7 @@ input_files                    = {}
 input_files['folder']          = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/gfdl-esm2m_1960-1999/"
 input_files['file_name'] = {}
 input_files['file_name']['channelStorage'] = input_files['folder'] + "/" + "gumbel_analysis_output_for_channel_storage.nc" 
-input_files['file_name']['floodVolume'   ] = input_files['folder'] + "/" + "gumbel_analysis_output_for_flood_innundation_volume.nc" 
+input_files['file_name']['floodVolume'   ] = input_files['folder'] + "/" + "gumbel_analysis_output_for_flood_inundation_volume.nc" 
 input_files['file_name']['dynamicFracWat'] = input_files['folder'] + "/" + "gumbel_analysis_output_for_fraction_of_surface_water.nc" 
 #
 # general input files

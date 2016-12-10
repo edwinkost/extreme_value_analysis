@@ -66,15 +66,15 @@ landmask = pcr.readmap(landmask_map_file)
 # read all extreme value maps (low resolution maps), resample them, and save them to the output folder
 msg = "Resampling extreme value maps."
 logger.info(msg)
-file_names = [   '2-year_of_flood_innundation_volume.map',
-                 '5-year_of_flood_innundation_volume.map',
-                '10-year_of_flood_innundation_volume.map',
-                '25-year_of_flood_innundation_volume.map',
-                '50-year_of_flood_innundation_volume.map',
-               '100-year_of_flood_innundation_volume.map',
-               '250-year_of_flood_innundation_volume.map',
-               '500-year_of_flood_innundation_volume.map',
-              '1000-year_of_flood_innundation_volume.map']
+file_names = [   '2-year_of_flood_inundation_volume.map',
+                 '5-year_of_flood_inundation_volume.map',
+                '10-year_of_flood_inundation_volume.map',
+                '25-year_of_flood_inundation_volume.map',
+                '50-year_of_flood_inundation_volume.map',
+               '100-year_of_flood_inundation_volume.map',
+               '250-year_of_flood_inundation_volume.map',
+               '500-year_of_flood_inundation_volume.map',
+              '1000-year_of_flood_inundation_volume.map']
 for file_name in file_names:
     complete_file_name = input_folder + "/" + file_name
     extreme_value_map = vos.readPCRmapClone(complete_file_name, \
@@ -191,7 +191,7 @@ for i_file in range(1, len(file_names)):
     cmd = ' python /home/edwin/github/edwinkost/wflow/wflow-py/Scripts/wflow_flood.py ' + \
           ' -i downscaling.ini ' + \
           ' -f ' + str(file_name) + \
-          ' -b 2-year_of_flood_innundation_volume.map -c 4 -d output_folder'
+          ' -b 2-year_of_flood_inundation_volume.map -c 4 -d output_folder'
     vos.cmd_line(cmd, using_subprocess = False)
 
 

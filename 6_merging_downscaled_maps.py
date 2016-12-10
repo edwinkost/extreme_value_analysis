@@ -426,7 +426,7 @@ for return_period in return_periods:
     logger.info(msg)
     
     # read from pcraster files
-    inundation_map = pcr.readmap(inputDirRoot + "/global/maps/" + "inun_" + str(return_period) + "_of_flood_innundation_volume_catch_04.tif.map")
+    inundation_map = pcr.readmap(inputDirRoot + "/global/maps/" + "inun_" + str(return_period) + "_of_flood_inundation_volume_catch_04.tif.map")
     
     # put it in a data dictionary
     netcdf_report.data_to_netcdf(netcdf_file[var_name]['file_name'], variable_name, pcr.pcr2numpy(inundation_map, vos.MV), timeBounds, timeStamp = None, posCnt = 0)
