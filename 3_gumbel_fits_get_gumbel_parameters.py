@@ -37,8 +37,11 @@ input_files                    = {}
 #
 #~ # - WATCH historical
 #~ input_files['folder']    = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/watch_1960-1999/"
-# - gfdl-esm2m historical
-input_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/gfdl-esm2m_1960-1999/"
+#~ # - gfdl-esm2m historical
+#~ input_files['folder']    = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/gfdl-esm2m_1960-1999/"
+# - hadgem2-es historical
+input_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/hadgem2-es_1960-1999/"
+#
 #
 input_files['file_name'] = {}
 input_files['file_name']['channelStorage'] = input_files['folder'] + "/" + "channel_storage_annual_flood_maxima.nc" 
@@ -67,8 +70,10 @@ output_files                   = {}
 #
 #~ # - WATCH historical
 #~ output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/watch_1960-1999/"
-# - gfdl-esm2m historical
-output_files['folder']         = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/gfdl-esm2m_1960-1999/"
+#~ # - gfdl-esm2m historical
+#~ output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/gfdl-esm2m_1960-1999/"
+# - hadgem2-es historical
+output_files['folder']         = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/hadgem2-es_1960-1999/"
 #
 try:
     os.makedirs(output_files['folder'])
@@ -144,7 +149,7 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     netcdf_report.create_netcdf_file(netcdf_file[var_name]) 
 
 # number of cores used 
-n_cores = 24    
+n_cores = 22    
 
 # derive gumbel parameters
 msg = "Deriving gumbel parameters."
