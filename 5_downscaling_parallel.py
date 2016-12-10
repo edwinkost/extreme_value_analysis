@@ -15,10 +15,12 @@ import logging
 logger = logging.getLogger(__name__)
 
 # input folder that contain extreme values (in pcraster format):
-input_folder = "/scratch-shared/edwinsut/flood_analyzer_analysis/extreme_values/watch_1960-1999/"
+# - WATCH historical
+input_folder          = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values/watch_1960-1999/"
 
 # output folder
-general_output_folder = "/scratch-shared/edwinhs-last/test_global_final_corrected_new_ldd_and_dem/"
+# - WATCH historical
+general_output_folder = "/scratch-shared/edwinhs-last/flood_analyzer_output/inundation_downscaled/watch_1960-1999/"
 
 # clean any files exists on the ouput directory (this can be done for global runs)
 clean_previous_output = True
