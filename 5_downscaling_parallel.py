@@ -27,8 +27,8 @@ input_folder          = "/scratch-shared/edwinhs-last/flood_analyzer_output/extr
 # output folder
 #~ # - WATCH historical
 #~ general_output_folder = "/scratch-shared/edwinhs-last/flood_analyzer_output/inundation_downscaled/watch_1960-1999/"
-# - gfdl-esm2m historical
-general_output_folder    = "/scratch-shared/edwinhs-last/flood_analyzer_output/inundation_downscaled/gfdl-esm2m_1960-1999/"
+#~ # - gfdl-esm2m historical
+#~ general_output_folder = "/scratch-shared/edwinhs-last/flood_analyzer_output/inundation_downscaled/gfdl-esm2m_1960-1999/"
 # - hadgem2-es historical
 general_output_folder    = "/scratch-shared/edwinhs-last/flood_analyzer_output/inundation_downscaled/hadgem2-es_1960-1999/"
 
