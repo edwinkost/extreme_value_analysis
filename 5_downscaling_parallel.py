@@ -17,14 +17,14 @@ logger = logging.getLogger(__name__)
 
 
 # input folder that contain extreme values (in pcraster format):
-#~ # - WATCH historical
-#~ input_folder       = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values/watch_1960-1999/"
+# - WATCH historical
+input_folder       = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values/watch_1960-1999/"
 #~ # - gfdl-esm2m historical
 #~ input_folder       = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values/gfdl-esm2m_1960-1999/"
 #~ # - hadgem2-es historical
 #~ input_folder       = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values/hadgem2-es_1960-1999/"
-# - ipsl-cm5a-lr historical
-input_folder          = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values/ipsl-cm5a-lr_1960-1999/"
+#~ # - ipsl-cm5a-lr historical
+#~ input_folder          = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values/ipsl-cm5a-lr_1960-1999/"
 
 
 # output folder
