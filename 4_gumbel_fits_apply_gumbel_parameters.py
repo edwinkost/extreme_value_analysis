@@ -33,10 +33,12 @@ logger = logging.getLogger(__name__)
 # input files
 input_files                    = {}
 # The gumbel fit parameters based on the annual flood maxima based on the PCR-GLOBWB 5 arcmin results:
-#~ # - WATCH historical
-#~ input_files['folder'] = "/scratch-shared/edwinsut/flood_analyzer_analysis/gumbel_fits/watch_1960-1999_example"
-# - gfdl-esm2m historical
-input_files['folder']          = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/gfdl-esm2m_1960-1999/"
+#
+# - WATCH historical
+input_files['folder']             = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/watch_1960-1999/"
+#~ # - gfdl-esm2m historical
+#~ input_files['folder']          = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/gfdl-esm2m_1960-1999/"
+#
 input_files['file_name'] = {}
 input_files['file_name']['channelStorage'] = input_files['folder'] + "/" + "gumbel_analysis_output_for_channel_storage.nc" 
 input_files['file_name']['floodVolume'   ] = input_files['folder'] + "/" + "gumbel_analysis_output_for_flood_inundation_volume.nc" 
@@ -50,7 +52,7 @@ pcr.setclone(input_files['clone_map_05min'])
 input_files['cell_area_05min'] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/cellsize05min.correct.map"
 input_files['ldd_map_05min'  ] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
 
-# option to save/present results at the landmask region only:
+# option to save/present results at the landmask region only (not working yet):
 landmask_only = True
 
 # start and end years for this analysis:
@@ -59,11 +61,13 @@ end_year = 1999
 
 # output files
 output_files                   = {}
+#
 # output folder
-#~ # - WATCH historical
-#~ output_files['folder']      = "/scratch-shared/edwinsut/flood_analyzer_analysis/extreme_values/watch_1960-1999/"
-# - gfdl-esm2m historical
-output_files['folder']         = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values/gfdl-esm2m_1960-1999/"
+#
+# - WATCH historical
+output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values/watch_1960-1999/"
+#~ # - gfdl-esm2m historical
+#~ output_files['folder']   = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values/gfdl-esm2m_1960-1999/"
 #
 try:
     os.makedirs(output_files['folder'])
