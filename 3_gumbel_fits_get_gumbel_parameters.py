@@ -149,7 +149,7 @@ for var_name in ['channelStorage', 'floodVolume', 'dynamicFracWat']:
     netcdf_report.create_netcdf_file(netcdf_file[var_name]) 
 
 # number of cores used 
-n_cores = 22    
+n_cores = 24    
 
 # derive gumbel parameters
 msg = "Deriving gumbel parameters."
