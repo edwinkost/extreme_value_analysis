@@ -67,7 +67,6 @@ output_files                    = {}
 # - hadgem2-es historical
 output_files['folder']          = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/hadgem2-es_1960-1999/"
 #
-#
 try:
     os.makedirs(output_files['folder'])
 except:
