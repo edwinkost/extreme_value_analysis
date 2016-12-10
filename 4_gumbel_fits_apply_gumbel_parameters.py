@@ -36,8 +36,11 @@ input_files                    = {}
 #
 #~ # - WATCH historical
 #~ input_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/watch_1960-1999/"
-# - gfdl-esm2m historical
-input_files['folder']          = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/gfdl-esm2m_1960-1999/"
+#~ # - gfdl-esm2m historical
+#~ input_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/gfdl-esm2m_1960-1999/"
+# - hadgem2-es historical
+input_files['folder']          = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/hadgem2-es_1960-1999/"
+#
 #
 input_files['file_name'] = {}
 input_files['file_name']['channelStorage'] = input_files['folder'] + "/" + "gumbel_analysis_output_for_channel_storage.nc" 
@@ -66,8 +69,11 @@ output_files                   = {}
 #
 #~ # - WATCH historical
 #~ output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values/watch_1960-1999/"
-# - gfdl-esm2m historical
-output_files['folder']         = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values/gfdl-esm2m_1960-1999/"
+#~ # - gfdl-esm2m historical
+#~ output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values/gfdl-esm2m_1960-1999/"
+# - hadgem2-es historical
+output_files['folder']         = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values/hadgem2-es_1960-1999/"
+#
 #
 try:
     os.makedirs(output_files['folder'])
