@@ -41,8 +41,10 @@ input_files                    = {}
 #~ input_files['folder']    = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/gfdl-esm2m_1960-1999/"
 #~ # - hadgem2-es historical
 #~ input_files['folder']    = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/hadgem2-es_1960-1999/"
-# - ipsl-cm5a-lr historical
-input_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/ipsl-cm5a-lr_1960-1999/"
+#~ # - ipsl-cm5a-lr historical
+#~ input_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/ipsl-cm5a-lr_1960-1999/"
+# - miroc-esm-chem historical
+input_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/miroc-esm-chem_1960-1999/"
 #
 #
 input_files['file_name'] = {}
@@ -76,8 +78,10 @@ output_files                   = {}
 #~ output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/gfdl-esm2m_1960-1999/"
 #~ # - hadgem2-es historical
 #~ output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/hadgem2-es_1960-1999/"
-# - ipsl-cm5a-lr historical
-output_files['folder']         = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/ipsl-cm5a-lr_1960-1999/"
+#~ # - ipsl-cm5a-lr historical
+#~ output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/ipsl-cm5a-lr_1960-1999/"
+# - miroc-esm-chem historical
+output_files['folder']         = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/miroc-esm-chem_1960-1999/"
 #
 #
 try:
