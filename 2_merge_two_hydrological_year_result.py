@@ -41,8 +41,10 @@ input_files                     = {}
 #~ input_files['folder']        = "/scratch-shared/edwinsut/flood_analyzer_analysis/maximum_events/hadgem2-es_1960-1999/"
 #~ # - ipsl-cm5a-lr historical
 #~ input_files['folder']        = "/scratch-shared/edwinsut/flood_analyzer_analysis/maximum_events/ipsl-cm5a-lr_1960-1999/"
-# - miroc-esm-chem historical
-input_files['folder']           = "/scratch-shared/edwinsut/flood_analyzer_analysis/maximum_events/miroc-esm-chem_1960-1999/"
+#~ # - miroc-esm-chem historical
+#~ input_files['folder']        = "/scratch-shared/edwinsut/flood_analyzer_analysis/maximum_events/miroc-esm-chem_1960-1999/"
+# - noresm1-m historical
+input_files['folder']           = "/scratch-shared/edwinsut/flood_analyzer_analysis/maximum_events/noresm1-m_1960-1999"
 #
 #
 # general input files
@@ -73,8 +75,10 @@ output_files                    = {}
 #~ output_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/hadgem2-es_1960-1999/"
 #~ # - ipsl-cm5a-lr historical
 #~ output_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/ipsl-cm5a-lr_1960-1999/"
-# - miroc-esm-chem historical
-output_files['folder']          = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/miroc-esm-chem_1960-1999/"
+#~ # - miroc-esm-chem historical
+#~ output_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/miroc-esm-chem_1960-1999/"
+# - noresm1-m historical
+output_files['folder']          = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/noresm1-m_1960-1999/"
 #
 #
 try:
