@@ -248,6 +248,11 @@ def netcdf2PCRobjClone(ncFile,varName,dateInput,\
     varName = str(varName)
 
     if automaticMatchingVariableName:
+        
+        # correction due previous typos
+        if varName == "flood_inundation_volume" and "flood_innundation_volume" in f.variables.keys():
+            f.variables['flood_inundation_volume'] = f.variables['flood_innundation_volume']
+        
         if varName == "evapotranspiration":        
             try:
                 f.variables['evapotranspiration'] = f.variables['referencePotET']
