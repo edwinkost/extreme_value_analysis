@@ -24,7 +24,7 @@ import virtualOS as vos
 import output_netcdf_cf_convention as outputNetCDF
 
 # variable dictionaries
-import aqueduct_flood_analyzer_variable_list_corrected as varDict
+import aqueduct_flood_analyzer_variable_list as varDict
 
 # logger
 import logging
