@@ -308,7 +308,7 @@ for fileName in files.keys():
 # MERGING PCRASTER MAPS
 print
 print
-with_merging = False
+with_merging = True
 if with_merging:
     msg = "Start merging."
     logger.info(msg)
