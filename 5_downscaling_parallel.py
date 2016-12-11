@@ -24,7 +24,10 @@ input_folder          = "/scratch-shared/edwinhs-last/flood_analyzer_output/extr
 #~ # - hadgem2-es historical
 #~ input_folder       = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values/hadgem2-es_1960-1999/"
 #~ # - ipsl-cm5a-lr historical
-#~ input_folder          = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values/ipsl-cm5a-lr_1960-1999/"
+#~ input_folder       = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values/ipsl-cm5a-lr_1960-1999/"
+# - miroc-esm-chem historical
+input_folder          = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values/miroc-esm-chem_1960-1999/"
+
 
 
 # output folder
@@ -36,6 +39,8 @@ general_output_folder    = "/scratch-shared/edwinhs-last/flood_analyzer_output/i
 #~ general_output_folder = "/scratch-shared/edwinhs-last/flood_analyzer_output/inundation_downscaled/hadgem2-es_1960-1999/"
 #~ # - ipsl-cm5a-lr historical
 #~ general_output_folder = "/scratch-shared/edwinhs-last/flood_analyzer_output/inundation_downscaled/ipsl-cm5a-lr_1960-1999/"
+# - miroc-esm-chem historical
+general_output_folder    = "/scratch-shared/edwinhs-last/flood_analyzer_output/inundation_downscaled/miroc-esm-chem_1960-1999/"
 
 
 
