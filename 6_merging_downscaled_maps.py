@@ -225,6 +225,9 @@ lonMax =  180.0
 
 inputDirRoot = str(sys.argv[1])
 
+output_netcdf_file_name = "inunriver_historical_WATCH_1999.nc"
+output_netcdf_file_name = str(sys.argv[2])
+
 outputDir = inputDirRoot + "/global/maps/"
 try:
 	os.makedirs(outputDir)
@@ -370,7 +373,7 @@ netcdf_file = {}
 netcdf_file[var_name] = {}
 #
 # - all return periods in one file: file name (format from Philip: inunriver_rcp4p5_0000GFDL-ESM2M_2030_rp00000.nc)
-netcdf_file[var_name]['file_name']  = netcdf_output_folder + "/" + "inunriver_historical_WATCH_1999.nc"
+netcdf_file[var_name]['file_name']  = netcdf_output_folder + "/" + output_netcdf_file_name
 #
 # - general attribute information:
 netcdf_file[var_name]['description'] = netcdf_setup['description']
