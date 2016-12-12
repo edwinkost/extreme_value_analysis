@@ -110,6 +110,9 @@ netcdf_setup['title'      ]     = "PCR-GLOBWB 2 output (post-processed for the A
 netcdf_setup['created by' ]     = "Edwin H. Sutanudjaja (E.H.Sutanudjaja@uu.nl)"
 netcdf_setup['description']     = 'The annual flood maxima for each year/period starting from October of the year until September of its following year (for normal hydrological years) or ' +\
                                                           'for each year/period starting from July of the year until June of its following year (for alternative hydrological years)."'
+netcdf_setup['source'     ]     = "Utrecht University, Department of Physical Geography - contact: Edwin H. Sutanudjaja (E.H.Sutanudjaja@uu.nl)"
+netcdf_setup['references' ]     = "Sutanudjaja et al., in prep."
+
 
 # change to the output folder (use it as the working folder) 
 os.chdir(output_files['folder'])
@@ -131,12 +134,13 @@ for var_name in variable_names:
     # - add more information 
     if output_files[var_name]['long_name']   == None: output_files[var_name]['long_name']   = output_files[var_name]['short_name']
     if output_files[var_name]['comment']     == None: output_files[var_name]['comment'] = ""
-    if output_files[var_name]['description'] == None: output_files[var_name]['description'] = ""
-    output_files[var_name]['description']       = netcdf_setup['description'] + " " + output_files[var_name]['description']
     output_files[var_name]['institution']       = netcdf_setup['institution']
     output_files[var_name]['title'      ]       = netcdf_setup['title'      ]
     output_files[var_name]['created by' ]       = netcdf_setup['created by' ]
-    output_files[var_name]['description']       = netcdf_setup['description']
+    if output_files[var_name]['description'] == None: output_files[var_name]['description'] = ""
+    output_files[var_name]['description']       = netcdf_setup['description'] + " " + output_files[var_name]['description']
+    output_files[var_name]['source'     ]       = netcdf_setup['source'     ]
+    output_files[var_name]['references' ]       = netcdf_setup['references' ]
     # - resolution
     output_files[var_name]['resolution_arcmin'] = 5. # unit: arc-minutes
     # - preparing netcdf files:
