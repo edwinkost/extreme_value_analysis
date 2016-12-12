@@ -128,6 +128,7 @@ cell_ids_30min = pcr.nominal(\
                                      output_files['tmp_folder'],
                                      None,
                                      False,
+                                     None,
                                      True))
 
 # set the cell areas for 5 arc-min and half arc-degree cells 
