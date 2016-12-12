@@ -243,7 +243,7 @@ for i_year in range(str_year, end_year + 1):
     surface_water_level_30min_arrays = vos.regridToCoarse(pcr.pcr2numpy(surface_water_level_30min, vos.MV), upscaling_factor, "max", vos.MV)
 
     # save it to netcdf file
-    ncFileName = output_files[var]['file_name']
+    ncFileName = output_files[var_name]['file_name']
     msg = "Saving to the netcdf file: " + str(ncFileName)
     logger.info(msg)
     time_stamp_used = datetime.datetime(i_year, 12, 31, 0)
