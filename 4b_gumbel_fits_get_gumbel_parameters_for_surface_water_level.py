@@ -36,7 +36,7 @@ input_files                    = {}
 # The annual flood maxima based on the PCR-GLOBWB 5 arcmin results:
 #
 # - WATCH historical
-input_files['folder']    = "/scratch-shared/edwinhs-last/flood_analyzer_output/surface_water_level_test/watch_1960-1999/"
+input_files['folder']    = "/scratch-shared/edwinhs-last/flood_analyzer_output/surface_water_level_maximum/watch_1960-1999/"
 #~ # - gfdl-esm2m historical
 #~ # - hadgem2-es historical
 #~ # - ipsl-cm5a-lr historical
