@@ -183,6 +183,11 @@ netcdf_file[var_name]['created by' ] = netcdf_setup['created by' ]
 netcdf_file[var_name]['source'     ] = netcdf_setup['source'     ]
 netcdf_file[var_name]['references' ] = netcdf_setup['references' ]
 #
+netcdf_file[var_name]['short_name']  = varDict.netcdf_short_name[var_name]
+netcdf_file[var_name]['unit']        = varDict.netcdf_unit[var_name]
+netcdf_file[var_name]['long_name']   = varDict.netcdf_long_name[var_name]          
+netcdf_file[var_name]['comment']     = varDict.comment[var_name]               
+#
 # - resolution (unit: arc-minutes)
 netcdf_file[var_name]['resolution_arcmin'] = 30. 
 if netcdf_file[var_name]['resolution_arcmin'] > 5.0:
