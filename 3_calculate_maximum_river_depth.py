@@ -247,5 +247,5 @@ for i_year in range(str_year, end_year + 1):
     msg = "Saving to the netcdf file: " + str(ncFileName)
     logger.info(msg)
     time_stamp_used = datetime.datetime(i_year, 12, 31, 0)
-    netcdf_report.data2NetCDF(ncFileName, varDict.netcdf_short_name[var], surface_water_level_30min_arrays, time_stamp_used)
+    netcdf_report.data2NetCDF(ncFileName, varDict.netcdf_short_name[var_name], surface_water_level_30min_arrays, time_stamp_used)
     
