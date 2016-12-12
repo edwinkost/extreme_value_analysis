@@ -26,9 +26,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-######################################################################################################################
-# The script to derive/calculate annual maxima of river depth (at half arc-degree resolution, as requested by Philip #
-######################################################################################################################
+#######################################################################################################################
+# The script to derive/calculate annual maxima of river depth (at half arc-degree resolution, as requested by Philip) #
+#######################################################################################################################
 
 # input files
 input_files                    = {}
@@ -172,7 +172,7 @@ var_name = 'surfaceWaterLevel'
 netcdf_file[var_name] = {}
 #
 # - file name
-netcdf_file[var_name]['file_name']   = output_files['folder'] + "/" + varDict.netcdf_short_name[var_name] + ".nc"
+netcdf_file[var_name]['file_name']   = output_files['folder'] + "/" + varDict.netcdf_short_name[var_name] + "_annual_maxima.nc"
 #
 # - general attribute information:
 netcdf_file[var_name]['description'] = netcdf_setup['description']
