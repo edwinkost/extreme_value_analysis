@@ -220,7 +220,7 @@ for i_year in range(str_year, end_year + 1):
     channel_storage_30min = pcr.areatotal(channel_storage, cell_ids_30min)
     
     # read fraction_of_surface_water and upscale it to 30 arc-min (dimensionless)
-    fraction_of_surface_water = vos.netcdf2PCRobjClone(input_files['file_name']['dynamicFracWat'], \ 
+    fraction_of_surface_water = vos.netcdf2PCRobjClone(input_files['file_name']['dynamicFracWat'], \
                                                        "fraction_of_surface_water", time_index_in_netcdf_file,\
                                                        useDoy = "Yes", \
                                                        cloneMapFileName  = clone_map_file,\
