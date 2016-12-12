@@ -162,21 +162,21 @@ for var_name in ['surfaceWaterLevel']:
                                       variable_name,\
                                       1,\
                                       "Yes",\
-                                      input_files['clone_map_05min'])
+                                      input_files['clone_map_30min'])
     #
     variable_name = str('location_parameter') + "_of_" + varDict.netcdf_short_name[var_name]
     location = vos.netcdf2PCRobjClone(netcdf_input_file,\
                                       variable_name,\
                                       1,\
                                       "Yes",\
-                                      input_files['clone_map_05min'])
+                                      input_files['clone_map_30min'])
     #
     variable_name = str('scale_parameter') + "_of_" + varDict.netcdf_short_name[var_name]
     scale    = vos.netcdf2PCRobjClone(netcdf_input_file,\
                                       variable_name,\
                                       1,\
                                       "Yes",\
-                                      input_files['clone_map_05min'])
+                                      input_files['clone_map_30min'])
     
     # applying gumbel parameters for every return period
     extreme_values = {}
