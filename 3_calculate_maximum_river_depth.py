@@ -46,7 +46,6 @@ input_files['folder']    = "/scratch-shared/edwinhs-last/flood_analyzer_output/m
 #
 input_files['file_name'] = {}
 input_files['file_name']['channelStorage'] = input_files['folder'] + "/" + "channel_storage_annual_flood_maxima.nc" 
-input_files['file_name']['floodVolume'   ] = input_files['folder'] + "/" + "flood_inundation_volume_annual_flood_maxima.nc" 
 input_files['file_name']['dynamicFracWat'] = input_files['folder'] + "/" + "fraction_of_surface_water_annual_flood_maxima.nc" 
 #
 # general input files
@@ -73,7 +72,7 @@ output_files                   = {}
 # output folder
 #
 # - WATCH historical
-output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/surface_water_level/watch_1960-1999/"
+output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/surface_water_level_maximum/watch_1960-1999/"
 #~ # - gfdl-esm2m historical
 #~ # - hadgem2-es historical
 #~ # - ipsl-cm5a-lr historical
@@ -203,7 +202,7 @@ msg = "Calculate surface water level at half-arc degree resolution "
 logger.info(msg)
 #
 # assumption for minimum surface water level
-minimum_fraction_of_surface_water = 0.001
+minimum_fraction_of_surface_water = 0.005
 msg = "Using the assumption for minimum_fraction_of_surface_water: " + str(minimum_fraction_of_surface_water)
 #
 for i_year in range(str_year, end_year + 1):
