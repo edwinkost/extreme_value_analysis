@@ -237,7 +237,7 @@ for i_year in range(str_year, end_year + 1):
     fraction_of_surface_water_30min = pcr.areatotal(fraction_of_surface_water * cell_area, cell_ids_30min) / cell_area_30min
     
     # calculate surface water level at 30 arc-min resolution
-    surface_water_level_30min = channel_storage_30_min / (pcr.max(fraction_of_surface_water_30min, minimum_fraction_of_surface_water) * cell_area_30min)
+    surface_water_level_30min = channel_storage_30min / (pcr.max(fraction_of_surface_water_30min, minimum_fraction_of_surface_water) * cell_area_30min)
 
     # convert it 30 arcmin arrays
     surface_water_level_30min_arrays = vos.regridToCoarse(pcr.pcr2numpy(surface_water_level_30min, vos.MV), upscaling_factor, "max", vos.MV)
