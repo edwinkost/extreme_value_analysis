@@ -209,7 +209,7 @@ for i_year in range(str_year, end_year + 1):
     time_index_in_netcdf_file = i_year - str_year + 1
 
     # read channel storage and upscale it to 30 arc-min (unit: m3)
-    channel_storage = vos.netcdf2PCRobjClone(input_files['file_name']['channelStorage'], \ 
+    channel_storage = vos.netcdf2PCRobjClone(input_files['file_name']['channelStorage'], \
                                              "channel_storage", time_index_in_netcdf_file,\
                                              useDoy = "Yes", \
                                              cloneMapFileName  = clone_map_file,\
