@@ -202,7 +202,7 @@ msg = "Using the assumption for minimum_fraction_of_surface_water: " + str(minim
 #
 for i_year in range(str_year, end_year + 1):
     
-    msg = = "Calculate surface water level at half-arc degree resolution for the year: " + str(i_year)
+    msg = "Calculate surface water level at half-arc degree resolution for the year: " + str(i_year)
     logger.info(msg)
     
     # time index for this year (for reading netcdf file
