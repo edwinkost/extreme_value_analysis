@@ -35,9 +35,10 @@ input_files                    = {}
 #
 # The annual flood maxima based on the PCR-GLOBWB 5 arcmin results:
 #
-# - WATCH historical
-input_files['folder']    = "/scratch-shared/edwinhs-last/flood_analyzer_output/surface_water_level_maximum/watch_1960-1999/"
+#~ # - WATCH historical
+#~ input_files['folder']    = "/scratch-shared/edwinhs-last/flood_analyzer_output/surface_water_level_maximum/watch_1960-1999/"
 #~ # - gfdl-esm2m historical
+input_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/surface_water_level_maximum/gfdl-esm2m_1960-1999/"
 #~ # - hadgem2-es historical
 #~ # - ipsl-cm5a-lr historical
 #~ # - miroc-esm-chem historical
@@ -64,9 +65,10 @@ output_files                   = {}
 
 # output folder
 #
-# - WATCH historical
-output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits_surface_water_level/watch_1960-1999/"
-#~ # - gfdl-esm2m historical
+#~ # - WATCH historical
+#~ output_files['folder']   = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits_surface_water_level/watch_1960-1999/"
+# - gfdl-esm2m historical
+output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits_surface_water_level/gfdl-esm2m_1960-1999/"
 #~ # - hadgem2-es historical
 #~ # - ipsl-cm5a-lr historical
 #~ # - miroc-esm-chem historical
