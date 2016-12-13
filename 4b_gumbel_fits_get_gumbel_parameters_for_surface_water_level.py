@@ -47,14 +47,6 @@ input_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_outpu
 #
 input_files['file_name'] = {}
 input_files['file_name']['surfaceWaterLevel'] = input_files['folder'] + "/" + "surface_water_level_annual_maxima.nc" 
-#
-# general input files
-# - clone map
-input_files['clone_map_30min'] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input30min/routing/lddsound_30min.map"
-pcr.setclone(input_files['clone_map_30min'])
-
-# option to save/present results at the landmask region only:
-landmask_only = True
 
 # start and end years for this analysis:
 str_year = 1960
@@ -94,6 +86,15 @@ try:
 except:
     pass
 vos.initialize_logging(log_file_location)
+
+
+# general input files
+# - clone map
+input_files['clone_map_30min'] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input30min/routing/lddsound_30min.map"
+pcr.setclone(input_files['clone_map_30min'])
+
+# option to save/present results at the landmask region only (not working yet)
+landmask_only = True
 
 
 # netcdf general setup:
