@@ -42,9 +42,11 @@ input_files                    = {}
 #~ input_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits_surface_water_level/hadgem2-es_1960-1999/"
 #~ # - ipsl-cm5a-lr historical
 #~ input_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits_surface_water_level/ipsl-cm5a-lr_1960-1999/"
-#~ # - miroc-esm-chem historical
-input_files['folder']          = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits_surface_water_level/miroc-esm-chem_1960-1999/"
-#~ # - noresm1-m historical
+# - miroc-esm-chem historical
+#~ input_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits_surface_water_level/miroc-esm-chem_1960-1999/"
+# - noresm1-m historical
+input_files['folder']          = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits_surface_water_level/noresm1-m_1960-1999/"
+#
 #
 # output files
 output_files                   = {}
@@ -60,8 +62,9 @@ output_files                   = {}
 #~ # - ipsl-cm5a-lr historical
 #~ output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values_surface_water_level/ipsl-cm5a-lr_1960-1999/"
 #~ # - miroc-esm-chem historical
-output_files['folder']         = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values_surface_water_level/miroc-esm-chem_1960-1999/"
-#~ # - noresm1-m historical
+#~ output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values_surface_water_level/miroc-esm-chem_1960-1999/"
+# - noresm1-m historical
+output_files['folder']         = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values_surface_water_level/noresm1-m_1960-1999/"
 #
 #
 #
