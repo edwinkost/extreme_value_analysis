@@ -34,36 +34,24 @@ logger = logging.getLogger(__name__)
 input_files                    = {}
 # The gumbel fit parameters based on the annual surface water level maxima:
 #
-# - WATCH historical
-input_files['folder']          = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits_surface_water_level/watch_1960-1999/"
-#~ # - gfdl-esm2m historical
+#~ # - WATCH historical
+#~ input_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits_surface_water_level/watch_1960-1999/"
+# - gfdl-esm2m historical
+input_files['folder']          = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits_surface_water_level/gfdl-esm2m_1960-1999/"
 #~ # - hadgem2-es historical
 #~ # - ipsl-cm5a-lr historical
 #~ # - miroc-esm-chem historical
 #~ # - noresm1-m historical
 #
-#
-#
-input_files['file_name'] = {}
-input_files['file_name']['surfaceWaterLevel'] = input_files['folder'] + "/" + "gumbel_analysis_output_for_surface_water_level.nc" 
-#
-# general input files
-# - clone map
-input_files['clone_map_30min'] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input30min/routing/lddsound_30min.map"
-pcr.setclone(input_files['clone_map_30min'])
-
-# start and end years for this analysis:
-str_year = 1960
-end_year = 1999
-
 # output files
 output_files                   = {}
 #
 # output folder
 #
-# - WATCH historical
-output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values_surface_water_level/watch_1960-1999/"
+#~ # - WATCH historical
+#~ output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values_surface_water_level/watch_1960-1999/"
 #~ # - gfdl-esm2m historical
+output_files['folder']         = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values_surface_water_level/gfdl-esm2m_1960-1999/"
 #~ # - hadgem2-es historical
 #~ # - ipsl-cm5a-lr historical
 #~ # - miroc-esm-chem historical
@@ -91,6 +79,18 @@ except:
     pass
 vos.initialize_logging(log_file_location)
 
+# surface water level input file name
+input_files['file_name'] = {}
+input_files['file_name']['surfaceWaterLevel'] = input_files['folder'] + "/" + "gumbel_analysis_output_for_surface_water_level.nc" 
+
+# general input files
+# - clone map
+input_files['clone_map_30min'] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input30min/routing/lddsound_30min.map"
+pcr.setclone(input_files['clone_map_30min'])
+
+# start and end years for this analysis:
+str_year = 1960
+end_year = 1999
 
 # netcdf general setup:
 netcdf_setup = {}
