@@ -43,9 +43,10 @@ input_files                    = {}
 #~ input_files['folder'] = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/hadgem2-es_1960-1999/"
 #~ # - ipsl-cm5a-lr historical
 #~ input_files['folder'] = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/ipsl-cm5a-lr_1960-1999/"
-# - miroc-esm-chem historical
-input_files['folder']    = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/miroc-esm-chem_1960-1999/"
-#~ # - noresm1-m historical
+#~ # - miroc-esm-chem historical
+#~ input_files['folder'] = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/miroc-esm-chem_1960-1999/"
+# - noresm1-m historical
+input_files['folder']    = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/noresm1-m_1960-1999/"
 #
 #
 input_files['file_name'] = {}
@@ -81,10 +82,11 @@ output_files                   = {}
 #~ # - hadgem2-es historical
 #~ output_files['folder']   = "/scratch-shared/edwinhs-last/flood_analyzer_output/surface_water_level_maximum/hadgem2-es_1960-1999/"
 #~ # - ipsl-cm5a-lr historical
-#~ output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/surface_water_level_maximum/ipsl-cm5a-lr_1960-1999/"
-# - miroc-esm-chem historical
-output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/surface_water_level_maximum/miroc-esm-chem_1960-1999/"
-#~ # - noresm1-m historical
+#~ output_files['folder']   = "/scratch-shared/edwinhs-last/flood_analyzer_output/surface_water_level_maximum/ipsl-cm5a-lr_1960-1999/"
+#~ # - miroc-esm-chem historical
+#~ output_files['folder']   = "/scratch-shared/edwinhs-last/flood_analyzer_output/surface_water_level_maximum/miroc-esm-chem_1960-1999/"
+# - noresm1-m historical
+output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/surface_water_level_maximum/noresm1-m_1960-1999/"
 #
 #
 try:
