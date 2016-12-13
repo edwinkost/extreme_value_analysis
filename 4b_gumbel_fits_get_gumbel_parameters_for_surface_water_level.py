@@ -38,8 +38,9 @@ input_files                    = {}
 #~ # - WATCH historical
 #~ input_files['folder']    = "/scratch-shared/edwinhs-last/flood_analyzer_output/surface_water_level_maximum/watch_1960-1999/"
 #~ # - gfdl-esm2m historical
-input_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/surface_water_level_maximum/gfdl-esm2m_1960-1999/"
-#~ # - hadgem2-es historical
+#~ input_files['folder']    = "/scratch-shared/edwinhs-last/flood_analyzer_output/surface_water_level_maximum/gfdl-esm2m_1960-1999/"
+# - hadgem2-es historical
+input_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/surface_water_level_maximum/hadgem2-es_1960-1999/"
 #~ # - ipsl-cm5a-lr historical
 #~ # - miroc-esm-chem historical
 #~ # - noresm1-m historical
@@ -59,9 +60,10 @@ output_files                   = {}
 #
 #~ # - WATCH historical
 #~ output_files['folder']   = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits_surface_water_level/watch_1960-1999/"
-# - gfdl-esm2m historical
-output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits_surface_water_level/gfdl-esm2m_1960-1999/"
-#~ # - hadgem2-es historical
+#~ # - gfdl-esm2m historical
+#~ output_files['folder']   = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits_surface_water_level/gfdl-esm2m_1960-1999/"
+# - hadgem2-es historical
+output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits_surface_water_level/hadgem2-es_1960-1999/"
 #~ # - ipsl-cm5a-lr historical
 #~ # - miroc-esm-chem historical
 #~ # - noresm1-m historical
