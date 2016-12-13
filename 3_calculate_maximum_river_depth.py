@@ -35,9 +35,10 @@ input_files                    = {}
 #
 # The annual flood maxima based on the PCR-GLOBWB 5 arcmin results:
 #
-# - WATCH historical
-input_files['folder']    = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/watch_1960-1999/"
-#~ # - gfdl-esm2m historical
+#~ # - WATCH historical
+#~ input_files['folder'] = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/watch_1960-1999/"
+# - gfdl-esm2m historical
+input_files['folder']    = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/gfdl-esm2m_1960-1999/"
 #~ # - hadgem2-es historical
 #~ # - ipsl-cm5a-lr historical
 #~ # - miroc-esm-chem historical
@@ -58,22 +59,22 @@ input_files['ldd_map_05min'  ] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/
 # - cell id for every half degree cell
 input_files['cell_ids_30min' ] = "/projects/0/dfguu/data/hydroworld/others/irrigationZones/half_arc_degree/uniqueIds30min.nom.map"
 
-
-# option to save/present results at the landmask region only:
-landmask_only = True
-
 # start and end years for this analysis:
 str_year = 1960
 end_year = 1999
+
+# option to save/present results at the landmask region only (not working yet):
+landmask_only = True
 
 # output files
 output_files                   = {}
 
 # output folder
 #
-# - WATCH historical
-output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/surface_water_level_maximum/watch_1960-1999/"
-#~ # - gfdl-esm2m historical
+#~ # - WATCH historical
+#~ output_files['folder']   = "/scratch-shared/edwinhs-last/flood_analyzer_output/surface_water_level_maximum/watch_1960-1999/"
+# - gfdl-esm2m historical
+output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/surface_water_level_maximum/gfdl-esm2m_1960-1999/"
 #~ # - hadgem2-es historical
 #~ # - ipsl-cm5a-lr historical
 #~ # - miroc-esm-chem historical
