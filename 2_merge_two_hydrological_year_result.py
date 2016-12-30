@@ -60,8 +60,19 @@ input_files['hydro_year_05min'] = "/scratch-shared/edwinsut/flood_analyzer_analy
 landmask_only = True
 
 # start and end years for this analysis:
-str_year = 1960
-end_year = 1999
+#~ # - for historical runs
+#~ str_year = 1960
+#~ end_year = 1999
+# - for the year 2030
+str_year = 2010
+end_year = 2049
+#~ # - for the year 2050
+#~ str_year = 2030
+#~ end_year = 2069
+#~ # - for the year 2080
+#~ str_year = 2060
+#~ end_year = 2099
+
 
 # output files
 output_files                    = {}
