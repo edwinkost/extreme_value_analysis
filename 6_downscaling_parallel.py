@@ -27,8 +27,11 @@ logger = logging.getLogger(__name__)
 #~ input_folder       = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values/ipsl-cm5a-lr_1960-1999/"
 #~ # - miroc-esm-chem historical
 #~ input_folder       = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values/miroc-esm-chem_1960-1999/"
-# - noresm1-m historical
-input_folder          = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values/noresm1-m_1960-1999/"
+#~ # - noresm1-m historical
+#~ input_folder       = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values/noresm1-m_1960-1999/"
+#
+# - input folder based on the system argument
+input_files['folder'] = os.path.abspath(sys.argv[1]) + "/"
 
 
 # output folder
@@ -42,8 +45,12 @@ input_folder          = "/scratch-shared/edwinhs-last/flood_analyzer_output/extr
 #~ general_output_folder = "/scratch-shared/edwinhs-last/flood_analyzer_output/inundation_downscaled/ipsl-cm5a-lr_1960-1999/"
 #~ # - miroc-esm-chem historical
 #~ general_output_folder = "/scratch-shared/edwinhs-last/flood_analyzer_output/inundation_downscaled/miroc-esm-chem_1960-1999/"
-# - noresm1-m historical
-general_output_folder    = "/scratch-shared/edwinhs-last/flood_analyzer_output/inundation_downscaled/noresm1-m_1960-1999/"
+#~ # - noresm1-m historical
+#~ general_output_folder = "/scratch-shared/edwinhs-last/flood_analyzer_output/inundation_downscaled/noresm1-m_1960-1999/"
+#
+# output folder based on the system argument
+output_folder_for_this_analysis = sys.argv[2]
+general_output_folder           = output_folder_for_this_analysis + "/" 
 
 
 # clean any files exists on the ouput directory (this can be done for global runs)
