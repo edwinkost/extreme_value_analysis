@@ -24,3 +24,6 @@ python 5b_gumbel_fits_apply_gumbel_parameters_for_surface_water_level.py /projec
 
 # downscaling inundation
 python 6_downscaling_parallel.py /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_rcp4p5_runs/extreme_values/gfdl-esm2m_2010-2049/ /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_rcp4p5_runs/inundation_downscaled/gfdl-esm2m_2010-2049/
+
+# merging the downscaled maps
+python 7_merging_downscaled_maps.py /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_rcp4p5_runs/inundation_downscaled/gfdl-esm2m_2010-2049/ inunriver_rcp4p5_gfdl-esm2m_2010-2049
