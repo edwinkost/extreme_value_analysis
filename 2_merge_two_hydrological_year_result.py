@@ -43,8 +43,11 @@ input_files                     = {}
 #~ input_files['folder']        = "/scratch-shared/edwinsut/flood_analyzer_analysis/maximum_events/ipsl-cm5a-lr_1960-1999/"
 #~ # - miroc-esm-chem historical
 #~ input_files['folder']        = "/scratch-shared/edwinsut/flood_analyzer_analysis/maximum_events/miroc-esm-chem_1960-1999/"
-# - noresm1-m historical
-input_files['folder']           = "/scratch-shared/edwinsut/flood_analyzer_analysis/maximum_events/noresm1-m_1960-1999"
+#~ # - noresm1-m historical
+#~ input_files['folder']        = "/scratch-shared/edwinsut/flood_analyzer_analysis/maximum_events/noresm1-m_1960-1999"
+#
+# - input folder based on the system argument
+input_files['folder']           = os.path.abspath(sys.argv[1]) + "/"
 #
 #
 # general input files
@@ -53,8 +56,10 @@ input_files['clone_map_05min']  = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20
 # - cell area, ldd maps
 input_files['cell_area_05min']  = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/cellsize05min.correct.map"
 input_files['ldd_map_05min']    = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
+#
+#
 # - hydrological year type (based on the WATCH data)
-input_files['hydro_year_05min'] = "/scratch-shared/edwinsut/flood_analyzer_analysis/hydrological_year/watch_1960-1999/hydrological_year_type.map"
+input_files['hydro_year_05min'] = "/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/hydrological_year/watch_1960-1999/hydrological_year_type.map"
 
 # option to save/present results at the landmask region only:
 landmask_only = True
@@ -88,8 +93,12 @@ output_files                    = {}
 #~ output_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/ipsl-cm5a-lr_1960-1999/"
 #~ # - miroc-esm-chem historical
 #~ output_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/miroc-esm-chem_1960-1999/"
-# - noresm1-m historical
-output_files['folder']          = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/noresm1-m_1960-1999/"
+#~ # - noresm1-m historical
+#~ output_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/noresm1-m_1960-1999/"
+#
+# output folder based on the system argument
+output_folder_for_this_analysis      = sys.argv[2]
+output_files['folder']               = output_folder_for_this_analysis + "/" 
 #
 #
 try:
