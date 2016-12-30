@@ -45,16 +45,28 @@ input_files                    = {}
 #~ input_files['folder']    = "/scratch-shared/edwinhs-last/flood_analyzer_output/surface_water_level_maximum/ipsl-cm5a-lr_1960-1999/"
 #~ # - miroc-esm-chem historical
 #~ input_files['folder']    = "/scratch-shared/edwinhs-last/flood_analyzer_output/surface_water_level_maximum/miroc-esm-chem_1960-1999/"
-#~ # - noresm1-m historical
-input_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/surface_water_level_maximum/noresm1-m_1960-1999/"
+# - noresm1-m historical
+#~ input_files['folder']    = "/scratch-shared/edwinhs-last/flood_analyzer_output/surface_water_level_maximum/noresm1-m_1960-1999/"
 #
+# - input folder based on the system argument
+input_files['folder']       = os.path.abspath(sys.argv[1]) + "/"
 #
 input_files['file_name'] = {}
 input_files['file_name']['surfaceWaterLevel'] = input_files['folder'] + "/" + "surface_water_level_annual_maxima.nc" 
 
 # start and end years for this analysis:
-str_year = 1960
-end_year = 1999
+#~ # - for historical runs
+#~ str_year = 1960
+#~ end_year = 1999
+# - for the year 2030
+str_year = 2010
+end_year = 2049
+#~ # - for the year 2050
+#~ str_year = 2030
+#~ end_year = 2069
+#~ # - for the year 2080
+#~ str_year = 2060
+#~ end_year = 2099
 
 # output files
 output_files                   = {}
@@ -72,8 +84,11 @@ output_files                   = {}
 # - miroc-esm-chem historical
 #~ output_files['folder']   = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits_surface_water_level/miroc-esm-chem_1960-1999/"
 #~ # - noresm1-m historical
-output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits_surface_water_level/noresm1-m_1960-1999/"
+#~ output_files['folder']   = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits_surface_water_level/noresm1-m_1960-1999/"
 #
+# output folder based on the system argument
+output_folder_for_this_analysis = sys.argv[2]
+output_files['folder']          = output_folder_for_this_analysis + "/" 
 #
 try:
     os.makedirs(output_files['folder'])
