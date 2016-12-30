@@ -66,6 +66,7 @@ input_files['ldd_map_05min'  ] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/
 # - cell id for every half degree cell
 input_files['cell_ids_30min' ] = "/projects/0/dfguu/data/hydroworld/others/irrigationZones/half_arc_degree/uniqueIds30min.nom.map"
 
+
 # start and end years for this analysis:
 #~ # - for historical runs
 #~ str_year = 1960

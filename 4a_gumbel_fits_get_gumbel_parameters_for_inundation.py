@@ -45,9 +45,11 @@ input_files                    = {}
 #~ input_files['folder']    = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/ipsl-cm5a-lr_1960-1999/"
 #~ # - miroc-esm-chem historical
 #~ input_files['folder']    = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/miroc-esm-chem_1960-1999/"
-# - noresm1-m historical
-input_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/noresm1-m_1960-1999/"
+#~ # - noresm1-m historical
+#~ input_files['folder']    = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/noresm1-m_1960-1999/"
 #
+# - input folder based on the system argument
+input_files['folder']       = os.path.abspath(sys.argv[1]) + "/"
 #
 input_files['file_name'] = {}
 input_files['file_name']['channelStorage'] = input_files['folder'] + "/" + "channel_storage_annual_flood_maxima.nc" 
@@ -62,12 +64,22 @@ pcr.setclone(input_files['clone_map_05min'])
 input_files['cell_area_05min'] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/cellsize05min.correct.map"
 input_files['ldd_map_05min'  ] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
 
-# option to save/present results at the landmask region only:
+# option to save/present results at the landmask region only (not working yet)
 landmask_only = True
 
 # start and end years for this analysis:
-str_year = 1960
-end_year = 1999
+#~ # - for historical runs
+#~ str_year = 1960
+#~ end_year = 1999
+# - for the year 2030
+str_year = 2010
+end_year = 2049
+#~ # - for the year 2050
+#~ str_year = 2030
+#~ end_year = 2069
+#~ # - for the year 2080
+#~ str_year = 2060
+#~ end_year = 2099
 
 # output files
 output_files                   = {}
@@ -84,8 +96,12 @@ output_files                   = {}
 #~ output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/ipsl-cm5a-lr_1960-1999/"
 #~ # - miroc-esm-chem historical
 #~ output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/miroc-esm-chem_1960-1999/"
-# - miroc-esm-chem historical
-output_files['folder']         = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/noresm1-m_1960-1999/"
+#~ # - miroc-esm-chem historical
+#~ output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/noresm1-m_1960-1999/"
+#
+# output folder based on the system argument
+output_folder_for_this_analysis = sys.argv[2]
+output_files['folder']          = output_folder_for_this_analysis + "/" 
 #
 #
 try:
