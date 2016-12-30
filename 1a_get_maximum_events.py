@@ -89,7 +89,7 @@ output_files['folder']               = output_folder_for_this_analysis + "/hydro
 try:
     os.makedirs(output_files['folder'] )
 except:
-    os.system('rm -r ' + output_files['folder']  + "/*")
+    #~ os.system('rm -r ' + output_files['folder']  + "/*")
     pass
 # - temporary output folder (e.g. needed for resampling/gdalwarp)
 output_files['tmp_folder']        = output_files['folder'] + "/tmp/"
