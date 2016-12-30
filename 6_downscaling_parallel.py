@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 #~ input_folder       = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values/noresm1-m_1960-1999/"
 #
 # - input folder based on the system argument
-input_files['folder'] = os.path.abspath(sys.argv[1]) + "/"
+input_folder          = os.path.abspath(sys.argv[1]) + "/"
 
 
 # output folder
