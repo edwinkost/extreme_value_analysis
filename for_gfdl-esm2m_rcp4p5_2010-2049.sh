@@ -15,3 +15,10 @@ python 4a_gumbel_fits_get_gumbel_parameters_for_inundation.py /projects/0/aquedu
 
 # calculate gumbel parameters for surface water level
 python 4b_gumbel_fits_get_gumbel_parameters_for_surface_water_level.py /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_rcp4p5_runs/surface_water_level_maximum/gfdl-esm2m_2010-2049/ /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_rcp4p5_runs/gumbel_fits_surface_water_level/gfdl-esm2m_2010-2049/
+
+# apply gumbel fits for inundation
+python 5a_gumbel_fits_apply_gumbel_parameters_for_inundation.py /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_rcp4p5_runs/gumbel_fits/gfdl-esm2m_2010-2049/ /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_rcp4p5_runs/extreme_values/gfdl-esm2m_2010-2049/
+
+# apply gumbel fits for surface water level
+python 5b_gumbel_fits_apply_gumbel_parameters_for_surface_water_level.py /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_rcp4p5_runs/gumbel_fits_surface_water_level/gfdl-esm2m_2010-2049/ /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_rcp4p5_runs/extreme_values_surface_water_level/gfdl-esm2m_2010-2049/
+

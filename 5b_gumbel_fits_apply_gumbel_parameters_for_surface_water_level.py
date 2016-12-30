@@ -44,9 +44,11 @@ input_files                    = {}
 #~ input_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits_surface_water_level/ipsl-cm5a-lr_1960-1999/"
 # - miroc-esm-chem historical
 #~ input_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits_surface_water_level/miroc-esm-chem_1960-1999/"
-# - noresm1-m historical
-input_files['folder']          = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits_surface_water_level/noresm1-m_1960-1999/"
+#~ # - noresm1-m historical
+#~ input_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits_surface_water_level/noresm1-m_1960-1999/"
 #
+# - input folder based on the system argument
+input_files['folder']       = os.path.abspath(sys.argv[1]) + "/"
 #
 # output files
 output_files                   = {}
@@ -63,9 +65,12 @@ output_files                   = {}
 #~ output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values_surface_water_level/ipsl-cm5a-lr_1960-1999/"
 #~ # - miroc-esm-chem historical
 #~ output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values_surface_water_level/miroc-esm-chem_1960-1999/"
-# - noresm1-m historical
-output_files['folder']         = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values_surface_water_level/noresm1-m_1960-1999/"
+#~ # - noresm1-m historical
+#~ output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values_surface_water_level/noresm1-m_1960-1999/"
 #
+# output folder based on the system argument
+output_folder_for_this_analysis = sys.argv[2]
+output_files['folder']          = output_folder_for_this_analysis + "/" 
 #
 #
 try:
