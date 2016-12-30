@@ -53,6 +53,10 @@ input_files['floodVolumeMonthMax']       = input_files['folder'] + "floodVolume_
 #
 # type of hydrological year based on the system argument
 type_of_hydrological_year        = np.int(sys.argv[2])
+print type_of_hydrological_year
+print type_of_hydrological_year
+print type_of_hydrological_year
+
 
 
 # number of months to be shifted (based on hydrological year)
