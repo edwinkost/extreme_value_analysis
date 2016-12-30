@@ -11,5 +11,5 @@ python 2_merge_two_hydrological_year_result.py /projects/0/aqueduct/users/edwins
 python 3_calculate_maximum_river_depth.py /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_rcp4p5_runs/maximum_events_merged/gfdl-esm2m_2010-2049/ /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_rcp4p5_runs/surface_water_level_maximum/gfdl-esm2m_2010-2049/
 
 # calculate gumbel parameters for inundation
-python 4a_gumbel_fits_get_gumbel_parameters_for_inundation.py projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_rcp4p5_runs/maximum_events_merged/gfdl-esm2m_2010-2049/ /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_rcp4p5_runs/gumbel_fits/gfdl-esm2m_2010-2049/
+python 4a_gumbel_fits_get_gumbel_parameters_for_inundation.py /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_rcp4p5_runs/maximum_events_merged/gfdl-esm2m_2010-2049/ /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_rcp4p5_runs/gumbel_fits/gfdl-esm2m_2010-2049/
 
