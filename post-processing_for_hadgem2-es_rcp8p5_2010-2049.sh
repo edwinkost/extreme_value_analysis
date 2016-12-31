@@ -1,7 +1,7 @@
 
 # get maximum events for two hydrological year types
 python 1a_get_maximum_events.py /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_oct_nov/pcrglobwb_4_land_covers_edwin_parameter_set_hadgem2-es/no_correction/rcp8p5/merged_2006-2099/ 1 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_rcp8p5_runs/maximum_events/hadgem2-es_2010-2049/ &
-python 1a_get_maximum_events.py /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_oct_nov/pcrglobwb_4_land_covers_edwin_parameter_set_hadgem2-es/no_correction/rcp8p5/merged_2006-2099/ 2 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_rcp8p5_runs/maximum_events/hadgem2-es_2010-2049/ &nd
+python 1a_get_maximum_events.py /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_oct_nov/pcrglobwb_4_land_covers_edwin_parameter_set_hadgem2-es/no_correction/rcp8p5/merged_2006-2099/ 2 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_rcp8p5_runs/maximum_events/hadgem2-es_2010-2049/ &
 wait
 
 # merging two hydrological years
