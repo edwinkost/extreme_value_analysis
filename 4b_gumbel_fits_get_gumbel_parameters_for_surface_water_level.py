@@ -58,12 +58,12 @@ input_files['file_name']['surfaceWaterLevel'] = input_files['folder'] + "/" + "s
 #~ # - for historical runs
 #~ str_year = 1960
 #~ end_year = 1999
-# - for the year 2030
-str_year = 2010
-end_year = 2049
-#~ # - for the year 2050
-#~ str_year = 2030
-#~ end_year = 2069
+#~ # - for the year 2030
+#~ str_year = 2010
+#~ end_year = 2049
+# - for the year 2050
+str_year = 2030
+end_year = 2069
 #~ # - for the year 2080
 #~ str_year = 2060
 #~ end_year = 2099

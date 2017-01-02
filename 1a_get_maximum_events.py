@@ -65,10 +65,19 @@ if type_of_hydrological_year == 2: num_of_shift_month = 6               # hydrol
 
 
 
-# start and end years for this analysis (PS: after shifted)
-# - for the year 2030
-str_year = 2010
-end_year = 2049
+# start and end years for this analysis:
+#~ # - for historical runs
+#~ str_year = 1960
+#~ end_year = 1999
+#~ # - for the year 2030
+#~ str_year = 2010
+#~ end_year = 2049
+# - for the year 2050
+str_year = 2030
+end_year = 2069
+#~ # - for the year 2080
+#~ str_year = 2060
+#~ end_year = 2099
 
 
 # output files
