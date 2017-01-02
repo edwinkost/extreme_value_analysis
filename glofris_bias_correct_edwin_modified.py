@@ -7,7 +7,8 @@ $Revision: 733 $
 $HeadURL: https://repos.deltares.nl/repos/Hydrology/trunk/GLOFRIS/src/GLOFRIS.py $
 $Keywords: $
 """
-import rp_bias_corr
+import rp_bias_corr_edwin_modified as rp_bias_corr
+
 from optparse import OptionParser
 import os
 import sys
