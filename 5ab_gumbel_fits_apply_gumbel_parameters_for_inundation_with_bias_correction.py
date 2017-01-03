@@ -61,16 +61,16 @@ input_files["future"]['file_name']['floodVolume'   ] = input_files["future"]['fo
 input_files["future"]['file_name']['dynamicFracWat'] = input_files["future"]['folder'] + "/" + "gumbel_analysis_bias_corrected_output_for_fraction_of_surface_water.nc" 
 #
 # The gumbel fit parameters based on the annual flood maxima based on the HISTORICAL run:
-input_files["baseline"]  = {}
+input_files["historical"]  = {}
 # - input folder based on the system argument
-input_files["baseline"]['folder']    = os.path.abspath(sys.argv[4]) + "/"
+input_files["historical"]['folder']    = os.path.abspath(sys.argv[4]) + "/"
 #~ # - gfdl-esm2m historical (example)
-#~ input_files["baseline"]['folder'] = "/scratch-shared/edwinhs/bias_correction_test/input/historical/gumbel_fits/gfdl-esm2m_1960-1999/"
+#~ input_files["historical"]['folder'] = "/scratch-shared/edwinhs/bias_correction_test/input/historical/gumbel_fits/gfdl-esm2m_1960-1999/"
 #
-input_files["baseline"]['file_name'] = {}
-input_files["baseline"]['file_name']['channelStorage'] = input_files["baseline"]['folder'] + "/" + "gumbel_analysis_bias_corrected_output_for_channel_storage.nc" 
-input_files["baseline"]['file_name']['floodVolume'   ] = input_files["baseline"]['folder'] + "/" + "gumbel_analysis_bias_corrected_output_for_flood_inundation_volume.nc" 
-input_files["baseline"]['file_name']['dynamicFracWat'] = input_files["baseline"]['folder'] + "/" + "gumbel_analysis_bias_corrected_output_for_fraction_of_surface_water.nc" 
+input_files["historical"]['file_name'] = {}
+input_files["historical"]['file_name']['channelStorage'] = input_files["historical"]['folder'] + "/" + "gumbel_analysis_bias_corrected_output_for_channel_storage.nc" 
+input_files["historical"]['file_name']['floodVolume'   ] = input_files["historical"]['folder'] + "/" + "gumbel_analysis_bias_corrected_output_for_flood_inundation_volume.nc" 
+input_files["historical"]['file_name']['dynamicFracWat'] = input_files["historical"]['folder'] + "/" + "gumbel_analysis_bias_corrected_output_for_fraction_of_surface_water.nc" 
 #
 #
 # general input files
