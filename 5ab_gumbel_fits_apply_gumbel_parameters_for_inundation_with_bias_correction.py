@@ -181,11 +181,13 @@ p_zero = {}
 location = {}
 scale = {}
 #
-# - a dictionary for extreme value:
-extreme_values = {}
-#
 # - a dictionary for return periods
 return_periods = ["2-year", "5-year", "10-year", "25-year", "50-year", "100-year", "250-year", "500-year", "1000-year"]
+#
+# - dictionaries for extreme value:
+extreme_values = {}
+extreme_values["including_bias"] = {}
+extreme_values["bias_corrected"] = {}
 #
 for var_name in ['channelStorage', 'floodVolume']: 
     
