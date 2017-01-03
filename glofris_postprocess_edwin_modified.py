@@ -749,8 +749,13 @@ def get_return_period_gumbel(p_zero, loc, scale, flvol, max_return_period = 1e9)
     """
     
     # maximum values for the given max_return_period
-    max_p = 1.-1./max_return_period
+    max_p = pcr.scalar(1.-1./max_return_period)
     max_p_residual = pcr.min(pcr.max((max_p-(p_zero))/(1.0-(p_zero)), 0.0), 1.0)
+    
+    pcr.report(max_p_residual, "max_p_residual.map")
+    cmd = "aguila " + "max_p_residual.map"
+    os.system(cmd)
+    
     max_reduced_variate = -pcr.ln(-pcr.ln((max_p_residual)))
     
     # compute the gumbel reduced variate belonging to the Gumbel distribution (excluding any zero-values): reduced_variate = (flvol-loc)/scale

@@ -243,9 +243,9 @@ for var_name in ['channelStorage', 'floodVolume']:
         msg = "For the given future extreme values, obtain the return period based on the historical gumbel fit/parameters."
         logger.info(msg)
         return_period_historical = glofris.get_return_period_gumbel(p_zero["historical"], location["historical"], scale["historical"], extreme_values["including_bias"][return_period])
-        pcr.report(return_period_historical, "return_period_historical.map")
-        cmd = "aguila " + "return_period_historical.map"
-        os.system(cmd)
+        #~ pcr.report(return_period_historical, "return_period_historical.map")
+        #~ cmd = "aguila " + "return_period_historical.map"
+        #~ os.system(cmd)
         
         # bias corrected extreme values
         msg = "Calculate the bias corrected extreme values: Using the return period based on the historical gumbel fit/parameters and the gumbel fit/parameters of the baseline run."
