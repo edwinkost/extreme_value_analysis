@@ -234,12 +234,12 @@ for var_name in ['channelStorage', 'floodVolume']:
         # lookup the return period in present days (historical run) belonging to future extreme values
         msg = "For the given future extreme values, obtain the return period based on the historical gumbel fit/parameters."
         logger.info(msg)
-        return_period_historical = glofris.get_return_period_gumbel(p_zero["historical"], location["historical"], scale["historical"], extreme_values["with_bias"][return_period])
+        return_period_historical = glofris.get_return_period_gumbel(p_zero["historical"], location["historical"], scale["historical"], extreme_values["including_bias"][return_period])
         
         # bias corrected extreme values
         msg = "Calculate the bias corrected extreme values: Using the return period based on the historical gumbel fit/parameters and the gumbel fit/parameters of the baseline run."
         logger.info(msg)
-        extreme_values["bias_corrected"][return_period] = glofris.inverse_gumbel(p_zero["baseline"], location["baseline"], scale["baseline"], return_period_in_year)
+        extreme_values["bias_corrected"][return_period] = glofris.inverse_gumbel(p_zero["baseline"], location["baseline"], scale["baseline"], return_period_historical)
     
     # time bounds in a netcdf file
     lowerTimeBound = datetime.datetime(str_year,  1,  1, 0)
