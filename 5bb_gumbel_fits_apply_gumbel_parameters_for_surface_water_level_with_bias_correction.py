@@ -26,9 +26,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-#############################################################################################
-# The script to apply gumbel fits WITH BIAS CORRECTION to the Annual Flood Maxima time series
-#############################################################################################
+############################################################################################################
+# The script to apply gumbel fits WITH BIAS CORRECTION to the Annual Surface Water Level Maxima time series
+############################################################################################################
 
 
 # start and end years for this analysis:
@@ -53,11 +53,10 @@ input_files["future"]  = {}
 # - input folder based on the system argument
 input_files["future"]['folder']    = os.path.abspath(sys.argv[3]) + "/"
 #~ # - gfdl-esm2m future/climate (example)
-#~ input_files["future"]['folder'] = "/scratch-shared/edwinhs/bias_correction_test/input/rcp4p5/gumbel_fits/gfdl-esm2m_2010-2049/"
+#~ input_files["future"]['folder'] = "/scratch-shared/edwinhs/bias_correction_test/input/rcp4p5/gumbel_fits_surface_water_level/gfdl-esm2m_2010-2049/"
 #
 input_files["future"]['file_name'] = {}
-input_files["future"]['file_name']['channelStorage'] = input_files["future"]['folder'] + "/" + "gumbel_analysis_output_for_channel_storage.nc" 
-input_files["future"]['file_name']['floodVolume'   ] = input_files["future"]['folder'] + "/" + "gumbel_analysis_output_for_flood_inundation_volume.nc" 
+input_files["future"]['file_name']['surfaceWaterLevel'] = input_files["future"]['folder'] + "/" + "gumbel_analysis_output_for_surface_water_level.nc" 
 #
 # The gumbel fit parameters based on the annual flood maxima based on the HISTORICAL run:
 input_files["historical"]  = {}
@@ -67,8 +66,7 @@ input_files["historical"]['folder']    = os.path.abspath(sys.argv[4]) + "/"
 #~ input_files["historical"]['folder'] = "/scratch-shared/edwinhs/bias_correction_test/input/historical/gumbel_fits/gfdl-esm2m_1960-1999/"
 #
 input_files["historical"]['file_name'] = {}
-input_files["historical"]['file_name']['channelStorage'] = input_files["historical"]['folder'] + "/" + "gumbel_analysis_output_for_channel_storage.nc" 
-input_files["historical"]['file_name']['floodVolume'   ] = input_files["historical"]['folder'] + "/" + "gumbel_analysis_output_for_flood_inundation_volume.nc" 
+input_files["historical"]['file_name']['surfaceWaterLevel'] = input_files["historical"]['folder'] + "/" + "gumbel_analysis_output_for_surface_water_level.nc" 
 #
 #
 # general input files
@@ -130,7 +128,7 @@ netcdf_setup['zlib']        = True
 netcdf_setup['institution'] = "Utrecht University, Department of Physical Geography ; Deltares ; World Resources Institute"
 netcdf_setup['title'      ] = "PCR-GLOBWB 2 output (post-processed for the Aqueduct Flood Analyzer): Gumbel Fit to Annual Flood Maxima"
 netcdf_setup['created by' ] = "Edwin H. Sutanudjaja (E.H.Sutanudjaja@uu.nl)"
-netcdf_setup['description'] = "The extreme values based on the gumbel fits of the annual flood maxima."
+netcdf_setup['description'] = "The bias-corrected extreme values based on the gumbel fits of the annual flood maxima."
 netcdf_setup['source'     ] = "Utrecht University, Department of Physical Geography - contact: Edwin H. Sutanudjaja (E.H.Sutanudjaja@uu.nl)"
 netcdf_setup['references' ] = "Sutanudjaja et al., in prep."
 
@@ -163,8 +161,6 @@ for bias_type in ['including_bias', 'bias_corrected']:
         netcdf_file[bias_type][var_name]['source'     ] = netcdf_setup['source'     ]
         netcdf_file[bias_type][var_name]['references' ] = netcdf_setup['references' ]
         #
-        if bias_type == "bias_corrected": 
-            netcdf_file[bias_type][var_name]['description'] += " BIAS-CORRECTED based on the historical and baseline output."
         # - resolution (unit: arc-minutes)
         netcdf_file[bias_type][var_name]['resolution_arcmin'] = 5. 
         #
