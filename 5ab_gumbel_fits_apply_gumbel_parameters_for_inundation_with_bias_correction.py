@@ -228,7 +228,7 @@ for var_name in ['channelStorage', 'floodVolume']:
         msg  = "\n"
         msg += "\n"
         msg += "\n"
-        msg += "Compute bias corrected exteme values for the return perod:" + str(return_period_in_year)
+        msg += "Compute bias corrected exteme values for the return period:" + str(return_period)
         msg += "\n"
         msg += "\n"
         logger.info(msg)
