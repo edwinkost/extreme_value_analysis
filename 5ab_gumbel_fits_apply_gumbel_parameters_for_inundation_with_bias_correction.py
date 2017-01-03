@@ -280,7 +280,7 @@ for var_name in ['channelStorage', 'floodVolume']:
             data_dictionary[variable_name] = pcr.pcr2numpy(extreme_values[bias_type][return_period], vos.MV)
         
         # save the variables to a netcdf file
-        netcdf_report.dictionary_of_data_to_netcdf(netcdf_fileextreme_values[bias_type][var_name]['file_name'], \
+        netcdf_report.dictionary_of_data_to_netcdf(netcdf_file[bias_type][var_name]['file_name'], \
                                                    data_dictionary, \
                                                    timeBounds)
 
