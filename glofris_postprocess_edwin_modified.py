@@ -766,6 +766,19 @@ def get_return_period_gumbel(p_zero, loc, scale, flvol, max_return_period = 1e9)
     # make sure that the reduced variate does not exceed the one
     reduced_variate = pcr.min((flvol-loc)/scale, pcr.scalar(max_reduced_variate))
 
+    pcr.report(flvol, "flvol.map")
+    cmd = "aguila " + "flvol.map"
+    os.system(cmd)
+
+    pcr.report(loc, "loc.map")
+    cmd = "aguila " + "loc.map"
+    os.system(cmd)
+
+    pcr.report(scale, "scale.map")
+    cmd = "aguila " + "scale.map"
+    os.system(cmd)
+
+
     pcr.report(reduced_variate, "reduced_variate.map")
     cmd = "aguila " + "reduced_variate.map"
     os.system(cmd)
