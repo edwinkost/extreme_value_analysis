@@ -156,7 +156,7 @@ for bias_type in ['including_bias', 'bias_corrected']:
         #
         # all gumbel fit parameters in a netcdf file:
         # - file name
-        netcdf_file[bias_type][var_name]['file_name']   = output_files['folder'] + "/" + str(bias_type) + "_" + extreme_values_based_on_gumbel_fit_for_" + varDict.netcdf_short_name[var_name] + ".nc"
+        netcdf_file[bias_type][var_name]['file_name']   = output_files['folder'] + "/" + str(bias_type) + "_" + "extreme_values_based_on_gumbel_fit_for_" + varDict.netcdf_short_name[var_name] + ".nc"
         #
         # - general attribute information:
         netcdf_file[bias_type][var_name]['description'] = netcdf_setup['description']
