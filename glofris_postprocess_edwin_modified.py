@@ -733,7 +733,7 @@ def rp_gumbel_original(p_zero, loc, scale, flvol, max_return_period=1e9):
     test_p = p == 1    
     return return_period, test_p
 
-def get_return_period_gumbel(p_zero, loc, scale, flvol, max_return_period = 1e9):
+def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcraster, flvol_in_pcraster, max_return_period = 1e9):
     """
     Transforms a unique, or array of flood volumes into the belonging return
     periods, according to gumbel parameters (belonging to non-zero part of the
@@ -748,70 +748,52 @@ def get_return_period_gumbel(p_zero, loc, scale, flvol, max_return_period = 1e9)
     This function is copied from: https://repos.deltares.nl/repos/Hydrology/trunk/GLOFRIS/src/rp_bias_corr.py
     """
     
-    # maximum values for the given max_return_period
-    max_p = pcr.scalar(1.-1./max_return_period)
-    max_p_residual = pcr.min(pcr.max((max_p-(p_zero))/(1.0-(p_zero)), 0.0), 1.0)
-    
-    #~ pcr.report(max_p_residual, "max_p_residual.map")
-    #~ cmd = "aguila " + "max_p_residual.map"
-    #~ os.system(cmd)
-    
-    max_reduced_variate = -pcr.ln(-pcr.ln((max_p_residual)))
-    
-    pcr.report(max_p_residual, "max_reduced_variate.map")
-    cmd = "aguila " + "max_reduced_variate.map"
-    os.system(cmd)
+    np.seterr(divide='ignore')
+    np.seterr(invalid='ignore')
 
+    # convert all pcraster maps to numpy arrays
+    p_zero  = pcr.pcr2numpy(p_zero_in_pcraster, vos.MV)
+    loc     = pcr.pcr2numpy(loc_in_pcraster   , vos.MV)
+    scale   = pcr.pcr2numpy(scale_in_pcraster , vos.MV)
+    flvol   = pcr.pcr2numpy(flvol_in_pcraster , vos.MV)
+    
+    # maximum values for the given max_return_period
+    max_p = 1.0-1.0/max_return_period
+    max_p_residual = np.minimum(np.maximum((max_p-np.float64(p_zero))/(1-np.float64(p_zero)), 0), 1)
+    max_reduced_variate = -np.log(-np.log(np.float64(max_p_residual)))
+    
     # compute the gumbel reduced variate belonging to the Gumbel distribution (excluding any zero-values): reduced_variate = (flvol-loc)/scale
     # make sure that the reduced variate does not exceed the one
-    reduced_variate = pcr.min((flvol-loc)/scale, max_reduced_variate)
+    reduced_variate = np.minimum((flvol-loc)/scale, max_reduced_variate)
 
-    pcr.report(flvol, "flvol.map")
-    cmd = "aguila " + "flvol.map"
-    os.system(cmd)
+    #~ pcr.report(flvol, "flvol.map")
+    #~ cmd = "aguila " + "flvol.map"
+    #~ os.system(cmd)
+#~ 
+    #~ pcr.report(loc, "loc.map")
+    #~ cmd = "aguila " + "loc.map"
+    #~ os.system(cmd)
+#~ 
+    #~ pcr.report(scale, "scale.map")
+    #~ cmd = "aguila " + "scale.map"
+    #~ os.system(cmd)
 
-    pcr.report(loc, "loc.map")
-    cmd = "aguila " + "loc.map"
-    os.system(cmd)
 
-    pcr.report(scale, "scale.map")
-    cmd = "aguila " + "scale.map"
-    os.system(cmd)
-
-
-    pcr.report(reduced_variate, "reduced_variate.map")
-    cmd = "aguila " + "reduced_variate.map"
-    os.system(cmd)
+    #~ pcr.report(reduced_variate, "reduced_variate.map")
+    #~ cmd = "aguila " + "reduced_variate.map"
+    #~ os.system(cmd)
 
     # transform the reduced variate into a probability (residual after removing the zero volume probability)
-    p_residual = pcr.min(pcr.max(pcr.exp(-pcr.exp(-pcr.scalar(reduced_variate))), 0.0), 1.0)
+    p_residual = np.minimum(np.maximum(np.exp(-np.exp(-np.float64(reduced_variate))), 0.0), 1.0)
 
     # tranform from non-zero only distribution to zero-included distribution
-    p = pcr.min(pcr.max(p_residual * (1.0 - p_zero) + p_zero, p_zero), max_p)  # never larger than max_p # 
+    p = np.minimum(np.maximum(p_residual*(1.0 - p_zero) + p_zero, p_zero), max_p)  # never larger than max_p # 
     
     # transform into a return period    
-    return_period = 1./(1.0-p)
+    return_period = 1.0/(1.0-p)
     
     # test values 
     test_p = p == 1    
     diff_p = 1.0 - p
     
-    return return_period
-
-
-    p = pcr.scalar(1. - 1./return_period)
-    
-    # p_residual is the probability density function of the population consisting of any values above zero
-    p_residual = pcr.min(pcr.max((p - p_zero) / (1.0 - p_zero), 0.0), 1.0) 
-
-    #~ # - alternative equation found on:  https://repos.deltares.nl/repos/Hydrology/trunk/GLOFRIS/src/rp_bias_corr.py (see the method inv_gumbel)
-    #~ p_residual = np.minimum(np.maximum((p-p_zero)/(1-p_zero), 0), np.float64(1-1./1e9))  # I think this is the correct equation"""
-    
-    reduced_variate = -pcr.ln(-pcr.ln(p_residual))
-
-    flvol = reduced_variate * scale + loc
-
-    # infinite numbers can occur. reduce these to zero!
-    # if any values become negative due to the statistical extrapolation, fix them to zero (may occur if the sample size for fitting was small and a small return period is requested)
-    flvol = pcr.max(0.0, pcr.cover(flvol, 0.0))
-
+    return pcr.numpy2pcr(pcr.Scalar, return_period, vos.MV)
