@@ -56,8 +56,8 @@ input_files["future"]['folder']    = os.path.abspath(sys.argv[3]) + "/"
 #~ input_files["future"]['folder'] = "/scratch-shared/edwinhs/bias_correction_test/input/rcp4p5/gumbel_fits/gfdl-esm2m_2010-2049/"
 #
 input_files["future"]['file_name'] = {}
-input_files["future"]['file_name']['channelStorage'] = input_files["future"]['folder'] + "/" + "gumbel_analysis_for_channel_storage.nc" 
-input_files["future"]['file_name']['floodVolume'   ] = input_files["future"]['folder'] + "/" + "gumbel_analysis_for_flood_inundation_volume.nc" 
+input_files["future"]['file_name']['channelStorage'] = input_files["future"]['folder'] + "/" + "gumbel_analysis_output_for_channel_storage.nc" 
+input_files["future"]['file_name']['floodVolume'   ] = input_files["future"]['folder'] + "/" + "gumbel_analysis_output_for_flood_inundation_volume.nc" 
 #
 # The gumbel fit parameters based on the annual flood maxima based on the HISTORICAL run:
 input_files["historical"]  = {}
@@ -67,8 +67,8 @@ input_files["historical"]['folder']    = os.path.abspath(sys.argv[4]) + "/"
 #~ input_files["historical"]['folder'] = "/scratch-shared/edwinhs/bias_correction_test/input/historical/gumbel_fits/gfdl-esm2m_1960-1999/"
 #
 input_files["historical"]['file_name'] = {}
-input_files["historical"]['file_name']['channelStorage'] = input_files["historical"]['folder'] + "/" + "gumbel_analysis_bias_for_channel_storage.nc" 
-input_files["historical"]['file_name']['floodVolume'   ] = input_files["historical"]['folder'] + "/" + "gumbel_analysis_bias_for_flood_inundation_volume.nc" 
+input_files["historical"]['file_name']['channelStorage'] = input_files["historical"]['folder'] + "/" + "gumbel_analysis_output_for_channel_storage.nc" 
+input_files["historical"]['file_name']['floodVolume'   ] = input_files["historical"]['folder'] + "/" + "gumbel_analysis_output_for_flood_inundation_volume.nc" 
 #
 #
 # general input files
@@ -83,8 +83,8 @@ input_files['ldd_map_05min'  ] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/
 input_files["baseline"]  = {}
 input_files["baseline"]['folder']    = "/scratch-shared/edwinhs/bias_correction_test/input/historical/gumbel_fits/watch_1960-1999/"
 input_files["baseline"]['file_name'] = {}
-input_files["baseline"]['file_name']['channelStorage'] = input_files["baseline"]['folder'] + "/" + "gumbel_analysis_for_channel_storage.nc" 
-input_files["baseline"]['file_name']['floodVolume'   ] = input_files["baseline"]['folder'] + "/" + "gumbel_analysis_for_flood_inundation_volume.nc" 
+input_files["baseline"]['file_name']['channelStorage'] = input_files["baseline"]['folder'] + "/" + "gumbel_analysis_output_for_channel_storage.nc" 
+input_files["baseline"]['file_name']['floodVolume'   ] = input_files["baseline"]['folder'] + "/" + "gumbel_analysis_output_for_flood_inundation_volume.nc" 
 
 
 # option to save/present results at the landmask region only (not working yet):
