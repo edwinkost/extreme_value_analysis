@@ -83,7 +83,7 @@ def inv_gumbel(p_zero, loc, scale, return_period):
     np.seterr(invalid='warn')
     return flvol
 
-def rp_gumbel(p_zero, loc, scale, flvol, max_return_period=1e9):
+def rp_gumbel_original(p_zero, loc, scale, flvol, max_return_period=1e9):
     """
     Transforms a unique, or array of flood volumes into the belonging return
     periods, according to gumbel parameters (belonging to non-zero part of the
@@ -114,6 +114,36 @@ def rp_gumbel(p_zero, loc, scale, flvol, max_return_period=1e9):
     test_p = p == 1    
     return return_period, test_p
     
+def rp_gumbel(p_zero, loc, scale, flvol, max_return_period=1e9):
+    """
+    Transforms a unique, or array of flood volumes into the belonging return
+    periods, according to gumbel parameters (belonging to non-zero part of the
+    distribution) and a zero probability
+    Inputs:
+        p_zero:        probability that flood volume is zero
+        loc:           Gumbel location parameter (of non-zero part of distribution)
+        scale:         Gumbel scale parameter (of non-zero part of distribution)
+        flvol:         Flood volume that will be transformed to return period
+        max_return_period: maximum return period considered. This maximum is needed to prevent that floating point
+                        precision becomes a problem (default: 1e9)
+    """
+    np.seterr(divide='ignore')
+    np.seterr(invalid='ignore')
+    max_p = 1-1./max_return_period
+    max_p_residual = np.minimum(np.maximum((max_p-np.float64(p_zero))/(1-np.float64(p_zero)), 0), 1)
+    max_reduced_variate = -np.log(-np.log(np.float64(max_p_residual)))
+    # compute the gumbel reduced variate belonging to the Gumbel distribution (excluding any zero-values)
+    # make sure that the reduced variate does not exceed the one, resembling the 1,000,000 year return period
+    reduced_variate = np.minimum((flvol-loc)/scale, max_reduced_variate)
+    # reduced_variate = (flvol-loc)/scale
+    # transform the reduced variate into a probability (residual after removing the zero volume probability)
+    p_residual = np.minimum(np.maximum(np.exp(-np.exp(-np.float64(reduced_variate))), 0), 1)
+    # tranform from non-zero only distribution to zero-included distribution
+    p = np.minimum(np.maximum(p_residual*(1-p_zero) + p_zero, p_zero), max_p)  # Never larger than max_p
+    # transform into a return period    
+    return_period = 1./(1-p)
+    test_p = p == 1    
+    return return_period, test_p
 
 
 def rp_bias_corr(obs_hist_gumbel_file,

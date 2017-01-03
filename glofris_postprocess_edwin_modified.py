@@ -509,6 +509,9 @@ def inverse_gumbel(p_zero, loc, scale, return_period):
     # p_residual is the probability density function of the population consisting of any values above zero
     p_residual = pcr.min(pcr.max((p - p_zero) / (1.0 - p_zero), 0.0), 1.0) 
 
+    #~ # - alternative equation found on:  https://repos.deltares.nl/repos/Hydrology/trunk/GLOFRIS/src/rp_bias_corr.py (see the method inv_gumbel)
+    #~ p_residual = np.minimum(np.maximum((p-p_zero)/(1-p_zero), 0), np.float64(1-1./1e9))  # I think this is the correct equation"""
+    
     reduced_variate = -pcr.ln(-pcr.ln(p_residual))
 
     flvol = reduced_variate * scale + loc
@@ -696,3 +699,93 @@ def apply_Gumbel_original(gumbelFile, trgFolder, prefix, return_periods, cellAre
         writeMap(fileName, 'PCRaster', x, y, np.flipud(flvol_data), -9999.)
     nc_src.close()
     
+
+def rp_gumbel_original(p_zero, loc, scale, flvol, max_return_period=1e9):
+    """
+    Transforms a unique, or array of flood volumes into the belonging return
+    periods, according to gumbel parameters (belonging to non-zero part of the
+    distribution) and a zero probability
+    Inputs:
+        p_zero:        probability that flood volume is zero
+        loc:           Gumbel location parameter (of non-zero part of distribution)
+        scale:         Gumbel scale parameter (of non-zero part of distribution)
+        flvol:         Flood volume that will be transformed to return period
+        max_return_period: maximum return period considered. This maximum is needed to prevent that floating point
+                        precision becomes a problem (default: 1e9)
+    This function is copied from: https://repos.deltares.nl/repos/Hydrology/trunk/GLOFRIS/src/rp_bias_corr.py
+    """
+    
+    np.seterr(divide='ignore')
+    np.seterr(invalid='ignore')
+    max_p = 1-1./max_return_period
+    max_p_residual = np.minimum(np.maximum((max_p-np.float64(p_zero))/(1-np.float64(p_zero)), 0), 1)
+    max_reduced_variate = -np.log(-np.log(np.float64(max_p_residual)))
+    # compute the gumbel reduced variate belonging to the Gumbel distribution (excluding any zero-values)
+    # make sure that the reduced variate does not exceed the one, resembling the 1,000,000 year return period
+    reduced_variate = np.minimum((flvol-loc)/scale, max_reduced_variate)
+    # reduced_variate = (flvol-loc)/scale
+    # transform the reduced variate into a probability (residual after removing the zero volume probability)
+    p_residual = np.minimum(np.maximum(np.exp(-np.exp(-np.float64(reduced_variate))), 0), 1)
+    # tranform from non-zero only distribution to zero-included distribution
+    p = np.minimum(np.maximum(p_residual*(1-p_zero) + p_zero, p_zero), max_p)  # Never larger than max_p
+    # transform into a return period    
+    return_period = 1./(1-p)
+    test_p = p == 1    
+    return return_period, test_p
+
+def get_return_period_gumbel(p_zero, loc, scale, flvol, max_return_period = 1e9):
+    """
+    Transforms a unique, or array of flood volumes into the belonging return
+    periods, according to gumbel parameters (belonging to non-zero part of the
+    distribution) and a zero probability
+    Inputs:
+        p_zero:        probability that flood volume is zero
+        loc:           Gumbel location parameter (of non-zero part of distribution)
+        scale:         Gumbel scale parameter (of non-zero part of distribution)
+        flvol:         Flood volume that will be transformed to return period
+        max_return_period: maximum return period considered. This maximum is needed to prevent that floating point
+                        precision becomes a problem (default: 1e9)
+    This function is copied from: https://repos.deltares.nl/repos/Hydrology/trunk/GLOFRIS/src/rp_bias_corr.py
+    """
+    
+    # maximum values for the given max_return_period
+    max_p = 1.-1./max_return_period
+    max_p_residual = np.minimum(np.maximum((max_p-np.float64(p_zero))/(1-np.float64(p_zero)), 0), 1)
+    max_reduced_variate = -np.log(-np.log(np.float64(max_p_residual)))
+    
+    # compute the gumbel reduced variate belonging to the Gumbel distribution (excluding any zero-values): reduced_variate = (flvol-loc)/scale
+    # make sure that the reduced variate does not exceed the one
+    reduced_variate = pcr.min((flvol-loc)/scale, pcr.scalar(max_reduced_variate))
+
+    # transform the reduced variate into a probability (residual after removing the zero volume probability)
+    p_residual = pcr.min(pcr.max(pcr.exp(-pcr.exp(-pcr.scalar(reduced_variate))), 0.0), 1.0)
+
+    # tranform from non-zero only distribution to zero-included distribution
+    p = pcr.min(pcr.max(p_residual * (1.0 - p_zero) + p_zero, p_zero), max_p)  # never larger than max_p # 
+    
+    # transform into a return period    
+    return_period = 1./(1.0-p)
+    
+    # test values 
+    test_p = p == 1    
+    diff_p = 1.0 - p
+    
+    return return_period
+
+
+    p = pcr.scalar(1. - 1./return_period)
+    
+    # p_residual is the probability density function of the population consisting of any values above zero
+    p_residual = pcr.min(pcr.max((p - p_zero) / (1.0 - p_zero), 0.0), 1.0) 
+
+    #~ # - alternative equation found on:  https://repos.deltares.nl/repos/Hydrology/trunk/GLOFRIS/src/rp_bias_corr.py (see the method inv_gumbel)
+    #~ p_residual = np.minimum(np.maximum((p-p_zero)/(1-p_zero), 0), np.float64(1-1./1e9))  # I think this is the correct equation"""
+    
+    reduced_variate = -pcr.ln(-pcr.ln(p_residual))
+
+    flvol = reduced_variate * scale + loc
+
+    # infinite numbers can occur. reduce these to zero!
+    # if any values become negative due to the statistical extrapolation, fix them to zero (may occur if the sample size for fitting was small and a small return period is requested)
+    flvol = pcr.max(0.0, pcr.cover(flvol, 0.0))
+
