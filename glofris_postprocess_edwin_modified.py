@@ -777,24 +777,10 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     # make sure that the reduced variate does not exceed the one
     reduced_variate = np.longdouble(np.minimum((flvol-loc)/scale, max_reduced_variate))
 
-    #~ pcr.report(flvol, "flvol.map")
-    #~ cmd = "aguila " + "flvol.map"
-    #~ os.system(cmd)
-#~ 
-    #~ pcr.report(loc, "loc.map")
-    #~ cmd = "aguila " + "loc.map"
-    #~ os.system(cmd)
-#~ 
-    #~ pcr.report(scale, "scale.map")
-    #~ cmd = "aguila " + "scale.map"
-    #~ os.system(cmd)
-
-    #~ pcr.report(pcr.numpy2pcr(pcr.Scalar, np.float64(reduced_variate), vos.MV), "reduced_variate.map")
-    #~ cmd = "aguila " + "reduced_variate.map"
-    #~ os.system(cmd)
-
-    #~ print np.nanmin(reduced_variate)
-    #~ print np.nanmax(reduced_variate)
+    print np.nanmin(reduced_variate)
+    print np.nanmax(reduced_variate)
+    print np.amin(reduced_variate)
+    print np.amax(reduced_variate)
     
     # transform the reduced variate into a probability (residual after removing the zero volume probability)
     #~ p_residual = np.minimum(np.maximum(np.exp(-np.exp(-np.longdouble(reduced_variate))), np.longdouble(0.0)), np.longdouble(1.0))
@@ -823,9 +809,11 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     # transform into a return period    
     return_period = 1.0/(1.0-p)
     
-    # for n
+    # for p_zero = 1.0 (value is always zero_
+    return_period[p_zero == 1.0000] = max_return_period
+
+    # cell with mv will be still mv
     return_period[p_zero == vos.MV] = vos.MV
-    return_period[p_zero == 1.0000] = vos.MV
     
     # test values 
     test_p = p == 1    
@@ -833,7 +821,6 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     
     print np.nanmin(return_period)
     print np.nanmax(return_period)
-
     print np.amin(return_period)
     print np.amax(return_period)
 
