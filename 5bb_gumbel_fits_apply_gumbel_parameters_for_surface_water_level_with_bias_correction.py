@@ -202,21 +202,21 @@ for var_name in ['surfaceWaterLevel']:
                                           variable_name,\
                                           1,\
                                           "Yes",\
-                                          input_files['clone_map_05min'])
+                                          input_files['clone_map_30min'])
         #
         variable_name = str('location_parameter') + "_of_" + varDict.netcdf_short_name[var_name]
         location[run_type] = vos.netcdf2PCRobjClone(netcdf_input_file,\
                                           variable_name,\
                                           1,\
                                           "Yes",\
-                                          input_files['clone_map_05min'])
+                                          input_files['clone_map_30min'])
         #
         variable_name = str('scale_parameter') + "_of_" + varDict.netcdf_short_name[var_name]
         scale[run_type]    = vos.netcdf2PCRobjClone(netcdf_input_file,\
                                           variable_name,\
                                           1,\
                                           "Yes",\
-                                          input_files['clone_map_05min'])
+                                          input_files['clone_map_30min'])
     
     # compute future extreme values (including bias correction):
     for return_period in return_periods:
