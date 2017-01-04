@@ -764,7 +764,7 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     
     # compute the gumbel reduced variate belonging to the Gumbel distribution (excluding any zero-values): reduced_variate = (flvol-loc)/scale
     # make sure that the reduced variate does not exceed the one
-    reduced_variate = np.minimum((flvol-loc)/scale, max_reduced_variate)
+    reduced_variate = np.float128(np.minimum((flvol-loc)/scale, max_reduced_variate))
 
     #~ pcr.report(flvol, "flvol.map")
     #~ cmd = "aguila " + "flvol.map"
