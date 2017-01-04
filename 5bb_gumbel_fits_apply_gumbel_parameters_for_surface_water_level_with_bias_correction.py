@@ -92,7 +92,7 @@ output_files                    = {}
 # output folder based on the system argument
 output_folder_for_this_analysis = sys.argv[5]
 output_files['folder']          = output_folder_for_this_analysis + "/" 
-#~ # - gfdl-esm2m
+#~ # - gfdl-esm2m (example)
 #~ output_files['folder']       = "/scratch-shared/edwinhs/bias_correction_test/output/extreme_values_surface_water_level_bias_corrected/gfdl-esm2m_2010-2049/"
 #
 #
