@@ -52,6 +52,9 @@ input_folder          = os.path.abspath(sys.argv[1]) + "/"
 output_folder_for_this_analysis = sys.argv[2]
 general_output_folder           = output_folder_for_this_analysis + "/" 
 
+# type of files
+type_of_files = str(sys.argv[3])
+# - options are: "normal"; "bias_corrected"; and "including_bias"
 
 # clean any files exists on the ouput directory (this can be done for global runs)
 clean_previous_output = True
@@ -86,7 +89,7 @@ for i_group in range(number_of_clone_groups):
     # - command lines for running the downscling script parallely
     cmd = ''
     for clone_code in clone_codes:
-       cmd += "python downscaling.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " "
+       cmd += "python downscaling.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " " + type_of_files + " "
        cmd = cmd + " & "
        i_clone += 1
     cmd = cmd + " wait "

@@ -25,6 +25,9 @@ global_output_folder = os.path.abspath(sys.argv[2])
 ini_file             = os.path.abspath(sys.argv[3])
 # - mask/code for this clone
 mask_code            = str(sys.argv[4])
+# - type of files (options are: "normal"; "bias_corrected"; and "including_bias")
+type_of_files        = str(sys.argv[5])
+
 
 # output folder for this mask only
 output_folder = global_output_folder + "/" + str(mask_code) + "/"
@@ -75,8 +78,10 @@ file_names = [   '2-year_of_flood_inundation_volume.map',
                '250-year_of_flood_inundation_volume.map',
                '500-year_of_flood_inundation_volume.map',
               '1000-year_of_flood_inundation_volume.map']
+front_name = ""
+if type_of_files != "normal": front_name = type_of_files + "_"
 for file_name in file_names:
-    complete_file_name = input_folder + "/" + file_name
+    complete_file_name = input_folder + "/" + front_name + file_name
     extreme_value_map = vos.readPCRmapClone(complete_file_name, \
                                             clone_map_file, \
                                             tmp_folder, \
@@ -113,7 +118,7 @@ river_length_low_resolution = pcr.ifthen(landmask, river_length_low_resolution)
 river_length_low_resolution = pcr.cover(river_length_low_resolution, 0.0)
 pcr.report(river_length_low_resolution, "resampled_low_resolution_channel_length.map") 
 # - river width
-river_width_file_name = "/projects/0/dfguu/users/edwin/data/data_for_glofris_downscaling/input_data/maps_05min/celldiagonal05min.map"
+river_width_file_name = "/projects/0/dfguu/users/edwin/data/data_for_glofris_downscaling/input_data/maps_05min/bankfull_width.map"
 river_width_low_resolution = vos.readPCRmapClone(river_width_file_name, \
                                                  clone_map_file, \
                                                  tmp_folder, \
