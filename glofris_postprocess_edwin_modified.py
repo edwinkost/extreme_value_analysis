@@ -809,15 +809,15 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     p = np.minimum(np.maximum(p_residual*(1.0 - p_zero) + p_zero, p_zero), max_p)  # never larger than max_p # 
     p = np.maximum(0.0, p)
     
-    print ""
-    print "p"
-    print np.nanmin(p)
-    print np.nanmax(p)
-
-    print np.amin(p)
-    print np.amax(p)
-    print "p"
-    print ""
+    #~ print ""
+    #~ print "p"
+    #~ print np.nanmin(p)
+    #~ print np.nanmax(p)
+#~ 
+    #~ print np.amin(p)
+    #~ print np.amax(p)
+    #~ print "p"
+    #~ print ""
 
     # transform into a return period    
     return_period = 1.0/(1.0-p)
