@@ -809,6 +809,12 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     test_p = p == 1    
     diff_p = 1.0 - p
     
+    print np.nanmin(return_period)
+    print np.nanmax(return_period)
+
+    print np.amin(return_period)
+    print np.amax(return_period)
+
     pcr.report(pcr.numpy2pcr(pcr.Scalar, np.float64(return_period), vos.MV), "return_period.map")
     cmd = "aguila " + "return_period.map"
     os.system(cmd)
