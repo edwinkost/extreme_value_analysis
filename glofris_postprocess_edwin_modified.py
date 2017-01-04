@@ -792,8 +792,9 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     #~ p_residual = np.minimum(np.maximum(np.exp(-np.exp(-np.longdouble(reduced_variate))), np.longdouble(0.0)), np.longdouble(1.0))
     p_residual = np.minimum(np.maximum(np.exp(-np.exp(-np.longdouble(reduced_variate))), 0), 1)
 
-    # tranform from non-zero only distribution to zero-included distribution
+    # transform from non-zero only distribution to zero-included distribution
     p = np.minimum(np.maximum(p_residual*(1.0 - p_zero) + p_zero, p_zero), max_p)  # never larger than max_p # 
+    p = np.maximum(0.0, p)
     
     # transform into a return period    
     return_period = 1.0/(1.0-p)
