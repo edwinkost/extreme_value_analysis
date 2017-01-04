@@ -752,19 +752,19 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     np.seterr(invalid='ignore')
 
     # convert all pcraster maps to numpy arrays
-    p_zero  = np.float128(pcr.pcr2numpy(p_zero_in_pcraster, vos.MV))
-    loc     = np.float128(pcr.pcr2numpy(loc_in_pcraster   , vos.MV))
-    scale   = np.float128(pcr.pcr2numpy(scale_in_pcraster , vos.MV))
-    flvol   = np.float128(pcr.pcr2numpy(flvol_in_pcraster , vos.MV))
+    p_zero  = np.float256(pcr.pcr2numpy(p_zero_in_pcraster, vos.MV))
+    loc     = np.float256(pcr.pcr2numpy(loc_in_pcraster   , vos.MV))
+    scale   = np.float256(pcr.pcr2numpy(scale_in_pcraster , vos.MV))
+    flvol   = np.float256(pcr.pcr2numpy(flvol_in_pcraster , vos.MV))
     
     # maximum values for the given max_return_period
-    max_p = np.float128(1.0-1.0/max_return_period)
-    max_p_residual = np.minimum(np.maximum((max_p-np.float128(p_zero))/(1-np.float128(p_zero)), 0), 1)
-    max_reduced_variate = -np.log(-np.log(np.float128(max_p_residual)))
+    max_p = np.float256(1.0-1.0/max_return_period)
+    max_p_residual = np.minimum(np.maximum((max_p-np.float256(p_zero))/(1-np.float256(p_zero)), 0), 1)
+    max_reduced_variate = -np.log(-np.log(np.float256(max_p_residual)))
     
     # compute the gumbel reduced variate belonging to the Gumbel distribution (excluding any zero-values): reduced_variate = (flvol-loc)/scale
     # make sure that the reduced variate does not exceed the one
-    reduced_variate = np.float128(np.minimum((flvol-loc)/scale, max_reduced_variate))
+    reduced_variate = np.float256(np.minimum((flvol-loc)/scale, max_reduced_variate))
 
     #~ pcr.report(flvol, "flvol.map")
     #~ cmd = "aguila " + "flvol.map"
@@ -784,7 +784,7 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     #~ os.system(cmd)
 
     # transform the reduced variate into a probability (residual after removing the zero volume probability)
-    p_residual = np.minimum(np.maximum(np.exp(-np.exp(-np.float128(reduced_variate))), 0.0), 1.0)
+    p_residual = np.minimum(np.maximum(np.exp(-np.exp(-np.float256(reduced_variate))), 0.0), 1.0)
 
     # tranform from non-zero only distribution to zero-included distribution
     p = np.minimum(np.maximum(p_residual*(1.0 - p_zero) + p_zero, p_zero), max_p)  # never larger than max_p # 
