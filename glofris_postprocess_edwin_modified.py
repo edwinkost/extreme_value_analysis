@@ -757,15 +757,9 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     scale   = np.longdouble(pcr.pcr2numpy(scale_in_pcraster , vos.MV))
     flvol   = np.longdouble(pcr.pcr2numpy(flvol_in_pcraster , vos.MV))
     
-    print np.nanmin(p_zero)
-    print np.nanmax(p_zero)
-
-    print np.amin(p_zero)
-    print np.amax(p_zero)
-
     # maximum values for the given max_return_period
     max_p = 1.0-1.0/max_return_period
-    max_p_residual = np.minimum(np.maximum((max_p-p_zero)/(1-p_zero), 0), 1)
+    max_p_residual = np.minimum(np.maximum((max_p-p_zero)/(1.0-p_zero), 0.0), 1.0)
 
     #~ print np.nanmin(max_p_residual)
     #~ print np.nanmax(max_p_residual)
@@ -773,7 +767,7 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     #~ print np.amin(max_p_residual)
     #~ print np.amax(max_p_residual)
 
-    max_reduced_variate = -np.log(-np.log(np.float64(max_p_residual)))
+    max_reduced_variate = -np.log(-np.log((max_p_residual)))
     
     #~ print np.nanmin(max_reduced_variate)
     #~ print np.nanmax(max_reduced_variate)
@@ -803,7 +797,7 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     
     # transform the reduced variate into a probability (residual after removing the zero volume probability)
     #~ p_residual = np.minimum(np.maximum(np.exp(-np.exp(-np.longdouble(reduced_variate))), np.longdouble(0.0)), np.longdouble(1.0))
-    p_residual = np.minimum(np.maximum(np.exp(-np.exp(-np.longdouble(reduced_variate))), 0), 1)
+    p_residual = np.minimum(np.maximum(np.exp(-np.exp(-np.longdouble(reduced_variate))), 0.0), 1.0)
 
     #~ print np.nanmin(p_residual)
     #~ print np.nanmax(p_residual)
@@ -828,15 +822,18 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     # transform into a return period    
     return_period = 1.0/(1.0-p)
     
+    # for n
+    return_period[p_zero == vos.MV] = vos.MV
+    
     # test values 
     test_p = p == 1    
     diff_p = 1.0 - p
     
-    #~ print np.nanmin(return_period)
-    #~ print np.nanmax(return_period)
-#~ 
-    #~ print np.amin(return_period)
-    #~ print np.amax(return_period)
+    print np.nanmin(return_period)
+    print np.nanmax(return_period)
+
+    print np.amin(return_period)
+    print np.amax(return_period)
 
     #~ pcr.report(pcr.numpy2pcr(pcr.Scalar, np.float64(return_period), vos.MV), "return_period.map")
     #~ cmd = "aguila " + "return_period.map"
