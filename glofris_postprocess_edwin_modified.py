@@ -758,7 +758,7 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     flvol   = np.float128(pcr.pcr2numpy(flvol_in_pcraster , vos.MV))
     
     # maximum values for the given max_return_period
-    max_p = 1.0-1.0/max_return_period
+    max_p = np.float128(1.0-1.0/max_return_period)
     max_p_residual = np.minimum(np.maximum((max_p-np.float128(p_zero))/(1-np.float128(p_zero)), 0), 1)
     max_reduced_variate = -np.log(-np.log(np.float128(max_p_residual)))
     
