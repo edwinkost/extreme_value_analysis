@@ -760,7 +760,9 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     # maximum values for the given max_return_period
     max_p = np.longdouble(1.0-1.0/max_return_period)
     max_p_residual = np.minimum(np.maximum((max_p-np.longdouble(p_zero))/(1-np.longdouble(p_zero)), 0), 1)
-    max_reduced_variate = np.float64(-np.log(-np.log(np.float64(max_p_residual))))
+    # - set small values to zero
+    max_p_residual[max_p_residual < 1e-64] = 0.0
+    max_reduced_variate = np.longdouble(-np.log(-np.log(np.longdouble(max_p_residual))))
     
     #~ print np.nanmin(max_reduced_variate)
     #~ print np.nanmax(max_reduced_variate)
