@@ -825,6 +825,7 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     
     # for n
     return_period[p_zero == vos.MV] = vos.MV
+    return_period[p_zero == 0] = vos.MV
     
     # test values 
     test_p = p == 1    
