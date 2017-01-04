@@ -782,8 +782,8 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     #~ cmd = "aguila " + "reduced_variate.map"
     #~ os.system(cmd)
 
-    print np.amin(reduced_variate)
-    print np.amax(reduced_variate)
+    print np.nanmin(reduced_variate)
+    print np.nanmax(reduced_variate)
     
     # transform the reduced variate into a probability (residual after removing the zero volume probability)
     #~ p_residual = np.minimum(np.maximum(np.exp(-np.exp(-np.longdouble(reduced_variate))), np.longdouble(0.0)), np.longdouble(1.0))
