@@ -802,6 +802,14 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     p = np.minimum(np.maximum(p_residual*(1.0 - p_zero) + p_zero, p_zero), max_p)  # never larger than max_p # 
     p = np.maximum(0.0, p)
     
+    print "p"
+    print np.nanmin(p)
+    print np.nanmax(p)
+
+    print np.amin(p)
+    print np.amax(p)
+    print "p"
+
     # transform into a return period    
     return_period = 1.0/(1.0-p)
     
@@ -815,8 +823,8 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     print np.amin(return_period)
     print np.amax(return_period)
 
-    pcr.report(pcr.numpy2pcr(pcr.Scalar, np.float64(return_period), vos.MV), "return_period.map")
-    cmd = "aguila " + "return_period.map"
-    os.system(cmd)
+    #~ pcr.report(pcr.numpy2pcr(pcr.Scalar, np.float64(return_period), vos.MV), "return_period.map")
+    #~ cmd = "aguila " + "return_period.map"
+    #~ os.system(cmd)
 
     return pcr.numpy2pcr(pcr.Scalar, np.float64(return_period), vos.MV)
