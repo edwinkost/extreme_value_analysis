@@ -767,7 +767,7 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     print np.amin(max_p_residual)
     print np.amax(max_p_residual)
 
-    max_reduced_variate = -np.log(-np.log(np.float64(max_p_residual))))
+    max_reduced_variate = -np.log(-np.log(np.float64(max_p_residual)))
     
     #~ print np.nanmin(max_reduced_variate)
     #~ print np.nanmax(max_reduced_variate)
