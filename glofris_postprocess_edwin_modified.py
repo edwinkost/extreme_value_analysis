@@ -762,6 +762,9 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     max_p_residual = np.minimum(np.maximum((max_p-np.longdouble(p_zero))/(1-np.longdouble(p_zero)), 0), 1)
     max_reduced_variate = np.longdouble(-np.log(-np.log(np.longdouble(max_p_residual))))
     
+    print np.nanmin(max_reduced_variate)
+    print np.nanmax(max_reduced_variate)
+
     # compute the gumbel reduced variate belonging to the Gumbel distribution (excluding any zero-values): reduced_variate = (flvol-loc)/scale
     # make sure that the reduced variate does not exceed the one
     reduced_variate = np.longdouble(np.minimum((flvol-loc)/scale, max_reduced_variate))
