@@ -92,14 +92,14 @@ landmask_only = True
 
 
 # output files
-output_files                   = {}
+output_files                    = {}
 #
 # - output folder
 # output folder based on the system argument
 output_folder_for_this_analysis = sys.argv[5]
 output_files['folder']          = output_folder_for_this_analysis + "/" 
 #~ # - gfdl-esm2m
-#~ output_files['folder']      = "/scratch-shared/edwinhs/bias_correction_test/output/extreme_values_bias_corrected/gfdl-esm2m_1960-1999/"
+#~ output_files['folder']       = "/scratch-shared/edwinhs/bias_correction_test/output/extreme_values_bias_corrected/gfdl-esm2m_2010-2049/"
 #
 #
 try:
@@ -245,6 +245,7 @@ for var_name in ['channelStorage', 'floodVolume']:
         msg = "For the given future extreme values, obtain the return period based on the historical gumbel fit/parameters."
         logger.info(msg)
         return_period_historical = glofris.get_return_period_gumbel(p_zero["historical"], location["historical"], scale["historical"], extreme_values["including_bias"][return_period])
+        
         #~ pcr.report(return_period_historical, "return_period_historical.map")
         #~ cmd = "aguila " + "return_period_historical.map"
         #~ os.system(cmd)
