@@ -763,15 +763,15 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     max_p_residual[p_zero >= max_p] = 0.0 
     max_reduced_variate = -np.log(-np.log((max_p_residual)))
 
-    print np.nanmin(max_p_residual)
-    print np.nanmax(max_p_residual)
-    print np.amin(max_p_residual)
-    print np.amax(max_p_residual)
-
-    print np.nanmin(max_reduced_variate)
-    print np.nanmax(max_reduced_variate)
-    print np.amin(max_reduced_variate)
-    print np.amax(max_reduced_variate)
+    #~ print np.nanmin(max_p_residual)
+    #~ print np.nanmax(max_p_residual)
+    #~ print np.amin(max_p_residual)
+    #~ print np.amax(max_p_residual)
+#~ 
+    #~ print np.nanmin(max_reduced_variate)
+    #~ print np.nanmax(max_reduced_variate)
+    #~ print np.amin(max_reduced_variate)
+    #~ print np.amax(max_reduced_variate)
 
     # compute the gumbel reduced variate belonging to the Gumbel distribution (excluding any zero-values): reduced_variate = (flvol-loc)/scale
     # make sure that the reduced variate does not exceed the one
@@ -818,10 +818,10 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     test_p = p == 1    
     diff_p = 1.0 - p
     
-    print np.nanmin(return_period)
-    print np.nanmax(return_period)
-    print np.amin(return_period)
-    print np.amax(return_period)
+    #~ print np.nanmin(return_period)
+    #~ print np.nanmax(return_period)
+    #~ print np.amin(return_period)
+    #~ print np.amax(return_period)
 
     #~ pcr.report(pcr.numpy2pcr(pcr.Scalar, np.float64(return_period), vos.MV), "return_period.map")
     #~ cmd = "aguila " + "return_period.map"
