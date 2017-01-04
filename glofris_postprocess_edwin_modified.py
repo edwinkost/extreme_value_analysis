@@ -733,7 +733,7 @@ def rp_gumbel_original(p_zero, loc, scale, flvol, max_return_period=1e9):
     test_p = p == 1    
     return return_period, test_p
 
-def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcraster, flvol_in_pcraster, max_return_period = np.longdouble(1e9)):
+def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcraster, flvol_in_pcraster, max_return_period = 1e9):
     """
     Transforms a unique, or array of flood volumes into the belonging return
     periods, according to gumbel parameters (belonging to non-zero part of the
@@ -758,9 +758,16 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     flvol   = np.longdouble(pcr.pcr2numpy(flvol_in_pcraster , vos.MV))
     
     # maximum values for the given max_return_period
-    max_p = np.longdouble(1.0-1.0/max_return_period)
-    max_p_residual = np.minimum(np.maximum((max_p-np.longdouble(p_zero))/(1-np.longdouble(p_zero)), 0), 1)
-    max_reduced_variate = np.longdouble(-np.log(-np.log(np.longdouble(max_p_residual))))
+    max_p = 1.0-1.0/max_return_period
+    max_p_residual = np.minimum(np.maximum((max_p-np.float64(p_zero))/(1-np.float64(p_zero)), 0), 1)
+
+    print np.nanmin(max_p_residual)
+    print np.nanmax(max_p_residual)
+
+    print np.amin(max_p_residual)
+    print np.amax(max_p_residual)
+
+    max_reduced_variate = -np.log(-np.log(np.float64(max_p_residual))))
     
     #~ print np.nanmin(max_reduced_variate)
     #~ print np.nanmax(max_reduced_variate)
@@ -792,13 +799,11 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     #~ p_residual = np.minimum(np.maximum(np.exp(-np.exp(-np.longdouble(reduced_variate))), np.longdouble(0.0)), np.longdouble(1.0))
     p_residual = np.minimum(np.maximum(np.exp(-np.exp(-np.longdouble(reduced_variate))), 0), 1)
 
-    p_residual = np.minimum(p_residual, max_p_residual)
-
-    print np.nanmin(p_residual)
-    print np.nanmax(p_residual)
-
-    print np.amin(p_residual)
-    print np.amax(p_residual)
+    #~ print np.nanmin(p_residual)
+    #~ print np.nanmax(p_residual)
+#~ 
+    #~ print np.amin(p_residual)
+    #~ print np.amax(p_residual)
 
     # transform from non-zero only distribution to zero-included distribution
     p = np.minimum(np.maximum(p_residual*(1.0 - p_zero) + p_zero, p_zero), max_p)  # never larger than max_p # 
@@ -821,11 +826,11 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     test_p = p == 1    
     diff_p = 1.0 - p
     
-    print np.nanmin(return_period)
-    print np.nanmax(return_period)
-
-    print np.amin(return_period)
-    print np.amax(return_period)
+    #~ print np.nanmin(return_period)
+    #~ print np.nanmax(return_period)
+#~ 
+    #~ print np.amin(return_period)
+    #~ print np.amax(return_period)
 
     #~ pcr.report(pcr.numpy2pcr(pcr.Scalar, np.float64(return_period), vos.MV), "return_period.map")
     #~ cmd = "aguila " + "return_period.map"
