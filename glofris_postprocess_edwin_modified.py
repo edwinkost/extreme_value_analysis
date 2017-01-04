@@ -808,15 +808,15 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     # transform into a return period    
     return_period = 1.0/(1.0-p)
     
-    # for p_zero = 1.0 (value is always zero_
+    # assign maximum return period for p_zero = 1.0 (value is always zero)
     return_period[p_zero == 1.0000] = max_return_period
 
     # cell with mv will be still mv
     return_period[p_zero == vos.MV] = vos.MV
     
-    # test values 
-    test_p = p == 1    
-    diff_p = 1.0 - p
+    #~ # test values (calculated in the original Hessel's script, not needed)
+    #~ test_p = p == 1    
+    #~ diff_p = 1.0 - p
     
     print np.nanmin(return_period)
     print np.nanmax(return_period)
