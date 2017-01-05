@@ -228,6 +228,10 @@ inputDirRoot = str(sys.argv[1])
 output_netcdf_file_name = "inunriver_historical_WATCH_1999.nc"
 output_netcdf_file_name = str(sys.argv[2])
 
+# time stamp for the first and last years
+str_year = int(sys.argv[3]
+end_year = int(sys.argv[4]
+
 outputDir = inputDirRoot + "/global/maps/"
 try:
 	os.makedirs(outputDir)
@@ -393,8 +397,6 @@ netcdf_report.create_netcdf_file(netcdf_file[var_name])
 #
 #
 # time bounds in a netcdf file
-str_year = 1960
-end_year = 1999
 lowerTimeBound = datetime.datetime(str_year,  1,  1, 0)
 upperTimeBound = datetime.datetime(end_year, 12, 31, 0)
 timeBounds = [lowerTimeBound, upperTimeBound]

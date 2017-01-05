@@ -16,4 +16,4 @@ python 5bb_gumbel_fits_apply_gumbel_parameters_for_surface_water_level_with_bias
 python 6_downscaling_parallel.py /scratch-shared/edwinhs/bias_correction_test/output/rcp4p5/extreme_values_bias_corrected/gfdl-esm2m_2010-2049/ /scratch-shared/edwinhs/bias_correction_test/output/rcp4p5/inundation_downscaled_bias_corrected/gfdl-esm2m_2010-2049/ bias_corrected
 
 # merging the downscaled maps
-python 7_merging_downscaled_maps.py /scratch-shared/edwinhs/bias_correction_test/output/rcp4p5/inundation_downscaled_bias_corrected/gfdl-esm2m_2010-2049/ inunriver_rcp4p5_gfdl-esm2m_2010-2049.nc
+python 7_merging_downscaled_maps.py /scratch-shared/edwinhs/bias_correction_test/output/rcp4p5/inundation_downscaled_bias_corrected/gfdl-esm2m_2010-2049/ inunriver_rcp4p5_gfdl-esm2m_2010-2049.nc 2010 2049
