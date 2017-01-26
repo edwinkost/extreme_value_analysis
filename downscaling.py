@@ -93,7 +93,7 @@ if map_type_name == "channel_storage.map":
 front_name = ""
 if type_of_files != "normal": front_name = type_of_files + "_"
 for file_name in file_names:
-    complete_file_name = input_folder + "/" + file_name
+    complete_file_name = input_folder + "/" + front_name + file_name
     extreme_value_map = vos.readPCRmapClone(complete_file_name, \
                                             clone_map_file, \
                                             tmp_folder, \
