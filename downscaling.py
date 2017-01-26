@@ -27,7 +27,9 @@ ini_file             = os.path.abspath(sys.argv[3])
 mask_code            = str(sys.argv[4])
 # - type of files (options are: "normal"; "bias_corrected"; and "including_bias")
 type_of_files        = str(sys.argv[5])
-
+# - option for map types: *flood_inundation_volume.map or *channel_storage.map
+map_type_name        = "channel_storage.map"
+map_type_name        = str(sys.argv[6])
 
 # output folder for this mask only
 output_folder = global_output_folder + "/" + str(mask_code) + "/"
@@ -78,10 +80,20 @@ file_names = [   '2-year_of_flood_inundation_volume.map',
                '250-year_of_flood_inundation_volume.map',
                '500-year_of_flood_inundation_volume.map',
               '1000-year_of_flood_inundation_volume.map']
+if map_type_name == "channel_storage.map":
+   file_names = [   '2-year_of_channel_storage.map',
+                    '5-year_of_channel_storage.map',
+                   '10-year_of_channel_storage.map',
+                   '25-year_of_channel_storage.map',
+                   '50-year_of_channel_storage.map',
+                  '100-year_of_channel_storage.map',
+                  '250-year_of_channel_storage.map',
+                  '500-year_of_channel_storage.map',
+                 '1000-year_of_channel_storage.map']
 front_name = ""
 if type_of_files != "normal": front_name = type_of_files + "_"
 for file_name in file_names:
-    complete_file_name = input_folder + "/" + front_name + file_name
+    complete_file_name = input_folder + "/" + file_name
     extreme_value_map = vos.readPCRmapClone(complete_file_name, \
                                             clone_map_file, \
                                             tmp_folder, \
@@ -196,7 +208,8 @@ for i_file in range(1, len(file_names)):
     cmd = ' python /home/edwin/github/edwinkost/wflow/wflow-py/Scripts/wflow_flood.py ' + \
           ' -i downscaling.ini ' + \
           ' -f ' + str(file_name) + \
-          ' -b 2-year_of_flood_inundation_volume.map -c 4 -d output_folder'
+          ' -b ' + str(file_names[0]) + \
+          ' -c 4 -d output_folder'
     vos.cmd_line(cmd, using_subprocess = False)
 
 
