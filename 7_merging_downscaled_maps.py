@@ -232,6 +232,10 @@ output_netcdf_file_name = str(sys.argv[2])
 str_year = int(sys.argv[3])
 end_year = int(sys.argv[4])
 
+# - option for map types: *flood_inundation_volume.map or *channel_storage.map
+map_type_name  = "channel_storage.map"
+map_type_name  = str(sys.argv[5])
+
 outputDir = inputDirRoot + "/global/maps/"
 try:
 	os.makedirs(outputDir)
@@ -431,7 +435,9 @@ for return_period in return_periods:
     logger.info(msg)
     
     # read from pcraster files
-    inundation_map = pcr.readmap(inputDirRoot + "/global/maps/" + "inun_" + str(return_period) + "_of_flood_inundation_volume_catch_04.tif.map")
+    inundation_file_name = inputDirRoot + "/global/maps/" + "inun_" + str(return_period) + "_of_flood_inundation_volume_catch_04.tif.map"
+    if map_type_name == "channel_storage.map": inundation_file_name = inputDirRoot + "/global/maps/" + "inun_" + str(return_period) + "_of_channel_storage_catch_04.tif.map"
+    inundation_map = pcr.readmap(inundation_file_name)
     
     # put it in a data dictionary
     netcdf_report.data_to_netcdf(netcdf_file[var_name]['file_name'], variable_name, pcr.pcr2numpy(inundation_map, vos.MV), timeBounds, timeStamp = None, posCnt = 0)
