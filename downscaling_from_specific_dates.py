@@ -146,7 +146,7 @@ logger.info(msg)
 # set the cell length manually
 cell_length = '0.00833333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333'
 factor = np.round(
-         vos.getMapAttributes(ldd_map_low_resolution_file_name, "cellsize") / cell_length, 2)
+         vos.getMapAttributes(ldd_map_low_resolution_file_name, "cellsize") / float(cell_length), 2)
 # numbers of rows and columns
 num_of_rows = np.round(pcr.clone().nrRows() * factor   , 2)
 num_of_cols = np.round(pcr.clone().nrCols() * factor   , 2)
