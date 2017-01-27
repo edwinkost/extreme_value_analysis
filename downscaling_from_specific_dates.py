@@ -78,7 +78,11 @@ landmask = pcr.readmap(landmask_map_file)
 # read the event map (low resolution), resample, and save to the output folder
 msg = "Resampling the event map."
 logger.info(msg)
-extreme_value_map = vos.netcdf2PCRobjClone(ncFile = input_netcdf_file, varName = nc_variable_name, dateInput = chosen_date,\
+date_used = chosen_date.split('-')
+date_time_used = datetime.date(int(date_used[0]), int(date_used[1]), int(date_used[2]))
+extreme_value_map = vos.netcdf2PCRobjClone(ncFile = input_netcdf_file, \
+                                           varName = nc_variable_name, \
+                                           dateInput = date_time_used,\
                                            useDoy = None,
                                            cloneMapFileName  = clone_map_file,\
                                            LatitudeLongitude = True,\
@@ -90,6 +94,8 @@ extreme_value_map = pcr.ifthen(landmask, extreme_value_map)
 extreme_value_map = pcr.cover(extreme_value_map, 0.0)
 event_file_name   = "channel_storage_" + chosen_date + ".map"
 pcr.report(extreme_value_map, event_file_name)
+cmd = 'aguila ' + event_file_name
+os.system(cmd)
 
 # resampling low resolution ldd map
 msg = "Resample the low resolution ldd map."
