@@ -42,7 +42,7 @@ water_body_file   = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input30min/ro
 water_body_year   = 1993
 
 # clean any files exists on the ouput directory
-clean_previous_output = True
+clean_previous_output = False
 if clean_previous_output and os.path.exists(output_folder): shutil.rmtree(output_folder)
 
 # make output and log folders, and initialize logging:
