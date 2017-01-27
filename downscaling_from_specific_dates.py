@@ -32,7 +32,8 @@ output_folder     = str(sys.argv[4])
 # - landmask/clone map
 landmask_map      = "/projects/0/dfguu/data/hydroworld/others/Mississippi/Mississippi30min.clone.map"
 # - bankfull channel capacity file (in pcraster format)
-channel_capacity  = "/projects/0/dfguu/users/edwinhs/data/from_niko_inundation_paper/simulation_result/maps/channel_capacity.map"
+channel_capacity_file_name  = \
+                    "/projects/0/dfguu/users/edwinhs/data/from_niko_inundation_paper/simulation_result/maps/channel_capacity.map"
 # - ldd map at low resolution
 ldd_map_low_resolution_file_name = "/projects/0/dfguu/users/edwinhs/data/from_niko_inundation_paper/simulation_result/maps/lddsound_30min.map"
 # - netcdf file for water bodies (lakes/reservoirs, low resolution)
@@ -129,7 +130,6 @@ pcr.report(river_width_low_resolution, "resampled_low_resolution_bankfull_width.
 # resampling bankfull channel capacity file
 msg = "Resample the channel capacity maps."
 logger.info(msg)
-channel_capacity_file_name = ldd_map_low_resolution_file_name
 channel_capacity = vos.readPCRmapClone(channel_capacity_file_name, \
                                        clone_map_file, \
                                        tmp_folder, \
