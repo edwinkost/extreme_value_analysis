@@ -55,12 +55,12 @@ tmp_folder = output_folder + "/tmp/"
 if os.path.exists(tmp_folder): shutil.rmtree(tmp_folder)
 os.makedirs(tmp_folder)
 
+# copy ini file 
+cmd = "cp downscaling.ini " + output_folder + "/downscaling.ini" 
+vos.cmd_line(cmd, using_subprocess = False)
+
 # change the working directory to the output folder 
 os.chdir(output_folder)
-
-# copy ini file 
-cmd = "cp " + str(ini_file) + " downscaling.ini" 
-vos.cmd_line(cmd, using_subprocess = False)
 
 # clone and landmask files at low resolution (e.g. 5 arc-minutes)
 # - set clone map
