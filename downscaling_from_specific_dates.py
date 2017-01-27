@@ -133,7 +133,7 @@ logger.info(msg)
 channel_capacity = vos.readPCRmapClone(channel_capacity_file_name, \
                                        clone_map_file, \
                                        tmp_folder, \
-                                       None, True, None, False)
+                                       None, False, None, False)
 channel_capacity = pcr.ifthen(landmask, channel_capacity)
 channel_capacity = pcr.cover(channel_capacity, 0.0)
 pcr.report(channel_capacity, "channel_capacity.map")
