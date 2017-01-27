@@ -206,7 +206,6 @@ pcr.report(stream_order_map, "high_resolution_stream_order.map")
 # execute downscaling script
 msg = "Downscaling."
 logger.info(msg)
-file_name = file_names[i_file]
 cmd = ' python /home/edwin/github/edwinkost/wflow/wflow-py/Scripts/wflow_flood.py ' + \
       ' -i downscaling.ini ' + \
       ' -f ' + str(event_file_name) + \
