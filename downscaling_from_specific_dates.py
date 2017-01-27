@@ -86,8 +86,7 @@ extreme_value_map = vos.netcdf2PCRobjClonePCRGLOBWB(ncFile = input_netcdf_file, 
                                                     useDoy = None,
                                                     cloneMapFileName  = clone_map_file,\
                                                     LatitudeLongitude = True,\
-                                                    specificFillValue = None,\
-                                                    automaticMatchingVariableName = True)
+                                                    specificFillValue = None)
 # - focus only to the landmask area. We have to do this so that only flood in the landmask that will be downscaled/routed. 
 extreme_value_map = pcr.ifthen(landmask, extreme_value_map)
 # - cover the rests to zero (so they will not contribute to any flood/inundation)
