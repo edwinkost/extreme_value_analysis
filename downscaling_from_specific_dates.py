@@ -34,7 +34,7 @@ landmask_map      = "/projects/0/dfguu/data/hydroworld/others/Mississippi/Missis
 # - bankfull channel capacity file (in pcraster format)
 channel_capacity  = "/projects/0/dfguu/users/edwinhs/data/from_niko_inundation_paper/simulation_result/maps/channel_capacity.map"
 # - ldd map at low resolution
-ldd_map_low_resolution_file_name = "/projects/0/dfguu/users/edwinhs/data/from_niko_inundation_paper/simulation_result/maps/"
+ldd_map_low_resolution_file_name = "/projects/0/dfguu/users/edwinhs/data/from_niko_inundation_paper/simulation_result/maps/lddsound_30min.map"
 # - netcdf file for water bodies (lakes/reservoirs, low resolution)
 water_body_file   = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input30min/routing/reservoirs/fromRensJune2013/reservoirparameterization/waterBodies30min.nc"
 # - year used for water body
