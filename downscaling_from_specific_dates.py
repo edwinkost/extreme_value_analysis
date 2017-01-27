@@ -80,14 +80,14 @@ msg = "Resampling the event map."
 logger.info(msg)
 date_used = chosen_date.split('-')
 date_time_used = datetime.date(int(date_used[0]), int(date_used[1]), int(date_used[2]))
-extreme_value_map = netcdf2PCRobjClonePCRGLOBWB(ncFile = input_netcdf_file, \
-                                                varName = nc_variable_name, \
-                                                dateInput = date_time_used,\
-                                                useDoy = None,
-                                                cloneMapFileName  = clone_map_file,\
-                                                LatitudeLongitude = True,\
-                                                specificFillValue = None,\
-                                                automaticMatchingVariableName = True)
+extreme_value_map = vos.netcdf2PCRobjClonePCRGLOBWB(ncFile = input_netcdf_file, \
+                                                    varName = nc_variable_name, \
+                                                    dateInput = date_time_used,\
+                                                    useDoy = None,
+                                                    cloneMapFileName  = clone_map_file,\
+                                                    LatitudeLongitude = True,\
+                                                    specificFillValue = None,\
+                                                    automaticMatchingVariableName = True)
 # - focus only to the landmask area. We have to do this so that only flood in the landmask that will be downscaled/routed. 
 extreme_value_map = pcr.ifthen(landmask, extreme_value_map)
 # - cover the rests to zero (so they will not contribute to any flood/inundation)
