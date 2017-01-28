@@ -93,8 +93,9 @@ extreme_value_map = pcr.ifthen(landmask, extreme_value_map)
 extreme_value_map = pcr.cover(extreme_value_map, 0.0)
 event_file_name   = "channel_storage_" + chosen_date + ".map"
 pcr.report(extreme_value_map, event_file_name)
-cmd = 'aguila ' + event_file_name
-os.system(cmd)
+#~ # - check it using aguila
+#~ cmd = 'aguila ' + event_file_name
+#~ os.system(cmd)
 
 # resampling low resolution ldd map
 msg = "Resample the low resolution ldd map."
