@@ -21,4 +21,7 @@ cd /home/edwinsut/github/edwinkost/extreme_value_analysis/
 # downscaling flood inundation volume and merging the downscaled maps
 
 # downscaling inundation based on channel storage and merging the downscaled maps
+# - rcp4p5
 python 6_downscaling_parallel.py /projects/0/aqueduct/users/edwinsut/bias_corrected_flood_analyzer_analysis_rcp4p5_runs_2010-2049/rcp4p5/extreme_values_bias_corrected/gfdl-esm2m_2010-2049/ /scratch-shared/edwinhs/inundation_downscaled_using_channel_storage/rcp4p5/gfdl-esm2m_2010-2049/ bias_corrected channel_storage.map
+# - rcp8p5
+python 6_downscaling_parallel.py /projects/0/aqueduct/users/edwinsut/bias_corrected_flood_analyzer_analysis_rcp8p5_runs_2010-2049/rcp8p5/extreme_values_bias_corrected/gfdl-esm2m_2010-2049/ /scratch-shared/edwinhs/inundation_downscaled_using_channel_storage/rcp8p5/gfdl-esm2m_2010-2049/ bias_corrected channel_storage.map
