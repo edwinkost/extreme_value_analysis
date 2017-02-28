@@ -171,6 +171,7 @@ pcr.setclone(clone_map_file)
 # resampling high resolution dem and ldd maps
 msg = "Resampling high resolution dem and ldd maps."
 logger.info(msg)
+#
 # - ldd map
 ldd_map_high_resolution_file_name = "/projects/0/dfguu/users/edwinhs/data/HydroSHEDS/hydro_basin_without_lakes/integrating_ldd/version_9_december_2016/merged_ldd.map"
 ldd_map_high_resolution = vos.readPCRmapClone(ldd_map_high_resolution_file_name, \
@@ -181,12 +182,20 @@ ldd_map_high_resolution = vos.readPCRmapClone(ldd_map_high_resolution_file_name,
 ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
 ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
 pcr.report(ldd_map_high_resolution, "resampled_high_resolution_ldd.map")
+#
 # - dem map
-dem_map_high_resolution_file_name = "/projects/0/dfguu/users/edwinhs/data/HydroSHEDS/hydro_basin_without_lakes/integrating_ldd/version_9_december_2016/cover_SRTM_1km_merge_gtopo_masked.map"
+#~ # -- using the dem from deltares
+#~ dem_map_high_resolution_file_name = "/projects/0/dfguu/users/edwinhs/data/HydroSHEDS/hydro_basin_without_lakes/integrating_ldd/version_9_december_2016/cover_SRTM_1km_merge_gtopo_masked.map"
+# -- using the gtopo30 dem
+dem_map_high_resolution_file_name    = "/projects/0/dfguu/data/hydroworld/basedata/hydrography/GTOPO30/edwin_process/gtopo30_full.map"
+#
+# TODO: using the merged DEMs from HydroSHEDS and Deltares/GTOPO30
+#
 dem_map_high_resolution = vos.readPCRmapClone(dem_map_high_resolution_file_name, \
                                               clone_map_file, \
                                               tmp_folder, \
                                               None, False, None, False)
+
 dem_map_high_resolution = pcr.cover(dem_map_high_resolution, 0.0)
 # - use dem only where ldd are defined
 dem_map_high_resolution = pcr.ifthen(pcr.defined(ldd_map_high_resolution) , dem_map_high_resolution)
@@ -205,11 +214,18 @@ msg = "Downscaling for every return period."
 logger.info(msg)
 for i_file in range(1, len(file_names)):
     file_name = file_names[i_file]
+    #~ # using the strahler order 4
+    #~ cmd = ' python /home/edwin/github/edwinkost/wflow/wflow-py/Scripts/wflow_flood.py ' + \
+          #~ ' -i downscaling.ini ' + \
+          #~ ' -f ' + str(file_name) + \
+          #~ ' -b ' + str(file_names[0]) + \
+          #~ ' -c 4 -d output_folder'
+    # using the strahler order 5
     cmd = ' python /home/edwin/github/edwinkost/wflow/wflow-py/Scripts/wflow_flood.py ' + \
           ' -i downscaling.ini ' + \
           ' -f ' + str(file_name) + \
           ' -b ' + str(file_names[0]) + \
-          ' -c 4 -d output_folder'
+          ' -c 5 -d output_folder'
     vos.cmd_line(cmd, using_subprocess = False)
 
 
