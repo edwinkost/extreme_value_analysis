@@ -220,12 +220,18 @@ for i_file in range(1, len(file_names)):
           #~ ' -f ' + str(file_name) + \
           #~ ' -b ' + str(file_names[0]) + \
           #~ ' -c 4 -d output_folder'
-    # using the strahler order 5
+    #~ # using the strahler order 5
+    #~ cmd = ' python /home/edwin/github/edwinkost/wflow/wflow-py/Scripts/wflow_flood.py ' + \
+          #~ ' -i downscaling.ini ' + \
+          #~ ' -f ' + str(file_name) + \
+          #~ ' -b ' + str(file_names[0]) + \
+          #~ ' -c 5 -d output_folder'
+    # using the strahler order 6
     cmd = ' python /home/edwin/github/edwinkost/wflow/wflow-py/Scripts/wflow_flood.py ' + \
           ' -i downscaling.ini ' + \
           ' -f ' + str(file_name) + \
           ' -b ' + str(file_names[0]) + \
-          ' -c 5 -d output_folder'
+          ' -c 6 -d output_folder'
     vos.cmd_line(cmd, using_subprocess = False)
 
 
