@@ -31,6 +31,10 @@ type_of_files        = str(sys.argv[5])
 map_type_name        = "channel_storage.map"
 map_type_name        = str(sys.argv[6])
 
+# - option for masking out permanent water bodies (valid only if map_type_name = "channel_storage.map")
+masking_out_permanent_water_bodies = False
+masking_out_permanent_water_bodies = sys.argv[7] == "masking_out_permanent_water_bodies" 
+
 # output folder for this mask only
 output_folder = global_output_folder + "/" + str(mask_code) + "/"
 
@@ -68,6 +72,14 @@ msg = "Set the landmask to : " + str(landmask_map_file)
 logger.info(msg)
 landmask = pcr.readmap(landmask_map_file)
 
+# permanent water bodies files:
+reservoir_capacity_file = "/scratch-shared/edwinsut/masking_out_permanent_water_bodies/"
+fracwat_file            = "/scratch-shared/edwinsut/masking_out_permanent_water_bodies/fracwat_2010.map"
+water_body_id_file      = "/scratch-shared/edwinsut/masking_out_permanent_water_bodies/waterbodyid_2010.map"
+
+# cell_area_file
+cell_area_file = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/cellsize05min.correct.map"
+
 # read all extreme value maps (low resolution maps), resample them, and save them to the output folder
 msg = "Resampling extreme value maps."
 logger.info(msg)
@@ -94,12 +106,66 @@ front_name = ""
 if type_of_files != "normal": front_name = type_of_files + "_"
 for file_name in file_names:
     complete_file_name = input_folder + "/" + front_name + file_name
-    extreme_value_map = vos.readPCRmapClone(complete_file_name, \
+    extreme_value_map = pcr.cover(
+                        vos.readPCRmapClone(complete_file_name, \
                                             clone_map_file, \
                                             tmp_folder, \
-                                            None, False, None, False)
+                                            None, False, None, False), 0.0)
     # - focus only to the landmask area. We have to do this so that only flood in the landmask that will be downscaled/routed. 
     extreme_value_map = pcr.ifthen(landmask, extreme_value_map)
+    #
+    # - masking out permanent water bodies
+    if masking_out_permanent_water_bodies:
+        cell_area = pcr.ifthen(landmask, \
+                    pcr.cover(\
+                    vos.readPCRmapClone(cell_area_file, \
+                                        clone_map_file, \
+                                        tmp_folder, \
+                                        None, False, None, False), 0.0))
+        # read the properties of permanent water bodies
+        fracwat            = pcr.ifthen(landmask, \
+                             pcr.cover(\
+                             vos.readPCRmapClone(fracwat_file, \
+                                                 clone_map_file, \
+                                                 tmp_folder, \
+                                                 None, False, None, False), 0.0))
+        reservoir_capacity = pcr.ifthen(landmask, \
+                             pcr.cover(\
+                             vos.readPCRmapClone(fracwat_file, \
+                                                 clone_map_file, \
+                                                 tmp_folder, \
+                                                 None, False, None, False), 0.0)) * 1000. * 1000.
+        water_body_id      = vos.readPCRmapClone(water_body_id_file, \
+                                                 clone_map_file, \
+                                                 tmp_folder, \
+                                                 None, False, None, True )
+        water_body_id      = pcr.ifthen(landmask, water_body_id)                                         
+        # calculate overbank volume from lakes and reservoirs
+        lake_reservoir_volume          = pcr.areatotal(extreme_value_map, water_body_id)
+        lake_reservoir_overbank_volume = pcr.cover(
+                                         pcr.max(0.0, lake_reservoir_volume - reservoir_capacity), 0.0)
+        land_area = cell_area * pcr.max(0.0, 1.0 - fracwat)
+        distributed_lake_reservoir_overbank_volume = pcr.cover(\
+                                                     lake_reservoir_overbank_volume * land_area / pcr.max(0.01, pcr.areatotal(land_area, water_body_id), 0.0)
+        #
+        # correcting extreme value:
+        extreme_value_map = pcr.ifthenelse(reservoir_capacity > 0.0, distributed_lake_reservoir_overbank_volume, extreme_value_map)
+        #
+        #  also masking out all cells with fracwat > 0.45
+        extreme_value_map = pcr.ifthenelse(fracwat > 0.45, 0.0, extreme_value_map)
+               
+
+
+
+
+
+
+
+
+
+    
+    
+    #
     # - cover the rests to zero (so they will not contribute to any flood/inundation)
     extreme_value_map = pcr.cover(extreme_value_map, 0.0)
     pcr.report(extreme_value_map, file_name)
