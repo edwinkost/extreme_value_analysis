@@ -159,7 +159,7 @@ for file_name in file_names:
                      pcr.ifthen(fracwat > 0.20, pcr.boolean(1)), masked_out)
         masked_out = pcr.cover(masked_out, pcr.boolean(0))
         #~ pcr.aguila(masked_out)
-        pcr.report(pcr.ifthen(pcr.scalar(masked_out) > 1.0, pcr.scalar(1.0)), "permanent_water_bodies.map")
+        pcr.report(masked_out, "permanent_water_bodies.map")
         extreme_value_map = pcr.ifthenelse(masked_out, 0.0, extreme_value_map)
     #
     # - cover the rests to zero (so they will not contribute to any flood/inundation)
@@ -252,7 +252,6 @@ if masking_out_permanent_water_bodies:
                                                    tmp_folder, \
                                                    None, False, None, False))
     permanent_water_bodies  = pcr.cover(permanent_water_bodies, pcr.boolean(0))
-    pcr.aguila(permanent_water_bodies)
     ldd_map_high_resolution = pcr.ifthenelse(permanent_water_bodies, pcr.ldd(5), ldd_map_high_resolution)
     ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
     ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
