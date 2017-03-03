@@ -250,7 +250,7 @@ if masking_out_permanent_water_bodies:
                               vos.readPCRmapClone("permanent_water_bodies.map", \
                                                    clone_map_file, \
                                                    tmp_folder, \
-                                                   None, False, None, True))
+                                                   None, False, None, False))
     permanent_water_bodies  = pcr.cover(permanent_water_bodies, pcr.boolean(0))
     pcr.aguila(permanent_water_bodies)
     ldd_map_high_resolution = pcr.ifthenelse(permanent_water_bodies, pcr.ldd(5), ldd_map_high_resolution)
