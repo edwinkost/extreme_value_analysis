@@ -252,8 +252,10 @@ if masking_out_permanent_water_bodies:
                                                    tmp_folder, \
                                                    None, False, None, False), 0.0)
     permanent_water_bodies = pcr.ifthenelse(permanent_water_bodies_scalar > 0.0, pcr.boolean(1), pcr.boolean(0))
-    pcr.aguila(permanent_water_bodies)
-    ldd_map_high_resolution = pcr.ifthenelse(permanent_water_bodies, pcr.ldd(5), ldd_map_high_resolution)
+    #~ pcr.aguila(permanent_water_bodies)
+    #~ ldd_map_high_resolution = pcr.ifthenelse(permanent_water_bodies, pcr.ldd(5), ldd_map_high_resolution)
+    non_permanent_water_bodies =  pcr.ifthenelse(permanent_water_bodies, pcr.boolean(0), pcr.boolean(1))
+    ldd_map_high_resolution = pcr.ifthen(non_permanent_water_bodies, ldd_map_high_resolution)
     ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
     ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
     pcr.report(ldd_map_high_resolution, "resampled_high_resolution_ldd_without_permanent_waterbodies.map")
