@@ -156,7 +156,7 @@ for file_name in file_names:
         masked_out = pcr.defined(water_body_id)
         # masking out all cells with fracwat > 0.20
         masked_out = pcr.cover(
-                     pcr.ifthen(fracwat > 0.20, pc.boolean(1.0)), masked_out)
+                     pcr.ifthen(fracwat > 0.20, pcr.boolean(1.0)), masked_out)
         masked_out = pcr.cover(masked_out, pcr.boolean(0.0))
         pcr.report(pcr.scalar(masked_out), "permanent_water_bodies.map")
         extreme_value_map = pcr.ifthenelse(masked_out, 0.0, extreme_value_map)
