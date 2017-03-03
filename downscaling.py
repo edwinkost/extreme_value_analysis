@@ -154,9 +154,9 @@ for file_name in file_names:
         masked_out = pcr.boolean(0)
         # masking out all water above lakes and reservoirs
         masked_out = pcr.defined(water_body_id)
-        # masking out all cells with fracwat > 0.20
-        masked_out = pcr.cover(
-                     pcr.ifthen(fracwat > 0.20, pcr.boolean(1)), masked_out)
+        #~ # masking out all cells with fracwat > 0.20
+        #~ masked_out = pcr.cover(
+                     #~ pcr.ifthen(fracwat > 0.20, pcr.boolean(1)), masked_out)
         masked_out = pcr.cover(masked_out, pcr.boolean(0))
         masked_out_scalar = pcr.ifthen(masked_out, pcr.scalar(1.0))
         pcr.report(masked_out_scalar, "permanent_water_bodies.map")
