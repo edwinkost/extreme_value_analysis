@@ -241,10 +241,10 @@ ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
 pcr.report(ldd_map_high_resolution, "resampled_high_resolution_ldd.map")
 #
 # - dem map
-#~ # -- using the dem from deltares
-#~ dem_map_high_resolution_file_name = "/projects/0/dfguu/users/edwinhs/data/HydroSHEDS/hydro_basin_without_lakes/integrating_ldd/version_9_december_2016/cover_SRTM_1km_merge_gtopo_masked.map"
-# -- using the gtopo30 dem
-dem_map_high_resolution_file_name    = "/projects/0/dfguu/data/hydroworld/basedata/hydrography/GTOPO30/edwin_process/gtopo30_full.map"
+# -- using the dem from deltares
+dem_map_high_resolution_file_name = "/projects/0/dfguu/users/edwinhs/data/HydroSHEDS/hydro_basin_without_lakes/integrating_ldd/version_9_december_2016/cover_SRTM_1km_merge_gtopo_masked.map"
+#~ # -- using the gtopo30 dem
+#~ dem_map_high_resolution_file_name    = "/projects/0/dfguu/data/hydroworld/basedata/hydrography/GTOPO30/edwin_process/gtopo30_full.map"
 #
 # TODO: using the merged DEMs from HydroSHEDS and Deltares/GTOPO30
 #
