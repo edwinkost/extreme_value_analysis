@@ -77,7 +77,7 @@ logger.info(msg)
 #
 number_of_clone_maps = 53
 all_clone_codes = ['M%02d'%i for i in range(1,number_of_clone_maps+1,1)]
-all_clone_codes = ['M09']
+#~ all_clone_codes = ['M09']
 #
 # - due to limited memory, we have to split the runs into several groups (assumption: a process takes maximum about 4.5 GB RAM and we will use normal nodes)
 num_of_clones_in_a_grp = np.int(np.floor(64.0 / 4.5))
