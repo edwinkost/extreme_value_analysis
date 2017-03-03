@@ -142,9 +142,6 @@ for file_name in file_names:
         water_body_id      = pcr.ifthen(pcr.scalar(water_body_id) > 0.00, water_body_id)
         water_body_id      = pcr.ifthen( landmask, water_body_id)                                         
         #
-        # USE THIS: directly masking out all water above lakes and reservoirs
-        extreme_value_map = pcr.ifthenelse(pcr.defined(water_body_id), 0.00, extreme_value_map)
-        #
         #~ # calculate overbank volume from lakes and reservoirs
         #~ lake_reservoir_volume          = pcr.areatotal(extreme_value_map, water_body_id)
         #~ lake_reservoir_overbank_volume = pcr.cover(
@@ -154,8 +151,15 @@ for file_name in file_names:
                                                      #~ lake_reservoir_overbank_volume * land_area / pcr.max(0.00, pcr.areatotal(land_area, water_body_id)), 0.0)
         #~ extreme_value_map = pcr.ifthenelse(reservoir_capacity > 0.0, distributed_lake_reservoir_overbank_volume, extreme_value_map)
         #
-        #  also masking out all cells with fracwat > 0.20
-        extreme_value_map = pcr.ifthenelse(fracwat > 0.20, 0.0, extreme_value_map)
+        masked_out = pcr.boolean(0.0)
+        # masking out all water above lakes and reservoirs
+        masked_out = pcr.defined(water_body_id)
+        # masking out all cells with fracwat > 0.20
+        masked_out = pcr.cover(
+                     pcr.ifthen(fracwat > 0.20, pc.boolean(1.0)), masked_out)
+        masked_out = pcr.cover(masked_out, pcr.boolean(0.0))
+        pcr.report(pcr.scalar(masked_out), "permanent_water_bodies.map")
+        extreme_value_map = pcr.ifthenelse(masked_out, 0.0, extreme_value_map)
     #
     # - cover the rests to zero (so they will not contribute to any flood/inundation)
     extreme_value_map = pcr.cover(extreme_value_map, 0.0)
@@ -239,6 +243,19 @@ ldd_map_high_resolution = vos.readPCRmapClone(ldd_map_high_resolution_file_name,
 ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
 ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
 pcr.report(ldd_map_high_resolution, "resampled_high_resolution_ldd.map")
+# - masking out permanent water bodies
+if masking_out_permanent_water_bodies:
+    permanent_water_bodies  = pcr.boolean(
+                              pcr.cover(
+                              vos.readPCRmapClone("permanent_water_bodies.map", \
+                                                   clone_map_file, \
+                                                   tmp_folder, \
+                                                   None, False, None, False), 0.0))
+    ldd_map_high_resolution = pcr.ifthenelse(permanent_water_bodies, pcr.ldd(5), ldd_map_high_resolution)
+    ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
+    ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
+    pcr.report(ldd_map_high_resolution, "resampled_high_resolution_ldd_without_permanent_waterbodies.map")
+
 #
 # - dem map
 # -- using the dem from deltares
