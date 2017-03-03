@@ -253,9 +253,6 @@ if masking_out_permanent_water_bodies:
                                                    None, False, None, False), 0.0)
     permanent_water_bodies = pcr.ifthenelse(permanent_water_bodies_scalar > 0.0, pcr.boolean(1), pcr.boolean(0))
     pcr.aguila(permanent_water_bodies)
-    
-    pietje
-    
     ldd_map_high_resolution = pcr.ifthenelse(permanent_water_bodies, pcr.ldd(5), ldd_map_high_resolution)
     ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
     ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
