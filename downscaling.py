@@ -159,7 +159,7 @@ for file_name in file_names:
                      pcr.ifthen(fracwat > 0.20, pcr.boolean(1)), masked_out)
         masked_out = pcr.cover(masked_out, pcr.boolean(0))
         pcr.aguila(masked_out)
-        pcr.report(pcr.ifthen(masked_out, 1.0), "permanent_water_bodies.map")
+        pcr.report(pcr.ifthen(pcr.scalar(masked_out) > 1.0, pcr.scalar(1.0)), "permanent_water_bodies.map")
         extreme_value_map = pcr.ifthenelse(masked_out, 0.0, extreme_value_map)
     #
     # - cover the rests to zero (so they will not contribute to any flood/inundation)
