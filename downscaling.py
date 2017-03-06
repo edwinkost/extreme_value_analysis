@@ -142,25 +142,25 @@ for file_name in file_names:
         water_body_id      = pcr.ifthen(pcr.scalar(water_body_id) > 0.00, water_body_id)
         water_body_id      = pcr.ifthen( landmask, water_body_id)                                         
         #
-        #~ # calculate overbank volume from lakes and reservoirs
-        #~ lake_reservoir_volume          = pcr.areatotal(extreme_value_map, water_body_id)
-        #~ lake_reservoir_overbank_volume = pcr.cover(
-                                         #~ pcr.max(0.0, lake_reservoir_volume - reservoir_capacity), 0.0)
-        #~ land_area = cell_area * pcr.max(0.0, 1.0 - fracwat)
-        #~ distributed_lake_reservoir_overbank_volume = pcr.cover(\
-                                                     #~ lake_reservoir_overbank_volume * land_area / pcr.max(0.00, pcr.areatotal(land_area, water_body_id)), 0.0)
-        #~ extreme_value_map = pcr.ifthenelse(reservoir_capacity > 0.0, distributed_lake_reservoir_overbank_volume, extreme_value_map)
+        # calculate overbank volume from lakes and reservoirs
+        lake_reservoir_volume          = pcr.areatotal(extreme_value_map, water_body_id)
+        lake_reservoir_overbank_volume = pcr.cover(
+                                         pcr.max(0.0, lake_reservoir_volume - reservoir_capacity), 0.0)
+        land_area = cell_area * pcr.max(0.0, 1.0 - fracwat)
+        distributed_lake_reservoir_overbank_volume = pcr.cover(\
+                                                     lake_reservoir_overbank_volume * land_area / pcr.max(0.00, pcr.areatotal(land_area, water_body_id)), 0.0)
+        extreme_value_map = pcr.ifthenelse(reservoir_capacity > 0.0, distributed_lake_reservoir_overbank_volume, extreme_value_map)
         #
         masked_out = pcr.boolean(0)
-        # masking out all water above lakes and reservoirs
-        masked_out = pcr.defined(water_body_id)
+        #~ # masking out all water above lakes and reservoirs
+        #~ masked_out = pcr.defined(water_body_id)
         #~ # masking out all cells with fracwat > 0.20
         #~ masked_out = pcr.cover(
                      #~ pcr.ifthen(fracwat > 0.20, pcr.boolean(1)), masked_out)
-        masked_out = pcr.cover(masked_out, pcr.boolean(0))
-        masked_out_scalar = pcr.ifthen(masked_out, pcr.scalar(1.0))
-        pcr.report(masked_out_scalar, "permanent_water_bodies.map")
-        extreme_value_map = pcr.ifthenelse(masked_out, 0.0, extreme_value_map)
+        #~ masked_out = pcr.cover(masked_out, pcr.boolean(0))
+        #~ masked_out_scalar = pcr.ifthen(masked_out, pcr.scalar(1.0))
+        #~ pcr.report(masked_out_scalar, "permanent_water_bodies.map")
+        #~ extreme_value_map = pcr.ifthenelse(masked_out, 0.0, extreme_value_map)
     #
     # - cover the rests to zero (so they will not contribute to any flood/inundation)
     extreme_value_map = pcr.cover(extreme_value_map, 0.0)
@@ -244,21 +244,21 @@ ldd_map_high_resolution = vos.readPCRmapClone(ldd_map_high_resolution_file_name,
 ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
 ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
 pcr.report(ldd_map_high_resolution, "resampled_high_resolution_ldd.map")
-# - masking out permanent water bodies
-if masking_out_permanent_water_bodies:
-    permanent_water_bodies_scalar = pcr.cover(
-                                    vos.readPCRmapClone("permanent_water_bodies.map", \
-                                                   clone_map_file, \
-                                                   tmp_folder, \
-                                                   None, False, None, False), 0.0)
-    permanent_water_bodies = pcr.ifthenelse(permanent_water_bodies_scalar > 0.0, pcr.boolean(1), pcr.boolean(0))
-    #~ pcr.aguila(permanent_water_bodies)
-    #~ ldd_map_high_resolution = pcr.ifthenelse(permanent_water_bodies, pcr.ldd(5), ldd_map_high_resolution)
-    non_permanent_water_bodies =  pcr.ifthenelse(permanent_water_bodies, pcr.boolean(0), pcr.boolean(1))
-    ldd_map_high_resolution = pcr.ifthen(non_permanent_water_bodies, ldd_map_high_resolution)
-    ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
-    ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
-    pcr.report(ldd_map_high_resolution, "resampled_high_resolution_ldd_without_permanent_waterbodies.map")
+#~ # - masking out permanent water bodies
+#~ if masking_out_permanent_water_bodies:
+    #~ permanent_water_bodies_scalar = pcr.cover(
+                                    #~ vos.readPCRmapClone("permanent_water_bodies.map", \
+                                                   #~ clone_map_file, \
+                                                   #~ tmp_folder, \
+                                                   #~ None, False, None, False), 0.0)
+    #~ permanent_water_bodies = pcr.ifthenelse(permanent_water_bodies_scalar > 0.0, pcr.boolean(1), pcr.boolean(0))
+    pcr.aguila(permanent_water_bodies)
+    ldd_map_high_resolution = pcr.ifthenelse(permanent_water_bodies, pcr.ldd(5), ldd_map_high_resolution)
+    #~ non_permanent_water_bodies =  pcr.ifthenelse(permanent_water_bodies, pcr.boolean(0), pcr.boolean(1))
+    #~ ldd_map_high_resolution = pcr.ifthen(non_permanent_water_bodies, ldd_map_high_resolution)
+    #~ ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
+    #~ ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
+    #~ pcr.report(ldd_map_high_resolution, "resampled_high_resolution_ldd_without_permanent_waterbodies.map")
 
 #
 # - dem map
@@ -284,6 +284,15 @@ pcr.report(dem_map_high_resolution, "resampled_high_resolution_dem.map")
 msg = "Calculating a high resolution stream order map."
 logger.info(msg)
 stream_order_map = pcr.streamorder(ldd_map_high_resolution)
+
+# strahler order option
+strahler_order_used = 4
+
+#
+
+# ignore smaller rivers
+stream_order_map = pcr.ifthenelse()
+
 pcr.report(stream_order_map, "high_resolution_stream_order.map")
 
 
@@ -292,24 +301,13 @@ msg = "Downscaling for every return period."
 logger.info(msg)
 for i_file in range(1, len(file_names)):
     file_name = file_names[i_file]
-    #~ # using the strahler order 4
-    #~ cmd = ' python /home/edwin/github/edwinkost/wflow/wflow-py/Scripts/wflow_flood.py ' + \
-          #~ ' -i downscaling.ini ' + \
-          #~ ' -f ' + str(file_name) + \
-          #~ ' -b ' + str(file_names[0]) + \
-          #~ ' -c 4 -d output_folder'
-    #~ # using the strahler order 5
-    #~ cmd = ' python /home/edwin/github/edwinkost/wflow/wflow-py/Scripts/wflow_flood.py ' + \
-          #~ ' -i downscaling.ini ' + \
-          #~ ' -f ' + str(file_name) + \
-          #~ ' -b ' + str(file_names[0]) + \
-          #~ ' -c 5 -d output_folder'
-    # using the strahler order 6
+    # using the strahler order 4
     cmd = ' python /home/edwin/github/edwinkost/wflow/wflow-py/Scripts/wflow_flood.py ' + \
           ' -i downscaling.ini ' + \
           ' -f ' + str(file_name) + \
           ' -b ' + str(file_names[0]) + \
-          ' -c 6 -d output_folder'
+          ' -c ' + str(strahler_order_used) + \
+          ' -d output_folder'
     vos.cmd_line(cmd, using_subprocess = False)
 
 
