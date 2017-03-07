@@ -148,12 +148,12 @@ for i_file in range(0, len(file_names)):
         lake_reservoir_volume          = pcr.areatotal(extreme_value_map, water_body_id)
         lake_reservoir_overbank_volume = pcr.cover(
                                          pcr.max(0.0, lake_reservoir_volume - reservoir_capacity), 0.0)
-        pcr.aguila(lake_reservoir_overbank_volume)
+        #~ pcr.aguila(lake_reservoir_overbank_volume)
         land_area = cell_area * pcr.max(0.0, 1.0 - fracwat)
         distributed_lake_reservoir_overbank_volume = pcr.cover(\
                                                      lake_reservoir_overbank_volume * land_area / pcr.max(0.00, pcr.areatotal(land_area, water_body_id)), 0.0)
         extreme_value_map = pcr.ifthenelse(reservoir_capacity > 0.0, distributed_lake_reservoir_overbank_volume, extreme_value_map)
-        pcr.aguila(extreme_value_map)
+        #~ pcr.aguila(extreme_value_map)
         #
         #~ # masking out all water above lakes and reservoirs
         #~ masked_out = pcr.boolean(0)
@@ -294,7 +294,7 @@ logger.info(msg)
 stream_order_map = pcr.streamorder(ldd_map_high_resolution)
 #
 # strahler order option
-strahler_order_used = 6
+strahler_order_used = 4
 #
 # TODO: ignore smaller rivers (< 10 m)
 #
