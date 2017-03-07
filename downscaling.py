@@ -106,7 +106,7 @@ front_name = ""
 if type_of_files != "normal": front_name = type_of_files + "_"
 for i_file in range(0, len(file_names)):
     file_name = file_names[i_file]
-    complete_file_name = input_folder + "/" + front_name + file_name[i_file]
+    complete_file_name = input_folder + "/" + front_name + file_name
     extreme_value_map = pcr.cover(
                         vos.readPCRmapClone(complete_file_name, \
                                             clone_map_file, \
