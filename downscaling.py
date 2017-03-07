@@ -147,10 +147,12 @@ for i_file in range(0, len(file_names)):
         lake_reservoir_volume          = pcr.areatotal(extreme_value_map, water_body_id)
         lake_reservoir_overbank_volume = pcr.cover(
                                          pcr.max(0.0, lake_reservoir_volume - reservoir_capacity), 0.0)
+        pcr.aguila(lake_reservoir_overbank_volume)
         land_area = cell_area * pcr.max(0.0, 1.0 - fracwat)
         distributed_lake_reservoir_overbank_volume = pcr.cover(\
                                                      lake_reservoir_overbank_volume * land_area / pcr.max(0.00, pcr.areatotal(land_area, water_body_id)), 0.0)
         extreme_value_map = pcr.ifthenelse(reservoir_capacity > 0.0, distributed_lake_reservoir_overbank_volume, extreme_value_map)
+        pcr.aguila(extreme_value_map)
         #
         #~ # masking out all water above lakes and reservoirs
         #~ masked_out = pcr.boolean(0)
@@ -293,7 +295,7 @@ stream_order_map = pcr.streamorder(ldd_map_high_resolution)
 # strahler order option
 strahler_order_used = 6
 #
-# TODO: ignore smaller rivers
+# TODO: ignore smaller rivers (< 10 m)
 #
 pcr.report(stream_order_map, "high_resolution_stream_order.map")
 
@@ -301,7 +303,7 @@ pcr.report(stream_order_map, "high_resolution_stream_order.map")
 # execute downscaling scripts for every return period
 msg = "Downscaling for every return period."
 logger.info(msg)
-for i_file in range(len(file_names)-1, 0, -1):
+for i_file in range(len(file_names)-1, 0, -1):       # starting from the highest return period
     file_name = file_names[i_file]
     # using the strahler order 4
     cmd = ' python /home/edwin/github/edwinkost/wflow/wflow-py/Scripts/wflow_flood.py ' + \
