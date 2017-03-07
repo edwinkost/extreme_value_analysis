@@ -152,7 +152,7 @@ for i_file in range(0, len(file_names)):
         land_area = cell_area * pcr.max(0.0, 1.0 - fracwat)
         # distribute spills from reservoirs only in their shores 
         land_area_average = pcr.areaaverage(land_area, water_body_id) 
-        land_area_weight  = pcr.ifthenelse(land_area < land_area_average, 0.0, land_area_average)
+        land_area_weight  = pcr.ifthenelse( land_area < land_area_average, 0.0, land_area_average)
         distributed_lake_reservoir_overbank_volume = pcr.cover(\
                                                      lake_reservoir_overbank_volume * land_area / pcr.max(0.00, pcr.areatotal(land_area_weight, water_body_id)), 0.0)
         extreme_value_map = pcr.ifthenelse(reservoir_capacity > 0.0, distributed_lake_reservoir_overbank_volume, extreme_value_map)
