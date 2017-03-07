@@ -265,9 +265,9 @@ if masking_out_permanent_water_bodies:
                                               None, False, None, False), 0.0)
     non_reservoir_areas_scalar = pcr.ifthenelse(reservoir_capacity > 0.0, pcr.scalar(0.0), pcr.scalar(1.0)) 
     non_reservoir_areas_scalar = pcr.ifthen(non_reservoir_areas_scalar > 0.0, non_reservoir_areas_scalar ) 
-    # extend these to 0.20 degree
+    # extend these to 0.10 degree
     non_reservoir_areas_scalar = pcr.cover(non_reservoir_areas_scalar, \
-                                 pcr.windowmaximum(non_reservoir_areas_scalar, 0.20))
+                                 pcr.windowmaximum(non_reservoir_areas_scalar, 0.10))
     ldd_map_high_resolution = pcr.ifthen(non_reservoir_areas_scalar > 0.0, ldd_map_high_resolution)
     ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
     ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
