@@ -73,7 +73,7 @@ logger.info(msg)
 landmask = pcr.readmap(landmask_map_file)
 
 # permanent water bodies files:
-reservoir_capacity_file = "/scratch-shared/edwinsut/masking_out_permanent_water_bodies/"
+reservoir_capacity_file = "/scratch-shared/edwinsut/masking_out_permanent_water_bodies/reservoircapacity_2010.map"
 fracwat_file            = "/scratch-shared/edwinsut/masking_out_permanent_water_bodies/fracwat_2010.map"
 water_body_id_file      = "/scratch-shared/edwinsut/masking_out_permanent_water_bodies/waterbodyid_2010.map"
 
