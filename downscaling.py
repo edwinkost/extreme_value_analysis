@@ -150,8 +150,11 @@ for i_file in range(0, len(file_names)):
                                          pcr.max(0.0, lake_reservoir_volume - reservoir_capacity), 0.0)
         #~ pcr.aguila(lake_reservoir_overbank_volume)
         land_area = cell_area * pcr.max(0.0, 1.0 - fracwat)
+        # distribute spills from reservoirs only in their shores 
+        land_area_average = pcr.areaaverage(land_area, water_body_id) 
+        land_area_weight  = pcr.ifthenelse(land_area < land_area_average, 0.0, land_area_average)
         distributed_lake_reservoir_overbank_volume = pcr.cover(\
-                                                     lake_reservoir_overbank_volume * land_area / pcr.max(0.00, pcr.areatotal(land_area, water_body_id)), 0.0)
+                                                     lake_reservoir_overbank_volume * land_area / pcr.max(0.00, pcr.areatotal(land_area_weight, water_body_id)), 0.0)
         extreme_value_map = pcr.ifthenelse(reservoir_capacity > 0.0, distributed_lake_reservoir_overbank_volume, extreme_value_map)
         #~ pcr.aguila(extreme_value_map)
         #
@@ -253,21 +256,22 @@ ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
 ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
 pcr.report(ldd_map_high_resolution, "resampled_high_resolution_ldd.map")
 #
-#~ # - masking out permanent water bodies
-#~ if masking_out_permanent_water_bodies:
-    #~ permanent_water_bodies_scalar = pcr.cover(
-                                    #~ vos.readPCRmapClone("permanent_water_bodies.map", \
-                                                   #~ clone_map_file, \
-                                                   #~ tmp_folder, \
-                                                   #~ None, False, None, False), 0.0)
-    #~ permanent_water_bodies = pcr.ifthenelse(permanent_water_bodies_scalar > 0.0, pcr.boolean(1), pcr.boolean(0))
-    #~ pcr.aguila(permanent_water_bodies)
-    #~ ldd_map_high_resolution = pcr.ifthenelse(permanent_water_bodies, pcr.ldd(5), ldd_map_high_resolution)
-    #~ non_permanent_water_bodies =  pcr.ifthenelse(permanent_water_bodies, pcr.boolean(0), pcr.boolean(1))
-    #~ ldd_map_high_resolution = pcr.ifthen(non_permanent_water_bodies, ldd_map_high_resolution)
-    #~ ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
-    #~ ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
-    #~ pcr.report(ldd_map_high_resolution, "resampled_high_resolution_ldd_without_permanent_waterbodies.map")
+# - masking out permanent water bodies (particularly from reservoirs)
+if masking_out_permanent_water_bodies:
+    reservoir_capacity  = pcr.cover(\
+                          vos.readPCRmapClone(reservoir_capacity_file, \
+                                              clone_map_file, \
+                                              tmp_folder, \
+                                              None, False, None, False), 0.0))
+    non_reservoir_areas_scalar = pcr.ifthenelse(reservoir_capacity > 0.0, pcr.scalar(0.0), pcr.scalar(1.0)) 
+    non_reservoir_areas_scalar = pcr.ifthen(non_reservoir_areas_scalar > 0.0, non_reservoir_areas_scalar ) 
+    # extend these to 0.20 degree
+    non_reservoir_areas_scalar = pcr.cover(non_reservoir_areas_scalar, \
+                                 pcr.windowmaximum(non_reservoir_areas_scalar, 0.20))
+    ldd_map_high_resolution = pcr.ifthen(non_reservoir_areas_scalar > 0.0, ldd_map_high_resolution)
+    ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
+    ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
+    pcr.report(ldd_map_high_resolution, "resampled_high_resolution_ldd.map")
 
 # - dem map
 # -- using the dem from deltares
