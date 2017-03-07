@@ -104,8 +104,8 @@ if map_type_name == "channel_storage.map":
                  '1000-year_of_channel_storage.map']
 front_name = ""
 if type_of_files != "normal": front_name = type_of_files + "_"
-#~ for i_file in range(0, len(file_names)):
-for i_file in range(0, 1):
+for i_file in range(0, len(file_names)):
+#~ for i_file in range(0, 1):
     file_name = file_names[i_file]
     complete_file_name = input_folder + "/" + front_name + file_name
     extreme_value_map = pcr.cover(
