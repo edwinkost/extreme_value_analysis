@@ -262,7 +262,7 @@ if masking_out_permanent_water_bodies:
                           vos.readPCRmapClone(reservoir_capacity_file, \
                                               clone_map_file, \
                                               tmp_folder, \
-                                              None, False, None, False), 0.0))
+                                              None, False, None, False), 0.0)
     non_reservoir_areas_scalar = pcr.ifthenelse(reservoir_capacity > 0.0, pcr.scalar(0.0), pcr.scalar(1.0)) 
     non_reservoir_areas_scalar = pcr.ifthen(non_reservoir_areas_scalar > 0.0, non_reservoir_areas_scalar ) 
     # extend these to 0.20 degree
