@@ -73,9 +73,9 @@ logger.info(msg)
 landmask = pcr.readmap(landmask_map_file)
 
 # permanent water bodies files:
-reservoir_capacity_file = "/scratch-shared/edwinsut/masking_out_permanent_water_bodies/reservoircapacity_2010.map"
-fracwat_file            = "/scratch-shared/edwinsut/masking_out_permanent_water_bodies/fracwat_2010.map"
-water_body_id_file      = "/scratch-shared/edwinsut/masking_out_permanent_water_bodies/waterbodyid_2010.map"
+reservoir_capacity_file = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/reservoircapacity_2010.map"
+fracwat_file            = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/fracwat_2010.map"
+water_body_id_file      = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/waterbodyid_2010.map"
 
 # cell_area_file
 cell_area_file = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/cellsize05min.correct.map"
@@ -301,7 +301,7 @@ pcr.report(stream_order_map, "high_resolution_stream_order.map")
 # execute downscaling scripts for every return period
 msg = "Downscaling for every return period."
 logger.info(msg)
-for i_file in range(len(file_names), 0, -1):
+for i_file in range(len(file_names)-1, 0, -1):
     file_name = file_names[i_file]
     # using the strahler order 4
     cmd = ' python /home/edwin/github/edwinkost/wflow/wflow-py/Scripts/wflow_flood.py ' + \
