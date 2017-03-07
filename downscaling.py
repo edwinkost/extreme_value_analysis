@@ -104,8 +104,8 @@ if map_type_name == "channel_storage.map":
                  '1000-year_of_channel_storage.map']
 front_name = ""
 if type_of_files != "normal": front_name = type_of_files + "_"
-for file_name in file_names:
-    complete_file_name = input_folder + "/" + front_name + file_name
+for i_file in range(0, len(file_names)):
+    complete_file_name = input_folder + "/" + front_name + file_name[i_file]
     extreme_value_map = pcr.cover(
                         vos.readPCRmapClone(complete_file_name, \
                                             clone_map_file, \
@@ -131,7 +131,7 @@ for file_name in file_names:
                                                  None, False, None, False), 0.0))
         reservoir_capacity = pcr.ifthen(landmask, \
                              pcr.cover(\
-                             vos.readPCRmapClone(fracwat_file, \
+                             vos.readPCRmapClone(reservoir_capacity_file, \
                                                  clone_map_file, \
                                                  tmp_folder, \
                                                  None, False, None, False), 0.0)) * 1000. * 1000.
@@ -151,8 +151,8 @@ for file_name in file_names:
                                                      lake_reservoir_overbank_volume * land_area / pcr.max(0.00, pcr.areatotal(land_area, water_body_id)), 0.0)
         extreme_value_map = pcr.ifthenelse(reservoir_capacity > 0.0, distributed_lake_reservoir_overbank_volume, extreme_value_map)
         #
-        masked_out = pcr.boolean(0)
         #~ # masking out all water above lakes and reservoirs
+        #~ masked_out = pcr.boolean(0)
         #~ masked_out = pcr.defined(water_body_id)
         #~ # masking out all cells with fracwat > 0.20
         #~ masked_out = pcr.cover(
@@ -164,6 +164,10 @@ for file_name in file_names:
     #
     # - cover the rests to zero (so they will not contribute to any flood/inundation)
     extreme_value_map = pcr.cover(extreme_value_map, 0.0)
+    #
+    # - make sure that extreme value maps increasing over return period 
+    if i_file == 0: previous_return_period_map = extreme_value_map
+    if i_file >  0: extreme_value_map = pcr.max(previous_return_period_map, extreme_value_map) 
     pcr.report(extreme_value_map, file_name)
 
 # resampling low resolution ldd map
@@ -244,6 +248,7 @@ ldd_map_high_resolution = vos.readPCRmapClone(ldd_map_high_resolution_file_name,
 ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
 ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
 pcr.report(ldd_map_high_resolution, "resampled_high_resolution_ldd.map")
+#
 #~ # - masking out permanent water bodies
 #~ if masking_out_permanent_water_bodies:
     #~ permanent_water_bodies_scalar = pcr.cover(
@@ -252,20 +257,19 @@ pcr.report(ldd_map_high_resolution, "resampled_high_resolution_ldd.map")
                                                    #~ tmp_folder, \
                                                    #~ None, False, None, False), 0.0)
     #~ permanent_water_bodies = pcr.ifthenelse(permanent_water_bodies_scalar > 0.0, pcr.boolean(1), pcr.boolean(0))
-    pcr.aguila(permanent_water_bodies)
-    ldd_map_high_resolution = pcr.ifthenelse(permanent_water_bodies, pcr.ldd(5), ldd_map_high_resolution)
+    #~ pcr.aguila(permanent_water_bodies)
+    #~ ldd_map_high_resolution = pcr.ifthenelse(permanent_water_bodies, pcr.ldd(5), ldd_map_high_resolution)
     #~ non_permanent_water_bodies =  pcr.ifthenelse(permanent_water_bodies, pcr.boolean(0), pcr.boolean(1))
     #~ ldd_map_high_resolution = pcr.ifthen(non_permanent_water_bodies, ldd_map_high_resolution)
     #~ ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
     #~ ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
     #~ pcr.report(ldd_map_high_resolution, "resampled_high_resolution_ldd_without_permanent_waterbodies.map")
 
-#
 # - dem map
 # -- using the dem from deltares
 dem_map_high_resolution_file_name = "/projects/0/dfguu/users/edwinhs/data/HydroSHEDS/hydro_basin_without_lakes/integrating_ldd/version_9_december_2016/cover_SRTM_1km_merge_gtopo_masked.map"
 #~ # -- using the gtopo30 dem
-#~ dem_map_high_resolution_file_name    = "/projects/0/dfguu/data/hydroworld/basedata/hydrography/GTOPO30/edwin_process/gtopo30_full.map"
+#~ dem_map_high_resolution_file_name = "/projects/0/dfguu/data/hydroworld/basedata/hydrography/GTOPO30/edwin_process/gtopo30_full.map"
 #
 # TODO: using the merged DEMs from HydroSHEDS and Deltares/GTOPO30
 #
@@ -284,22 +288,19 @@ pcr.report(dem_map_high_resolution, "resampled_high_resolution_dem.map")
 msg = "Calculating a high resolution stream order map."
 logger.info(msg)
 stream_order_map = pcr.streamorder(ldd_map_high_resolution)
-
-# strahler order option
-strahler_order_used = 4
-
 #
-
-# ignore smaller rivers
-stream_order_map = pcr.ifthenelse()
-
+# strahler order option
+strahler_order_used = 6
+#
+# TODO: ignore smaller rivers
+#
 pcr.report(stream_order_map, "high_resolution_stream_order.map")
 
 
 # execute downscaling scripts for every return period
 msg = "Downscaling for every return period."
 logger.info(msg)
-for i_file in range(1, len(file_names)):
+for i_file in range(len(file_names), 0, -1):
     file_name = file_names[i_file]
     # using the strahler order 4
     cmd = ' python /home/edwin/github/edwinkost/wflow/wflow-py/Scripts/wflow_flood.py ' + \
