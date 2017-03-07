@@ -294,7 +294,7 @@ logger.info(msg)
 stream_order_map = pcr.streamorder(ldd_map_high_resolution)
 #
 # strahler order option
-strahler_order_used = 4
+strahler_order_used = 6
 #
 # TODO: ignore smaller rivers (< 10 m)
 #
@@ -306,7 +306,6 @@ msg = "Downscaling for every return period."
 logger.info(msg)
 for i_file in range(len(file_names)-1, 0, -1):       # starting from the highest return period
     file_name = file_names[i_file]
-    # using the strahler order 4
     cmd = ' python /home/edwin/github/edwinkost/wflow/wflow-py/Scripts/wflow_flood.py ' + \
           ' -i downscaling.ini ' + \
           ' -f ' + str(file_name) + \
