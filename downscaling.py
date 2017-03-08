@@ -33,7 +33,7 @@ map_type_name        = str(sys.argv[6])
 
 # option for masking out reservoir storages
 masking_out_reservoirs = False
-if map_type_name = "channel_storage.map": masking_out_reservoirs = True
+if map_type_name == "channel_storage.map": masking_out_reservoirs = True
 
 # output folder for this mask only
 output_folder = global_output_folder + "/" + str(mask_code) + "/"
