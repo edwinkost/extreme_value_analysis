@@ -248,6 +248,7 @@ reservoirs_30sec = pcr.cover(\
                                        tmp_folder, \
                                        None, False, None, False, True), pcr.boolean(0.0))
 reservoirs_30sec = pcr.ifthen(landmask_30sec, reservoirs_30sec)
+pcr.aguila(reservoirs_30sec)
 
 msg = "Set the (high resolution) landmask based on the file: " + str(landmask_map_file)
 logger.info(msg)
