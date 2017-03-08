@@ -94,7 +94,7 @@ for i_group in range(number_of_clone_groups):
     # - command lines for running the downscling script parallely
     cmd = ''
     for clone_code in clone_codes:
-       cmd += "python downscaling.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " " + type_of_files + " " + map_type_name + " masking_out_permanent_water_bodies "
+       cmd += "python downscaling.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " " + type_of_files + " " + map_type_name
        cmd = cmd + " & "
        i_clone += 1
     cmd = cmd + " wait "
