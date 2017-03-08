@@ -272,7 +272,7 @@ if masking_out_reservoirs:
     #
     #~ # alternative 2: just ignore ldd values at reservoirs
     non_reservoirs = pcr.ifthenelse(reservoirs_30sec, pcr.boolean(0.0), pcr.boolean(1.0))
-    ldd_map_high_resolution = pcr.ifthen(non_reservoirs, non_reservoirs)
+    ldd_map_high_resolution = pcr.ifthen(non_reservoirs, ldd_map_high_resolution)
     #
     ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
     ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
