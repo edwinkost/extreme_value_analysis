@@ -251,27 +251,35 @@ reservoirs_30sec = pcr.ifthen(landmask_30sec, reservoirs_30sec)
 pcr.aguila(reservoirs_30sec)
 
 
-# resampling high resolution dem and ldd maps
-msg = "Resampling high resolution dem and ldd maps."
-logger.info(msg)
-#
 # - ldd map
+msg = "Resampling high resolution ldd map."
+logger.info(msg)
 ldd_map_high_resolution_file_name = "/projects/0/dfguu/users/edwinhs/data/HydroSHEDS/hydro_basin_without_lakes/integrating_ldd/version_9_december_2016/merged_ldd.map"
 ldd_map_high_resolution = vos.readPCRmapClone(ldd_map_high_resolution_file_name, \
                                               clone_map_file, \
                                               tmp_folder, \
                                               None, True, None, False)
-ldd_map_high_resolution = pcr.cover(ldd_map_high_resolution, pcr.ldd(5))	
+#~ ldd_map_high_resolution = pcr.cover(ldd_map_high_resolution, pcr.ldd(5))	                                 # DON'T DO THIS
 ldd_map_high_resolution = pcr.ifthen(landmask_30sec, ldd_map_high_resolution)
 ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
 ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
 #
 # - masking out reservoirs
 if masking_out_reservoirs:
-    ldd_map_high_resolution = pcr.ifthenelse(reservoirs_30sec, pcr.ldd(5), ldd_map_high_resolution)
+    #
+    #~ # alternative 1: assume the entire reservoirs as pits                                                 # DON'T DO THIS
+    #~ ldd_map_high_resolution = pcr.ifthenelse(reservoirs_30sec, pcr.ldd(5), ldd_map_high_resolution)       # DON'T DO THIS
+    #
+    #~ # alternative 2: just ignore ldd values at reservoirs
+    non_reservoirs = pcr.ifthenelse(reservoirs_30sec, pcr.boolean(0.0), pcr.boolean(1.0))
+    ldd_map_high_resolution = pcr.ifthen(non_reservoirs, non_reservoirs)
+    #
     ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
     ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
 pcr.report(ldd_map_high_resolution, "resampled_high_resolution_ldd.map")
+
+
+
 
 # - dem map
 # -- using the dem from deltares
@@ -298,7 +306,7 @@ logger.info(msg)
 stream_order_map = pcr.streamorder(ldd_map_high_resolution)
 #
 # strahler order option
-strahler_order_used = 5
+strahler_order_used = 6
 #
 # TODO: ignore smaller rivers (< 10 m)
 #
