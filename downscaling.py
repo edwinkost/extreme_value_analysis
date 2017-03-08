@@ -250,18 +250,6 @@ reservoirs_30sec = pcr.cover(\
 reservoirs_30sec = pcr.ifthen(landmask_30sec, reservoirs_30sec)
 pcr.aguila(reservoirs_30sec)
 
-msg = "Set the (high resolution) landmask based on the file: " + str(landmask_map_file)
-logger.info(msg)
-
-
-reservoirs_30sec = pcr.cover(\
-                   vos.readPCRmapClone(landmask_map_file, \
-                                       clone_map_file, \
-                                       tmp_folder, \
-                                       None, False, None, False, True), pcr.boolean(1.0))
-
-
-
 
 # resampling high resolution dem and ldd maps
 msg = "Resampling high resolution dem and ldd maps."
@@ -300,7 +288,7 @@ dem_map_high_resolution = vos.readPCRmapClone(dem_map_high_resolution_file_name,
 
 dem_map_high_resolution = pcr.cover(dem_map_high_resolution, 0.0)
 # - use dem only where ldd are defined
-dem_map_high_resolution = pcr.ifthen(pcr.defined(ldd_map_high_resolution) , dem_map_high_resolution)
+dem_map_high_resolution = pcr.ifthen(pcr.defined(ldd_map_high_resolution), dem_map_high_resolution)
 pcr.report(dem_map_high_resolution, "resampled_high_resolution_dem.map")
 
 
