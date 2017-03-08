@@ -31,9 +31,9 @@ type_of_files        = str(sys.argv[5])
 map_type_name        = "channel_storage.map"
 map_type_name        = str(sys.argv[6])
 
-# - option for masking out permanent water bodies (valid only if map_type_name = "channel_storage.map")
-masking_out_permanent_water_bodies = False
-masking_out_permanent_water_bodies = sys.argv[7] == "masking_out_permanent_water_bodies" 
+# option for masking out reservoir storages
+masking_out_reservoirs = False
+if map_type_name = "channel_storage.map": masking_out_reservoirs = True
 
 # output folder for this mask only
 output_folder = global_output_folder + "/" + str(mask_code) + "/"
@@ -72,7 +72,7 @@ msg = "Set the landmask to : " + str(landmask_map_file)
 logger.info(msg)
 landmask = pcr.readmap(landmask_map_file)
 
-# permanent water bodies files:
+# permanent water bodies files (at 5 arc min resolution)
 reservoir_capacity_file = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/reservoircapacity_2010.map"
 fracwat_file            = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/fracwat_2010.map"
 water_body_id_file      = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/waterbodyid_2010.map"
@@ -116,8 +116,8 @@ for i_file in range(0, len(file_names)):
     # - focus only to the landmask area. We have to do this so that only flood in the landmask that will be downscaled/routed. 
     extreme_value_map = pcr.ifthen(landmask, extreme_value_map)
     #
-    # - masking out permanent water bodies
-    if masking_out_permanent_water_bodies:
+    # - masking out reservoir storage
+    if masking_out_reservoirs:
         cell_area = pcr.ifthen(landmask, \
                     pcr.cover(\
                     vos.readPCRmapClone(cell_area_file, \
@@ -154,20 +154,8 @@ for i_file in range(0, len(file_names)):
         land_area_average = pcr.areaaverage(land_area, water_body_id) 
         land_area_weight  = pcr.ifthenelse( land_area < land_area_average, 0.0, land_area_average)
         distributed_lake_reservoir_overbank_volume = pcr.cover(\
-                                                     lake_reservoir_overbank_volume * land_area / pcr.max(0.00, pcr.areatotal(land_area_weight, water_body_id)), 0.0)
+                                                     lake_reservoir_overbank_volume * land_area_weight / pcr.max(0.00, pcr.areatotal(land_area_weight, water_body_id)), 0.0)
         extreme_value_map = pcr.ifthenelse(reservoir_capacity > 0.0, distributed_lake_reservoir_overbank_volume, extreme_value_map)
-        #~ pcr.aguila(extreme_value_map)
-        #
-        #~ # masking out all water above lakes and reservoirs
-        #~ masked_out = pcr.boolean(0)
-        #~ masked_out = pcr.defined(water_body_id)
-        #~ # masking out all cells with fracwat > 0.20
-        #~ masked_out = pcr.cover(
-                     #~ pcr.ifthen(fracwat > 0.20, pcr.boolean(1)), masked_out)
-        #~ masked_out = pcr.cover(masked_out, pcr.boolean(0))
-        #~ masked_out_scalar = pcr.ifthen(masked_out, pcr.scalar(1.0))
-        #~ pcr.report(masked_out_scalar, "permanent_water_bodies.map")
-        #~ extreme_value_map = pcr.ifthenelse(masked_out, 0.0, extreme_value_map)
     #
     # - cover the rests to zero (so they will not contribute to any flood/inundation)
     extreme_value_map = pcr.cover(extreme_value_map, 0.0)
@@ -177,7 +165,7 @@ for i_file in range(0, len(file_names)):
     if i_file >  0: extreme_value_map = pcr.max(previous_return_period_map, extreme_value_map) 
     pcr.report(extreme_value_map, file_name)
 
-# resampling low resolution ldd map
+# resampling low resolution ldd map (actually, we don't need these):
 msg = "Resample the low resolution ldd map."
 logger.info(msg)
 ldd_map_low_resolution_file_name = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
@@ -241,6 +229,39 @@ logger.info(msg)
 pcr.setclone(clone_map_file)
  
 
+# using the landmask as defined from 5 arc-min model results:
+msg = "Set the (high resolution) landmask based on the file: " + str(landmask_map_file)
+logger.info(msg)
+landmask_30sec = pcr.cover(\
+                 vos.readPCRmapClone(landmask_map_file, \
+                                     clone_map_file, \
+                                     tmp_folder, \
+                                     None, False, None, False, True), pcr.boolean(0.0))
+
+# a boolean map for reservoirs at high resolution
+reservoirs_30sec_file = "/scratch/shared/edwinsut/reservoirs_and_lakes_30sec/grand_reservoirs_v1_1.boolean.map"
+msg = "Set the (high resolution) reservoirs based on the file: " + str(reservoirs_30sec_file)
+logger.info(msg)
+reservoirs_30sec = pcr.cover(\
+                   vos.readPCRmapClone(reservoirs_30sec_file, \
+                                       clone_map_file, \
+                                       tmp_folder, \
+                                       None, False, None, False, True), pcr.boolean(0.0))
+reservoirs_30sec = pcr.ifthen(landmask_30sec, reservoirs_30sec)
+
+msg = "Set the (high resolution) landmask based on the file: " + str(landmask_map_file)
+logger.info(msg)
+
+
+reservoirs_30sec = pcr.cover(\
+                   vos.readPCRmapClone(landmask_map_file, \
+                                       clone_map_file, \
+                                       tmp_folder, \
+                                       None, False, None, False, True), pcr.boolean(1.0))
+
+
+
+
 # resampling high resolution dem and ldd maps
 msg = "Resampling high resolution dem and ldd maps."
 logger.info(msg)
@@ -251,27 +272,17 @@ ldd_map_high_resolution = vos.readPCRmapClone(ldd_map_high_resolution_file_name,
                                               clone_map_file, \
                                               tmp_folder, \
                                               None, True, None, False)
-#~ ldd_map_high_resolution = pcr.cover(ldd_map_high_resolution, pcr.ldd(5))	# YOU SHOULD NOT DO THIS
+ldd_map_high_resolution = pcr.cover(ldd_map_high_resolution, pcr.ldd(5))	
+ldd_map_high_resolution = pcr.ifthen(landmask_30sec, ldd_map_high_resolution)
 ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
 ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
-pcr.report(ldd_map_high_resolution, "resampled_high_resolution_ldd.map")
 #
-# - masking out permanent water bodies (particularly from reservoirs)
-if masking_out_permanent_water_bodies:
-    reservoir_capacity  = pcr.cover(\
-                          vos.readPCRmapClone(reservoir_capacity_file, \
-                                              clone_map_file, \
-                                              tmp_folder, \
-                                              None, False, None, False), 0.0)
-    non_reservoir_areas_scalar = pcr.ifthenelse(reservoir_capacity > 0.0, pcr.scalar(0.0), pcr.scalar(1.0)) 
-    non_reservoir_areas_scalar = pcr.ifthen(non_reservoir_areas_scalar > 0.0, non_reservoir_areas_scalar ) 
-    # extend these to 0.10 degree
-    non_reservoir_areas_scalar = pcr.cover(non_reservoir_areas_scalar, \
-                                 pcr.windowmaximum(non_reservoir_areas_scalar, 0.10))
-    ldd_map_high_resolution = pcr.ifthen(non_reservoir_areas_scalar > 0.0, ldd_map_high_resolution)
+# - masking out reservoirs
+if masking_out_reservoirs:
+    ldd_map_high_resolution = pcr.ifthenelse(reservoirs_30sec, pcr.ldd(5), ldd_map_high_resolution)
     ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
     ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
-    pcr.report(ldd_map_high_resolution, "resampled_high_resolution_ldd.map")
+pcr.report(ldd_map_high_resolution, "resampled_high_resolution_ldd.map")
 
 # - dem map
 # -- using the dem from deltares
@@ -298,7 +309,7 @@ logger.info(msg)
 stream_order_map = pcr.streamorder(ldd_map_high_resolution)
 #
 # strahler order option
-strahler_order_used = 6
+strahler_order_used = 5
 #
 # TODO: ignore smaller rivers (< 10 m)
 #
