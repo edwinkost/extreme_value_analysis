@@ -72,6 +72,20 @@ msg = "Set the landmask to : " + str(landmask_map_file)
 logger.info(msg)
 landmask = pcr.readmap(landmask_map_file)
 
+# resampling low resolution ldd map
+msg = "Resample the low resolution ldd map."
+logger.info(msg)
+ldd_map_low_resolution_file_name = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
+ldd_map_low_resolution = vos.readPCRmapClone(ldd_map_low_resolution_file_name, \
+                                             clone_map_file, \
+                                             tmp_folder, \
+                                             None, True, None, False)
+ldd_map_low_resolution = pcr.ifthen(landmask, ldd_map_low_resolution)    # NOTE THAT YOU MAY NOT HAVE TO MASK-OUT THE LDD.
+ldd_map_low_resolution = pcr.lddrepair(pcr.ldd(ldd_map_low_resolution))
+ldd_map_low_resolution = pcr.lddrepair(ldd_map_low_resolution)
+pcr.report(ldd_map_low_resolution, "resampled_low_resolution_ldd.map")
+
+
 # permanent water bodies files (at 5 arc min resolution)
 reservoir_capacity_file = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/reservoircapacity_2010.map"
 fracwat_file            = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/fracwat_2010.map"
@@ -144,13 +158,37 @@ for i_file in range(0, len(file_names)):
         water_body_id      = pcr.ifthen(pcr.scalar(water_body_id) > 0.00, water_body_id)
         water_body_id      = pcr.ifthen( landmask, water_body_id)                                         
         #
-        # calculate overbank volume from lakes and reservoirs
+        # water body outlet
+        wbCatchment        = pcr.catchmenttotal(pcr.scalar(1), ldd)
+        water_body_outlet  = pcr.ifthen(wbCatchment ==\
+                             pcr.areamaximum(wbCatchment, \
+                             water_body_id),\
+                             water_body_id) # = outlet ids      # This may give more than two outlets, particularly if there are more than one cells that have largest upstream areas      
+        # - make sure that there is only one outlet for each water body 
+        water_body_outlet  = pcr.ifthen(\
+                             pcr.areaorder(pcr.scalar( water_body_outlet), \
+                             water_body_outlet) == 1., water_body_outlet)
+        water_body_outlet  = pcr.ifthen(\
+                             pcr.scalar(water_body_outlet) > 0., water_body_outlet)
+
+        # calculate overbank volume from reservoirs (and lakes)
         lake_reservoir_volume          = pcr.areatotal(extreme_value_map, water_body_id)
         lake_reservoir_overbank_volume = pcr.cover(
                                          pcr.max(0.0, lake_reservoir_volume - reservoir_capacity), 0.0)
         #~ pcr.aguila(lake_reservoir_overbank_volume)
+        #
+        # transfer 75% of overbank volume to the downstream (several cells downstream)
+        transfer_to_downstream = pcr.cover(\
+                                 pcr.ifthen(pcr.scalar(water_body_outlet) > 0. lake_reservoir_overbank_volume * 0.75), 0.0)
+        transfer_to_downstream = pcr.upstream(ldd_map_low_resolution, transfer_to_downstream)
+        transfer_to_downstream = pcr.upstream(ldd_map_low_resolution, transfer_to_downstream)
+        transfer_to_downstream = pcr.upstream(ldd_map_low_resolution, transfer_to_downstream)
+        extreme_value_map      = transfer_to_downstream + \
+                                 pcr.ifthenelse(reservoir_capacity > 0.0, 0.0, extreme_value_map) 
+        #
+        # the remaining overbank volume (25%) will be distributed to the shores
+        lake_reservoir_overbank_volume = lake_reservoir_overbank_volume * 0.25                         
         land_area = cell_area * pcr.max(0.0, 1.0 - fracwat)
-        # distribute spills from reservoirs only in their shores 
         land_area_average = pcr.areaaverage(land_area, water_body_id) 
         land_area_weight  = pcr.ifthenelse( land_area < land_area_average, 0.0, land_area_average)
         distributed_lake_reservoir_overbank_volume = pcr.cover(\
@@ -164,19 +202,6 @@ for i_file in range(0, len(file_names)):
     if i_file == 0: previous_return_period_map = extreme_value_map
     if i_file >  0: extreme_value_map = pcr.max(previous_return_period_map, extreme_value_map) 
     pcr.report(extreme_value_map, file_name)
-
-# resampling low resolution ldd map (actually, we don't need these):
-msg = "Resample the low resolution ldd map."
-logger.info(msg)
-ldd_map_low_resolution_file_name = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
-ldd_map_low_resolution = vos.readPCRmapClone(ldd_map_low_resolution_file_name, \
-                                             clone_map_file, \
-                                             tmp_folder, \
-                                             None, True, None, False)
-#~ ldd_map_low_resolution = pcr.ifthen(landmask, ldd_map_low_resolution)    # NOTE THAT YOU SHOULD NOT MASK-OUT THE LDD.
-ldd_map_low_resolution = pcr.lddrepair(pcr.ldd(ldd_map_low_resolution))
-ldd_map_low_resolution = pcr.lddrepair(ldd_map_low_resolution)
-pcr.report(ldd_map_low_resolution, "resampled_low_resolution_ldd.map")
 
 # resampling river length and width files (actually, we don't need these):
 msg = "Resample the low resolution river length and width maps."
