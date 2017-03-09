@@ -183,10 +183,12 @@ for i_file in range(0, len(file_names)):
         transfer_to_downstream = pcr.upstream(ldd_map_low_resolution, transfer_to_downstream)
         transfer_to_downstream = pcr.upstream(ldd_map_low_resolution, transfer_to_downstream)
         transfer_to_downstream = pcr.upstream(ldd_map_low_resolution, transfer_to_downstream)
+        transfer_to_downstream = pcr.upstream(ldd_map_low_resolution, transfer_to_downstream)
+        transfer_to_downstream = pcr.upstream(ldd_map_low_resolution, transfer_to_downstream)
         extreme_value_map      = transfer_to_downstream + \
-                                 pcr.ifthenelse(reservoir_capacity > 0.0, 0.00, extreme_value_map) 
+                                 pcr.ifthenelse(pcr.scalar(water_body_id) > 0.00, 0.00, extreme_value_map) 
         #
-        # the remaining overbank volume (25%) will be distributed to the shores
+        # the remaining overbank volume (50%) will be distributed to the shores
         lake_reservoir_overbank_volume = lake_reservoir_overbank_volume * 0.25                         
         land_area = cell_area * pcr.max(0.0, 1.0 - fracwat)
         land_area_average = pcr.areaaverage(land_area, water_body_id) 
