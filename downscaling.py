@@ -186,7 +186,7 @@ for i_file in range(0, len(file_names)):
         transfer_to_downstream = pcr.upstream(ldd_map_low_resolution, transfer_to_downstream)
         transfer_to_downstream = pcr.upstream(ldd_map_low_resolution, transfer_to_downstream)
         extreme_value_map      = transfer_to_downstream + \
-                                 pcr.ifthenelse(pcr.scalar(water_body_id) > 0.00, 0.00, extreme_value_map) 
+                                 pcr.ifthenelse(pcr.cover(pcr.scalar(water_body_id), 0.0) > 0.00, 0.00, extreme_value_map) 
         #
         # the remaining overbank volume (50%) will be distributed to the shores
         lake_reservoir_overbank_volume = lake_reservoir_overbank_volume * 0.25                         
@@ -195,7 +195,7 @@ for i_file in range(0, len(file_names)):
         land_area_weight  = pcr.ifthenelse( land_area < land_area_average, 0.0, land_area_average)
         distributed_lake_reservoir_overbank_volume = pcr.cover(\
                                                      lake_reservoir_overbank_volume * land_area_weight / pcr.max(0.00, pcr.areatotal(land_area_weight, water_body_id)), 0.0)
-        extreme_value_map = pcr.ifthenelse(reservoir_capacity > 0.0, distributed_lake_reservoir_overbank_volume, extreme_value_map)
+        extreme_value_map = pcr.ifthenelse(pcr.cover(pcr.scalar(water_body_id), 0.0) > 0.00, distributed_lake_reservoir_overbank_volume, extreme_value_map)
     #
     # - cover the rests to zero (so they will not contribute to any flood/inundation)
     extreme_value_map = pcr.cover(extreme_value_map, 0.0)
