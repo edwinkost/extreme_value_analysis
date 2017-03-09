@@ -273,8 +273,19 @@ reservoirs_30sec = pcr.cover(\
                                        tmp_folder, \
                                        None, False, None, False, True), pcr.boolean(0.0))
 reservoirs_30sec = pcr.ifthen(landmask_30sec, reservoirs_30sec)
-pcr.aguila(reservoirs_30sec)
+#~ pcr.aguila(reservoirs_30sec)
 
+# a boolean map for lakes at high resolution
+lakes_30sec_file      = "/scratch/shared/edwinsut/reservoirs_and_lakes_30sec/glwd1_lakes.boolean.map"
+msg = "Set the (high resolution) lakes based on the file: " + str(lakes_30sec_file)
+logger.info(msg)
+lakes_30sec = pcr.cover(\
+              vos.readPCRmapClone(lakes_30sec_file, \
+                                  clone_map_file, \
+                                  tmp_folder, \
+                                  None, False, None, False, True), pcr.boolean(0.0))
+lakes_30sec = pcr.ifthen(landmask_30sec, lakes_30sec)
+pcr.aguila(lakes_30sec)
 
 # - ldd map
 msg = "Resampling high resolution ldd map."
@@ -292,12 +303,13 @@ ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
 # - masking out reservoirs
 if masking_out_reservoirs:
     #
-    #~ # alternative 1: assume the entire reservoirs as pits                                                 # DON'T DO THIS
-    #~ ldd_map_high_resolution = pcr.ifthenelse(reservoirs_30sec, pcr.ldd(5), ldd_map_high_resolution)       # DON'T DO THIS
+    #~ # alternative 1: assume the entire reservoirs and lakes as pits                                          
+    ldd_map_high_resolution = pcr.ifthenelse(lakes_30sec, pcr.ldd(5), ldd_map_high_resolution)
+    ldd_map_high_resolution = pcr.ifthenelse(reservoirs_30sec, pcr.ldd(5), ldd_map_high_resolution)
     #
     #~ # alternative 2: just ignore ldd values at reservoirs
-    non_reservoirs = pcr.ifthenelse(reservoirs_30sec, pcr.boolean(0.0), pcr.boolean(1.0))
-    ldd_map_high_resolution = pcr.ifthen(non_reservoirs, ldd_map_high_resolution)
+    #~ non_reservoirs = pcr.ifthenelse(reservoirs_30sec, pcr.boolean(0.0), pcr.boolean(1.0))
+    #~ ldd_map_high_resolution = pcr.ifthen(non_reservoirs, ldd_map_high_resolution)
     #
     ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
     ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
