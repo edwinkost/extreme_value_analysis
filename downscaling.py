@@ -159,7 +159,7 @@ for i_file in range(0, len(file_names)):
         water_body_id      = pcr.ifthen( landmask, water_body_id)                                         
         #
         # water body outlet
-        wbCatchment        = pcr.catchmenttotal(pcr.scalar(1), ldd)
+        wbCatchment        = pcr.catchmenttotal(pcr.scalar(1), ldd_map_low_resolution)
         water_body_outlet  = pcr.ifthen(wbCatchment ==\
                              pcr.areamaximum(wbCatchment, \
                              water_body_id),\
