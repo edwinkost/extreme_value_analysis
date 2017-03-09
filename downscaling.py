@@ -183,8 +183,6 @@ for i_file in range(0, len(file_names)):
         transfer_to_downstream = pcr.upstream(ldd_map_low_resolution, transfer_to_downstream)
         transfer_to_downstream = pcr.upstream(ldd_map_low_resolution, transfer_to_downstream)
         transfer_to_downstream = pcr.upstream(ldd_map_low_resolution, transfer_to_downstream)
-        transfer_to_downstream = pcr.upstream(ldd_map_low_resolution, transfer_to_downstream)
-        transfer_to_downstream = pcr.upstream(ldd_map_low_resolution, transfer_to_downstream)
         extreme_value_map      = transfer_to_downstream + \
                                  pcr.ifthenelse(pcr.cover(pcr.scalar(water_body_id), 0.0) > 0.00, 0.00, extreme_value_map) 
         #
