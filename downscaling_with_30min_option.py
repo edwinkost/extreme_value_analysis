@@ -33,7 +33,7 @@ map_type_name        = str(sys.argv[6])
 
 # - option with first upscaling model results to 30 arc-min model
 try:
-    with_upscaling = "str(sys.argv[7])" == "with_upscaling"
+    with_upscaling = str(sys.argv[7]) == "with_upscaling"
 except:
     with_upscaling = False
 
