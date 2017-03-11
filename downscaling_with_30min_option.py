@@ -371,7 +371,7 @@ lakes_30sec = pcr.cover(\
                                   tmp_folder, \
                                   None, False, None, False, True), pcr.boolean(0.0))
 lakes_30sec = pcr.ifthen(landmask_30sec, lakes_30sec)
-pcr.aguila(lakes_30sec)
+#~ pcr.aguila(lakes_30sec)
 
 # - ldd map
 msg = "Resampling high resolution ldd map."
