@@ -229,7 +229,7 @@ if with_upscaling:
         extreme_value_30min_map_at_5min_resolution = pcr.areatotal(extreme_value_05min_map, cell_ids_30min)
         # convert it to 30 arcmin numpy array and store it in a dictionary 
         extreme_value_30min_at_5min_resolution = pcr.pcr2numpy(extreme_value_30min_map_at_5min_resolution, vos.MV)
-        resampling_factor = np.int(30. / (5./60.))
+        resampling_factor = np.int(30. / (5.))
         extreme_value_30min[file_name] = vos.regridToCoarse(extreme_value_30min_at_5min_resolution, resampling_factor, "max", vos.MV)
   
     # save numpy arrays to 30 arcmin maps
