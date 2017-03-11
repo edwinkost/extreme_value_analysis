@@ -262,7 +262,7 @@ if with_upscaling:
         # rename 5 arc-min file
         file_name = file_names[i_file]
         cmd = 'mv ' +  file_name + " " + file_name + "5min.map"
-        # 
+        vos.cmd_line(cmd, using_subprocess = False) 
         pcr.report(extreme_value_30min[file_name], file_name)
     #
     # prepare ldd at 30 arcmin resolution (we need this, only for the compatibility with the downscaling script)
