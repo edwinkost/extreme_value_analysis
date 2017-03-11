@@ -218,7 +218,7 @@ if with_upscaling:
                                          None, False, None, True)
     cell_ids_30min = pcr.ifthen(pcr.scalar(cell_ids_30min) > 0.0, cell_ids_30min)
     # a dictionary that will contain 30 arcmin numpy array
-    extreme_value_30_min = {} 
+    extreme_value_30min = {} 
 
     # upscaling to 30 arc-min:
     for i_file in range(0, len(file_names)):
