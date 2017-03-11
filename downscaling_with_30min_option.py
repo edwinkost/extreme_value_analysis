@@ -252,7 +252,7 @@ if with_upscaling:
                     ' -l ' + str(cell_length) + \
                     ' clone_low_resolution_30min.map'
     vos.cmd_line(cmd, using_subprocess = False)
-    clone_map_file = clone_low_resolution_30min.map
+    clone_map_file = "clone_low_resolution_30min.map"
     # - set the clone and landmask map
     pcr.setclone(clone_map_file)
     landmask = pcr.boolean(1.0)
