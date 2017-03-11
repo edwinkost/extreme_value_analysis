@@ -60,6 +60,12 @@ type_of_files  = str(sys.argv[3])
 map_type_name  = "channel_storage.map"
 map_type_name  = str(sys.argv[4])
 
+# - option with first upscaling model results to 30 arc-min model
+try:
+    with_upscaling = "str(sys.argv[7])" == "with_upscaling"
+except:
+    with_upscaling = False
+
 # clean any files exists on the ouput directory (this can be done for global runs)
 clean_previous_output = True
 if clean_previous_output and os.path.exists(general_output_folder): shutil.rmtree(general_output_folder)
@@ -94,7 +100,10 @@ for i_group in range(number_of_clone_groups):
     # - command lines for running the downscling script parallely
     cmd = ''
     for clone_code in clone_codes:
-       cmd += "python downscaling.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " " + type_of_files + " " + map_type_name
+       if with_upscaling:
+          cmd += "python downscaling_with_30min_option.py" + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " " + type_of_files + " " + map_type_name + "with_upscaling"
+       else:
+          cmd += "python downscaling.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " " + type_of_files + " " + map_type_name
        cmd = cmd + " & "
        i_clone += 1
     cmd = cmd + " wait "
