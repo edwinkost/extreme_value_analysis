@@ -264,6 +264,8 @@ if with_upscaling:
         cmd = 'mv ' +  file_name + " " + file_name + ".5min.map"
         vos.cmd_line(cmd, using_subprocess = False) 
         # report it to pcraster files
+        print(file_name)
+        os.system('pwd')
         pcr.report(pcr.numpy2pcr(pcr.Scalar, extreme_value_30min[file_name], vos.MV), file_name)
     #
     # prepare ldd at 30 arcmin resolution (we need this, only for the compatibility with the downscaling script)
