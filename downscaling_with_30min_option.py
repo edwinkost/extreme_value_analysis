@@ -261,7 +261,7 @@ if with_upscaling:
     for i_file in range(0, len(file_names)):
         # rename 5 arc-min file
         file_name = file_names[i_file]
-        cmd = 'mv ' +  file_name + " " + file_name + "5min.map"
+        cmd = 'mv ' +  file_name + " " + file_name + ".5min.map"
         vos.cmd_line(cmd, using_subprocess = False) 
         # report it to pcraster files
         pcr.report(pcr.numpy2pcr(pcr.Scalar, extreme_value_30min[file_name], vos.MV), file_name)
