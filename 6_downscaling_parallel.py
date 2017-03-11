@@ -101,7 +101,7 @@ for i_group in range(number_of_clone_groups):
     cmd = ''
     for clone_code in clone_codes:
        if with_upscaling:
-          cmd += "python downscaling_with_30min_option.py" + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " " + type_of_files + " " + map_type_name + "with_upscaling"
+          cmd += "python downscaling_with_30min_option.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " " + type_of_files + " " + map_type_name + "with_upscaling"
        else:
           cmd += "python downscaling.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " " + type_of_files + " " + map_type_name
        cmd = cmd + " & "
