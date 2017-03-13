@@ -220,7 +220,7 @@ for i_file in range(0, len(file_names)):
     pcr.report(extreme_value_map, file_name)
 
 # upscaling model results to 30 arc-min:
-if with_upscaling:
+if with_upscaling or map_type_name == "HESSEL_RESULT":
     # cell id for each 30 arcmin cell
     cell_ids_30min_file = "/projects/0/dfguu/data/hydroworld/others/irrigationZones/half_arc_degree/uniqueIds30min.nom.map"
     cell_ids_30min = vos.readPCRmapClone(cell_ids_30min_file, \
@@ -237,7 +237,10 @@ if with_upscaling:
         file_name = file_names[i_file]
         extreme_value_05min_map = pcr.readmap(file_name)
         # upscale it to 30 arcmin resolution: 
-        extreme_value_30min_map_at_5min_resolution = pcr.areatotal(extreme_value_05min_map, cell_ids_30min)
+        if map_type_name == "HESSEL_RESULT":
+            extreme_value_30min_map_at_5min_resolution = pcr.areamaximum(extreme_value_05min_map, cell_ids_30min)
+        else:
+            extreme_value_30min_map_at_5min_resolution = pcr.areatotal(extreme_value_05min_map, cell_ids_30min)
         # convert it to 30 arcmin numpy array and store it in a dictionary 
         extreme_value_30min_at_5min_resolution = pcr.pcr2numpy(extreme_value_30min_map_at_5min_resolution, vos.MV)
         resampling_factor = np.int(30. / (5.))
@@ -269,7 +272,7 @@ if with_upscaling or map_type_name == "HESSEL_RESULT":
     landmask = pcr.boolean(1.0)
 
 # save numpy arrays to 30 arcmin maps
-if with_upscaling:
+if with_upscaling or map_type_name == "HESSEL_RESULT":
     # save numpy arrays
     for i_file in range(0, len(file_names)):
         # rename 5 arc-min file
