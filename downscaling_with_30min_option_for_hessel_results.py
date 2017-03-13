@@ -122,6 +122,17 @@ if map_type_name == "channel_storage.map":
                   '250-year_of_channel_storage.map',
                   '500-year_of_channel_storage.map',
                  '1000-year_of_channel_storage.map']
+   # using timpctl
+   file_names = ["timpctl_50.00_return_period_00002.0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_80.00_return_period_00005.0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_90.00_return_period_00010.0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_96.00_return_period_00025.0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_98.00_return_period_00050.0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_99.00_return_period_00100.0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_99.60_return_period_00250.0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_99.80_return_period_00500.0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_99.90_return_period_01000.0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_99.99_return_period_10000.0_channel_storage_annual_flood_maxima.map"]
 if map_type_name == "HESSEL_RESULT":
    file_names = ["flvol_dynRout_EU-WATCH_run_default_RP_00002.map",
                  "flvol_dynRout_EU-WATCH_run_default_RP_00005.map",
