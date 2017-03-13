@@ -245,6 +245,7 @@ if with_upscaling:
 
 # - set the clone map to 30 arcmin resolution
 if with_upscaling or map_type_name == "HESSEL_RESULT":
+    resampling_factor = np.int(30. / (5.))
     num_of_rows = np.round(pcr.clone().nrRows() / resampling_factor   , 2)
     num_of_cols = np.round(pcr.clone().nrCols() / resampling_factor   , 2)
     x_min       = np.round(pcr.clone().west()                         , 2)
