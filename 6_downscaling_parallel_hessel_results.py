@@ -104,7 +104,7 @@ for i_group in range(number_of_clone_groups):
        if with_upscaling:
           cmd += "python downscaling_with_30min_option.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " " + type_of_files + " " + map_type_name + " with_upscaling"
        else:
-          if map_type_name == "HESSEL_RESULT"
+          if map_type_name == "HESSEL_RESULT":
              cmd += "python downscaling_with_30min_option_for_hessel_results.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " " + type_of_files + " " + map_type_name
           else:
              cmd += "python downscaling.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " " + type_of_files + " " + map_type_name
