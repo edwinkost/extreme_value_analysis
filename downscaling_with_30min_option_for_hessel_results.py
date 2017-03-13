@@ -123,16 +123,16 @@ if map_type_name == "channel_storage.map":
                   '500-year_of_channel_storage.map',
                  '1000-year_of_channel_storage.map']
    # using timpctl
-   file_names = ["timpctl_50.00_return_period_00002.0_channel_storage_annual_flood_maxima.map",
-                 "timpctl_80.00_return_period_00005.0_channel_storage_annual_flood_maxima.map",
-                 "timpctl_90.00_return_period_00010.0_channel_storage_annual_flood_maxima.map",
-                 "timpctl_96.00_return_period_00025.0_channel_storage_annual_flood_maxima.map",
-                 "timpctl_98.00_return_period_00050.0_channel_storage_annual_flood_maxima.map",
-                 "timpctl_99.00_return_period_00100.0_channel_storage_annual_flood_maxima.map",
-                 "timpctl_99.60_return_period_00250.0_channel_storage_annual_flood_maxima.map",
-                 "timpctl_99.80_return_period_00500.0_channel_storage_annual_flood_maxima.map",
-                 "timpctl_99.90_return_period_01000.0_channel_storage_annual_flood_maxima.map",
-                 "timpctl_99.99_return_period_10000.0_channel_storage_annual_flood_maxima.map"]
+   file_names = ["timpctl_50p00_return_period_00002p0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_80p00_return_period_00005p0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_90p00_return_period_00010p0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_96p00_return_period_00025p0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_98p00_return_period_00050p0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_99p00_return_period_00100p0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_99p60_return_period_00250p0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_99p80_return_period_00500p0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_99p90_return_period_01000p0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_99p99_return_period_10000p0_channel_storage_annual_flood_maxima.map"]
 if map_type_name == "HESSEL_RESULT":
    file_names = ["flvol_dynRout_EU-WATCH_run_default_RP_00002.map",
                  "flvol_dynRout_EU-WATCH_run_default_RP_00005.map",
