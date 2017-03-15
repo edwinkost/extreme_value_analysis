@@ -289,7 +289,7 @@ landmask_05_min = pcr.defined(
                                       clone_map_file, \
                                       tmp_folder, \
                                       None, True, None, False))
-pcr.aguila(landmask_05_min
+pcr.aguila(landmask_05_min)
 #~ 
 #~ landmask_30 sec = 
 #~ 
