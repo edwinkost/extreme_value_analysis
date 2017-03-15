@@ -464,8 +464,10 @@ for return_period in return_periods:
     inundation_file_name = inputDirRoot + "/global/maps/" + "inun_" + str(return_period) + "_of_flood_inundation_volume_catch_04.tif.map"
     if map_type_name == "channel_storage.map": inundation_file_name = inputDirRoot + "/global/maps/" + "inun_" + str(return_period) + "_of_channel_storage_catch_04.tif.map"
     inundation_map = pcr.readmap(inundation_file_name)
+    inundation_map = pcr.cover(inundation_map, 0.0)
     # masking out permanent water bodies
     inundation_map = pcr.ifthen(non_permanent_water_bodies, inundation_map)
+    inundation_map = pcr.cover(inundation_map, 0.0)
     
     # put it in a data dictionary
     netcdf_report.data_to_netcdf(netcdf_file[var_name]['file_name'], variable_name, pcr.pcr2numpy(inundation_map, vos.MV), timeBounds, timeStamp = None, posCnt = 0)
