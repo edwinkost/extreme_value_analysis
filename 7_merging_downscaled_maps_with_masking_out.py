@@ -342,7 +342,7 @@ print
 print
 
 # set the global clone maps
-clone_map_file = 
+clone_map_file = "/projects/0/dfguu/users/edwinhs/data/HydroSHEDS/hydro_basin_without_lakes/integrating_ldd/version_9_december_2016/merged_ldd.map"
 pcr.setclone(clone_map_file)
 
 # boolean maps to mask out permanent water bodies (lakes and reservoirs):
