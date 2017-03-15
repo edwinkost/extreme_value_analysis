@@ -229,7 +229,6 @@ output_directory = str(sys.argv[2])
 
 output_netcdf_file_name = "inunriver_historical_WATCH_1999.nc"
 output_netcdf_file_name = str(sys.argv[3])
-output_netcdf_file_name = output_directory + "/" + output_netcdf_file_name
 
 # time stamp for the first and last years
 str_year = int(sys.argv[4])
