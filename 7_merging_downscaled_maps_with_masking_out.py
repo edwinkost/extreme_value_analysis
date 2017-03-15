@@ -225,25 +225,28 @@ lonMax =  180.0
 
 inputDirRoot = str(sys.argv[1])
 
+output_directory = str(sys.argv[2])
+
 output_netcdf_file_name = "inunriver_historical_WATCH_1999.nc"
-output_netcdf_file_name = str(sys.argv[2])
+output_netcdf_file_name = str(sys.argv[3])
+output_netcdf_file_name = output_directory + "/" + output_netcdf_file_name
 
 # time stamp for the first and last years
-str_year = int(sys.argv[3])
-end_year = int(sys.argv[4])
+str_year = int(sys.argv[4])
+end_year = int(sys.argv[5])
 
 # - option for map types: *flood_inundation_volume.map or *channel_storage.map
 map_type_name  = "channel_storage.map"
-map_type_name  = str(sys.argv[5])
+map_type_name  = str(sys.argv[6])
 
-outputDir = inputDirRoot + "/global/maps/"
+outputDir = output_directory + "/global/maps/"
 try:
 	os.makedirs(outputDir)
 except:
 	pass
 
 # - prepare logger and its directory
-log_file_location = outputDir + "/log/"
+log_file_location = output_directory + "/log/"
 try:
     os.makedirs(log_file_location)
 except:
