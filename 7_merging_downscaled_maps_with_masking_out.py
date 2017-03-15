@@ -292,8 +292,9 @@ landmask_05_min = pcr.defined(
                                       None, True, None, False))
 #~ pcr.aguila(landmask_05_min)
 landmask_30_sec_file = "/projects/0/dfguu/users/edwinhs/data/HydroSHEDS/hydro_basin_without_lakes/integrating_ldd/version_9_december_2016/merged_ldd.map"
-landmask_30 sec = pcr.defined(pcr.readmap(landmask_30_sec_file))
+landmask_30_sec = pcr.defined(pcr.readmap(landmask_30_sec_file))
 landmask_used = pcr.ifthen(landmask_05_min, landmask_30 sec)
+pcr.aguila(landmask_used)
 
 #~ print areas
 #~ print areas[0]
