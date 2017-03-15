@@ -389,7 +389,7 @@ logger.info(msg)
 # netcdf general setup:
 netcdf_setup = {}
 netcdf_setup['format']          = "NETCDF4"
-netcdf_setup['zlib']            = True
+netcdf_setup['zlib']            = False
 netcdf_setup['institution']     = "Department of Physical Geography, Utrecht University"
 netcdf_setup['title'      ]     = "PCR-GLOBWB 2 output (post-processed for the Aqueduct Flood Analyzer): Flood Inundation Depth (above surface level)."
 netcdf_setup['created by' ]     = "Edwin H. Sutanudjaja (E.H.Sutanudjaja@uu.nl)"
