@@ -256,7 +256,7 @@ if os.path.exists(tmp_folder): shutil.rmtree(tmp_folder)
 os.makedirs(tmp_folder)
 
 # number of cores that will be used
-ncores = 5
+ncores = 9
 
 # clone/mask maps
 number_of_clone_maps = 53
@@ -303,7 +303,7 @@ landmask_used = pcr.ifthen(landmask_05_min, landmask_05_min)
 landmask_30_sec_file = "/projects/0/dfguu/users/edwinhs/data/HydroSHEDS/hydro_basin_without_lakes/integrating_ldd/version_9_december_2016/merged_ldd.map"
 landmask_30_sec = pcr.defined(pcr.readmap(landmask_30_sec_file))
 landmask_used = pcr.ifthen(landmask_05_min, landmask_30_sec)
-pcr.aguila(landmask_used)
+#~ pcr.aguila(landmask_used)
 
 #~ print areas
 #~ print areas[0]
@@ -380,7 +380,7 @@ lakes_30sec = pcr.cover(pcr.readmap(lakes_30sec_file), pcr.boolean(0.0))
 # cells that do not belong lakes and reservoirs
 non_permanent_water_bodies = pcr.ifthenelse(reservoirs_30sec, pcr.boolean(0.0), pcr.boolean(1.0))
 non_permanent_water_bodies = pcr.ifthenelse(     lakes_30sec, pcr.boolean(0.0), non_permanent_water_bodies)
-pcr.aguila(non_permanent_water_bodies)
+#~ pcr.aguila(non_permanent_water_bodies)
 
 # Convert pcraster files to a netcdt file:
 msg = "Convert pcraster maps to a netcdf file."
