@@ -268,7 +268,17 @@ areas = ['M%02d'%i for i in range(1,number_of_clone_maps+1,1)]
 # MAIN SCRIPT
 ########################################################################
 
-# get clone 
+# change the working directory to the "maps folder"
+os.chdir(outputDir)
+
+# set the landmask of 5 arcmin model
+landmask_05_min_file = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
+landmask_05_min = pcr.defined(pcr.readmap(landmask_05_min_file))
+landmask_used = pcr.ifthen(landmask_05_min, landmask_05_min)
+landmask_used = pcr.boolean(pcr.windowmaximum(pcr.scalar(landmask_used), 0.5))
+pcr.report(landmask_used, "extended_landmask_5min.map")
+
+# set the clone at high resolution 
 msg = "Make and set the clone map."
 logger.info(msg)
 # - number of rows and clones
@@ -284,9 +294,8 @@ setclone(tempCloneMap)
 clone_map_file = tempCloneMap
 
 # set the landmask
-landmask_05_min_file = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
 landmask_05_min = pcr.defined(
-                  vos.readPCRmapClone(landmask_05_min_file, \
+                  vos.readPCRmapClone("extended_landmask_5min.map", \
                                       clone_map_file, \
                                       tmp_folder, \
                                       None, True, None, False))
