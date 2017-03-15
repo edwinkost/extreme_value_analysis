@@ -443,7 +443,7 @@ for return_period in return_periods:
                                   comment    = varDict.comment[var_name]
                                   )
 
-# store the pcraster map to netcdf files:
+# masking out water bodies and store the pcraster map to netcdf files:
 for return_period in return_periods:
     
     # variable name
@@ -460,6 +460,9 @@ for return_period in return_periods:
     # masking out permanent water bodies
     inundation_map = pcr.ifthen(non_permanent_water_bodies, inundation_map)
     inundation_map = pcr.cover(inundation_map, 0.0)
+    
+    # report in pcraster maps
+    pcr.report(inundation_map, inundation_file_name)
     
     # put it in a data dictionary
     netcdf_report.data_to_netcdf(netcdf_file[var_name]['file_name'], variable_name, pcr.pcr2numpy(inundation_map, vos.MV), timeBounds, timeStamp = None, posCnt = 0)
