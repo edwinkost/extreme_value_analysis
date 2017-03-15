@@ -452,8 +452,8 @@ for return_period in return_periods:
     logger.info(msg)
     
     # read from pcraster files
-    inundation_file_name = inputDirRoot + "/global/maps/" + "inun_" + str(return_period) + "_of_flood_inundation_volume_catch_04.tif.map"
-    if map_type_name == "channel_storage.map": inundation_file_name = inputDirRoot + "/global/maps/" + "inun_" + str(return_period) + "_of_channel_storage_catch_04.tif.map"
+    inundation_file_name = output_directory + "/global/maps/" + "inun_" + str(return_period) + "_of_flood_inundation_volume_catch_04.tif.map"
+    if map_type_name == "channel_storage.map": inundation_file_name = output_directory + "/global/maps/" + "inun_" + str(return_period) + "_of_channel_storage_catch_04.tif.map"
     inundation_map = pcr.readmap(inundation_file_name)
     inundation_map = pcr.cover(inundation_map, 0.0)
     # masking out permanent water bodies
