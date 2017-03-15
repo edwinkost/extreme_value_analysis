@@ -289,8 +289,8 @@ tempCloneMap = outputDir+'/temp_clone.map'
 command = 'mapattr -s -R %d -C %d -P "yb2t"	-B -x %f -y %f -l %f %s' %\
 	(nrRows,nrCols,lonMin,latMax,deltaLat,tempCloneMap)
 vos.cmd_line(command, using_subprocess = False)
-# - set the clone map. 
-setclone(tempCloneMap)
+# - set the clone map
+pcr.setclone(tempCloneMap)
 clone_map_file = tempCloneMap
 
 # set the landmask
