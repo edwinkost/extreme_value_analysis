@@ -290,11 +290,10 @@ landmask_05_min = pcr.defined(
                                       clone_map_file, \
                                       tmp_folder, \
                                       None, True, None, False))
-pcr.aguila(landmask_05_min)
-#~ 
-#~ landmask_30 sec = 
-#~ 
-#~ landmask_used   = pcr.ifthen(pcr.defined(landmask_30 sec, ))
+#~ pcr.aguila(landmask_05_min)
+landmask_30_sec_file = "/projects/0/dfguu/users/edwinhs/data/HydroSHEDS/hydro_basin_without_lakes/integrating_ldd/version_9_december_2016/merged_ldd.map"
+landmask_30 sec = pcr.defined(pcr.readmap(landmask_30_sec_file))
+landmask_used = pcr.ifthen(landmask_05_min, landmask_30 sec)
 
 #~ print areas
 #~ print areas[0]
@@ -473,12 +472,13 @@ for return_period in return_periods:
     if map_type_name == "channel_storage.map": inundation_file_name = output_directory + "/global/maps/" + "inun_" + str(return_period) + "_of_channel_storage_catch_06.tif.map"
     inundation_map = pcr.readmap(inundation_file_name)
     inundation_map = pcr.cover(inundation_map, 0.0)
+    inundation_map = pcr.ifthen(landmask_used, inundation_map)
+    
     # masking out permanent water bodies
     inundation_map = pcr.ifthen(non_permanent_water_bodies, inundation_map)
-    inundation_map = pcr.cover(inundation_map, 0.0)
     
     # report in pcraster maps
-    pcr.report(inundation_map, inundation_file_name)
+    pcr.report(inundation_map, inundation_file_name + ".masked_out.map")
     
     # put it in a data dictionary
     netcdf_report.data_to_netcdf(netcdf_file[var_name]['file_name'], variable_name, pcr.pcr2numpy(inundation_map, vos.MV), timeBounds, timeStamp = None, posCnt = 0)
