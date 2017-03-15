@@ -353,7 +353,7 @@ reservoirs_30sec = pcr.cover(pcr.readmap(reservoirs_30sec_file), pcr.boolean(0.0
 lakes_30sec_file      = "/scratch/shared/edwinsut/reservoirs_and_lakes_30sec/glwd1_lakes.boolean.map"
 msg = "Set the (high resolution) lakes based on the file: " + str(lakes_30sec_file)
 logger.info(msg)
-lakes_30sec = pcr.cover(pcr.readmap(lakes_30sec_file, pcr.boolean(0.0))
+lakes_30sec = pcr.cover(pcr.readmap(lakes_30sec_file), pcr.boolean(0.0))
 # cells that do not belong lakes and reservoirs
 non_permanent_water_bodies = pcr.ifthenelse(reservoirs_30sec, pcr.boolean(0.0), pcr.boolean(1.0))
 non_permanent_water_bodies = pcr.ifthenelse(     lakes_30sec, pcr.boolean(0.0), non_permanent_water_bodies)
