@@ -290,15 +290,14 @@ landmask_05_min = pcr.defined(
                                       clone_map_file, \
                                       tmp_folder, \
                                       None, True, None, False))
-#~ pcr.aguila(landmask_05_min)
+landmask_used = pcr.ifthen(landmask_05_min, landmask_05_min)
+landmask_used = pcr.boolean(pcr.windomaximum(pcr.scalar(landmask_used), 0.5))
 landmask_30_sec_file = "/projects/0/dfguu/users/edwinhs/data/HydroSHEDS/hydro_basin_without_lakes/integrating_ldd/version_9_december_2016/merged_ldd.map"
 landmask_30_sec = pcr.defined(pcr.readmap(landmask_30_sec_file))
 landmask_used = pcr.ifthen(landmask_05_min, landmask_30_sec)
-pcr.aguila(landmask_used)
 
 #~ print areas
 #~ print areas[0]
-
 
 # get a list of input files that will be merged
 msg = "Get the list of input files that will be merged."
