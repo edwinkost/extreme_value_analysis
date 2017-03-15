@@ -238,19 +238,21 @@ end_year = int(sys.argv[5])
 map_type_name  = "channel_storage.map"
 map_type_name  = str(sys.argv[6])
 
+# prepare maps directory
 outputDir = output_directory + "/global/maps/"
-try:
-	os.makedirs(outputDir)
-except:
-	pass
+if os.path.exists(outputDir): shutil.rmtree(outputDir)
+os.makedirs(outputDir)
 
-# - prepare logger and its directory
+# prepare logger and its directory
 log_file_location = output_directory + "/log/"
-try:
-    os.makedirs(log_file_location)
-except:
-    pass
+if os.path.exists(log_file_location): shutil.rmtree(log_file_location)
+os.makedirs(log_file_location)
 vos.initialize_logging(log_file_location)
+
+# make tmp folder:
+tmp_folder = output_directory + "/tmp/"
+if os.path.exists(tmp_folder): shutil.rmtree(tmp_folder)
+os.makedirs(tmp_folder)
 
 # number of cores that will be used
 ncores = 5
@@ -265,7 +267,6 @@ areas = ['M%02d'%i for i in range(1,number_of_clone_maps+1,1)]
 # MAIN SCRIPT
 ########################################################################
 
-
 # get clone 
 msg = "Make and set the clone map."
 logger.info(msg)
@@ -279,6 +280,20 @@ command = 'mapattr -s -R %d -C %d -P "yb2t"	-B -x %f -y %f -l %f %s' %\
 vos.cmd_line(command, using_subprocess = False)
 # - set the clone map. 
 setclone(tempCloneMap)
+clone_map_file = tempCloneMap
+
+# set the landmask
+landmask_05_min_file = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
+landmask_05_min = pcr.defined(
+                  vos.readPCRmapClone(landmask_05_min_file, \
+                                      clone_map_file, \
+                                      tmp_folder, \
+                                      None, True, None, False))
+pcr.aguila(landmask_05_min
+#~ 
+#~ landmask_30 sec = 
+#~ 
+#~ landmask_used   = pcr.ifthen(pcr.defined(landmask_30 sec, ))
 
 #~ print areas
 #~ print areas[0]
