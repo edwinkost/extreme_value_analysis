@@ -374,7 +374,7 @@ netcdf_setup['source'     ]     = "Utrecht University, Department of Physical Ge
 netcdf_setup['references' ]     = "Sutanudjaja et al., in prep."
 
 # netcdf output folderls -lah 
-netcdf_output_folder = inputDirRoot + "/global/netcdf/"
+netcdf_output_folder = output_directory + "/global/netcdf/"
 try:
 	os.makedirs(netcdf_output_folder)
 except:
