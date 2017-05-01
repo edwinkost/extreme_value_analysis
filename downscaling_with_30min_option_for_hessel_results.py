@@ -28,8 +28,15 @@ mask_code            = str(sys.argv[4])
 # - type of files (options are: "normal"; "bias_corrected"; and "including_bias")
 type_of_files        = str(sys.argv[5])
 # - option for map types: *flood_inundation_volume.map or *channel_storage.map
+map_type_name        = "HESSEL_RESULT"
 map_type_name        = "channel_storage.map"
 map_type_name        = str(sys.argv[6])
+
+# - option with first upscaling model results to 30 arc-min model
+try:
+    with_upscaling = str(sys.argv[7]) == "with_upscaling"
+except:
+    with_upscaling = False
 
 # option for masking out reservoir storages
 masking_out_reservoirs = False
@@ -60,7 +67,7 @@ os.chdir(output_folder)
 cmd = "cp " + str(ini_file) + " downscaling.ini" 
 vos.cmd_line(cmd, using_subprocess = False)
 
-# clone and landmask files at low resolution (e.g. 5 arc-minutes)
+# clone and landmask files at low resolution (using 5 arc-minutes)
 # - set clone map
 clone_map_file    = "/projects/0/dfguu/data/hydroworld/others/05ArcMinCloneMaps/new_masks_from_top/clone_" + str(mask_code) + ".map" 
 msg = "Set the pcraster clone map to : " + str(clone_map_file)
@@ -85,8 +92,7 @@ ldd_map_low_resolution = pcr.lddrepair(pcr.ldd(ldd_map_low_resolution))
 ldd_map_low_resolution = pcr.lddrepair(ldd_map_low_resolution)
 pcr.report(ldd_map_low_resolution, "resampled_low_resolution_ldd.map")
 
-
-# permanent water bodies files (at 5 arc min resolution)
+# permanent water bodies files (at 5 arc-minutes resolution)
 reservoir_capacity_file = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/reservoircapacity_2010.map"
 fracwat_file            = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/fracwat_2010.map"
 water_body_id_file      = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/waterbodyid_2010.map"
@@ -116,6 +122,27 @@ if map_type_name == "channel_storage.map":
                   '250-year_of_channel_storage.map',
                   '500-year_of_channel_storage.map',
                  '1000-year_of_channel_storage.map']
+   # using timpctl
+   file_names = ["timpctl_50p00_return_period_00002p0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_80p00_return_period_00005p0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_90p00_return_period_00010p0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_96p00_return_period_00025p0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_98p00_return_period_00050p0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_99p00_return_period_00100p0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_99p60_return_period_00250p0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_99p80_return_period_00500p0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_99p90_return_period_01000p0_channel_storage_annual_flood_maxima.map",
+                 "timpctl_99p99_return_period_10000p0_channel_storage_annual_flood_maxima.map"]
+if map_type_name == "HESSEL_RESULT":
+   file_names = ["flvol_dynRout_EU-WATCH_run_default_RP_00002.map",
+                 "flvol_dynRout_EU-WATCH_run_default_RP_00005.map",
+                 "flvol_dynRout_EU-WATCH_run_default_RP_00010.map",
+                 "flvol_dynRout_EU-WATCH_run_default_RP_00025.map",
+                 "flvol_dynRout_EU-WATCH_run_default_RP_00050.map",
+                 "flvol_dynRout_EU-WATCH_run_default_RP_00100.map",
+                 "flvol_dynRout_EU-WATCH_run_default_RP_00250.map",
+                 "flvol_dynRout_EU-WATCH_run_default_RP_00500.map",
+                 "flvol_dynRout_EU-WATCH_run_default_RP_01000.map"]
 front_name = ""
 if type_of_files != "normal": front_name = type_of_files + "_"
 for i_file in range(0, len(file_names)):
@@ -203,11 +230,94 @@ for i_file in range(0, len(file_names)):
     if i_file >  0: extreme_value_map = pcr.max(previous_return_period_map, extreme_value_map) 
     pcr.report(extreme_value_map, file_name)
 
+# upscaling model results to 30 arc-min:
+if with_upscaling or map_type_name == "HESSEL_RESULT":
+    # cell id for each 30 arcmin cell
+    cell_ids_30min_file = "/projects/0/dfguu/data/hydroworld/others/irrigationZones/half_arc_degree/uniqueIds30min.nom.map"
+    cell_ids_30min = vos.readPCRmapClone(cell_ids_30min_file, \
+                                         clone_map_file, \
+                                         tmp_folder, \
+                                         None, False, None, True)
+    cell_ids_30min = pcr.ifthen(pcr.scalar(cell_ids_30min) > 0.0, cell_ids_30min)
+    # a dictionary that will contain 30 arcmin numpy array
+    extreme_value_30min = {} 
+
+    # upscaling to 30 arc-min:
+    for i_file in range(0, len(file_names)):
+        # read extreme value map
+        file_name = file_names[i_file]
+        extreme_value_05min_map = pcr.readmap(file_name)
+        # upscale it to 30 arcmin resolution: 
+        if map_type_name == "HESSEL_RESULT":
+            extreme_value_30min_map_at_5min_resolution = pcr.areamaximum(extreme_value_05min_map, cell_ids_30min)
+        else:
+            extreme_value_30min_map_at_5min_resolution = pcr.areatotal(extreme_value_05min_map, cell_ids_30min)
+        # convert it to 30 arcmin numpy array and store it in a dictionary 
+        extreme_value_30min_at_5min_resolution = pcr.pcr2numpy(extreme_value_30min_map_at_5min_resolution, vos.MV)
+        resampling_factor = np.int(30. / (5.))
+        extreme_value_30min[file_name] = vos.regridToCoarse(extreme_value_30min_at_5min_resolution, resampling_factor, "max", vos.MV)
+
+# - set the clone map to 30 arcmin resolution
+if with_upscaling or map_type_name == "HESSEL_RESULT":
+    resampling_factor = np.int(30. / (5.))
+    num_of_rows = np.round(pcr.clone().nrRows() / resampling_factor   , 2)
+    num_of_cols = np.round(pcr.clone().nrCols() / resampling_factor   , 2)
+    x_min       = np.round(pcr.clone().west()                         , 2)
+    y_max       = np.round(pcr.clone().north()                        , 2)
+    cell_length = pcr.clone().cellSize() * resampling_factor
+    # set the cell length manually
+    cell_length = '0.5'
+    #
+    # - make the map using 'mapattr' command 
+    cmd = 'mapattr -s -R ' + str(num_of_rows) + \
+                    ' -C ' + str(num_of_cols) + \
+                    ' -B -P yb2t ' + \
+                    ' -x ' + str(x_min) + \
+                    ' -y ' + str(y_max) + \
+                    ' -l ' + str(cell_length) + \
+                    ' clone_low_resolution_30min.map'
+    vos.cmd_line(cmd, using_subprocess = False)
+    clone_map_file = "clone_low_resolution_30min.map"
+    # - set the clone and landmask map
+    pcr.setclone(clone_map_file)
+    landmask = pcr.boolean(1.0)
+
+# save numpy arrays to 30 arcmin maps
+if with_upscaling or map_type_name == "HESSEL_RESULT":
+    # save numpy arrays
+    for i_file in range(0, len(file_names)):
+        # rename 5 arc-min file
+        file_name = file_names[i_file]
+        cmd = 'mv ' +  file_name + " " + file_name + ".5min.map"
+        vos.cmd_line(cmd, using_subprocess = False) 
+        # report it to pcraster files
+        print(file_name)
+        os.system('pwd')
+        pcr.report(pcr.numpy2pcr(pcr.Scalar, extreme_value_30min[file_name], vos.MV), file_name)
+
+# prepare ldd at 30 arcmin resolution (we need this, only for the compatibility with the downscaling script)
+if with_upscaling or map_type_name == "HESSEL_RESULT":
+    # - rename ldd 
+    cmd = 'mv resampled_low_resolution_ldd.map resampled_low_resolution_ldd.5min.map'
+    # - using 30 arcmin ldd 
+    ldd_map_low_resolution_file_name = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input30min/routing/lddsound_30min.map"
+    ldd_map_low_resolution = vos.readPCRmapClone(ldd_map_low_resolution_file_name, \
+                                                 clone_map_file, \
+                                                 tmp_folder, \
+                                                 None, True, None, False)
+    ldd_map_low_resolution = pcr.lddrepair(pcr.ldd(ldd_map_low_resolution))
+    ldd_map_low_resolution = pcr.lddrepair(ldd_map_low_resolution)
+    pcr.report(ldd_map_low_resolution, "resampled_low_resolution_ldd.map")
+
+
 # resampling river length and width files (actually, we don't need these):
 msg = "Resample the low resolution river length and width maps."
 logger.info(msg)
+#
 # - river length
 river_length_file_name = "/projects/0/dfguu/users/edwin/data/data_for_glofris_downscaling/input_data/maps_05min/celldiagonal05min.map"
+if with_upscaling or map_type_name == "HESSEL_RESULT":
+    river_length_file_name = "/scratch-shared/hydrowld/cell_diagonal_30min/celldiagonal30min.map" 
 river_length_low_resolution = vos.readPCRmapClone(river_length_file_name, \
                                                   clone_map_file, \
                                                   tmp_folder, \
@@ -215,8 +325,11 @@ river_length_low_resolution = vos.readPCRmapClone(river_length_file_name, \
 river_length_low_resolution = pcr.ifthen(landmask, river_length_low_resolution)
 river_length_low_resolution = pcr.cover(river_length_low_resolution, 0.0)
 pcr.report(river_length_low_resolution, "resampled_low_resolution_channel_length.map") 
+#
 # - river width
 river_width_file_name = "/projects/0/dfguu/users/edwin/data/data_for_glofris_downscaling/input_data/maps_05min/bankfull_width.map"
+if with_upscaling or map_type_name == "HESSEL_RESULT":
+    river_width_file_name = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input30min/routing/floodplain_30arcmin_world_final/based_on_daily_runoff/map/bankfull_width.map" 
 river_width_low_resolution = vos.readPCRmapClone(river_width_file_name, \
                                                  clone_map_file, \
                                                  tmp_folder, \
@@ -229,11 +342,14 @@ pcr.report(river_width_low_resolution, "resampled_low_resolution_bankfull_width.
 # clone at high resolution (e.g. 30 arc-seconds)
 msg = "Set the clone map at high resolution."
 logger.info(msg)
-num_of_rows = np.round(pcr.clone().nrRows() * 10   , 2)
-num_of_cols = np.round(pcr.clone().nrCols() * 10   , 2)
-x_min       = np.round(pcr.clone().west()          , 2)
-y_max       = np.round(pcr.clone().north()         , 2)
-cell_length = pcr.clone().cellSize() / 10.
+# resampling factor
+factor = 10
+if with_upscaling or map_type_name == "HESSEL_RESULT": factor = 60 
+# numbers of rows and columns
+num_of_rows = np.round(pcr.clone().nrRows() * factor   , 2)
+num_of_cols = np.round(pcr.clone().nrCols() * factor   , 2)
+x_min       = np.round(pcr.clone().west()              , 2)
+y_max       = np.round(pcr.clone().north()             , 2)
 # set the cell length manually
 cell_length = '0.00833333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333'
 #
@@ -285,7 +401,7 @@ lakes_30sec = pcr.cover(\
                                   tmp_folder, \
                                   None, False, None, False, True), pcr.boolean(0.0))
 lakes_30sec = pcr.ifthen(landmask_30sec, lakes_30sec)
-pcr.aguila(lakes_30sec)
+#~ pcr.aguila(lakes_30sec)
 
 # - ldd map
 msg = "Resampling high resolution ldd map."

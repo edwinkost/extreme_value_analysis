@@ -57,6 +57,7 @@ general_output_folder           = output_folder_for_this_analysis + "/"
 type_of_files  = str(sys.argv[3])
 
 # - option for map types: *flood_inundation_volume.map or *channel_storage.map
+map_type_name  = "HESSEL_RESULT"
 map_type_name  = "channel_storage.map"
 map_type_name  = str(sys.argv[4])
 
@@ -101,9 +102,12 @@ for i_group in range(number_of_clone_groups):
     cmd = ''
     for clone_code in clone_codes:
        if with_upscaling:
-          cmd += "python downscaling_with_30min_option.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " " + type_of_files + " " + map_type_name + " with_upscaling"
+          cmd += "python downscaling_with_30min_option_for_hessel_results.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " " + type_of_files + " " + map_type_name + " with_upscaling"
        else:
-          cmd += "python downscaling.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " " + type_of_files + " " + map_type_name
+          if map_type_name == "HESSEL_RESULT":
+             cmd += "python downscaling_with_30min_option_for_hessel_results.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " " + type_of_files + " " + map_type_name
+          else:
+             cmd += "python downscaling_with_30min_option_for_hessel_results.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " " + type_of_files + " " + map_type_name
        cmd = cmd + " & "
        i_clone += 1
     cmd = cmd + " wait "
