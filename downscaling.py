@@ -344,7 +344,7 @@ stream_order_map = pcr.streamorder(ldd_map_high_resolution)
 #
 # strahler order option
 #~ strahler_order_used = 6
-strahler_order_used = 7
+strahler_order_used    = 5
 #
 # TODO: ignore smaller rivers (< 10 m)
 #
