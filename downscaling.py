@@ -285,7 +285,7 @@ lakes_30sec = pcr.cover(\
                                   tmp_folder, \
                                   None, False, None, False, True), pcr.boolean(0.0))
 lakes_30sec = pcr.ifthen(landmask_30sec, lakes_30sec)
-pcr.aguila(lakes_30sec)
+#~ pcr.aguila(lakes_30sec)
 
 # - ldd map
 msg = "Resampling high resolution ldd map."
@@ -343,7 +343,8 @@ logger.info(msg)
 stream_order_map = pcr.streamorder(ldd_map_high_resolution)
 #
 # strahler order option
-strahler_order_used = 6
+#~ strahler_order_used = 6
+strahler_order_used = 7
 #
 # TODO: ignore smaller rivers (< 10 m)
 #
