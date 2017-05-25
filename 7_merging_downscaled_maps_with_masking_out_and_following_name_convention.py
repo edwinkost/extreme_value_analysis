@@ -489,6 +489,7 @@ for i_return_period in range(0, len(return_periods)):
     if map_type_name == "channel_storage.map": inundation_file_name = output_directory + "/global/maps/" + "inun_" + str(return_period) + "_of_channel_storage_catch_06.tif.map"
     if return_period == "2-year":
         inundation_map = pcr.ifthen(landmask_used, pcr.scalar(0.0))
+        pcr.report(inundation_map, inundation_file_name)
     if return_period != "2-year":
         inundation_map = pcr.readmap(inundation_file_name)
         inundation_map = pcr.cover(inundation_map, 0.0)
