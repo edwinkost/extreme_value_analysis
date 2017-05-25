@@ -492,7 +492,7 @@ for i_return_period in range(len(return_periods) - 1, -1, -1):
         inundation_map = pcr.cover(inundation_map, 0.0)
         inundation_map = pcr.ifthen(landmask_used, inundation_map)
     if return_period == "2-year":
-        inundation_map = pcr.ifthen(pcr.defined(inundation_map), 0.0)
+        inundation_map = pcr.ifthen(landmask_used, 0.0)
     
     # masking out permanent water bodies
     inundation_map = pcr.ifthen(non_permanent_water_bodies, inundation_map)
