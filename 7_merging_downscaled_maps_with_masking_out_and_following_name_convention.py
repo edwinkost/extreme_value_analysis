@@ -449,7 +449,8 @@ for i_return_period in range(0, len(return_periods)):
     file_name = netcdf_output_folder + "/" + output_netcdf_file_name + "_" + return_period_code + ".nc"
     msg = "Preparing the netcdf file: " + file_name
     logger.info(msg)
-    netcdf_report.create_netcdf_file(file_name) 
+    netcdf_file[var_name]['file_name'] = file_name
+    netcdf_report.create_netcdf_file(netcdf_file[var_name]) 
     #
     # - variable name and unit 
     variable_name = str(return_period) + "_of_" + varDict.netcdf_short_name[var_name]
