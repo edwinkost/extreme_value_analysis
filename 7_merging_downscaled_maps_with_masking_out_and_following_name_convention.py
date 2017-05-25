@@ -467,7 +467,7 @@ for i_return_period in range(0, len(return_periods)):
                                   )
 
 # masking out water bodies and store output pcraster maps that have been merged to netcdf files:
-for i_return_period in range(0, len(return_periods)):
+for i_return_period in range(len(return_periods) - 1, -1, -1):
     
     # return period:
     return_period      = return_periods[i_return_period]
@@ -485,11 +485,14 @@ for i_return_period in range(0, len(return_periods)):
     logger.info(msg)
     
     # read from pcraster files
-    inundation_file_name = output_directory + "/global/maps/" + "inun_" + str(return_period) + "_of_flood_inundation_volume_catch_06.tif.map"
-    if map_type_name == "channel_storage.map": inundation_file_name = output_directory + "/global/maps/" + "inun_" + str(return_period) + "_of_channel_storage_catch_06.tif.map"
-    inundation_map = pcr.readmap(inundation_file_name)
-    inundation_map = pcr.cover(inundation_map, 0.0)
-    inundation_map = pcr.ifthen(landmask_used, inundation_map)
+    if return_period != "2-year":
+        inundation_file_name = output_directory + "/global/maps/" + "inun_" + str(return_period) + "_of_flood_inundation_volume_catch_06.tif.map"
+        if map_type_name == "channel_storage.map": inundation_file_name = output_directory + "/global/maps/" + "inun_" + str(return_period) + "_of_channel_storage_catch_06.tif.map"
+        inundation_map = pcr.readmap(inundation_file_name)
+        inundation_map = pcr.cover(inundation_map, 0.0)
+        inundation_map = pcr.ifthen(landmask_used, inundation_map)
+    if return_period == "2-year":
+        inundation_map = pcr.ifthen(pcr.defined(inundation_map), 0.0)
     
     # masking out permanent water bodies
     inundation_map = pcr.ifthen(non_permanent_water_bodies, inundation_map)
@@ -499,4 +502,3 @@ for i_return_period in range(0, len(return_periods)):
     
     # write to netcdf files
     netcdf_report.data_to_netcdf(file_name, variable_name, pcr.pcr2numpy(inundation_map, vos.MV), timeBounds, timeStamp = None, posCnt = 0)
-
