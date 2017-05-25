@@ -486,7 +486,7 @@ for i_return_period in range(0, len(return_periods)):
     
     # read from pcraster files
     if return_period == "2-year":
-        inundation_map = pcr.ifthen(landmask_used, 0.0)
+        inundation_map = pcr.ifthen(landmask_used, pcr.scalar(0.0))
     if return_period != "2-year":
         inundation_file_name = output_directory + "/global/maps/" + "inun_" + str(return_period) + "_of_flood_inundation_volume_catch_06.tif.map"
         if map_type_name == "channel_storage.map": inundation_file_name = output_directory + "/global/maps/" + "inun_" + str(return_period) + "_of_channel_storage_catch_06.tif.map"
