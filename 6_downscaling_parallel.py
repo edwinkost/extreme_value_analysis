@@ -107,7 +107,7 @@ for i_group in range(number_of_clone_groups):
     # - command lines for running the downscling script parallely
     cmd = ''
     for clone_code in clone_codes:
-       cmd += "python downscaling_with_30min_option.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " " + type_of_files + " " + map_type_name + " " + strahler_order_used
+       cmd += "python downscaling_with_30min_option.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " " + type_of_files + " " + map_type_name + " " + str(strahler_order_used)
        if with_upscaling:
           cmd = cmd + " " + "with_upscaling"
        cmd = cmd + " & "
