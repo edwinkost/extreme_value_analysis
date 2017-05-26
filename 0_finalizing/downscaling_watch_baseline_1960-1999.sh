@@ -5,3 +5,4 @@ python 6_downscaling_parallel.py /projects/0/aqueduct/users/edwinsut/aqueduct_fl
 
 # merging all downscaled maps
 python 7_merging_downscaled_maps_with_masking_out_and_following_name_convention.py /scratch-shared/edwinsut/finalizing_downscaling/using_strahler_order_6/ /scratch-shared/edwinsut/finalizing_downscaling/using_strahler_order_6/ inunriver_historical_WATCH_1999 1960 1999 channel_storage.map
+
