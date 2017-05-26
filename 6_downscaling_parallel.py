@@ -63,13 +63,13 @@ map_type_name  = str(sys.argv[4])
 # - option for strahler order number
 strahler_order_used = 6 # default
 try:
-    strahler_order_used = int(sys.argv[7])
+    strahler_order_used = int(sys.argv[5])
 except:
     pass
 
 # - option with first upscaling model results to 30 arc-min model
 try:
-    with_upscaling = str(sys.argv[5]) == "with_upscaling"
+    with_upscaling = str(sys.argv[6]) == "with_upscaling"
 except:
     with_upscaling = False
 
