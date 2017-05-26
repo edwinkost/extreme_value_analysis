@@ -240,6 +240,9 @@ end_year = int(sys.argv[5])
 map_type_name  = "channel_storage.map"
 map_type_name  = str(sys.argv[6])
 
+# strahler order option
+strahler_order_option = str(sys.argv[7])
+
 # prepare maps directory
 outputDir = output_directory + "/global/maps/"
 if os.path.exists(outputDir): shutil.rmtree(outputDir)
@@ -485,8 +488,8 @@ for i_return_period in range(0, len(return_periods)):
     logger.info(msg)
     
     # read from pcraster files
-    inundation_file_name = output_directory + "/global/maps/" + "inun_" + str(return_period) + "_of_flood_inundation_volume_catch_06.tif.map"
-    if map_type_name == "channel_storage.map": inundation_file_name = output_directory + "/global/maps/" + "inun_" + str(return_period) + "_of_channel_storage_catch_06.tif.map"
+    inundation_file_name = output_directory + "/global/maps/" + "inun_" + str(return_period) + "_of_flood_inundation_volume_catch_" + strahler_order_option + ".tif.map"
+    if map_type_name == "channel_storage.map": inundation_file_name = output_directory + "/global/maps/" + "inun_" + str(return_period) + "_of_channel_storage_catch_" + strahler_order_option + ".tif.map"
     if return_period == "2-year":
         inundation_map = pcr.ifthen(landmask_used, pcr.scalar(0.0))
         pcr.report(inundation_map, inundation_file_name)
