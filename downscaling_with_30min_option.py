@@ -31,9 +31,16 @@ type_of_files        = str(sys.argv[5])
 map_type_name        = "channel_storage.map"
 map_type_name        = str(sys.argv[6])
 
+# - option for strahler order number
+strahler_order_number = 6 # default
+try:
+    strahler_order_number = int(sys.argv[7])
+except:
+    pass
+
 # - option with first upscaling model results to 30 arc-min model
 try:
-    with_upscaling = str(sys.argv[7]) == "with_upscaling"
+    with_upscaling = str(sys.argv[8]) == "with_upscaling"
 except:
     with_upscaling = False
 
@@ -91,7 +98,7 @@ ldd_map_low_resolution = pcr.lddrepair(pcr.ldd(ldd_map_low_resolution))
 ldd_map_low_resolution = pcr.lddrepair(ldd_map_low_resolution)
 pcr.report(ldd_map_low_resolution, "resampled_low_resolution_ldd.map")
 
-# permanent water bodies files (at 5 arc-minutes resolution)
+# permanent water bodies files (at 5 arc-minute resolution)
 reservoir_capacity_file = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/reservoircapacity_2010.map"
 fracwat_file            = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/fracwat_2010.map"
 water_body_id_file      = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/waterbodyid_2010.map"
@@ -432,11 +439,12 @@ logger.info(msg)
 stream_order_map = pcr.streamorder(ldd_map_high_resolution)
 #
 # strahler order option
-strahler_order_used = 6
+strahler_order_used = strahler_order_number
+msg = "The strahler order number used for this downscaling method: " + str(strahler_order_used)
+logger.info(msg)
+pcr.report(stream_order_map, "high_resolution_stream_order.map")
 #
 # TODO: ignore smaller rivers (< 10 m)
-#
-pcr.report(stream_order_map, "high_resolution_stream_order.map")
 
 
 # execute downscaling scripts for every return period
