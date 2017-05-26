@@ -61,9 +61,9 @@ map_type_name  = "channel_storage.map"
 map_type_name  = str(sys.argv[4])
 
 # - option for strahler order number
-strahler_order_number = 6 # default
+strahler_order_used = 6 # default
 try:
-    strahler_order_number = int(sys.argv[7])
+    strahler_order_used = int(sys.argv[7])
 except:
     pass
 
