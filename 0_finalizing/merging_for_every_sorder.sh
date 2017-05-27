@@ -1,9 +1,0 @@
-
-# merging all downscaled maps
-#~ python 7_merging_downscaled_maps_with_masking_out_and_following_name_convention.py /scratch-shared/edwinsut/finalizing_downscaling/using_strahler_order_4/ /scratch-shared/edwinsut/finalizing_downscaling/using_strahler_order_4/ inunriver_historical_WATCH_1999 1960 1999 channel_storage.map 04
-#~ python 7_merging_downscaled_maps_with_masking_out_and_following_name_convention.py /scratch-shared/edwinsut/finalizing_downscaling/using_strahler_order_5/ /scratch-shared/edwinsut/finalizing_downscaling/using_strahler_order_5/ inunriver_historical_WATCH_1999 1960 1999 channel_storage.map 05
-
-#~ python 7_merging_downscaled_maps_with_masking_out_and_following_name_convention.py /scratch-shared/edwinsut/finalizing_downscaling/using_strahler_order_6/ /scratch-shared/edwinsut/finalizing_downscaling/using_strahler_order_6/ inunriver_historical_WATCH_1999 1960 1999 channel_storage.map 06
-#~ python 7_merging_downscaled_maps_with_masking_out_and_following_name_convention.py /scratch-shared/edwinsut/finalizing_downscaling/using_strahler_order_7/ /scratch-shared/edwinsut/finalizing_downscaling/using_strahler_order_7/ inunriver_historical_WATCH_1999 1960 1999 channel_storage.map 07
-#~ python 7_merging_downscaled_maps_with_masking_out_and_following_name_convention.py /scratch-shared/edwinsut/finalizing_downscaling/using_strahler_order_8/ /scratch-shared/edwinsut/finalizing_downscaling/using_strahler_order_8/ inunriver_historical_WATCH_1999 1960 1999 channel_storage.map 08
-
