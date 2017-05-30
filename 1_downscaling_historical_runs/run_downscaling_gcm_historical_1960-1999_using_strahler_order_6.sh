@@ -1,0 +1,5 @@
+#~ bash downscaling_gfdl-esm2m_baseline_1960-1999_using_strahler_order_6.sh
+#~ bash downscaling_hadgem2-es_baseline_1960-1999_using_strahler_order_6.sh
+bash downscaling_ipsl-cm5a-lr_baseline_1960-1999_using_strahler_order_6.sh
+bash downscaling_miroc-esm-chem_baseline_1960-1999_using_strahler_order_6.sh
+bash downscaling_noresm1-m_baseline_1960-1999_using_strahler_order_6.sh
