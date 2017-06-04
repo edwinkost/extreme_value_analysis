@@ -38,12 +38,18 @@ input_files                           = {}
 #~ input_files['dynamicFracWatMonthMax'] = input_files['folder'] + "dynamicFracWat_monthMax_output_1951-01-31_to_2005-12-31.nc"                                    # unit: dimensionless
 #~ input_files['floodVolumeMonthMax']    = input_files['folder'] + "floodVolume_monthMax_output_1951-01-31_to_2005-12-31.nc"                                       # unit: m3
 #
-# pcrglobwb result folder based on the system argument
-pcrglobwb_result_folder                  = os.path.abspath(sys.argv[1])
-input_files['folder']                    = pcrglobwb_result_folder + "/"
-input_files['channelStorageMonthMax']    = input_files['folder'] + "channelStorage_monthMax_output_2006-01-31_to_2099-12-31.nc"                                    # unit: m3
-input_files['dynamicFracWatMonthMax']    = input_files['folder'] + "dynamicFracWat_monthMax_output_2006-01-31_to_2099-12-31.nc"                                    # unit: dimensionless
-input_files['floodVolumeMonthMax']       = input_files['folder'] + "floodVolume_monthMax_output_2006-01-31_to_2099-12-31.nc"                                       # unit: m3
+# - cru-ts3.23_era-20c_kinematicwave 
+input_files['folder']                 = "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_oct_nov/pcrglobwb_4_land_covers_edwin_parameter_set_cru-ts3.23_era-20c_kinematicwave/no_correction/non-natural/merged_1958-2010/global/netcdf/"
+input_files['channelStorageMonthMax'] = input_files['folder'] + "channelStorage_monthMax_output_1958-01-31_to_2010-12-31.nc"                                    # unit: m3
+input_files['dynamicFracWatMonthMax'] = input_files['folder'] + "dynamicFracWat_monthMax_output_1958-01-31_to_2010-12-31.nc"                                    # unit: dimensionless
+input_files['floodVolumeMonthMax']    = input_files['folder'] + "floodVolume_monthMax_output_1958-01-31_to_2010-12-31.nc"                                       # unit: m3
+#
+#~ # pcrglobwb result folder based on the system argument
+#~ pcrglobwb_result_folder                  = os.path.abspath(sys.argv[1])
+#~ input_files['folder']                    = pcrglobwb_result_folder + "/"
+#~ input_files['channelStorageMonthMax']    = input_files['folder'] + "channelStorage_monthMax_output_2006-01-31_to_2099-12-31.nc"                                    # unit: m3
+#~ input_files['dynamicFracWatMonthMax']    = input_files['folder'] + "dynamicFracWat_monthMax_output_2006-01-31_to_2099-12-31.nc"                                    # unit: dimensionless
+#~ input_files['floodVolumeMonthMax']       = input_files['folder'] + "floodVolume_monthMax_output_2006-01-31_to_2099-12-31.nc"                                       # unit: m3
 
 
 # type of hydrological year
@@ -64,24 +70,8 @@ num_of_shift_month = 9                                                  # hydrol
 if type_of_hydrological_year == 2: num_of_shift_month = 6               # hydrological year 2: July to June
 
 
-
-# start and end years for this analysis:
-#~ # - for historical runs
-#~ str_year = 1960
-#~ end_year = 1999
-#~ # - for the year 2030
-#~ str_year = 2010
-#~ end_year = 2049
-# - for the year 2050
-str_year = 2030
-end_year = 2069
-#~ # - for the year 2080
-#~ str_year = 2060
-#~ end_year = 2099
-
-
 # output files
-output_files                      = {}
+output_files                         = {}
 # - output folder
 #
 #~ # - WATCH historical
@@ -90,9 +80,12 @@ output_files                      = {}
 #~ # - GCM historical: noresm1-m
 #~ output_files['folder']            = "/scratch-shared/edwinsut/flood_analyzer_analysis/maximum_events/noresm1-m_1960-1999/hydrological_year_" + str(type_of_hydrological_year) + "/"
 #
-# output folder based on the system argument
-output_folder_for_this_analysis      = sys.argv[3]
-output_files['folder']               = output_folder_for_this_analysis + "/hydrological_year_" + str(type_of_hydrological_year) + "/" 
+# - cru-ts3.23_era-20c_kinematicwave 
+output_files['folder']               = "/scratch-shared/edwinsut/flood_analyzer_analysis/maximum_events/cru-ts3.23_era-20c_kinematicwave/hydrological_year_" + str(type_of_hydrological_year) + "/"
+#
+#~ # output folder based on the system argument
+#~ output_folder_for_this_analysis   = sys.argv[3]
+#~ output_files['folder']            = output_folder_for_this_analysis + "/hydrological_year_" + str(type_of_hydrological_year) + "/" 
 #
 #
 try:
@@ -114,6 +107,25 @@ try:
 except:
     pass
 vos.initialize_logging(log_file_location)
+
+
+# start and end years for this analysis:
+# - for historical runs
+str_year = 1960
+end_year = 1999
+#~ # - for the year 2030
+#~ str_year = 2010
+#~ end_year = 2049
+#~ # - for the year 2050
+#~ str_year = 2030
+#~ end_year = 2069
+#~ # - for the year 2080
+#~ str_year = 2060
+#~ end_year = 2099
+#
+# - based on the system argument
+str_year = int(sys.argv[4])
+end_year = int(sys.argv[5])
 
 
 # STEP 1: Using cdo shiftime to shift netcf file
