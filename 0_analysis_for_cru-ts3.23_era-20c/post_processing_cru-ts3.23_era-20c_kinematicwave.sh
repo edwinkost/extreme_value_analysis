@@ -11,10 +11,11 @@ wait
 ###################################################################################
 
 # get annual maximum events based on a defined/given hydrological year tipe map
-python 2_merge_two_hydrological_year_result.py "/scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/maximum_events/" /scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/hydrological_year_types_1960-1999/hydrological_year_type.map "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/maximum_events/" 1960 1999 &
+python 2_merge_two_hydrological_year_result.py "/scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/maximum_events/" /scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/hydrological_year_types_1960-1999/hydrological_year_type.map "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/maximum_events/merged/" 1960 1999 &
 
 wait
 
 ###################################################################################
 
-
+# calculate maximum surface water level (river depth)
+python 3_calculate_maximum_river_depth.py 
