@@ -18,4 +18,11 @@ wait
 ###################################################################################
 
 # calculate maximum surface water level (river depth)
-python 3_calculate_maximum_river_depth.py 
+python 3_calculate_maximum_river_depth_without_upscaling.py "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/maximum_events/merged/" "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/surface_water_level_maximum/" 1960 1999 &
+
+wait
+
+###################################################################################
+
+
+ 

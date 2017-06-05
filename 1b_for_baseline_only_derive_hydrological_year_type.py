@@ -158,7 +158,7 @@ basin_map = pcr.nominal(\
                                 input_files['clone_map_05min'],
                                 output_files['tmp_folder'],
                                 None, False, None, True))
-pcr.aguila(basin_map)
+#~ pcr.aguila(basin_map)
 # - extend/extrapolate the basin
 basin_map = pcr.cover(basin_map, pcr.windowmajority(basin_map, 0.5))
 basin_map = pcr.cover(basin_map, pcr.windowmajority(basin_map, 0.5))
@@ -166,7 +166,7 @@ basin_map = pcr.cover(basin_map, pcr.windowmajority(basin_map, 0.5))
 basin_map = pcr.cover(basin_map, pcr.windowmajority(basin_map, 1.0))
 basin_map = pcr.cover(basin_map, pcr.windowmajority(basin_map, 1.5))
 basin_map = pcr.ifthen(landmask, basin_map)
-pcr.aguila(basin_map)
+#~ pcr.aguila(basin_map)
 
 msg = "Redefining the basin map (so that it is consistent with the ldd map used in PCR-GLOBWB):"
 logger.info(msg)
@@ -179,18 +179,18 @@ outlet = pcr.nominal(pcr.uniqueid(pcr.ifthen(upstream_area == upstream_area_maxi
 # - ignoring outlets with small upstream areas
 threshold = 50. * 1000. * 1000.                                                 # unit: m2
 outlet    = pcr.ifthen(upstream_area_maximum > threshold, outlet)
-pcr.aguila(outlet)
+#~ pcr.aguila(outlet)
 outlet = pcr.cover(outlet, pcr.nominal(0.0))
 # - recalculate the basin
 basin_map  = pcr.nominal(pcr.subcatchment(ldd, outlet))
 basin_map  = pcr.clump(basin_map)
 basin_map  = pcr.ifthen(landmask, basin_map)
 pcr.report(basin_map , "basin_map.map")
-pcr.aguila(basin_map)
+#~ pcr.aguila(basin_map)
 # - calculate the basin area
 basin_area = pcr.areatotal(cell_area, basin_map)
 pcr.report(basin_area, "basin_area.map")
-pcr.aguila(basin_area)
+#~ pcr.aguila(basin_area)
 
 
 # finding the month that give the maximum discharge (from the climatology time series)
@@ -230,5 +230,5 @@ hydrological_year_type = pcr.ifthenelse(maximum_month == 11, pcr.nominal(2), hyd
 hydrological_year_type = pcr.cover(hydrological_year_type, pcr.nominal(1))
 hydrological_year_type = pcr.ifthen(landmask, hydrological_year_type)
 pcr.report(hydrological_year_type, "hydrological_year_type.map")
-pcr.aguila(hydrological_year_type)
+#~ pcr.aguila(hydrological_year_type)
 
