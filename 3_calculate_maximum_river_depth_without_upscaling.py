@@ -63,8 +63,6 @@ pcr.setclone(input_files['clone_map_05min'])
 # - cell area, ldd maps
 input_files['cell_area_05min'] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/cellsize05min.correct.map"
 input_files['ldd_map_05min'  ] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
-#~ # - cell id for every half degree cell
-#~ input_files['cell_ids_30min' ] = "/projects/0/dfguu/data/hydroworld/others/irrigationZones/half_arc_degree/uniqueIds30min.nom.map"
 
 # output files
 output_files                   = {}
@@ -127,10 +125,6 @@ vos.initialize_logging(log_file_location)
 # - based on the system arguments:
 str_year = int(sys.argv[3])
 end_year = int(sys.argv[4])
-
-
-# option to save/present results at the landmask region only (not working yet):
-landmask_only = True
 
 
 # set the pcraster clone, ldd and landmask maps 
