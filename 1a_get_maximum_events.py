@@ -41,15 +41,16 @@ input_files                           = {}
 #~ # pcrglobwb result folder based on the system argument
 #~ pcrglobwb_result_folder                  = os.path.abspath(sys.argv[1])
 #~ input_files['folder']                    = pcrglobwb_result_folder + "/"
-#~ input_files['channelStorageMonthMax']    = input_files['folder'] + "channelStorage_monthMax_output_2006-01-31_to_2099-12-31.nc"                                    # unit: m3
-#~ input_files['dynamicFracWatMonthMax']    = input_files['folder'] + "dynamicFracWat_monthMax_output_2006-01-31_to_2099-12-31.nc"                                    # unit: dimensionless
-#~ input_files['floodVolumeMonthMax']       = input_files['folder'] + "floodVolume_monthMax_output_2006-01-31_to_2099-12-31.nc"                                       # unit: m3
+#~ input_files['channelStorageMonthMax']    = input_files['folder'] + "channelStorage_monthMax_output_2006-01-31_to_2099-12-31.nc"                                 # unit: m3
+#~ input_files['dynamicFracWatMonthMax']    = input_files['folder'] + "dynamicFracWat_monthMax_output_2006-01-31_to_2099-12-31.nc"                                 # unit: dimensionless
+#~ input_files['floodVolumeMonthMax']       = input_files['folder'] + "floodVolume_monthMax_output_2006-01-31_to_2099-12-31.nc"                                    # unit: m3
 #
 # - cru-ts3.23_era-20c_kinematicwave 
-input_files['folder']                 = os.path.abspath(sys.argv[1])
-input_files['channelStorageMonthMax'] = input_files['folder'] + "channelStorage_monthMax_output_1958-01-31_to_2010-12-31.nc"                                    # unit: m3
-input_files['dynamicFracWatMonthMax'] = input_files['folder'] + "dynamicFracWat_monthMax_output_1958-01-31_to_2010-12-31.nc"                                    # unit: dimensionless
-input_files['floodVolumeMonthMax']    = input_files['folder'] + "floodVolume_monthMax_output_1958-01-31_to_2010-12-31.nc"                                       # unit: m3
+pcrglobwb_result_folder                  = os.path.abspath(sys.argv[1])
+input_files['folder']                    = pcrglobwb_result_folder + "/"
+input_files['channelStorageMonthMax']    = input_files['folder'] + "channelStorage_monthMax_output_1958-01-31_to_2010-12-31.nc"                                    # unit: m3
+input_files['dynamicFracWatMonthMax']    = input_files['folder'] + "dynamicFracWat_monthMax_output_1958-01-31_to_2010-12-31.nc"                                    # unit: dimensionless
+input_files['floodVolumeMonthMax']       = input_files['folder'] + "floodVolume_monthMax_output_1958-01-31_to_2010-12-31.nc"                                       # unit: m3
 
 # type of hydrological year
 # - hydrological year 1: October to September 
