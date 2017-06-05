@@ -11,24 +11,28 @@
 #~ ###################################################################################
 #~ 
 #~ # get annual maximum events based on a defined/given hydrological year tipe map
-#~ python 2_merge_two_hydrological_year_result.py "/scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/maximum_events/" /scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/hydrological_year_types_1960-1999/hydrological_year_type.map "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/maximum_events/merged/" 1960 1999 &
+#~ python 2_merge_two_hydrological_year_result.py "/scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/maximum_events/" /scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/hydrological_year_types_1960-1999/hydrological_year_type.map "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/maximum_events/merged/" 1960 1999 
 #~ 
-#~ wait
 #~ 
 #~ ###################################################################################
 #~ 
 #~ # calculate maximum surface water level (river depth)
-#~ python 3_calculate_maximum_river_depth_without_upscaling.py "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/maximum_events/merged/" "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/surface_water_level_maximum/" 1960 1999 &
+#~ python 3_calculate_maximum_river_depth_without_upscaling.py "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/maximum_events/merged/" "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/surface_water_level_maximum/" 1960 1999 
 #~ 
-#~ wait
-
-###################################################################################
+#~ 
+#~ ###################################################################################
 
 # gumbel fits for annual flood maxima variables: ['channelStorage', 'surfaceWaterLevel']
-python 4_gumbel_fits_get_gumbel_parameters_for_inundation_and_surface_water_level_variables.py "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/maximum_events/merged/" "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/surface_water_level_maximum/" "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/gumbel_fits/" 1960 1999 &
-# 
+python 4_gumbel_fits_get_gumbel_parameters_for_inundation_and_surface_water_level_variables.py "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/maximum_events/merged/" "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/surface_water_level_maximum/" "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/gumbel_fits/" 1960 1999 
 
-wait
 
 ###################################################################################
- 
+
+# apply gumbel parameters without/with and with bias correction, for annual flood maxima variables: ['channelStorage', 'surfaceWaterLevel'] 
+python  5a_gumbel_fits_apply_gumbel_parameters_without_bias_correction_for_historical_and_baseline_runs.py "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/gumbel_fits/"
+"/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/extreme_values/" 1960 1999
+
+
+###################################################################################
+
+# derive/downscale flood inundation maps
