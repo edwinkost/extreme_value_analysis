@@ -30,10 +30,17 @@ logger = logging.getLogger(__name__)
 
 # input files
 input_files                           = {}
+#
 # PCR-GLOBWB 5 arcmin results
+#
 # - WATCH historical
 input_files['folder']            = "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_oct_nov/pcrglobwb_4_land_covers_edwin_parameter_set_watch_kinematicwave/no_correction/non-natural/merged_1958_to_2001/global/netcdf/"
 input_files['dischargeMonthAvg'] = input_files['folder'] + "discharge_monthAvg_output_1958-01-31_to_2001-12-31.nc"                                    # unit: m3/s
+#
+# - based on the system arguments:
+input_files['folder']            = sys.argv[1]
+input_files['dischargeMonthAvg'] = input_files['folder'] + "/" + sys.argv[2]
+#
 #
 # General input files
 # - clone map
@@ -47,11 +54,16 @@ input_files['basin_map_05min']   = "/projects/0/dfguu/users/edwin/data/aqueduct_
 # start and end years for this analysis (PS: after shifted)
 str_year = 1960
 end_year = 1999
+# - based on the system arguments:
+str_year = int(sys.argv[3])
+end_year = int(sys.argv[4])
 
 # output files
 output_files                     = {}
 # - output folder
 output_files['folder']           = "/scratch-shared/edwinsut/flood_analyzer_analysis/hydrological_year/watch_1960-1999/"
+# - based on the system arguments:
+output_files['folder']           = sys.argv[5]
 #
 try:
     os.makedirs(output_files['folder'])
