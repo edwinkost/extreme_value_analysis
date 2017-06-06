@@ -276,22 +276,12 @@ fracwat_file            = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5m
 water_body_id_file      = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/waterbodyid_2010.map"
 
 # read the properties of permanent water bodies
-clone_map_file     = input_files['clone_map_05min']
 landmask           = pcr.defined(pcr.readmap(input_files['ldd_map_05min'  ]))
-fracwat            = pcr.ifthen(landmask, \
-                     pcr.cover(\
-                     vos.readPCRmapClone(fracwat_file, \
-                                         clone_map_file, \
-                                         tmp_folder, \
-                                         None, False, None, False), 0.0))
-water_body_id      = vos.readPCRmapClone(water_body_id_file, \
-                                         clone_map_file, \
-                                         tmp_folder, \
-                                         None, False, None, True )
+fracwat            = pcr.cover(pcr.readmap(fracwat_file), 0.0)
+water_body_id      = pcr.readmap(water_body_id_file)
 water_body_id      = pcr.ifthen(pcr.scalar(water_body_id) > 0.00, water_body_id)
 water_body_id      = pcr.cover(water_body_id, pcr.nominal(0.0))
 water_body_id      = pcr.ifthen( landmask, water_body_id)                                         
-#
 non_permanent_water_bodies = pcr.ifthenelse(pcr.scalar(water_body_id) > 0.00, pcr.boolean(0.0), pcr.boolean(1.0))
 non_permanent_water_bodies = pcr.ifthen(landmask, non_permanent_water_bodies)
 
