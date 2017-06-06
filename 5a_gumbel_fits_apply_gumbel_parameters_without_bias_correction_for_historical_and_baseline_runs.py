@@ -273,22 +273,22 @@ logger.info(msg)
 
 landmask           = pcr.defined(pcr.readmap(input_files['ldd_map_05min'  ]))
 
-# permanent water bodies files (at 5 arc-minute resolution) 
-fracwat_file            = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/fracwat_2010.map"
-water_body_id_file      = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/waterbodyid_2010.map"
-
-# read the properties of permanent water bodies
-fracwat            = pcr.cover(pcr.readmap(fracwat_file), 0.0)
-water_body_id      = pcr.readmap(water_body_id_file)
-water_body_id      = pcr.ifthen(pcr.scalar(water_body_id) > 0.00, water_body_id)
-water_body_area    = pcr.areatotal(input_files['cell_area_05min'] * fracwat, water_body_id)
-water_body_area    = pcr.cover(water_body_area, 0.0)
-water_body_id      = pcr.cover(water_body_id, pcr.nominal(0.0))
-water_body_id      = pcr.ifthen( landmask, water_body_id)                                         
-non_permanent_water_bodies = pcr.boolean(1.0)
-non_permanent_water_bodies = pcr.ifthenelse(water_body_area > 50. * 1000. * 1000., pcr.boolean(0.0), non_permanent_water_bodies)
-non_permanent_water_bodies = pcr.ifthen(landmask, non_permanent_water_bodies)
-pcr.aguila(non_permanent_water_bodies)
+#~ # permanent water bodies files (at 5 arc-minute resolution) 
+#~ fracwat_file            = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/fracwat_2010.map"
+#~ water_body_id_file      = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/waterbodyid_2010.map"
+#~ 
+#~ # read the properties of permanent water bodies
+#~ fracwat            = pcr.cover(pcr.readmap(fracwat_file), 0.0)
+#~ water_body_id      = pcr.readmap(water_body_id_file)
+#~ water_body_id      = pcr.ifthen(pcr.scalar(water_body_id) > 0.00, water_body_id)
+#~ water_body_area    = pcr.areatotal(input_files['cell_area_05min'] * fracwat, water_body_id)
+#~ water_body_area    = pcr.cover(water_body_area, 0.0)
+#~ water_body_id      = pcr.cover(water_body_id, pcr.nominal(0.0))
+#~ water_body_id      = pcr.ifthen( landmask, water_body_id)                                         
+#~ non_permanent_water_bodies = pcr.boolean(1.0)
+#~ non_permanent_water_bodies = pcr.ifthenelse(water_body_area > 50. * 1000. * 1000., pcr.boolean(0.0), non_permanent_water_bodies)
+#~ non_permanent_water_bodies = pcr.ifthen(landmask, non_permanent_water_bodies)
+#~ pcr.aguila(non_permanent_water_bodies)
 
 # - time bounds for netcdf files
 lowerTimeBound = datetime.datetime(str_year,  1,  1, 0)
@@ -337,8 +337,8 @@ for i_return_period in range(0, len(return_periods)):
     
     # masking out ocean
     surface_water_level = pcr.ifthen(landmask, surface_water_level)
-    # masking out permanent water bodies
-    surface_water_level = pcr.ifthen(non_permanent_water_bodies, surface_water_level)
+    #~ # masking out permanent water bodies
+    #~ surface_water_level = pcr.ifthen(non_permanent_water_bodies, surface_water_level)
     # report in pcraster maps
     pcr.report(surface_water_level, surface_water_level_file_name + ".masked_out.map")
     
