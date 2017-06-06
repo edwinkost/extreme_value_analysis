@@ -284,7 +284,7 @@ water_body_id      = pcr.cover(water_body_id, pcr.nominal(0.0))
 water_body_id      = pcr.ifthen( landmask, water_body_id)                                         
 non_permanent_water_bodies = pcr.boolean(1.0)
 #~ non_permanent_water_bodies = pcr.ifthenelse(pcr.scalar(water_body_id) > 0.00, pcr.boolean(0.0), non_permanent_water_bodies)
-non_permanent_water_bodies = pcr.ifthenelse(fracwat < 0.25, pcr.boolean(1.0), non_permanent_water_bodies)
+non_permanent_water_bodies = pcr.ifthenelse(fracwat < 0.50, pcr.boolean(1.0), non_permanent_water_bodies)
 non_permanent_water_bodies = pcr.ifthen(landmask, non_permanent_water_bodies)
 
 # - time bounds for netcdf files
