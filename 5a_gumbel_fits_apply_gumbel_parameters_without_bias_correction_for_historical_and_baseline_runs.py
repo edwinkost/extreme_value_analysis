@@ -271,6 +271,8 @@ for var_name in ['channelStorage', 'surfaceWaterLevel']:
 msg = "Preparing final netcdf files, one for every return period, as requested by Philip."
 logger.info(msg)
 
+landmask           = pcr.defined(pcr.readmap(input_files['ldd_map_05min'  ]))
+
 #~ # permanent water bodies files (at 5 arc-minute resolution) 
 #~ fracwat_file            = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/fracwat_2010.map"
 #~ water_body_id_file      = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/waterbodyid_2010.map"
