@@ -32,13 +32,10 @@
 #~ python  5a_gumbel_fits_apply_gumbel_parameters_without_bias_correction_for_historical_and_baseline_runs.py "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/gumbel_fits/" "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/extreme_values/" 1960 1999
 
 
-python  5a_gumbel_fits_apply_gumbel_parameters_without_bias_correction_for_historical_and_baseline_runs.py "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/gumbel_fits_test/" "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/extreme_values_test/" 1960 1999 surface_water_level_historical_cru-ts3.23_era-20c_1980
-
-
 ###################################################################################
 
-# derive/downscale flood inundation maps at 30 arc-second resolution
-python 6_downscaling_parallel.py "/scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/extreme_values/" "/scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/inundation_downscaled/" normal "channel_storage.map" 6
+#~ # derive/downscale flood inundation maps at 30 arc-second resolution
+#~ python 6_downscaling_parallel.py "/scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/extreme_values/" "/scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/inundation_downscaled/" normal "channel_storage.map" 6
 
 # merging all downscaled map
 python 7_merging_downscaled_maps_with_masking_out_and_following_name_convention.py "/scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/inundation_downscaled/" "/scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/inundation_downscaled/" inunriver_historical_0_cru-ts3.23_era-20c 1980 1960 1999 channel_storage.map 06
