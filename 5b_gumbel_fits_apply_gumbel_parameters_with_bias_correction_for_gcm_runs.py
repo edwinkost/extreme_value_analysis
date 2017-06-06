@@ -106,8 +106,6 @@ vos.initialize_logging(log_file_location)
 
 
 # start and end years for this analysis:
-str_year = np.int(sys.argv[5])
-end_year = np.int(sys.argv[6])
 #~ # - for the year 2030
 #~ str_year = 2010
 #~ end_year = 2049
@@ -117,6 +115,8 @@ end_year = np.int(sys.argv[6])
 #~ # - for the year 2080
 #~ str_year = 2060
 #~ end_year = 2099
+str_year = np.int(sys.argv[5])
+end_year = np.int(sys.argv[6])
 
 
 # netcdf general setup:
