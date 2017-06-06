@@ -287,6 +287,7 @@ water_body_id      = pcr.ifthen( landmask, water_body_id)
 non_permanent_water_bodies = pcr.boolean(1.0)
 non_permanent_water_bodies = pcr.ifthenelse(water_body_area > 10. * 1000. * 1000., pcr.boolean(0.0), non_permanent_water_bodies)
 non_permanent_water_bodies = pcr.ifthen(landmask, non_permanent_water_bodies)
+pcr.aguila(non_permanent_water_bodies)
 
 # - time bounds for netcdf files
 lowerTimeBound = datetime.datetime(str_year,  1,  1, 0)
