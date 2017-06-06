@@ -337,8 +337,10 @@ for i_return_period in range(0, len(return_periods)):
     
     # masking out ocean
     surface_water_level = pcr.ifthen(landmask, surface_water_level)
+
     #~ # masking out permanent water bodies
     #~ surface_water_level = pcr.ifthen(non_permanent_water_bodies, surface_water_level)
+
     # report in pcraster maps
     pcr.report(surface_water_level, surface_water_level_file_name + ".masked_out.map")
     

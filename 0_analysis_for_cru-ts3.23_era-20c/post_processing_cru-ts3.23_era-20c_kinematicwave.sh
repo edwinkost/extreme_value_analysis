@@ -38,7 +38,7 @@
 #~ python 6_downscaling_parallel.py "/scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/extreme_values/" "/scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/inundation_downscaled/" normal "channel_storage.map" 6
 
 # merging all downscaled map
-python 7_merging_downscaled_maps_with_masking_out_and_following_name_convention.py "/scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/inundation_downscaled/" "/scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/inundation_downscaled/" inunriver_historical_0_cru-ts3.23_era-20c 1980 1960 1999 channel_storage.map 06
+python 7_merging_downscaled_maps_with_masking_out_and_following_name_convention.py "/scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/inundation_downscaled/" "/scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/cru-ts3.23_era-20c_kinematicwave/1960-1999/inundation_downscaled/" inunriver_historical_0_cru-ts3.23_era-20c_1980 1960 1999 channel_storage.map 06
 
 
 ###################################################################################
