@@ -286,7 +286,7 @@ water_body_area    = pcr.cover(water_body_area, 0.0)
 water_body_id      = pcr.cover(water_body_id, pcr.nominal(0.0))
 water_body_id      = pcr.ifthen( landmask, water_body_id)                                         
 non_permanent_water_bodies = pcr.boolean(1.0)
-non_permanent_water_bodies = pcr.ifthenelse(water_body_area > 10. * 1000. * 1000., pcr.boolean(0.0), non_permanent_water_bodies)
+non_permanent_water_bodies = pcr.ifthenelse(water_body_area > 50. * 1000. * 1000., pcr.boolean(0.0), non_permanent_water_bodies)
 non_permanent_water_bodies = pcr.ifthen(landmask, non_permanent_water_bodies)
 pcr.aguila(non_permanent_water_bodies)
 
