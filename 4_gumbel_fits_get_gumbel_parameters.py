@@ -117,6 +117,15 @@ str_year = int(sys.argv[4])
 end_year = int(sys.argv[5])
 
 
+# option to limit only certain variables being processed
+option_to_limit_variables = "None"
+try:
+    option_to_limit_variables = sys.argv[6]
+except:
+    pass
+variable_name_list = ['channelStorage', 'surfaceWaterLevel']
+if option_to_limit_variables != "None": variable_name_list = [option_to_limit_variables]
+
 # netcdf general setup:
 netcdf_setup = {}
 netcdf_setup['format']          = "NETCDF4"
@@ -139,7 +148,7 @@ netcdf_file = {}
 
 msg = "Preparing netcdf output files."
 logger.info(msg)
-for var_name in ['channelStorage', 'surfaceWaterLevel']: 
+for var_name in variable_name_list: 
     #
     netcdf_file[var_name] = {}
     #
@@ -176,7 +185,7 @@ n_cores = 24
 msg = "Deriving gumbel parameters."
 logger.info(msg)
 #
-for var_name in ['channelStorage', 'surfaceWaterLevel']: 
+for var_name in variable_name_list: 
     
     msg = "Deriving gumbel parameters based on the annual flood maxima file: " + str(input_files['file_name'][var_name])
     logger.info(msg)
