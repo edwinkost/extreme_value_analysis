@@ -127,6 +127,15 @@ end_year = int(sys.argv[4])
 output_netcdf_file_name = "surface_water_level_historical_000000000WATCH_1999"
 output_netcdf_file_name = str(sys.argv[5])
 
+# option to limit only certain variables being processed
+option_to_limit_variables = "None"
+try:
+    option_to_limit_variables = sys.argv[6]
+except:
+    pass
+variable_name_list = ['channelStorage', 'surfaceWaterLevel']
+if option_to_limit_variables != "None": variable_name_list = [option_to_limit_variables]
+
 
 # netcdf general setup:
 netcdf_setup = {}
@@ -150,7 +159,7 @@ netcdf_file = {}
 
 msg = "Preparing netcdf output files."
 logger.info(msg)
-for var_name in ['channelStorage', 'surfaceWaterLevel']: 
+for var_name in variable_name_list: 
     #
     netcdf_file[var_name] = {}
     #
@@ -184,7 +193,7 @@ logger.info(msg)
 # return periods
 return_periods = ["2-year", "5-year", "10-year", "25-year", "50-year", "100-year", "250-year", "500-year", "1000-year"]
 #
-for var_name in ['channelStorage', 'surfaceWaterLevel']: 
+for var_name in variable_name_list: 
     
     msg = "Applying gumbel parameters from the file: " + str(input_files['file_name'][var_name])
     logger.info(msg)
@@ -266,6 +275,8 @@ for var_name in ['channelStorage', 'surfaceWaterLevel']:
 
 ###################################################################################
 
+
+if 'surfaceWaterLevel' not in variable_name_list: sys.exit()
 
 # masking out permanent water bodies
 msg = "Preparing final netcdf files, one for every return period, as requested by Philip."
