@@ -26,7 +26,7 @@
 
 ###################################################################################
 
-# apply gumbel parameters without/with and with bias correction, for annual flood maxima variables: ['channelStorage', 'surfaceWaterLevel'] 
+# apply gumbel parameters without/with and with bias correction, for annual flood maxima variables: ['surfaceWaterLevel'] 
 python  5a_gumbel_fits_apply_gumbel_parameters_without_bias_correction_for_historical_and_baseline_runs.py "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/watch/1960-1999/gumbel_fits/" "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/watch/1960-1999/extreme_values/" 1960 1999 surface_water_level_historical_watch_1980 surfaceWaterLevel
 
 
