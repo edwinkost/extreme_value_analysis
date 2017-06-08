@@ -21,7 +21,7 @@ python 3_calculate_maximum_river_depth_without_upscaling.py "/projects/0/aqueduc
 ###################################################################################
 #~ 
 # gumbel fits for annual flood maxima variables: ['surfaceWaterLevel']
-python 4_gumbel_fits_get_gumbel_parameters_for_inundation_and_surface_water_level_variables.py "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/watch/1960-1999/maximum_events/merged/" "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/watch/1960-1999/surface_water_level_maximum/" "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/watch/1960-1999/gumbel_fits/" 1960 1999 surfaceWaterLevel
+python 4_gumbel_fits_get_gumbel_parameters.py "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/watch/1960-1999/maximum_events/merged/" "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/watch/1960-1999/surface_water_level_maximum/" "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/watch/1960-1999/gumbel_fits/" 1960 1999 surfaceWaterLevel
 
 
 ###################################################################################
