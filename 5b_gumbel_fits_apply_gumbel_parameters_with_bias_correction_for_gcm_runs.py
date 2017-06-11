@@ -119,6 +119,21 @@ str_year = np.int(sys.argv[5])
 end_year = np.int(sys.argv[6])
 
 
+# output netcdf file name (without extension) for the variable 'surfaceWaterLevel'
+output_netcdf_file_name_for_surface_water_level = "surface_water_level_historical_000000000WATCH_1999"
+output_netcdf_file_name_for_surface_water_level = str(sys.argv[7])
+
+
+# option to limit only certain variables being processed
+option_to_limit_variables = "None"
+try:
+    option_to_limit_variables = sys.argv[8]
+except:
+    pass
+variable_name_list = ['channelStorage', 'surfaceWaterLevel']
+if option_to_limit_variables != "None": variable_name_list = [option_to_limit_variables]
+
+
 # netcdf general setup:
 netcdf_setup = {}
 netcdf_setup['format']      = "NETCDF4"
@@ -143,7 +158,7 @@ msg = "Preparing netcdf output files."
 logger.info(msg)
 for bias_type in ['including_bias', 'bias_corrected']:
     netcdf_file[bias_type] = {}
-    for var_name in ['channelStorage', 'floodVolume']: 
+    for var_name in variable_name_list: 
         #
         netcdf_file[bias_type][var_name] = {}
         #
@@ -187,7 +202,7 @@ extreme_values = {}
 extreme_values["including_bias"] = {}
 extreme_values["bias_corrected"] = {}
 #
-for var_name in ['channelStorage', 'floodVolume']: 
+for var_name in variable_name_list: 
     
     msg  = "Applying gumbel parameters from the climate run: " + str(input_files["future"]['file_name'][var_name])
     msg += "    that are bias corrected to the baseline run: " + str(input_files["baseline"]['file_name'][var_name])
@@ -293,7 +308,3 @@ for var_name in ['channelStorage', 'floodVolume']:
         netcdf_report.dictionary_of_data_to_netcdf(netcdf_file[bias_type][var_name]['file_name'], \
                                                    data_dictionary, \
                                                    timeBounds)
-
-
-
-

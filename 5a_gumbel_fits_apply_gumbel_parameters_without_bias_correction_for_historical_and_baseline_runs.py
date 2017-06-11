@@ -123,7 +123,7 @@ vos.initialize_logging(log_file_location)
 str_year = int(sys.argv[3])
 end_year = int(sys.argv[4])
 
-# output netcdf file name (without extension)
+# output netcdf file name (without extension) for the variable 'surfaceWaterLevel'
 output_netcdf_file_name = "surface_water_level_historical_000000000WATCH_1999"
 output_netcdf_file_name = str(sys.argv[5])
 
