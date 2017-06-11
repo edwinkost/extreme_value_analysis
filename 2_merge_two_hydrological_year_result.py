@@ -145,7 +145,8 @@ os.chdir(output_files['folder'])
 netcdf_report = outputNetCDF.OutputNetCDF()
 
 # - variables that will be reported:
-variable_names = ['channelStorage', 'floodVolume', 'dynamicFracWat']
+#~ variable_names = ['channelStorage', 'floodVolume', 'dynamicFracWat']
+variable_names = ['channelStorage', 'dynamicFracWat']
 for var_name in variable_names: 
     output_files[var_name] = {}
     # - attribute information for netcdf files
@@ -181,7 +182,7 @@ logger.info(msg)
 input_files['file_name']                           = {}
 for hydro_year in ["hydrological_year_1", "hydrological_year_2"]:
     input_files['file_name'][hydro_year]           = {} 
-    for var in ['channelStorage', 'dynamicFracWat', 'floodVolume']:
+    for var in variable_names:
         input_files['file_name'][hydro_year][var] = glob.glob(input_files['folder'] + "/" + str(hydro_year) + "/" + str(var) + "*" + str(str_year) + "_to_" + str(end_year) + "*.nc")[0]
         msg = input_files['file_name'][hydro_year][var]
         logger.info(msg)
@@ -228,7 +229,7 @@ logger.info(msg)
 #
 for i_year in range(str_year, end_year + 1):
     
-    for var in ['channelStorage', 'dynamicFracWat', 'floodVolume']:
+    for var in variable_names:
         
         msg = "Merging for the variable " + str(var) + " for the year " + str(i_year)
         logger.info(msg)
