@@ -352,45 +352,47 @@ return_period_codes = ["rp00002", "rp00005", "rp00010", "rp00025", "rp00050",  "
 
 # preparing netcdf files and their variables:
 var_name = "surfaceWaterLevel"
-for i_return_period in range(0, len(return_periods)):
-    # 
-    return_period      = return_periods[i_return_period]
-    return_period_code = return_period_codes[i_return_period]
-    # 
-    # - preparing netcdf file:
-    file_name = output_files['folder'] + "/" + output_netcdf_file_name_for_surface_water_level + "_" + return_period_code + ".nc"
-    msg = "Preparing the netcdf file: " + file_name
-    logger.info(msg)
-    netcdf_file[var_name]['file_name'] = file_name
-    netcdf_report.create_netcdf_file(netcdf_file[var_name]) 
-    #
-    # - variable name and unit 
-    variable_name = str(return_period) + "_of_" + varDict.netcdf_short_name[var_name]
-    var_long_name = str(return_period) + "_of_" + varDict.netcdf_long_name[var_name]
-    variable_unit = varDict.netcdf_unit[var_name]
-    # 
-    # - creating variable 
-    netcdf_report.create_variable(\
-                                  ncFileName = file_name, \
-                                  varName    = variable_name, \
-                                  varUnit    = variable_unit, \
-                                  longName   = var_long_name, \
-                                  comment    = varDict.comment[var_name]
-                                  )
-
-    # read from pcraster files
-    surface_water_level_file_name = output_files['folder'] + "/" + str(return_period) + "_of_surface_water_level" + ".map"
-    surface_water_level = pcr.readmap(surface_water_level_file_name)
-    surface_water_level = pcr.cover(surface_water_level, 0.0)
+for bias_type in ['including_bias', 'bias_corrected']:
+    for i_return_period in range(0, len(return_periods)):
+        # 
+        return_period      = return_periods[i_return_period]
+        return_period_code = return_period_codes[i_return_period]
+        # 
+        # - preparing netcdf file:
+        file_name = output_files['folder'] + "/" + output_netcdf_file_name_for_surface_water_level + "_" + return_period_code + ".nc"
+        if bias_type == "including_bias": file_name = file_name + "including_bias.nc"
+        msg = "Preparing the netcdf file: " + file_name
+        logger.info(msg)
+        netcdf_file[bias_type][var_name]['file_name'] = file_name
+        netcdf_report.create_netcdf_file(netcdf_file[bias_type][var_name]) 
+        #
+        # - variable name and unit 
+        variable_name = str(return_period) + "_of_" + varDict.netcdf_short_name[var_name]
+        var_long_name = str(return_period) + "_of_" + varDict.netcdf_long_name[var_name]
+        variable_unit = varDict.netcdf_unit[var_name]
+        # 
+        # - creating variable 
+        netcdf_report.create_variable(\
+                                      ncFileName = file_name, \
+                                      varName    = variable_name, \
+                                      varUnit    = variable_unit, \
+                                      longName   = var_long_name, \
+                                      comment    = varDict.comment[var_name]
+                                      )
     
-    # masking out ocean
-    surface_water_level = pcr.ifthen(landmask, surface_water_level)
-
-    #~ # masking out permanent water bodies
-    #~ surface_water_level = pcr.ifthen(non_permanent_water_bodies, surface_water_level)
-
-    # report in pcraster maps
-    pcr.report(surface_water_level, surface_water_level_file_name + ".masked_out.map")
+        # read from pcraster files
+        surface_water_level_file_name = output_files['folder'] + "/" + bias_type + "_" + str(return_period) + "_of_surface_water_level" + ".map"
+        surface_water_level = pcr.readmap(surface_water_level_file_name)
+        surface_water_level = pcr.cover(surface_water_level, 0.0)
+        
+        # masking out ocean
+        surface_water_level = pcr.ifthen(landmask, surface_water_level)
     
-    # write to netcdf files
-    netcdf_report.data_to_netcdf(file_name, variable_name, pcr.pcr2numpy(surface_water_level, vos.MV), timeBounds, timeStamp = None, posCnt = 0)
+        #~ # masking out permanent water bodies
+        #~ surface_water_level = pcr.ifthen(non_permanent_water_bodies, surface_water_level)
+    
+        # report in pcraster maps
+        pcr.report(surface_water_level, surface_water_level_file_name + ".masked_out.map")
+        
+        # write to netcdf files
+        netcdf_report.data_to_netcdf(file_name, variable_name, pcr.pcr2numpy(surface_water_level, vos.MV), timeBounds, timeStamp = None, posCnt = 0)
