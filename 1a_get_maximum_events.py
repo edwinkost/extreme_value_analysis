@@ -38,19 +38,19 @@ input_files                           = {}
 #~ input_files['dynamicFracWatMonthMax'] = input_files['folder'] + "dynamicFracWat_monthMax_output_1951-01-31_to_2005-12-31.nc"                                    # unit: dimensionless
 #~ input_files['floodVolumeMonthMax']    = input_files['folder'] + "floodVolume_monthMax_output_1951-01-31_to_2005-12-31.nc"                                       # unit: m3
 #
-#~ # pcrglobwb result folder based on the system argument
-#~ pcrglobwb_result_folder                  = os.path.abspath(sys.argv[1])
-#~ input_files['folder']                    = pcrglobwb_result_folder + "/"
-#~ input_files['channelStorageMonthMax']    = input_files['folder'] + "channelStorage_monthMax_output_2006-01-31_to_2099-12-31.nc"                                 # unit: m3
-#~ input_files['dynamicFracWatMonthMax']    = input_files['folder'] + "dynamicFracWat_monthMax_output_2006-01-31_to_2099-12-31.nc"                                 # unit: dimensionless
-#~ input_files['floodVolumeMonthMax']       = input_files['folder'] + "floodVolume_monthMax_output_2006-01-31_to_2099-12-31.nc"                                    # unit: m3
-#
-# - cru-ts3.23_era-20c_kinematicwave 
+# pcrglobwb result folder based on the system argument
 pcrglobwb_result_folder                  = os.path.abspath(sys.argv[1])
 input_files['folder']                    = pcrglobwb_result_folder + "/"
-input_files['channelStorageMonthMax']    = input_files['folder'] + "channelStorage_monthMax_output_1958-01-31_to_2010-12-31.nc"                                    # unit: m3
-input_files['dynamicFracWatMonthMax']    = input_files['folder'] + "dynamicFracWat_monthMax_output_1958-01-31_to_2010-12-31.nc"                                    # unit: dimensionless
-input_files['floodVolumeMonthMax']       = input_files['folder'] + "floodVolume_monthMax_output_1958-01-31_to_2010-12-31.nc"                                       # unit: m3
+input_files['channelStorageMonthMax']    = input_files['folder'] + "channelStorage_monthMax_output_2006-01-31_to_2099-12-31.nc"                                 # unit: m3
+input_files['dynamicFracWatMonthMax']    = input_files['folder'] + "dynamicFracWat_monthMax_output_2006-01-31_to_2099-12-31.nc"                                 # unit: dimensionless
+#~ input_files['floodVolumeMonthMax']       = input_files['folder'] + "floodVolume_monthMax_output_2006-01-31_to_2099-12-31.nc"                                    # unit: m3
+#
+#~ # - cru-ts3.23_era-20c_kinematicwave 
+#~ pcrglobwb_result_folder                  = os.path.abspath(sys.argv[1])
+#~ input_files['folder']                    = pcrglobwb_result_folder + "/"
+#~ input_files['channelStorageMonthMax']    = input_files['folder'] + "channelStorage_monthMax_output_1958-01-31_to_2010-12-31.nc"                                    # unit: m3
+#~ input_files['dynamicFracWatMonthMax']    = input_files['folder'] + "dynamicFracWat_monthMax_output_1958-01-31_to_2010-12-31.nc"                                    # unit: dimensionless
+#~ input_files['floodVolumeMonthMax']       = input_files['folder'] + "floodVolume_monthMax_output_1958-01-31_to_2010-12-31.nc"                                       # unit: m3
 
 # type of hydrological year
 # - hydrological year 1: October to September 
@@ -131,7 +131,8 @@ if type_of_hydrological_year == 2: msg = msg + "(July to June)"
 # - shifted input files
 shifted_input_files           = {}
 cmd = ""
-for var in ['channelStorageMonthMax', 'dynamicFracWatMonthMax', 'floodVolumeMonthMax']: 
+#~ for var in ['channelStorageMonthMax', 'dynamicFracWatMonthMax', 'floodVolumeMonthMax']: 
+for var in ['channelStorageMonthMax', 'dynamicFracWatMonthMax']: 
     # - cdo shifttime
     inp_file = input_files[var]
     out_file = output_files['folder'] + "/" + os.path.basename(input_files[var]) + "_shifted_hydrological_year_" + str(type_of_hydrological_year) + ".nc"
@@ -145,7 +146,8 @@ print(""); print(cmd); os.system(cmd); print("")
 #
 # - annual maxima input files
 annual_maxima_files           = {}
-for var in ['channelStorageMonthMax', 'dynamicFracWatMonthMax', 'floodVolumeMonthMax']: 
+#~ for var in ['channelStorageMonthMax', 'dynamicFracWatMonthMax', 'floodVolumeMonthMax']: 
+for var in ['channelStorageMonthMax', 'dynamicFracWatMonthMax']: 
     msg = "Find the annual maxima from the file " + str(shifted_input_files[var])
     logger.info(msg)
     # - cdo yearmax
@@ -158,9 +160,5 @@ for var in ['channelStorageMonthMax', 'dynamicFracWatMonthMax', 'floodVolumeMont
     out_file = inp_file + "_" + str(str_year) + "_to_" + str(end_year) + ".nc"
     cmd = "cdo selyear," + str(str_year) + "/" + str(end_year) + " " + inp_file + " " + out_file
     print(""); print(cmd); os.system(cmd); print("")
-
-
-
-
 
 
