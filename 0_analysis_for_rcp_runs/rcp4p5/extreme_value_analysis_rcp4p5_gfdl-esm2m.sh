@@ -78,13 +78,17 @@
 
 #####################################################################################################
 #
-# apply gumbel parameters with bias correction, for the variable 'channelStorage' 
+#~ # apply gumbel parameters with bias correction, for the variable 'channelStorage' 
+#~ # 2010-2049 (2030)
+#~ # DONE
+#~ # 2030-2069 (2050)
+#~ # DONE
+#~ # 2050-2099 (2080)
+#~ python 5b_gumbel_fits_apply_gumbel_parameters_with_bias_correction_for_gcm_runs.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp4p5/2050-2099/gfdl-esm2m/gumbel_fits/channel_storage/" "/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/gumbel_fits/gfdl-esm2m_1960-1999/" "/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/gumbel_fits/watch_1960-1999/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp4p5/2050-2099/gfdl-esm2m/extreme_values/channel_storage/" 2050 2099 None channelStorage
+# 
+# gumbel fits for the annual flood maxima variable 'surfaceWaterLevel'
 # 2010-2049 (2030)
-# DONE
-# 2030-2069 (2050)
-# DONE
-# 2050-2099 (2080)
-python 5b_gumbel_fits_apply_gumbel_parameters_with_bias_correction_for_gcm_runs.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp4p5/2050-2099/gfdl-esm2m/gumbel_fits/channel_storage/" "/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/gumbel_fits/gfdl-esm2m_1960-1999/" "/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/gumbel_fits/watch_1960-1999/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp4p5/2050-2099/gfdl-esm2m/extreme_values/channel_storage/" 2050 2099 None channelStorage
+python 5b_gumbel_fits_apply_gumbel_parameters_with_bias_correction_for_gcm_runs.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp4p5/2010-2049/gfdl-esm2m/gumbel_fits/surface_water_level/" "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/baseline_and_historical/gfdl-esm2m/1960-1999/gumbel_fits/" "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/baseline_and_historical/watch/1960-1999/gumbel_fits/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp4p5/2010-2049/gfdl-esm2m/extreme_values/surface_water_level/" 2010 2049 surface_water_level_historical_0000GFDL-ESM2M_2030 surfaceWaterLevel
 
 
 

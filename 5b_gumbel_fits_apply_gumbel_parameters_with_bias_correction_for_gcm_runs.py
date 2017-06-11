@@ -308,3 +308,89 @@ for var_name in variable_name_list:
         netcdf_report.dictionary_of_data_to_netcdf(netcdf_file[bias_type][var_name]['file_name'], \
                                                    data_dictionary, \
                                                    timeBounds)
+
+
+###################################################################################
+
+
+if 'surfaceWaterLevel' not in variable_name_list: sys.exit()
+
+# masking out permanent water bodies
+msg = "Preparing final netcdf files, one for every return period, as requested by Philip."
+logger.info(msg)
+
+landmask           = pcr.defined(pcr.readmap(input_files['ldd_map_05min'  ]))
+
+#~ # permanent water bodies files (at 5 arc-minute resolution) 
+#~ fracwat_file            = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/fracwat_2010.map"
+#~ water_body_id_file      = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/waterbodyid_2010.map"
+#~ 
+#~ # read the properties of permanent water bodies
+#~ fracwat            = pcr.cover(pcr.readmap(fracwat_file), 0.0)
+#~ water_body_id      = pcr.readmap(water_body_id_file)
+#~ water_body_id      = pcr.ifthen(pcr.scalar(water_body_id) > 0.00, water_body_id)
+#~ water_body_area    = pcr.areatotal(input_files['cell_area_05min'] * fracwat, water_body_id)
+#~ water_body_area    = pcr.cover(water_body_area, 0.0)
+#~ water_body_id      = pcr.cover(water_body_id, pcr.nominal(0.0))
+#~ water_body_id      = pcr.ifthen( landmask, water_body_id)                                         
+#~ non_permanent_water_bodies = pcr.boolean(1.0)
+#~ non_permanent_water_bodies = pcr.ifthenelse(water_body_area > 50. * 1000. * 1000., pcr.boolean(0.0), non_permanent_water_bodies)
+#~ non_permanent_water_bodies = pcr.ifthen(landmask, non_permanent_water_bodies)
+#~ pcr.aguila(non_permanent_water_bodies)
+
+# - time bounds for netcdf files
+lowerTimeBound = datetime.datetime(str_year,  1,  1, 0)
+upperTimeBound = datetime.datetime(end_year, 12, 31, 0)
+timeBounds = [lowerTimeBound, upperTimeBound]
+
+# - variable name according to the PCR-GLOBWB variable dictionary
+var_name = 'surfaceWaterLevel' 
+
+# - return periods
+return_periods      = [ "2-year",  "5-year", "10-year", "25-year", "50-year", "100-year", "250-year", "500-year", "1000-year"]
+return_period_codes = ["rp00002", "rp00005", "rp00010", "rp00025", "rp00050",  "rp00100",  "rp00250",  "rp00500",   "rp01000"]
+
+# preparing netcdf files and their variables:
+var_name = "surfaceWaterLevel"
+for i_return_period in range(0, len(return_periods)):
+    # 
+    return_period      = return_periods[i_return_period]
+    return_period_code = return_period_codes[i_return_period]
+    # 
+    # - preparing netcdf file:
+    file_name = output_files['folder'] + "/" + output_netcdf_file_name_for_surface_water_level + "_" + return_period_code + ".nc"
+    msg = "Preparing the netcdf file: " + file_name
+    logger.info(msg)
+    netcdf_file[var_name]['file_name'] = file_name
+    netcdf_report.create_netcdf_file(netcdf_file[var_name]) 
+    #
+    # - variable name and unit 
+    variable_name = str(return_period) + "_of_" + varDict.netcdf_short_name[var_name]
+    var_long_name = str(return_period) + "_of_" + varDict.netcdf_long_name[var_name]
+    variable_unit = varDict.netcdf_unit[var_name]
+    # 
+    # - creating variable 
+    netcdf_report.create_variable(\
+                                  ncFileName = file_name, \
+                                  varName    = variable_name, \
+                                  varUnit    = variable_unit, \
+                                  longName   = var_long_name, \
+                                  comment    = varDict.comment[var_name]
+                                  )
+
+    # read from pcraster files
+    surface_water_level_file_name = output_files['folder'] + "/" + str(return_period) + "_of_surface_water_level" + ".map"
+    surface_water_level = pcr.readmap(surface_water_level_file_name)
+    surface_water_level = pcr.cover(surface_water_level, 0.0)
+    
+    # masking out ocean
+    surface_water_level = pcr.ifthen(landmask, surface_water_level)
+
+    #~ # masking out permanent water bodies
+    #~ surface_water_level = pcr.ifthen(non_permanent_water_bodies, surface_water_level)
+
+    # report in pcraster maps
+    pcr.report(surface_water_level, surface_water_level_file_name + ".masked_out.map")
+    
+    # write to netcdf files
+    netcdf_report.data_to_netcdf(file_name, variable_name, pcr.pcr2numpy(surface_water_level, vos.MV), timeBounds, timeStamp = None, posCnt = 0)
