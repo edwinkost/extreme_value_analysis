@@ -360,7 +360,7 @@ for bias_type in ['including_bias', 'bias_corrected']:
         # 
         # - preparing netcdf file:
         file_name = output_files['folder'] + "/" + output_netcdf_file_name_for_surface_water_level + "_" + return_period_code + ".nc"
-        if bias_type == "including_bias": file_name = file_name + "including_bias.nc"
+        if bias_type == "including_bias": file_name = file_name + ".including_bias.nc"
         msg = "Preparing the netcdf file: " + file_name
         logger.info(msg)
         netcdf_file[bias_type][var_name]['file_name'] = file_name
