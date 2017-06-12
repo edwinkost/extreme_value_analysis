@@ -11,6 +11,11 @@
 #SBATCH --mail-user=edwinkost@gmail.com                                                                                     
 
 
+
+# move to the folder that contains the scripts
+cd /home/edwin/github/edwinkost/extreme_value_analysis
+
+
 ################################################################################################
 #
 # Downscaling BIAS-CORRECTED floods - rcp4p5 - gfdl-esm2m - inunriver_rcp4p5_0000GFDL-ESM2M
