@@ -1,4 +1,16 @@
-
+#!/bin/bash                                                                                                                  
+#SBATCH -N 1                                                                                                                 
+#SBATCH -t 48:59:00                                                                                                         
+#SBATCH -p normal                                                                                                            
+#SBATCH --constraint=haswell                                                                                                 
+                                                                                                                             
+# mail alert at start, end and abortion of execution                                                                         
+#SBATCH --mail-type=ALL                                                                                                      
+                                                                                                                             
+# send mail to this address                                                                                                  
+#SBATCH --mail-user=edwinkost@gmail.com                                                                                      
+                                                 
+                                                 
 #####################################################################################################
 #
 # get maximum events for the hydrological year types 1 and 2
