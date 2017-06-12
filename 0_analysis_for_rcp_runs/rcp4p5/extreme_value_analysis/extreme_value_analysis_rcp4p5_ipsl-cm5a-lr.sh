@@ -9,6 +9,10 @@
                                                                                                                              
 # send mail to this address                                                                                                  
 #SBATCH --mail-user=edwinkost@gmail.com                                                                                      
+
+
+# go to the scripts folder
+cd /home/edwinsut/github/edwinkost/extreme_value_analysis
                                                  
                                                  
 #####################################################################################################

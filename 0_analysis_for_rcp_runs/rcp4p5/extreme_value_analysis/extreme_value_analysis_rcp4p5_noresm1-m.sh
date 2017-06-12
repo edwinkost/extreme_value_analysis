@@ -11,6 +11,11 @@
 #SBATCH --mail-user=edwinkost@gmail.com                                                                                      
 
 
+# go to the scripts folder
+cd /home/edwinsut/github/edwinkost/extreme_value_analysis
+
+
+
 #####################################################################################################
 #
 # get maximum events for the hydrological year types 1 and 2

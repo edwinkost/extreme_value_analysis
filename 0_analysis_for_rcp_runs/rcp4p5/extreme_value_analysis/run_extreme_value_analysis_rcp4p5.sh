@@ -1,6 +1,0 @@
-
-#~ bash 0_analysis_for_rcp_runs/rcp4p5/extreme_value_analysis/extreme_value_analysis_rcp4p5_gfdl-esm2m.sh
-#~ bash 0_analysis_for_rcp_runs/rcp4p5/extreme_value_analysis/extreme_value_analysis_rcp4p5_hadgem2-es.sh
-bash 0_analysis_for_rcp_runs/rcp4p5/extreme_value_analysis/extreme_value_analysis_rcp4p5_ipsl-cm5a-lr.sh
-bash 0_analysis_for_rcp_runs/rcp4p5/extreme_value_analysis/extreme_value_analysis_rcp4p5_miroc-esm-chem.sh
-bash 0_analysis_for_rcp_runs/rcp4p5/extreme_value_analysis/extreme_value_analysis_rcp4p5_noresm1-m.sh
