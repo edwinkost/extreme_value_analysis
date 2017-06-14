@@ -29,10 +29,10 @@ cd /home/edwinsut/github/edwinkost/extreme_value_analysis
 # DONE
 #
 # 2050-2099 (2080)
-# - derive/downscale flood inundation maps at 30 arc-second resolution
-python 6_downscaling_parallel.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp8p5/2050-2099/gfdl-esm2m/extreme_values/channel_storage/" /scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/rcp8p5/2050-2099/gfdl-esm2m/inundation_downscaled/bias_corrected/ "bias_corrected" channel_storage.map 6
+#~ # - derive/downscale flood inundation maps at 30 arc-second resolution
+#~ python 6_downscaling_parallel.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp8p5/2050-2099/gfdl-esm2m/extreme_values/channel_storage/" /scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/rcp8p5/2050-2099/gfdl-esm2m/inundation_downscaled/bias_corrected/ "bias_corrected" channel_storage.map 6
 # - merging all downscaled map
-python 7_merging_downscaled_maps_with_masking_out_and_following_name_convention.py "/scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/rcp8p5/2050-2099/gfdl-esm2m/inundation_downscaled/bias_corrected/" "/scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/rcp8p5/2050-2099/gfdl-esm2m/inundation_downscaled/bias_corrected/" inunriver_rcp8p5_0000GFDL-ESM2M_2080 2050 2099 channel_storage.map 06
+python 7_merging_downscaled_maps_with_masking_out_and_following_name_convention.py "/scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/rcp8p5/2050-2099/gfdl-esm2m/inundation_downscaled/bias_corrected/" "/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2017_05_XX/river/inundation/rcp8p5/2050-2099/inundation_downscaled_from_bias_corrected_floods/GFDL-ESM2M/" inunriver_rcp8p5_0000GFDL-ESM2M_2080 2050 2099 channel_storage.map 06
 #
 #
 ################################################################################################
@@ -52,10 +52,10 @@ python 7_merging_downscaled_maps_with_masking_out_and_following_name_convention.
 # DONE
 #
 # 2050-2099 (2080)
-# - derive/downscale flood inundation maps at 30 arc-second resolution
-python 6_downscaling_parallel.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp8p5/2050-2099/gfdl-esm2m/extreme_values/channel_storage/" /scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/rcp8p5/2050-2099/gfdl-esm2m/inundation_downscaled/including_bias/ "including_bias" channel_storage.map 6
+#~ # - derive/downscale flood inundation maps at 30 arc-second resolution
+#~ python 6_downscaling_parallel.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp8p5/2050-2099/gfdl-esm2m/extreme_values/channel_storage/" /scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/rcp8p5/2050-2099/gfdl-esm2m/inundation_downscaled/including_bias/ "including_bias" channel_storage.map 6
 # - merging all downscaled map
-python 7_merging_downscaled_maps_with_masking_out_and_following_name_convention.py "/scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/rcp8p5/2050-2099/gfdl-esm2m/inundation_downscaled/including_bias/" "/scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/rcp8p5/2050-2099/gfdl-esm2m/inundation_downscaled/including_bias/" inunriver_rcp8p5_0000GFDL-ESM2M_2080 2050 2099 channel_storage.map 06
+python 7_merging_downscaled_maps_with_masking_out_and_following_name_convention.py "/scratch/shared/edwinsut/flood_analyzer_analysis_june_2017/rcp8p5/2050-2099/gfdl-esm2m/inundation_downscaled/including_bias/" "/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2017_05_XX/river/inundation/rcp8p5/2050-2099/inundation_downscaled_from_non_bias_corrected_floods/GFDL-ESM2M/" inunriver_rcp8p5_0000GFDL-ESM2M_2080 2050 2099 channel_storage.map 06
 #
 #
 ################################################################################################
