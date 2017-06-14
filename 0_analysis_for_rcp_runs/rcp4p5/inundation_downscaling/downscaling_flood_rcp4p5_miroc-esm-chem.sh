@@ -53,7 +53,7 @@ python 7_merging_downscaled_maps_with_masking_out_and_following_name_convention.
 #
 # 2050-2099 (2080)
 # - derive/downscale flood inundation maps at 30 arc-second resolution
-python 6_downscaling_parallel.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp4p5/2050-2099/miroc-esm-chem/extreme_values/channel_storage/" /scratch/shared/edwin/flood_analyzer_analysis_june_2017/rcp4p5/2050-2099/miroc-esm-chem/inundation_downscaled/including_bias/ "including_bias" channel_storage.map 6
+#~ python 6_downscaling_parallel.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp4p5/2050-2099/miroc-esm-chem/extreme_values/channel_storage/" /scratch/shared/edwin/flood_analyzer_analysis_june_2017/rcp4p5/2050-2099/miroc-esm-chem/inundation_downscaled/including_bias/ "including_bias" channel_storage.map 6
 # - merging all downscaled map
 python 7_merging_downscaled_maps_with_masking_out_and_following_name_convention.py "/scratch/shared/edwin/flood_analyzer_analysis_june_2017/rcp4p5/2050-2099/miroc-esm-chem/inundation_downscaled/including_bias/" "/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2017_05_XX/river/inundation/rcp4p5/2050-2099/inundation_downscaled_from_non_bias_corrected_floods/MIROC-ESM-CHEM/" inunriver_rcp4p5_MIROC-ESM-CHEM_2080 2050 2099 channel_storage.map 06
 #
