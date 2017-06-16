@@ -15,26 +15,26 @@
 cd /home/edwinsut/github/edwinkost/extreme_value_analysis
 
 
-#####################################################################################################
-#
-# get maximum events for the hydrological year types 1 and 2
-#
-# 2010-2049 (2030)
-python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2017_feb_rcp6p0/pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m/no_correction/rcp6p0/merged_2006-2099/" 1 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/gfdl-esm2m/maximum_events/ 2010 2049 &
-python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2017_feb_rcp6p0/pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m/no_correction/rcp6p0/merged_2006-2099/" 2 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/gfdl-esm2m/maximum_events/ 2010 2049 &
-#
-# 2030-2069 (2050)
-python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2017_feb_rcp6p0/pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m/no_correction/rcp6p0/merged_2006-2099/" 1 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/gfdl-esm2m/maximum_events/ 2030 2069 &
-python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2017_feb_rcp6p0/pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m/no_correction/rcp6p0/merged_2006-2099/" 2 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/gfdl-esm2m/maximum_events/ 2030 2069 &
-#
-# 2050-2099 (2080)
-python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2017_feb_rcp6p0/pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m/no_correction/rcp6p0/merged_2006-2099/" 1 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/maximum_events/ 2050 2099 &
-python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2017_feb_rcp6p0/pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m/no_correction/rcp6p0/merged_2006-2099/" 2 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/maximum_events/ 2050 2099 &
-#
-wait
-#
-#
-#####################################################################################################
+#~ #####################################################################################################
+#~ #
+#~ # get maximum events for the hydrological year types 1 and 2
+#~ #
+#~ # 2010-2049 (2030)
+#~ python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2017_feb_rcp6p0/pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m/no_correction/rcp6p0/merged_2006-2099/" 1 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/gfdl-esm2m/maximum_events/ 2010 2049 &
+#~ python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2017_feb_rcp6p0/pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m/no_correction/rcp6p0/merged_2006-2099/" 2 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/gfdl-esm2m/maximum_events/ 2010 2049 &
+#~ #
+#~ # 2030-2069 (2050)
+#~ python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2017_feb_rcp6p0/pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m/no_correction/rcp6p0/merged_2006-2099/" 1 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/gfdl-esm2m/maximum_events/ 2030 2069 &
+#~ python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2017_feb_rcp6p0/pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m/no_correction/rcp6p0/merged_2006-2099/" 2 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/gfdl-esm2m/maximum_events/ 2030 2069 &
+#~ #
+#~ # 2050-2099 (2080)
+#~ python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2017_feb_rcp6p0/pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m/no_correction/rcp6p0/merged_2006-2099/" 1 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/maximum_events/ 2050 2099 &
+#~ python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2017_feb_rcp6p0/pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m/no_correction/rcp6p0/merged_2006-2099/" 2 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/maximum_events/ 2050 2099 &
+#~ #
+#~ wait
+#~ #
+#~ #
+#~ #####################################################################################################
 #
 # derive hydro year type (based on the baseline/historical run using WATCH forcing data)
 # DONE
@@ -43,19 +43,19 @@ wait
 #####################################################################################################
 
 
-#~ #####################################################################################################
-#~ #
-#~ # get annual maximum events based on a defined/given hydrological year tipe map
-#~ # 2010-2049 (2030)
-#~ # DONE
-#~ # 2030-2069 (2050)
-#~ # DONE
-#~ # 2050-2099 (2080)
-#~ python 2_merge_two_hydrological_year_result.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/maximum_events/" /projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/hydrological_year/watch_1960-1999/hydrological_year_type.map "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/maximum_events/merged/" 2050 2099 &
-#~ wait
-#~ #
-#~ #
-#~ #####################################################################################################
+#####################################################################################################
+#
+# get annual maximum events based on a defined/given hydrological year tipe map
+# 2010-2049 (2030)
+python 2_merge_two_hydrological_year_result.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/maximum_events/" /projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/hydrological_year/watch_1960-1999/hydrological_year_type.map "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/gfdl-esm2m/maximum_events/merged/" 2010 2049 &
+# 2030-2069 (2050)
+python 2_merge_two_hydrological_year_result.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/maximum_events/" /projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/hydrological_year/watch_1960-1999/hydrological_year_type.map "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/gfdl-esm2m/maximum_events/merged/" 2030 2069 &
+# 2050-2099 (2080)
+python 2_merge_two_hydrological_year_result.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/maximum_events/" /projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/hydrological_year/watch_1960-1999/hydrological_year_type.map "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/maximum_events/merged/" 2050 2099 &
+wait
+#
+#
+#####################################################################################################
 
 
 #~ #####################################################################################################
