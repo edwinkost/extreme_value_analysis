@@ -58,46 +58,46 @@ cd /home/edwinsut/github/edwinkost/extreme_value_analysis
 #~ #####################################################################################################
 
 
-#####################################################################################################
-#
-# calculate maximum surface water level (river depth)
-# 2010-2049 (2030)
-python 3_calculate_maximum_river_depth_without_upscaling.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/gfdl-esm2m/maximum_events/merged/" /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/gfdl-esm2m/maximum_events/surface_water_level_maximum/ 2010 2049 &
-# 2030-2069 (2050)
-python 3_calculate_maximum_river_depth_without_upscaling.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/gfdl-esm2m/maximum_events/merged/" /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/gfdl-esm2m/maximum_events/surface_water_level_maximum/ 2030 2069 &
-# 2050-2099 (2080)
-python 3_calculate_maximum_river_depth_without_upscaling.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/maximum_events/merged/" /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/maximum_events/surface_water_level_maximum/ 2050 2099 &
-wait
-#
-#
-#####################################################################################################
-
-
 #~ #####################################################################################################
 #~ #
-#~ # gumbel fits for the annual flood maxima variable 'channelStorage'
+#~ # calculate maximum surface water level (river depth)
 #~ # 2010-2049 (2030)
-#~ # DONE
+#~ python 3_calculate_maximum_river_depth_without_upscaling.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/gfdl-esm2m/maximum_events/merged/" /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/gfdl-esm2m/maximum_events/surface_water_level_maximum/ 2010 2049 &
 #~ # 2030-2069 (2050)
-#~ # DONE
+#~ python 3_calculate_maximum_river_depth_without_upscaling.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/gfdl-esm2m/maximum_events/merged/" /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/gfdl-esm2m/maximum_events/surface_water_level_maximum/ 2030 2069 &
 #~ # 2050-2099 (2080)
-#~ python 4_gumbel_fits_get_gumbel_parameters.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/maximum_events/merged/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/maximum_events/surface_water_level_maximum/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/gumbel_fits/channel_storage/" 2050 2099 channelStorage &
+#~ python 3_calculate_maximum_river_depth_without_upscaling.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/maximum_events/merged/" /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/maximum_events/surface_water_level_maximum/ 2050 2099 &
 #~ wait
-#~ # 
-#~ # gumbel fits for the annual flood maxima variable 'surfaceWaterLevel'
-#~ # 2010-2049 (2030)
-#~ python 4_gumbel_fits_get_gumbel_parameters.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/gfdl-esm2m/maximum_events/merged/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/gfdl-esm2m/maximum_events/surface_water_level_maximum/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/gfdl-esm2m/gumbel_fits/surface_water_level/" 2010 2049 surfaceWaterLevel &
-#~ wait
-#~ # 2030-2069 (2050)
-#~ python 4_gumbel_fits_get_gumbel_parameters.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/gfdl-esm2m/maximum_events/merged/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/gfdl-esm2m/maximum_events/surface_water_level_maximum/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/gfdl-esm2m/gumbel_fits/surface_water_level/" 2030 2069 surfaceWaterLevel &
-#~ wait
-#~ # 2050-2099 (2080)
-#~ python 4_gumbel_fits_get_gumbel_parameters.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/maximum_events/merged/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/maximum_events/surface_water_level_maximum/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/gumbel_fits/surface_water_level/" 2050 2099 surfaceWaterLevel &
-#~ # 
-#~ wait
-#~ # 
-#~ # 
+#~ #
+#~ #
 #~ #####################################################################################################
+
+
+#####################################################################################################
+#
+# gumbel fits for the annual flood maxima variable 'channelStorage'
+# 2010-2049 (2030)
+python 4_gumbel_fits_get_gumbel_parameters.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/gfdl-esm2m/maximum_events/merged/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/gfdl-esm2m/maximum_events/surface_water_level_maximum/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/gfdl-esm2m/gumbel_fits/channel_storage/" 2010 2049 channelStorage &
+# 2030-2069 (2050)
+python 4_gumbel_fits_get_gumbel_parameters.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/gfdl-esm2m/maximum_events/merged/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/gfdl-esm2m/maximum_events/surface_water_level_maximum/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/gfdl-esm2m/gumbel_fits/channel_storage/" 2030 2069 channelStorage &
+# 2050-2099 (2080)
+python 4_gumbel_fits_get_gumbel_parameters.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/maximum_events/merged/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/maximum_events/surface_water_level_maximum/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/gumbel_fits/channel_storage/" 2050 2099 channelStorage &
+wait
+# 
+# gumbel fits for the annual flood maxima variable 'surfaceWaterLevel'
+# 2010-2049 (2030)
+python 4_gumbel_fits_get_gumbel_parameters.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/gfdl-esm2m/maximum_events/merged/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/gfdl-esm2m/maximum_events/surface_water_level_maximum/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/gfdl-esm2m/gumbel_fits/surface_water_level/" 2010 2049 surfaceWaterLevel &
+wait
+# 2030-2069 (2050)
+python 4_gumbel_fits_get_gumbel_parameters.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/gfdl-esm2m/maximum_events/merged/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/gfdl-esm2m/maximum_events/surface_water_level_maximum/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/gfdl-esm2m/gumbel_fits/surface_water_level/" 2030 2069 surfaceWaterLevel &
+wait
+# 2050-2099 (2080)
+python 4_gumbel_fits_get_gumbel_parameters.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/maximum_events/merged/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/maximum_events/surface_water_level_maximum/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/gumbel_fits/surface_water_level/" 2050 2099 surfaceWaterLevel &
+# 
+wait
+# 
+# 
+#####################################################################################################
 
 
 
