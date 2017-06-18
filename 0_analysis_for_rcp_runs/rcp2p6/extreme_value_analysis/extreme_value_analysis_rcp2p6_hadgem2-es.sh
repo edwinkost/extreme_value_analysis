@@ -20,16 +20,16 @@ cd /home/edwinsut/github/edwinkost/extreme_value_analysis
 # get maximum events for the hydrological year types 1 and 2
 #
 # 2010-2049 (2030)
-python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2017_feb_rcp2p6/pcrglobwb_4_land_covers_edwin_parameter_set_hadgem2-es/no_correction/rcp2p6/merged_2006-2099/" 1 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp2p6/2010-2049/hadgem2-es/maximum_events/ 2010 2049 &
-python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2017_feb_rcp2p6/pcrglobwb_4_land_covers_edwin_parameter_set_hadgem2-es/no_correction/rcp2p6/merged_2006-2099/" 2 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp2p6/2010-2049/hadgem2-es/maximum_events/ 2010 2049 &
+python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2017_may_jun_rcp2p6/pcrglobwb_4_land_covers_edwin_parameter_set_hadgem2-es/no_correction/rcp2p6/merged_2006-2099/" 1 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp2p6/2010-2049/hadgem2-es/maximum_events/ 2010 2049 &
+python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2017_may_jun_rcp2p6/pcrglobwb_4_land_covers_edwin_parameter_set_hadgem2-es/no_correction/rcp2p6/merged_2006-2099/" 2 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp2p6/2010-2049/hadgem2-es/maximum_events/ 2010 2049 &
 #
 # 2030-2069 (2050)
-python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2017_feb_rcp2p6/pcrglobwb_4_land_covers_edwin_parameter_set_hadgem2-es/no_correction/rcp2p6/merged_2006-2099/" 1 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp2p6/2030-2069/hadgem2-es/maximum_events/ 2030 2069 &
-python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2017_feb_rcp2p6/pcrglobwb_4_land_covers_edwin_parameter_set_hadgem2-es/no_correction/rcp2p6/merged_2006-2099/" 2 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp2p6/2030-2069/hadgem2-es/maximum_events/ 2030 2069 &
+python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2017_may_jun_rcp2p6/pcrglobwb_4_land_covers_edwin_parameter_set_hadgem2-es/no_correction/rcp2p6/merged_2006-2099/" 1 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp2p6/2030-2069/hadgem2-es/maximum_events/ 2030 2069 &
+python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2017_may_jun_rcp2p6/pcrglobwb_4_land_covers_edwin_parameter_set_hadgem2-es/no_correction/rcp2p6/merged_2006-2099/" 2 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp2p6/2030-2069/hadgem2-es/maximum_events/ 2030 2069 &
 #
 # 2050-2099 (2080)
-python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2017_feb_rcp2p6/pcrglobwb_4_land_covers_edwin_parameter_set_hadgem2-es/no_correction/rcp2p6/merged_2006-2099/" 1 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp2p6/2050-2099/hadgem2-es/maximum_events/ 2050 2099 &
-python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2017_feb_rcp2p6/pcrglobwb_4_land_covers_edwin_parameter_set_hadgem2-es/no_correction/rcp2p6/merged_2006-2099/" 2 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp2p6/2050-2099/hadgem2-es/maximum_events/ 2050 2099 &
+python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2017_may_jun_rcp2p6/pcrglobwb_4_land_covers_edwin_parameter_set_hadgem2-es/no_correction/rcp2p6/merged_2006-2099/" 1 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp2p6/2050-2099/hadgem2-es/maximum_events/ 2050 2099 &
+python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2017_may_jun_rcp2p6/pcrglobwb_4_land_covers_edwin_parameter_set_hadgem2-es/no_correction/rcp2p6/merged_2006-2099/" 2 /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp2p6/2050-2099/hadgem2-es/maximum_events/ 2050 2099 &
 #
 wait
 #
