@@ -1,6 +1,6 @@
 #!/bin/bash                                                                                                                  
 #SBATCH -N 1                                                                                                                 
-#SBATCH -t 13:30:00                                                                                                         
+#SBATCH -t 8:30:00                                                                                                         
 #~ #SBATCH -p normal                                                                                                            
 #~ #SBATCH --constraint=haswell                                                                                                 
 #SBATCH -p fat                                                                                                            
@@ -87,6 +87,7 @@ python 4_gumbel_fits_get_gumbel_parameters.py "/projects/0/aqueduct/users/edwins
 python 4_gumbel_fits_get_gumbel_parameters.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/gfdl-esm2m/maximum_events/merged/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/gfdl-esm2m/maximum_events/surface_water_level_maximum/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/gfdl-esm2m/gumbel_fits/channel_storage/" 2030 2069 channelStorage &
 # 2050-2099 (2080)
 python 4_gumbel_fits_get_gumbel_parameters.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/maximum_events/merged/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/maximum_events/surface_water_level_maximum/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/gfdl-esm2m/gumbel_fits/channel_storage/" 2050 2099 channelStorage &
+wait
 #
 #
 #####################################################################################################
