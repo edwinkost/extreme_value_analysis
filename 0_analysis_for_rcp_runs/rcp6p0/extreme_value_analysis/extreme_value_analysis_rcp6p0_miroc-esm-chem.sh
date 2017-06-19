@@ -1,8 +1,9 @@
 #!/bin/bash                                                                                                                  
 #SBATCH -N 1                                                                                                                 
-#SBATCH -t 15:00:00                                                                                                         
-#SBATCH -p normal                                                                                                            
-#SBATCH --constraint=haswell                                                                                                 
+#SBATCH -t 13:30:00                                                                                                         
+#~ #SBATCH -p normal                                                                                                            
+#~ #SBATCH --constraint=haswell                                                                                                 
+#SBATCH -p fat                                                                                                            
                                                                                                                              
 # mail alert at start, end and abortion of execution                                                                         
 #SBATCH --mail-type=ALL                                                                                                      
@@ -82,10 +83,8 @@ wait
 # gumbel fits for the annual flood maxima variable 'channelStorage'
 # 2010-2049 (2030)
 python 4_gumbel_fits_get_gumbel_parameters.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/miroc-esm-chem/maximum_events/merged/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/miroc-esm-chem/maximum_events/surface_water_level_maximum/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/miroc-esm-chem/gumbel_fits/channel_storage/" 2010 2049 channelStorage &
-wait
 # 2030-2069 (2050)
 python 4_gumbel_fits_get_gumbel_parameters.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/miroc-esm-chem/maximum_events/merged/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/miroc-esm-chem/maximum_events/surface_water_level_maximum/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/miroc-esm-chem/gumbel_fits/channel_storage/" 2030 2069 channelStorage &
-wait
 # 2050-2099 (2080)
 python 4_gumbel_fits_get_gumbel_parameters.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/miroc-esm-chem/maximum_events/merged/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/miroc-esm-chem/maximum_events/surface_water_level_maximum/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/miroc-esm-chem/gumbel_fits/channel_storage/" 2050 2099 channelStorage &
 wait
@@ -99,10 +98,8 @@ wait
 # gumbel fits for the annual flood maxima variable 'surfaceWaterLevel'
 # 2010-2049 (2030)
 python 4_gumbel_fits_get_gumbel_parameters.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/miroc-esm-chem/maximum_events/merged/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/miroc-esm-chem/maximum_events/surface_water_level_maximum/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/miroc-esm-chem/gumbel_fits/surface_water_level/" 2010 2049 surfaceWaterLevel &
-wait
 # 2030-2069 (2050)
 python 4_gumbel_fits_get_gumbel_parameters.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/miroc-esm-chem/maximum_events/merged/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/miroc-esm-chem/maximum_events/surface_water_level_maximum/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/miroc-esm-chem/gumbel_fits/surface_water_level/" 2030 2069 surfaceWaterLevel &
-wait
 # 2050-2099 (2080)
 python 4_gumbel_fits_get_gumbel_parameters.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/miroc-esm-chem/maximum_events/merged/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/miroc-esm-chem/maximum_events/surface_water_level_maximum/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/miroc-esm-chem/gumbel_fits/surface_water_level/" 2050 2099 surfaceWaterLevel &
 wait

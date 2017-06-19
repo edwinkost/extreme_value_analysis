@@ -1,6 +1,6 @@
 #!/bin/bash                                                                                                                  
 #SBATCH -N 1                                                                                                                 
-#SBATCH -t 13:45:00                                                                                                         
+#SBATCH -t 13:30:00                                                                                                         
 #~ #SBATCH -p normal                                                                                                            
 #~ #SBATCH --constraint=haswell                                                                                                 
 #SBATCH -p fat                                                                                                            
@@ -53,10 +53,8 @@ wait
 # get annual maximum events based on a defined/given hydrological year tipe map
 # 2010-2049 (2030)
 python 2_merge_two_hydrological_year_result.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/ipsl-cm5a-lr/maximum_events/" /projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/hydrological_year/watch_1960-1999/hydrological_year_type.map "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/ipsl-cm5a-lr/maximum_events/merged/" 2010 2049 &
-wait
 # 2030-2069 (2050)
 python 2_merge_two_hydrological_year_result.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/ipsl-cm5a-lr/maximum_events/" /projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/hydrological_year/watch_1960-1999/hydrological_year_type.map "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/ipsl-cm5a-lr/maximum_events/merged/" 2030 2069 &
-wait
 # 2050-2099 (2080)
 python 2_merge_two_hydrological_year_result.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/ipsl-cm5a-lr/maximum_events/" /projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/hydrological_year/watch_1960-1999/hydrological_year_type.map "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/ipsl-cm5a-lr/maximum_events/merged/" 2050 2099 &
 wait
@@ -100,10 +98,8 @@ wait
 # gumbel fits for the annual flood maxima variable 'surfaceWaterLevel'
 # 2010-2049 (2030)
 python 4_gumbel_fits_get_gumbel_parameters.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/ipsl-cm5a-lr/maximum_events/merged/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/ipsl-cm5a-lr/maximum_events/surface_water_level_maximum/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2010-2049/ipsl-cm5a-lr/gumbel_fits/surface_water_level/" 2010 2049 surfaceWaterLevel &
-wait
 # 2030-2069 (2050)
 python 4_gumbel_fits_get_gumbel_parameters.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/ipsl-cm5a-lr/maximum_events/merged/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/ipsl-cm5a-lr/maximum_events/surface_water_level_maximum/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2030-2069/ipsl-cm5a-lr/gumbel_fits/surface_water_level/" 2030 2069 surfaceWaterLevel &
-wait
 # 2050-2099 (2080)
 python 4_gumbel_fits_get_gumbel_parameters.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/ipsl-cm5a-lr/maximum_events/merged/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/ipsl-cm5a-lr/maximum_events/surface_water_level_maximum/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp6p0/2050-2099/ipsl-cm5a-lr/gumbel_fits/surface_water_level/" 2050 2099 surfaceWaterLevel &
 wait
