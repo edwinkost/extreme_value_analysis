@@ -321,6 +321,7 @@ msg = "The files that will be merged: " + str(files)
 logger.info(msg)
 
 # number of cores that will be used
+ncores = 2                        # limited for run in a normal node (64 GB only)
 ncores = min(len(files), ncores)
 msg = 'Using %d cores to process' % ncores,
 logger.info(msg)
