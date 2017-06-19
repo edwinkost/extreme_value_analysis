@@ -1,8 +1,9 @@
 #!/bin/bash                                                                                                                  
 #SBATCH -N 1                                                                                                                 
-#SBATCH -t 15:00:00                                                                                                         
-#SBATCH -p normal                                                                                                            
-#SBATCH --constraint=haswell                                                                                                 
+#SBATCH -t 8:30:00                                                                                                         
+#~ #SBATCH -p normal                                                                                                            
+#~ #SBATCH --constraint=haswell
+#SBATCH -p fat                                                                                                            
                                                                                                                              
 # mail alert at start, end and abortion of execution                                                                         
 #SBATCH --mail-type=ALL                                                                                                      
