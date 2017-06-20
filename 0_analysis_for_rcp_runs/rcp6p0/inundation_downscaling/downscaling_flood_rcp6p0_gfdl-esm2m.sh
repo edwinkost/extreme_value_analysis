@@ -1,6 +1,6 @@
 #!/bin/bash                                                                                                                 
 #SBATCH -N 1                                                                                                                
-#SBATCH -t 49:49:49                                                                                                        
+#SBATCH -t 119:00:00                                                                                                        
 #SBATCH -p normal                                                                                                           
 #SBATCH --constraint=haswell                                                                                                
                                                                                                                             
