@@ -104,19 +104,14 @@ reservoir_capacity_file = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5m
 fracwat_file            = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/fracwat_2010.map"
 water_body_id_file      = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/waterbodyid_2010.map"
 
+
 # cell_area_file
 cell_area_file = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/cellsize05min.correct.map"
 
 
+# bankfull capacity (5 arcmin, volume: m3)
 surface_water_bankfull_capacity_file_name = None
 surface_water_bankfull_capacity_file_name = "/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/extreme_values/watch_1960-1999/2-year_of_channel_storage.map"
-if surface_water_bankfull_capacity_file_name != None:
-    surface_water_bankfull_capacity = pcr.cover(
-                                      vos.readPCRmapClone(surface_water_bankfull_capacity_file_name, \
-                                                          clone_map_file, \
-                                                          tmp_folder, \
-                                                          None, False, None, False), 0.0)
-    pcr.report(surface_water_bankfull_capacity, "surface_water_bankfull_capacity.map")                                                                
 
 
 # read all extreme value maps (low resolution maps), resample them, and save them to the output folder
