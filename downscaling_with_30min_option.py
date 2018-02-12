@@ -98,6 +98,7 @@ ldd_map_low_resolution = pcr.lddrepair(pcr.ldd(ldd_map_low_resolution))
 ldd_map_low_resolution = pcr.lddrepair(ldd_map_low_resolution)
 pcr.report(ldd_map_low_resolution, "resampled_low_resolution_ldd.map")
 
+
 # permanent water bodies files (at 5 arc-minute resolution)
 reservoir_capacity_file = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/reservoircapacity_2010.map"
 fracwat_file            = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/fracwat_2010.map"
@@ -105,6 +106,17 @@ water_body_id_file      = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5m
 
 # cell_area_file
 cell_area_file = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/cellsize05min.correct.map"
+
+
+surface_water_bankfull_capacity_file_name = None
+surface_water_bankfull_capacity_file_name = "/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/extreme_values/watch_1960-1999/2-year_of_channel_storage.map"
+if surface_water_bankfull_capacity_file_name != None:
+    surface_water_bankfull_capacity = pcr.cover(vos.readPCRmapClone(surface_water_bankfull_capacity_file_name, \
+                                                                    clone_map_file, \
+                                                                    tmp_folder, \
+                                                                    None, True, None, False), 0.0)
+    pcr.report(surface_water_bankfull_capacity, "surface_water_bankfull_capacity.map")                                                                
+
 
 # read all extreme value maps (low resolution maps), resample them, and save them to the output folder
 msg = "Resampling extreme value maps."
@@ -128,17 +140,34 @@ if map_type_name == "channel_storage.map":
                   '250-year_of_channel_storage.map',
                   '500-year_of_channel_storage.map',
                  '1000-year_of_channel_storage.map']
+#
 front_name = ""
 if type_of_files != "normal": front_name = type_of_files + "_"
+#
+#
+# river/surface water bankfull capacities (5 arcmin, volume: m3)
+# - this should be taken from the historical WATCH run. 
+if surface_water_bankfull_capacity_file_name != None: file_names = surface_water_bankfull_capacity + file_names
+#
+#
 for i_file in range(0, len(file_names)):
 #~ for i_file in range(0, 1):
     file_name = file_names[i_file]
     complete_file_name = input_folder + "/" + front_name + file_name
+    #
+    # - if defined, we will also have to read surface_water_bankfull_capacity_file_name  
+    # - all extreme value maps must be higher than this map 
+    if i_file == 0 and surface_water_bankfull_capacity_file_name != None:
+        complete_file_name = surface_water_bankfull_capacity_file_name
+        file_name = os.path.basename(complete_file_name)
+    #
+    # - read maps
     extreme_value_map = pcr.cover(
                         vos.readPCRmapClone(complete_file_name, \
                                             clone_map_file, \
                                             tmp_folder, \
                                             None, False, None, False), 0.0)
+    #
     # - focus only to the landmask area. We have to do this so that only flood in the landmask that will be downscaled/routed. 
     extreme_value_map = pcr.ifthen(landmask, extreme_value_map)
     #
@@ -214,6 +243,7 @@ for i_file in range(0, len(file_names)):
     if i_file == 0: previous_return_period_map = extreme_value_map
     if i_file >  0: extreme_value_map = pcr.max(previous_return_period_map, extreme_value_map) 
     pcr.report(extreme_value_map, file_name)
+
 
 # upscaling model results to 30 arc-min:
 if with_upscaling:
@@ -455,7 +485,7 @@ for i_file in range(len(file_names)-1, 0, -1):       # starting from the highest
     cmd = ' python /home/edwin/github/edwinkost/wflow/wflow-py/Scripts/wflow_flood.py ' + \
           ' -i downscaling.ini ' + \
           ' -f ' + str(file_name) + \
-          ' -b ' + str(file_names[0]) + \
+          ' -b ' + str(file_name[0]) + \
           ' -c ' + str(strahler_order_used) + \
           ' -d output_folder'
     vos.cmd_line(cmd, using_subprocess = False)
