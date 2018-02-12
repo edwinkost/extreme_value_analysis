@@ -111,10 +111,11 @@ cell_area_file = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routin
 surface_water_bankfull_capacity_file_name = None
 surface_water_bankfull_capacity_file_name = "/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/extreme_values/watch_1960-1999/2-year_of_channel_storage.map"
 if surface_water_bankfull_capacity_file_name != None:
-    surface_water_bankfull_capacity = pcr.cover(vos.readPCRmapClone(surface_water_bankfull_capacity_file_name, \
-                                                                    clone_map_file, \
-                                                                    tmp_folder, \
-                                                                    None, True, None, False), 0.0)
+    surface_water_bankfull_capacity = pcr.cover(
+                                      vos.readPCRmapClone(surface_water_bankfull_capacity_file_name, \
+                                                          clone_map_file, \
+                                                          tmp_folder, \
+                                                          None, False, None, False), 0.0)
     pcr.report(surface_water_bankfull_capacity, "surface_water_bankfull_capacity.map")                                                                
 
 
