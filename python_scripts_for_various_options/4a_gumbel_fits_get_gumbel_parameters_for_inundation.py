@@ -64,22 +64,6 @@ pcr.setclone(input_files['clone_map_05min'])
 input_files['cell_area_05min'] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/cellsize05min.correct.map"
 input_files['ldd_map_05min'  ] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
 
-# option to save/present results at the landmask region only (not working yet)
-landmask_only = True
-
-# start and end years for this analysis:
-#~ # - for historical runs
-#~ str_year = 1960
-#~ end_year = 1999
-#~ # - for the year 2030
-#~ str_year = 2010
-#~ end_year = 2049
-# - for the year 2050
-str_year = 2030
-end_year = 2069
-#~ # - for the year 2080
-#~ str_year = 2060
-#~ end_year = 2099
 
 # output files
 output_files                   = {}
@@ -123,6 +107,24 @@ try:
 except:
     pass
 vos.initialize_logging(log_file_location)
+
+
+# start and end years for this analysis:
+#~ # - for historical runs
+#~ str_year = 1960
+#~ end_year = 1999
+#~ # - for the year 2030
+#~ str_year = 2010
+#~ end_year = 2049
+# - for the year 2050
+#~ str_year = 2030
+#~ end_year = 2069
+#~ # - for the year 2080
+#~ str_year = 2060
+#~ end_year = 2099
+# - based on the system arguments:
+str_year = int(sys.argv[3])
+end_year = int(sys.argv[4])
 
 
 # netcdf general setup:

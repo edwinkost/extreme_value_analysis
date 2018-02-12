@@ -30,10 +30,17 @@ logger = logging.getLogger(__name__)
 
 # input files
 input_files                           = {}
+#
 # PCR-GLOBWB 5 arcmin results
+#
 # - WATCH historical
 input_files['folder']            = "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_oct_nov/pcrglobwb_4_land_covers_edwin_parameter_set_watch_kinematicwave/no_correction/non-natural/merged_1958_to_2001/global/netcdf/"
 input_files['dischargeMonthAvg'] = input_files['folder'] + "discharge_monthAvg_output_1958-01-31_to_2001-12-31.nc"                                    # unit: m3/s
+#
+# - based on the system arguments:
+input_files['folder']            = sys.argv[1]
+input_files['dischargeMonthAvg'] = input_files['folder'] + "/" + sys.argv[2]
+#
 #
 # General input files
 # - clone map
@@ -47,11 +54,16 @@ input_files['basin_map_05min']   = "/projects/0/dfguu/users/edwin/data/aqueduct_
 # start and end years for this analysis (PS: after shifted)
 str_year = 1960
 end_year = 1999
+# - based on the system arguments:
+str_year = int(sys.argv[3])
+end_year = int(sys.argv[4])
 
 # output files
 output_files                     = {}
 # - output folder
 output_files['folder']           = "/scratch-shared/edwinsut/flood_analyzer_analysis/hydrological_year/watch_1960-1999/"
+# - based on the system arguments:
+output_files['folder']           = sys.argv[5]
 #
 try:
     os.makedirs(output_files['folder'])
@@ -146,7 +158,7 @@ basin_map = pcr.nominal(\
                                 input_files['clone_map_05min'],
                                 output_files['tmp_folder'],
                                 None, False, None, True))
-pcr.aguila(basin_map)
+#~ pcr.aguila(basin_map)
 # - extend/extrapolate the basin
 basin_map = pcr.cover(basin_map, pcr.windowmajority(basin_map, 0.5))
 basin_map = pcr.cover(basin_map, pcr.windowmajority(basin_map, 0.5))
@@ -154,7 +166,7 @@ basin_map = pcr.cover(basin_map, pcr.windowmajority(basin_map, 0.5))
 basin_map = pcr.cover(basin_map, pcr.windowmajority(basin_map, 1.0))
 basin_map = pcr.cover(basin_map, pcr.windowmajority(basin_map, 1.5))
 basin_map = pcr.ifthen(landmask, basin_map)
-pcr.aguila(basin_map)
+#~ pcr.aguila(basin_map)
 
 msg = "Redefining the basin map (so that it is consistent with the ldd map used in PCR-GLOBWB):"
 logger.info(msg)
@@ -167,18 +179,18 @@ outlet = pcr.nominal(pcr.uniqueid(pcr.ifthen(upstream_area == upstream_area_maxi
 # - ignoring outlets with small upstream areas
 threshold = 50. * 1000. * 1000.                                                 # unit: m2
 outlet    = pcr.ifthen(upstream_area_maximum > threshold, outlet)
-pcr.aguila(outlet)
+#~ pcr.aguila(outlet)
 outlet = pcr.cover(outlet, pcr.nominal(0.0))
 # - recalculate the basin
 basin_map  = pcr.nominal(pcr.subcatchment(ldd, outlet))
 basin_map  = pcr.clump(basin_map)
 basin_map  = pcr.ifthen(landmask, basin_map)
 pcr.report(basin_map , "basin_map.map")
-pcr.aguila(basin_map)
+#~ pcr.aguila(basin_map)
 # - calculate the basin area
 basin_area = pcr.areatotal(cell_area, basin_map)
 pcr.report(basin_area, "basin_area.map")
-pcr.aguila(basin_area)
+#~ pcr.aguila(basin_area)
 
 
 # finding the month that give the maximum discharge (from the climatology time series)
@@ -218,5 +230,5 @@ hydrological_year_type = pcr.ifthenelse(maximum_month == 11, pcr.nominal(2), hyd
 hydrological_year_type = pcr.cover(hydrological_year_type, pcr.nominal(1))
 hydrological_year_type = pcr.ifthen(landmask, hydrological_year_type)
 pcr.report(hydrological_year_type, "hydrological_year_type.map")
-pcr.aguila(hydrological_year_type)
+#~ pcr.aguila(hydrological_year_type)
 
