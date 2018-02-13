@@ -387,7 +387,7 @@ landmask_30sec = pcr.cover(\
                                      None, False, None, False, True), pcr.boolean(0.0))
 
 # a boolean map for reservoirs at high resolution
-reservoirs_30sec_file = "/scratch/shared/edwinsut/reservoirs_and_lakes_30sec/grand_reservoirs_v1_1.boolean.map"
+reservoirs_30sec_file = "/projects/0/aqueduct/users/edwinsut/data/reservoirs_and_lakes_30sec/grand_reservoirs_v1_1.boolean.map"
 msg = "Set the (high resolution) reservoirs based on the file: " + str(reservoirs_30sec_file)
 logger.info(msg)
 reservoirs_30sec = pcr.cover(\
@@ -399,7 +399,7 @@ reservoirs_30sec = pcr.ifthen(landmask_30sec, reservoirs_30sec)
 #~ pcr.aguila(reservoirs_30sec)
 
 # a boolean map for lakes at high resolution
-lakes_30sec_file      = "/scratch/shared/edwinsut/reservoirs_and_lakes_30sec/glwd1_lakes.boolean.map"
+lakes_30sec_file      = "/projects/0/aqueduct/users/edwinsut/data/reservoirs_and_lakes_30sec/glwd1_lakes.boolean.map"
 msg = "Set the (high resolution) lakes based on the file: " + str(lakes_30sec_file)
 logger.info(msg)
 lakes_30sec = pcr.cover(\
@@ -409,6 +409,9 @@ lakes_30sec = pcr.cover(\
                                   None, False, None, False, True), pcr.boolean(0.0))
 lakes_30sec = pcr.ifthen(landmask_30sec, lakes_30sec)
 #~ pcr.aguila(lakes_30sec)
+#
+# PS: Shall we also include the other levels of GLWD? Perhaps: NO, as we have to ensure the connectivity of river networks during the downscaling process. 
+
 
 # - ldd map
 msg = "Resampling high resolution ldd map."
