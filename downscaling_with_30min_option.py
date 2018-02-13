@@ -490,12 +490,12 @@ for i_file in range(len(file_names)-1, 0, -1):       # starting from the highest
     cmd = ' python /home/edwin/github/edwinkost/wflow/wflow-py/Scripts/wflow_flood.py ' + \
           ' -i downscaling.ini ' + \
           ' -f ' + str(file_name) + \
-          ' -b ' + str(file_name[0]) + \
+          ' -b ' + str(file_names[0]) + \
           ' -c ' + str(strahler_order_used) + \
           ' -d output_folder'
-    print cmd
-    print file_names
-    pietje
+    #~ print cmd
+    #~ print file_names
+    #~ pietje
     vos.cmd_line(cmd, using_subprocess = False)
 
 
