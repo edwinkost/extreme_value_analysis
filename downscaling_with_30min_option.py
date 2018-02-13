@@ -347,7 +347,6 @@ river_width_low_resolution = pcr.cover(river_width_low_resolution, 0.0)
 pcr.report(river_width_low_resolution, "resampled_low_resolution_bankfull_width.map") 
 
 
-pietje
 
 
 
@@ -494,6 +493,7 @@ for i_file in range(len(file_names)-1, 0, -1):       # starting from the highest
           ' -b ' + str(file_name[0]) + \
           ' -c ' + str(strahler_order_used) + \
           ' -d output_folder'
+    pietje
     vos.cmd_line(cmd, using_subprocess = False)
 
 
