@@ -487,7 +487,7 @@ msg = "Downscaling for every return period."
 logger.info(msg)
 for i_file in range(len(file_names)-1, 0, -1):       # starting from the highest return period
     file_name = file_names[i_file]
-    cmd = ' python /home/edwinsut/github/edwinkost/wflow/wflow-py/Scripts/wflow_flood.py ' + \
+    cmd = ' python /home/edwin/github/edwinkost/wflow/wflow-py/Scripts/wflow_flood.py ' + \
           ' -i downscaling.ini ' + \
           ' -f ' + str(file_name) + \
           ' -b ' + str(file_names[0]) + \
