@@ -112,6 +112,7 @@ cell_area_file = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routin
 # bankfull capacity (5 arcmin, volume: m3)
 surface_water_bankfull_capacity_file_name = None
 surface_water_bankfull_capacity_file_name = "/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/extreme_values/watch_1960-1999/2-year_of_channel_storage.map"
+surface_water_bankfull_capacity_file_name = "/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/extreme_values/watch_1960-1999/2-year_of_channel_storage_used_as_bankfull_capacity.map"
 
 
 # read all extreme value maps (low resolution maps), resample them, and save them to the output folder
