@@ -146,7 +146,6 @@ if type_of_files != "normal": front_name = type_of_files + "_"
 # - this should be taken from the historical WATCH run. 
 if surface_water_bankfull_capacity_file_name != None: file_names.insert(0, os.path.basename(surface_water_bankfull_capacity_file_name))
 print file_names
-pietje
 #
 #
 for i_file in range(0, len(file_names)):
@@ -242,6 +241,7 @@ for i_file in range(0, len(file_names)):
     if i_file >  0: extreme_value_map = pcr.max(previous_return_period_map, extreme_value_map) 
     pcr.report(extreme_value_map, file_name)
 
+pietje
 
 # upscaling model results to 30 arc-min:
 if with_upscaling:
