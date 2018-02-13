@@ -241,7 +241,7 @@ for i_file in range(0, len(file_names)):
     if i_file >  0: extreme_value_map = pcr.max(previous_return_period_map, extreme_value_map) 
     pcr.report(extreme_value_map, file_name)
 
-pietje
+
 
 # upscaling model results to 30 arc-min:
 if with_upscaling:
@@ -317,6 +317,7 @@ if with_upscaling:
     pcr.report(ldd_map_low_resolution, "resampled_low_resolution_ldd.map")
 
 
+
 # resampling river length and width files (actually, we don't need these):
 msg = "Resample the low resolution river length and width maps."
 logger.info(msg)
@@ -344,6 +345,10 @@ river_width_low_resolution = vos.readPCRmapClone(river_width_file_name, \
 river_width_low_resolution = pcr.ifthen(landmask, river_width_low_resolution)
 river_width_low_resolution = pcr.cover(river_width_low_resolution, 0.0)
 pcr.report(river_width_low_resolution, "resampled_low_resolution_bankfull_width.map") 
+
+
+pietje
+
 
 
 # clone at high resolution (e.g. 30 arc-seconds)
