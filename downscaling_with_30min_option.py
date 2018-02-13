@@ -493,6 +493,7 @@ for i_file in range(len(file_names)-1, 0, -1):       # starting from the highest
           ' -b ' + str(file_name[0]) + \
           ' -c ' + str(strahler_order_used) + \
           ' -d output_folder'
+    print cmd
     pietje
     vos.cmd_line(cmd, using_subprocess = False)
 
