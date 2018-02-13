@@ -144,7 +144,7 @@ if type_of_files != "normal": front_name = type_of_files + "_"
 #
 # river/surface water bankfull capacities (5 arcmin, volume: m3)
 # - this should be taken from the historical WATCH run. 
-if surface_water_bankfull_capacity_file_name != None: file_names.insert(0, os.path.basename(complete_file_name))
+if surface_water_bankfull_capacity_file_name != None: file_names.insert(0, os.path.basename(surface_water_bankfull_capacity_file_name))
 print file_names
 pietje
 #
