@@ -431,7 +431,7 @@ ldd_map_high_resolution = pcr.ifthen(landmask_30sec, ldd_map_high_resolution)
 ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
 ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
 #
-# - masking out reservoirs
+# - masking out reservoirs and lakes
 if masking_out_reservoirs:
     #
     #~ # alternative 1: assume the entire reservoirs and lakes as pits                                          

@@ -281,6 +281,7 @@ landmask_05_min = pcr.defined(pcr.readmap(landmask_05_min_file))
 landmask_used = pcr.ifthen(landmask_05_min, landmask_05_min)
 landmask_used = pcr.boolean(pcr.windowmaximum(pcr.scalar(landmask_used), 0.5))
 pcr.report(landmask_used, "extended_landmask_5min.map")
+pcr.aguila(landmask_used)
 
 # set the clone at high resolution 
 msg = "Make and set the clone map."
@@ -382,9 +383,12 @@ lakes_30sec_file      = "/projects/0/aqueduct/users/edwinsut/data/reservoirs_and
 msg = "Set the (high resolution) lakes based on the file: " + str(lakes_30sec_file)
 logger.info(msg)
 lakes_30sec = pcr.cover(pcr.readmap(lakes_30sec_file), pcr.boolean(0.0))
+#
 # cells that do not belong lakes and reservoirs
 non_permanent_water_bodies = pcr.ifthenelse(reservoirs_30sec, pcr.boolean(0.0), pcr.boolean(1.0))
+non_permanent_water_bodies = pcr.ifthen(non_permanent_water_bodies, non_permanent_water_bodies)
 non_permanent_water_bodies = pcr.ifthenelse(     lakes_30sec, pcr.boolean(0.0), non_permanent_water_bodies)
+non_permanent_water_bodies = pcr.ifthen(non_permanent_water_bodies, non_permanent_water_bodies)
 #~ pcr.aguila(non_permanent_water_bodies)
 
 # Convert pcraster files to a netcdt file:
@@ -497,7 +501,15 @@ for i_return_period in range(0, len(return_periods)):
     inundation_map = pcr.ifthen(landmask_used, inundation_map)
     
     # masking out permanent water bodies
-    inundation_map = pcr.ifthen(non_permanent_water_bodies, inundation_map)
+    #~ inundation_map = pcr.ifthen(non_permanent_water_bodies, inundation_map)
+    
+reservoirs_30sec = pcr.cover(pcr.readmap(reservoirs_30sec_file), pcr.boolean(0.0))
+lakes_30sec_file      = "/projects/0/aqueduct/users/edwinsut/data/reservoirs_and_lakes_30sec/glwd1_lakes.boolean.map"
+msg = "Set the (high resolution) lakes based on the file: " + str(lakes_30sec_file)
+logger.info(msg)
+lakes_30sec = pcr.cover(pcr.readmap(lakes_30sec_file), pcr.boolean(0.0))
+
+
     
     # report in pcraster maps
     pcr.report(inundation_map, inundation_file_name + ".masked_out.map")
