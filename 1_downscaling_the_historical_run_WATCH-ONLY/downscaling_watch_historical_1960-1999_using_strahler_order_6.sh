@@ -1,10 +1,17 @@
 
-# using strahler order 6
 
-
-
+#~ EXTREME_VALUE_INPUT_FOLDER=/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/extreme_values/watch_1960-1999/
+#~ UNMERGED_MAP_OUTPUT_FOLDER=/scratch-shared/edwinsut/flood_inundation_2018_02_XX/before_merged/historical/WATCH/1960-1999/
+#~ 
+#~ TYPE_OF_EXTREME_VALUE_FILE=normal
+#~ 
+#~ 
+#~ 
+#~ # other options: using strahler order 6 to downscale channel_storage.map
+#~ 
+#~ 
 #~ # - downscaling inundation
-#~ python 6_downscaling_parallel.py /projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/extreme_values/watch_1960-1999/ /scratch-shared/edwinsut/flood_inundation_2018_02_XX/historical/watch/1960-1999/ normal channel_storage.map 6
+#~ python 6_downscaling_parallel.py $EXTREME_VALUE_INPUT_FOLDER $UNMERGED_MAP_OUTPUT_FOLDER $TYPE_OF_EXTREME_VALUE_FILE channel_storage.map 6
 
 
 # - merging all downscaled maps

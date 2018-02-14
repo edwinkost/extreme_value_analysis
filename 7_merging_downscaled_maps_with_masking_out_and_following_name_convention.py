@@ -501,15 +501,15 @@ for i_return_period in range(0, len(return_periods)):
     inundation_map = pcr.ifthen(landmask_used, inundation_map)
     
     # masking out permanent water bodies
-    #~ inundation_map = pcr.ifthen(non_permanent_water_bodies, inundation_map)
+    inundation_map = pcr.ifthen(non_permanent_water_bodies, inundation_map)
     
-reservoirs_30sec = pcr.cover(pcr.readmap(reservoirs_30sec_file), pcr.boolean(0.0))
-lakes_30sec_file      = "/projects/0/aqueduct/users/edwinsut/data/reservoirs_and_lakes_30sec/glwd1_lakes.boolean.map"
-msg = "Set the (high resolution) lakes based on the file: " + str(lakes_30sec_file)
-logger.info(msg)
-lakes_30sec = pcr.cover(pcr.readmap(lakes_30sec_file), pcr.boolean(0.0))
-
-
+#~ reservoirs_30sec = pcr.cover(pcr.readmap(reservoirs_30sec_file), pcr.boolean(0.0))
+#~ lakes_30sec_file      = "/projects/0/aqueduct/users/edwinsut/data/reservoirs_and_lakes_30sec/glwd1_lakes.boolean.map"
+#~ msg = "Set the (high resolution) lakes based on the file: " + str(lakes_30sec_file)
+#~ logger.info(msg)
+#~ lakes_30sec = pcr.cover(pcr.readmap(lakes_30sec_file), pcr.boolean(0.0))
+#~ 
+#~ 
     
     # report in pcraster maps
     pcr.report(inundation_map, inundation_file_name + ".masked_out.map")
