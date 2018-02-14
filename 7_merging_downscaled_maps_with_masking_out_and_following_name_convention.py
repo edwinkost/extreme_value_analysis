@@ -398,7 +398,7 @@ netcdf_setup['zlib']            = False
 netcdf_setup['institution']     = "Department of Physical Geography, Utrecht University"
 netcdf_setup['title'      ]     = "PCR-GLOBWB 2 output (post-processed for the Aqueduct Flood Analyzer): Flood Inundation Depth (above surface level)."
 netcdf_setup['created by' ]     = "Edwin H. Sutanudjaja (E.H.Sutanudjaja@uu.nl)"
-netcdf_setup['description']     = "The extreme values of flood inundation depth (above surface level)."
+netcdf_setup['description']     = "The extreme values of fluvial flood inundation depth (above surface level)."
 netcdf_setup['source'     ]     = "Utrecht University, Department of Physical Geography - contact: Edwin H. Sutanudjaja (E.H.Sutanudjaja@uu.nl)"
 netcdf_setup['references' ]     = "Sutanudjaja et al., in prep."
 
@@ -491,13 +491,10 @@ for i_return_period in range(0, len(return_periods)):
     # read from pcraster files
     inundation_file_name = output_directory + "/global/maps/" + "inun_" + str(return_period) + "_of_flood_inundation_volume_catch_" + strahler_order_option + ".tif.map"
     if map_type_name == "channel_storage.map": inundation_file_name = output_directory + "/global/maps/" + "inun_" + str(return_period) + "_of_channel_storage_catch_" + strahler_order_option + ".tif.map"
-    if return_period == "2-year":
-        inundation_map = pcr.ifthen(landmask_used, pcr.scalar(0.0))
-        pcr.report(inundation_map, inundation_file_name)
-    if return_period != "2-year":
-        inundation_map = pcr.readmap(inundation_file_name)
-        inundation_map = pcr.cover(inundation_map, 0.0)
-        inundation_map = pcr.ifthen(landmask_used, inundation_map)
+    #
+    inundation_map = pcr.readmap(inundation_file_name)
+    inundation_map = pcr.cover(inundation_map, 0.0)
+    inundation_map = pcr.ifthen(landmask_used, inundation_map)
     
     # masking out permanent water bodies
     inundation_map = pcr.ifthen(non_permanent_water_bodies, inundation_map)
