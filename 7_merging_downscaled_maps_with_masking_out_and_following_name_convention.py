@@ -374,11 +374,11 @@ clone_map_file = "/projects/0/dfguu/users/edwinhs/data/HydroSHEDS/hydro_basin_wi
 pcr.setclone(clone_map_file)
 
 # boolean maps to mask out permanent water bodies (lakes and reservoirs):
-reservoirs_30sec_file = "/scratch/shared/edwinsut/reservoirs_and_lakes_30sec/grand_reservoirs_v1_1.boolean.map"
+reservoirs_30sec_file = "/projects/0/aqueduct/users/edwinsut/data/reservoirs_and_lakes_30sec/grand_reservoirs_v1_1.boolean.map"
 msg = "Set the (high resolution) reservoirs based on the file: " + str(reservoirs_30sec_file)
 logger.info(msg)
 reservoirs_30sec = pcr.cover(pcr.readmap(reservoirs_30sec_file), pcr.boolean(0.0))
-lakes_30sec_file      = "/scratch/shared/edwinsut/reservoirs_and_lakes_30sec/glwd1_lakes.boolean.map"
+lakes_30sec_file      = "/projects/0/aqueduct/users/edwinsut/data/reservoirs_and_lakes_30sec/glwd1_lakes.boolean.map"
 msg = "Set the (high resolution) lakes based on the file: " + str(lakes_30sec_file)
 logger.info(msg)
 lakes_30sec = pcr.cover(pcr.readmap(lakes_30sec_file), pcr.boolean(0.0))
