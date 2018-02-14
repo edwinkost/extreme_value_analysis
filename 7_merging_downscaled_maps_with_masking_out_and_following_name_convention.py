@@ -314,6 +314,7 @@ file_for_extent_of_hydrosheds = "/projects/0/dfguu/users/edwinhs/data/HydroSHEDS
 extent_of_hydrosheds = pcr.defined(pcr.readmap(file_for_extent_of_hydrosheds))
 extent_of_hydrosheds = pcr.ifthen(extent_of_hydrosheds, extent_of_hydrosheds)
 landmask_used = pcr.cover(extent_of_hydrosheds, landmask_used)
+landmask_used = pcr.ifthen(landmask_used, landmask_used)
 #
 pcr.aguila(landmask_used)
 
