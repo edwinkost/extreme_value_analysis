@@ -308,6 +308,13 @@ landmask_used = pcr.ifthen(landmask_05_min, landmask_05_min)
 landmask_30_sec_file = "/projects/0/dfguu/users/edwinhs/data/HydroSHEDS/hydro_basin_without_lakes/integrating_ldd/version_9_december_2016/merged_ldd.map"
 landmask_30_sec = pcr.defined(pcr.readmap(landmask_30_sec_file))
 landmask_used = pcr.ifthen(landmask_05_min, landmask_30_sec)
+#
+# added on 14 Feb 2018: make sure that the landmask includes the entire extent of HydroSHEDS 30sec 
+file_for_extent_of_hydrosheds = "/projects/0/dfguu/users/edwinhs/data/HydroSHEDS/hydro_basin_without_lakes/integrating_ldd/version_9_december_2016/merged_ldd.map"
+extent_of_hydrosheds = pcr.defined(pcr.readmap(file_for_extent_of_hydrosheds))
+extent_of_hydrosheds = pcr.ifthen(extent_of_hydrosheds, extent_of_hydrosheds)
+landmask_used = pcr.cover(extent_of_hydrosheds, landmask_used)
+#
 pcr.aguila(landmask_used)
 
 #~ print areas
