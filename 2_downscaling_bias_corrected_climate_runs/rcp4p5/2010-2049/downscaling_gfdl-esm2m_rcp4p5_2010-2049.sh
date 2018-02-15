@@ -9,21 +9,22 @@
 # send mail to this address
 #SBATCH --mail-user=edwinkost@gmail.com
 
-###################################################################################################################################
+###########################################################################################################################################
 
 # steps:
 # - Check whether it is from rcp or historical runs?
 # - Check the type of extreme value maps: bias_corrected? 
 # - Which rcp?
-# - Which gcm? There are three formats: GFDL-ESM2M and 0000GFDL-ESM2M and gfdl-esm2m
+# - Which gcm? There are three formats: GFDL-ESM2M and 0000GFDL-ESM2M and gfdl-esm2m.
 # - Which time period?
-# - Check the output folders: MERGED_MAP_OUTPUT_FOLDER and UNMERGED_MAP_OUTPUT_FOLDER
-# - Set the input folder: EXTREME_VALUE_INPUT_FOLDER
+# - Check the output folders: MERGED_MAP_OUTPUT_FOLDER and UNMERGED_MAP_OUTPUT_FOLDER (be careful here, do NOT write to your input folder)
+# - Set the input folder: EXTREME_VALUE_INPUT_FOLDER (this varies among rcps).
+# - Set/check the job name.
 
-###################################################################################################################################
+###########################################################################################################################################
 
 # job name
-#SBATCH -J rcp4p5_GFDL-ESM2M_1980
+#SBATCH -J rcp4p5_GFDL-ESM2M_2030
 
 TYPE_OF_EXTREME_VALUE_FILE=bias_corrected
 
