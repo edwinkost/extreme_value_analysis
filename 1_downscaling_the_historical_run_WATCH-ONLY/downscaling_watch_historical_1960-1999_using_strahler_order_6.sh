@@ -10,14 +10,14 @@
 # send mail to this address
 #SBATCH --mail-user=edwinkost@gmail.com
 
+# job name
+#SBATCH -J historical_WATCH_1980
+
 STA_PERIOD=1960
 END_PERIOD=1999
 MID_PERIOD=1980
 
 NETCDF_OUTPUT_CONVENTION=inunriver_historical_000000000WATCH_$MID_PERIOD
-
-# job name
-#SBATCH -J inunriver_historical_000000000WATCH_1980
 
 MERGED_MAP_OUTPUT_FOLDER=/scratch-shared/edwinsut/flood_inundation_2018_02_XX/merged/historical/WATCH/$STA_PERIOD-$END_PERIOD/
 
@@ -32,11 +32,7 @@ TYPE_OF_EXTREME_VALUE_FILE=normal
 ###################################################################################################################################
 
 
-
-###################################################################################################################################
-
-
-# -cleaning up previous folders
+# - cleaning up previous folders
 rm -r $UNMERGED_MAP_OUTPUT_FOLDER
 rm -r $MERGED_MAP_OUTPUT_FOLDER
 
