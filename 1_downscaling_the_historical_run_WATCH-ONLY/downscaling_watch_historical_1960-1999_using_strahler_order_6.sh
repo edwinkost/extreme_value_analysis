@@ -16,6 +16,9 @@ MID_PERIOD=1980
 
 NETCDF_OUTPUT_CONVENTION=inunriver_historical_000000000WATCH_$MID_PERIOD
 
+# job name
+#SBATCH -J inunriver_historical_000000000WATCH_1980
+
 MERGED_MAP_OUTPUT_FOLDER=/scratch-shared/edwinsut/flood_inundation_2018_02_XX/merged/historical/WATCH/$STA_PERIOD-$END_PERIOD/
 
 UNMERGED_MAP_OUTPUT_FOLDER=/scratch-shared/edwinsut/flood_inundation_2018_02_XX/before_merged/historical/WATCH/$STA_PERIOD-$END_PERIOD/
@@ -28,8 +31,6 @@ TYPE_OF_EXTREME_VALUE_FILE=normal
 
 ###################################################################################################################################
 
-# job name
-#SBATCH -J $NETCDF_OUTPUT_CONVENTION-$STA_PERIOD-$END_PERIOD-normal-edwinsut
 
 
 ###################################################################################################################################
