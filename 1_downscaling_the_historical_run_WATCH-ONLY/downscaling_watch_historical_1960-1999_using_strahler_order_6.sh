@@ -34,6 +34,12 @@ TYPE_OF_EXTREME_VALUE_FILE=normal
 
 ###################################################################################################################################
 
+
+
+# -cleaning up previous folders
+rm -r $UNMERGED_MAP_OUTPUT_FOLDER
+rm -r $MERGED_MAP_OUTPUT_FOLDER
+
 # - downscaling inundation
 echo python 6_downscaling_parallel.py $EXTREME_VALUE_INPUT_FOLDER $UNMERGED_MAP_OUTPUT_FOLDER $TYPE_OF_EXTREME_VALUE_FILE channel_storage.map 6
 
