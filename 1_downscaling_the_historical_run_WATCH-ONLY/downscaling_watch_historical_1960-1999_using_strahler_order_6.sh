@@ -1,3 +1,14 @@
+#!/bin/bash
+#SBATCH -N 1
+#SBATCH -t 29:00:00
+#~ #SBATCH -p normal
+#SBATCH -p short
+
+# mail alert at start, end and abortion of execution
+#SBATCH --mail-type=ALL
+
+# send mail to this address
+#SBATCH --mail-user=edwinkost@gmail.com
 
 STA_PERIOD=1960
 END_PERIOD=1999
@@ -14,6 +25,15 @@ EXTREME_VALUE_INPUT_FOLDER=/projects/0/aqueduct/users/edwinsut/aqueduct_flood_an
 TYPE_OF_EXTREME_VALUE_FILE=normal
 
 # other options: using strahler order 6 to downscale channel_storage.map
+
+###################################################################################################################################
+
+# job name
+#SBATCH -J $NETCDF_OUTPUT_CONVENTION-$STA_PERIOD-$END_PERIOD-normal-edwinsut
+
+
+###################################################################################################################################
+
 
 # - downscaling inundation
 echo python 6_downscaling_parallel.py $EXTREME_VALUE_INPUT_FOLDER $UNMERGED_MAP_OUTPUT_FOLDER $TYPE_OF_EXTREME_VALUE_FILE channel_storage.map 6

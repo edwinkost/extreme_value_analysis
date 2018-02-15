@@ -316,7 +316,7 @@ extent_of_hydrosheds = pcr.ifthen(extent_of_hydrosheds, extent_of_hydrosheds)
 landmask_used = pcr.cover(extent_of_hydrosheds, landmask_used)
 landmask_used = pcr.ifthen(landmask_used, landmask_used)
 #
-pcr.aguila(landmask_used)
+#~ pcr.aguila(landmask_used)
 
 #~ print areas
 #~ print areas[0]
