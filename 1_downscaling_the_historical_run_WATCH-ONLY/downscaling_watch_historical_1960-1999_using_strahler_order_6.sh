@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH -N 1
-#~ #SBATCH -t 29:00:00
-#~ #SBATCH -p normal
-#SBATCH -p short
+#SBATCH -t 29:00:00
+#SBATCH -p normal
+#~ #SBATCH -p short
 
 # mail alert at start, end and abortion of execution
 #SBATCH --mail-type=ALL
@@ -32,9 +32,9 @@ TYPE_OF_EXTREME_VALUE_FILE=normal
 ###################################################################################################################################
 
 
-# - cleaning up previous folders
-rm -r $UNMERGED_MAP_OUTPUT_FOLDER
-rm -r $MERGED_MAP_OUTPUT_FOLDER
+# - cleaning up previous folders (if exists)
+rm -r $UNMERGED_MAP_OUTPUT_FOLDER/*
+rm -r $MERGED_MAP_OUTPUT_FOLDER/*
 
 # - go to the script folder
 cd /home/edwinsut/github/edwinkost/extreme_value_analysis
