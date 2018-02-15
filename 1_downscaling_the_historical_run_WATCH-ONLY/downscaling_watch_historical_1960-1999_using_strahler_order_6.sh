@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH -N 1
-#SBATCH -t 29:00:00
+#~ #SBATCH -t 29:00:00
 #~ #SBATCH -p normal
 #SBATCH -p short
 
