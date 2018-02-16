@@ -13,8 +13,8 @@
 
 # steps:
 # - Check whether it is from rcp or historical runs?
-# - Check the type of extreme value maps: bias_corrected? 
 # - Which rcp?
+# - Check the type of extreme value maps: bias_corrected? 
 # - Which gcm? There are three formats: IPSL-CM5A-LR and 00IPSL-CM5A-LR and ipsl-cm5a-lr (please be careful during find and replace-ing). 
 # - Which time period?
 # - Check the output folders: MERGED_MAP_OUTPUT_FOLDER and UNMERGED_MAP_OUTPUT_FOLDER (be careful here, do NOT write to your input folder).
@@ -32,12 +32,14 @@ STA_PERIOD=2010
 END_PERIOD=2049
 MID_PERIOD=2030
 
+FORCING_NAME=IPSL-CM5A-LR
+
 # nc filename convention:inunriver_rcp4p5_00000000000000_$MID_PERIOD
 NETCDF_OUTPUT_CONVENTION=inunriver_rcp4p5_00IPSL-CM5A-LR_$MID_PERIOD
 
-MERGED_MAP_OUTPUT_FOLDER=/scratch-shared/edwinsut/flood_inundation_2018_02_XX/merged/rcp4p5/IPSL-CM5A-LR/$STA_PERIOD-$END_PERIOD/
+MERGED_MAP_OUTPUT_FOLDER=/scratch-shared/edwinsut/flood_inundation_2018_02_XX/inundation_30sec/rcp4p5/$STA_PERIOD-$END_PERIOD/$FORCING_NAME/merged/
 
-UNMERGED_MAP_OUTPUT_FOLDER=/scratch-shared/edwinsut/flood_inundation_2018_02_XX/before_merged/rcp4p5/IPSL-CM5A-LR/$STA_PERIOD-$END_PERIOD/
+UNMERGED_MAP_OUTPUT_FOLDER=/scratch-shared/edwinsut/flood_inundation_2018_02_XX/inundation_30sec/rcp4p5/$STA_PERIOD-$END_PERIOD/$FORCING_NAME/before_merged/
 
 EXTREME_VALUE_INPUT_FOLDER=/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/rcp4p5/bias_corrected_flood_analyzer_analysis_rcp4p5_runs_2010-2049/rcp4p5/extreme_values_bias_corrected/ipsl-cm5a-lr_2010-2049/
 
