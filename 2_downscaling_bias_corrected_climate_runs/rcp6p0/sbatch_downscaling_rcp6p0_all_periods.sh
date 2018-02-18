@@ -10,7 +10,7 @@
 #SBATCH --mail-user=edwinkost@gmail.com
 
 # job name
-#SBATCH -J rcp6p0_ALL-GCMs_ALL-PERIODS
+#SBATCH -J rcp6p0_ALL-GCMs_ALL-PERIODS_using-fat-node
 
 
 cd /home/edwinsut/github/edwinkost/extreme_value_analysis/2_downscaling_bias_corrected_climate_runs/rcp6p0/
