@@ -25,7 +25,7 @@ wait
 #
 # get annual maximum events based on a defined/given hydrological year tipe map
 # 2060-2099 (2080)
-python 2_merge_two_hydrological_year_result.py "/scratch-shared/edwinsut/extreme_value_analysis_2018_02_XX_FIRST-TEST/rcp4p5/2060-2099/maximum_events/gfdl-esm2m/" /projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/hydrological_year/watch_1960-1999/hydrological_year_type.map "/scratch-shared/edwinsut/extreme_value_analysis_2018_02_XX_FIRST-TEST/rcp4p5/2060-2099/gfdl-esm2m/maximum_events/merged/" 2060 2099 &
+python 2_merge_two_hydrological_year_result.py "/scratch-shared/edwinsut/extreme_value_analysis_2018_02_XX_FIRST-TEST/rcp4p5/2060-2099/gfdl-esm2m/maximum_events//" /projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/hydrological_year/watch_1960-1999/hydrological_year_type.map "/scratch-shared/edwinsut/extreme_value_analysis_2018_02_XX_FIRST-TEST/rcp4p5/2060-2099/gfdl-esm2m/maximum_events/merged/" 2060 2099 &
 #
 wait
 #
@@ -45,20 +45,20 @@ wait
 #####################################################################################################
 
 
-#~ #####################################################################################################
-#~ #
-#~ # gumbel fits for the annual flood maxima variable 'channelStorage'
-#~ # 2060-2099 (2080)
-#~ python 4_gumbel_fits_get_gumbel_parameters.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp4p5/2050-2099/gfdl-esm2m/maximum_events/merged/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp4p5/2050-2099/gfdl-esm2m/maximum_events/surface_water_level_maximum/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp4p5/2050-2099/gfdl-esm2m/gumbel_fits/channel_storage/" 2050 2099 channelStorage &
-#~ # 
-#~ # gumbel fits for the annual flood maxima variable 'surfaceWaterLevel'
-#~ # 2060-2099 (2080)
-#~ python 4_gumbel_fits_get_gumbel_parameters.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp4p5/2050-2099/gfdl-esm2m/maximum_events/merged/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp4p5/2050-2099/gfdl-esm2m/maximum_events/surface_water_level_maximum/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp4p5/2050-2099/gfdl-esm2m/gumbel_fits/surface_water_level/" 2050 2099 surfaceWaterLevel &
-#~ # 
-#~ wait
-#~ # 
-#~ # 
-#~ #####################################################################################################
+#####################################################################################################
+#
+# gumbel fits for the annual flood maxima variable 'channelStorage'
+# 2060-2099 (2080)
+python 4_gumbel_fits_get_gumbel_parameters.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp4p5/2050-2099/gfdl-esm2m/maximum_events/merged/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp4p5/2050-2099/gfdl-esm2m/maximum_events/surface_water_level_maximum/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp4p5/2050-2099/gfdl-esm2m/gumbel_fits/channel_storage/" 2050 2099 channelStorage &
+# 
+# gumbel fits for the annual flood maxima variable 'surfaceWaterLevel'
+# 2060-2099 (2080)
+python 4_gumbel_fits_get_gumbel_parameters.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp4p5/2050-2099/gfdl-esm2m/maximum_events/merged/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp4p5/2050-2099/gfdl-esm2m/maximum_events/surface_water_level_maximum/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_june_2017/rcp4p5/2050-2099/gfdl-esm2m/gumbel_fits/surface_water_level/" 2050 2099 surfaceWaterLevel &
+# 
+wait
+# 
+# 
+#####################################################################################################
 
 
 
