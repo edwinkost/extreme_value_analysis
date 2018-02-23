@@ -53,7 +53,7 @@ python 4_gumbel_fits_get_gumbel_parameters.py "/scratch-shared/edwinsut/extreme_
 # 
 # gumbel fits for the annual flood maxima variable 'surfaceWaterLevel'
 # 2060-2099 (2080)
-python 4_gumbel_fits_get_gumbel_parameters.py "/scratch-shared/edwinsut/extreme_value_analysis_2018_02_XX_FIRST-TEST/rcp4p5/2060-2099/gfdl-esm2m/maximum_events/merged/" "/scratch-shared/edwinsut/extreme_value_analysis_2018_02_XX_FIRST-TEST/rcp4p5/2060-2099/gfdl-esm2m/maximum_events/surface_water_level_maximum/" "/scratch-shared/edwinsut/extreme_value_analysis_2018_02_XX_FIRST-TEST/rcp4p5/2060-2099/gfdl-esm2m/gumbel_fits/channel_storage/" 2060 2099 surfaceWaterLevel &
+python 4_gumbel_fits_get_gumbel_parameters.py "/scratch-shared/edwinsut/extreme_value_analysis_2018_02_XX_FIRST-TEST/rcp4p5/2060-2099/gfdl-esm2m/maximum_events/merged/" "/scratch-shared/edwinsut/extreme_value_analysis_2018_02_XX_FIRST-TEST/rcp4p5/2060-2099/gfdl-esm2m/maximum_events/surface_water_level_maximum/" "/scratch-shared/edwinsut/extreme_value_analysis_2018_02_XX_FIRST-TEST/rcp4p5/2060-2099/gfdl-esm2m/gumbel_fits/surface_water_level/" 2060 2099 surfaceWaterLevel &
 # 
 wait
 # 
