@@ -53,7 +53,10 @@ import netCDF4 as nc
 import logging as logger
 import datetime
 import scipy
-import scipy.stats as stats
+try:
+	import scipy.stats as stats
+except:
+	import scipy.stats as stats
 
 import pdb
 #from glofris_utils import *
