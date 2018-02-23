@@ -52,6 +52,7 @@ import numpy as np
 import netCDF4 as nc
 import logging as logger
 import datetime
+import scipy
 import scipy.stats as stats
 
 import pdb
