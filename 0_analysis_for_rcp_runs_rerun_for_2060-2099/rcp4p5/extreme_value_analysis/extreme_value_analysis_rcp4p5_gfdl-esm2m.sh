@@ -1,14 +1,15 @@
 
-#~ #####################################################################################################
-#~ #
-#~ # get maximum events for the hydrological year types 1 and 2
-#~ # 2060-2099 (2080)
-#~ python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_oct_nov/pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m/no_correction/rcp4p5/merged_2006-2099/" 1 /scratch-shared/edwinsut/extreme_value_analysis_2018_02_XX_FIRST-TEST/rcp4p5/2060-2099/maximum_events/ 2060 2099 &
-#~ python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_oct_nov/pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m/no_correction/rcp4p5/merged_2006-2099/" 2 /scratch-shared/edwinsut/extreme_value_analysis_2018_02_XX_FIRST-TEST/rcp4p5/2060-2099/maximum_events/ 2060 2099 &
-#~ wait
-#~ #
-#~ #
-#~ #####################################################################################################
+#####################################################################################################
+#
+# get maximum events for the hydrological year types 1 and 2
+# 2060-2099 (2080)
+python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_oct_nov/pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m/no_correction/rcp4p5/merged_2006-2099/" 1 /scratch-shared/edwinsut/extreme_value_analysis_2018_02_XX_FIRST-TEST/rcp4p5/2060-2099/maximum_events/ 2060 2099 &
+python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_oct_nov/pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m/no_correction/rcp4p5/merged_2006-2099/" 2 /scratch-shared/edwinsut/extreme_value_analysis_2018_02_XX_FIRST-TEST/rcp4p5/2060-2099/maximum_events/ 2060 2099 &
+#
+wait
+#
+#
+#####################################################################################################
 
 
 #####################################################################################################
@@ -24,7 +25,8 @@
 #
 # get annual maximum events based on a defined/given hydrological year tipe map
 # 2060-2099 (2080)
-python 2_merge_two_hydrological_year_result.py "/scratch-shared/edwinsut/extreme_value_analysis_2018_02_XX_FIRST-TEST/rcp4p5/2060-2099/maximum_events/" /projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/hydrological_year/watch_1960-1999/hydrological_year_type.map "/scratch-shared/edwinsut/extreme_value_analysis_2018_02_XX_FIRST-TEST/rcp4p5/2060-2099/maximum_events/" 2060 2099 &
+python 2_merge_two_hydrological_year_result.py "/scratch-shared/edwinsut/extreme_value_analysis_2018_02_XX_FIRST-TEST/rcp4p5/2060-2099/maximum_events/" /projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/hydrological_year/watch_1960-1999/hydrological_year_type.map "/scratch-shared/edwinsut/extreme_value_analysis_2018_02_XX_FIRST-TEST/rcp4p5/2060-2099/maximum_events/merged/" 2060 2099 &
+#
 wait
 #
 #
