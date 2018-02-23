@@ -37,7 +37,7 @@ wait
 #
 # calculate maximum surface water level (river depth)
 # 2060-2099 (2080)
-python 3_calculate_maximum_river_depth_without_upscaling.py "/scratch-shared/edwinsut/extreme_value_analysis_2018_02_XX_FIRST-TEST/rcp4p5/2060-2099/maximum_events/gfdl-esm2m/merged/" /scratch-shared/edwinsut/extreme_value_analysis_2018_02_XX_FIRST-TEST/rcp4p5/2060-2099/maximum_events/gfdl-esm2m/surface_water_level_maximum/ 2060 2099 &
+python 3_calculate_maximum_river_depth_without_upscaling.py "/scratch-shared/edwinsut/extreme_value_analysis_2018_02_XX_FIRST-TEST/rcp4p5/2060-2099/gfdl-esm2m/maximum_events/merged/" /scratch-shared/edwinsut/extreme_value_analysis_2018_02_XX_FIRST-TEST/rcp4p5/2060-2099/gfdl-esm2m/maximum_events/surface_water_level_maximum/ 2060 2099 &
 #
 wait
 #
