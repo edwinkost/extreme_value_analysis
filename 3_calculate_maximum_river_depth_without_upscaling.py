@@ -17,7 +17,10 @@ import virtualOS as vos
 try:
 	import glofris_postprocess_edwin_modified as glofris
 except:
-	import glofris_postprocess_edwin_modified as glofris
+	try:
+		import glofris_postprocess_edwin_modified as glofris
+	except:
+		import glofris_postprocess_edwin_modified as glofris
 
 # netcdf reporting module:
 import outputNetCDF
