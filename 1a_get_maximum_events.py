@@ -136,7 +136,7 @@ for var in ['channelStorageMonthMax', 'dynamicFracWatMonthMax']:
     # - cdo shifttime
     inp_file = input_files[var]
     out_file = output_files['folder'] + "/" + os.path.basename(input_files[var]) + "_shifted_hydrological_year_" + str(type_of_hydrological_year) + ".nc"
-    cmd += "cdo shifttime,-" + str(num_of_shift_month) + "mon " + inp_file + " " + out_file
+    cmd += "cdo -L -f nc4 -z zip -shifttime,-" + str(num_of_shift_month) + "mon " + inp_file + " " + out_file
     cmd += " & "
     shifted_input_files[var] = out_file
 cmd += " wait "
@@ -153,12 +153,12 @@ for var in ['channelStorageMonthMax', 'dynamicFracWatMonthMax']:
     # - cdo yearmax
     inp_file = shifted_input_files[var]
     out_file = shifted_input_files[var] + "_annual_maxima.nc"
-    cmd = "cdo yearmax " + str(inp_file) + " " + str(out_file)
+    cmd = "cdo -L -f nc4 -z zip -yearmax " + str(inp_file) + " " + str(out_file)
     print(""); print(cmd); os.system(cmd); print("")
     # - cdo selyear
     inp_file = out_file
     out_file = inp_file + "_" + str(str_year) + "_to_" + str(end_year) + ".nc"
-    cmd = "cdo selyear," + str(str_year) + "/" + str(end_year) + " " + inp_file + " " + out_file
+    cmd = "cdo -L -f nc4 -z zip -selyear," + str(str_year) + "/" + str(end_year) + " " + inp_file + " " + out_file
     print(""); print(cmd); os.system(cmd); print("")
 
 
