@@ -1,14 +1,14 @@
 
-#####################################################################################################
-#
-# get maximum events for the hydrological year types 1 and 2
-# 2060-2099 (2080)
-python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_oct_nov/pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m/no_correction/rcp4p5/merged_2006-2099/" 1 /scratch-shared/edwinsut/extreme_value_analysis_2018_02_XX_FIRST-TEST/rcp4p5/2060-2099/maximum_events/ 2060 2099 &
-python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_oct_nov/pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m/no_correction/rcp4p5/merged_2006-2099/" 2 /scratch-shared/edwinsut/extreme_value_analysis_2018_02_XX_FIRST-TEST/rcp4p5/2060-2099/maximum_events/ 2060 2099 &
-wait
-#
-#
-#####################################################################################################
+#~ #####################################################################################################
+#~ #
+#~ # get maximum events for the hydrological year types 1 and 2
+#~ # 2060-2099 (2080)
+#~ python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_oct_nov/pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m/no_correction/rcp4p5/merged_2006-2099/" 1 /scratch-shared/edwinsut/extreme_value_analysis_2018_02_XX_FIRST-TEST/rcp4p5/2060-2099/maximum_events/ 2060 2099 &
+#~ python 1a_get_maximum_events.py "/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_oct_nov/pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m/no_correction/rcp4p5/merged_2006-2099/" 2 /scratch-shared/edwinsut/extreme_value_analysis_2018_02_XX_FIRST-TEST/rcp4p5/2060-2099/maximum_events/ 2060 2099 &
+#~ wait
+#~ #
+#~ #
+#~ #####################################################################################################
 
 
 #####################################################################################################
