@@ -98,7 +98,7 @@ python 5b_gumbel_fits_apply_gumbel_parameters_with_bias_correction_for_gcm_runs.
 # 
 # gumbel fits for the annual flood maxima variable 'surfaceWaterLevel'
 # 2060-2099 (2080)
-python 5b_gumbel_fits_apply_gumbel_parameters_with_bias_correction_for_gcm_runs.py "$MAIN_OUTPUT_FOLDER/$RCP_CODE/2060-2099/$GCM_SMALL_LETTERS/gumbel_fits/surface_water_level/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_may_june_2017/historical/$GCM_CAPITAL_LETTERS/1960-1999/gumbel_fits/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_may_june_2017/historical/WATCH/1960-1999/gumbel_fits" "$MAIN_OUTPUT_FOLDER/$RCP_CODE/2060-2099/$GCM_SMALL_LETTERS/extreme_values/surface_water_level/" 2060 2099 surface_water_level_$RCP_CODE_$GCM_CONVENTION_NAME_2080 surfaceWaterLevel &
+python 5b_gumbel_fits_apply_gumbel_parameters_with_bias_correction_for_gcm_runs.py "$MAIN_OUTPUT_FOLDER/$RCP_CODE/2060-2099/$GCM_SMALL_LETTERS/gumbel_fits/surface_water_level/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_may_june_2017/historical/$GCM_CAPITAL_LETTERS/1960-1999/gumbel_fits/" "/projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_may_june_2017/historical/WATCH/1960-1999/gumbel_fits" "$MAIN_OUTPUT_FOLDER/$RCP_CODE/2060-2099/$GCM_SMALL_LETTERS/extreme_values/surface_water_level/" 2060 2099 surface_water_level_${RCP_CODE}_${GCM_CONVENTION_NAME}_2080 surfaceWaterLevel &
 # 
 wait
 # 
