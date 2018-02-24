@@ -8,9 +8,10 @@ MAIN_OUTPUT_FOLDER=/projects/0/aqueduct/users/edwinsut/extreme_value_analysis_20
 #
 RCP_CODE=rcp4p5
 #
+GCM_SMALL_LETTERS=gfdl-esm2m
+#
 GCM_CONVENTION_NAME=0000GFDL-ESM2M
 GCM_CAPITAL_LETTERS=GFDL-ESM2M
-GCM_SMALL_LETTERS=gfdl-esm2m
 #
 # 
 PCRGLOBWB_OUTPUT_FOLDER=/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_oct_nov/pcrglobwb_4_land_covers_edwin_parameter_set_$GCM_SMALL_LETTERS/no_correction/$RCP_CODE/merged_2006-2099/
