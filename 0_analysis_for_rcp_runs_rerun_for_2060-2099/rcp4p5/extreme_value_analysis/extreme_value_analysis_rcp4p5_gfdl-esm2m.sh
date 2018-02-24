@@ -21,6 +21,11 @@ echo $PCRGLOBWB_OUTPUT_FOLDER
 
 
 
+# go to the working folder
+cd /home/edwinsut/github/edwinkost/extreme_value_analysis/
+
+
+
 #####################################################################################################
 #
 # get maximum events for the hydrological year types 1 and 2
