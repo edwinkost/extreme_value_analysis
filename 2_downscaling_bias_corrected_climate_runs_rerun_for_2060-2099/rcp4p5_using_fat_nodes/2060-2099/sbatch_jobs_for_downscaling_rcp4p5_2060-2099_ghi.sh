@@ -10,7 +10,6 @@
 
 # job name
 #SBATCH -J rcp4p5_2080_ghi
-#~ #SBATCH -J rcp4p5_2080_mn
 
 bash downscaling_gfdl-esm2m_rcp4p5_2060-2099.sh &
 bash downscaling_hadgem2-es_rcp4p5_2060-2099.sh &

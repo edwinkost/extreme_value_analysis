@@ -9,7 +9,6 @@
 #SBATCH --mail-user=edwinkost@gmail.com
 
 # job name
-#~ #SBATCH -J rcp4p5_2080_ghi
 #SBATCH -J rcp4p5_2080_mn
 
 #~ bash downscaling_gfdl-esm2m_rcp4p5_2060-2099.sh &
