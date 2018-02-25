@@ -48,6 +48,10 @@ EXTREME_VALUE_INPUT_FOLDER=/projects/0/aqueduct/users/edwinsut/extreme_value_ana
 #################################################################################################################################################
 
 
+# load anaconda and its libraries
+. /home/edwin/opt/anaconda2/bashrc_anaconda
+
+
 # - cleaning up previous folders (if exists)
 rm -r $UNMERGED_MAP_OUTPUT_FOLDER/*
 rm -r $MERGED_MAP_OUTPUT_FOLDER/*
