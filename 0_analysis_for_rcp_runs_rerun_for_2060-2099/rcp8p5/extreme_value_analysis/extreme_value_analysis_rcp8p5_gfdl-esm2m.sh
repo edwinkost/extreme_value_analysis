@@ -94,7 +94,7 @@ wait
 #
 # apply gumbel parameters with bias correction, for the variable 'channelStorage' 
 # 2060-2099 (2080)
-python 5b_gumbel_fits_apply_gumbel_parameters_with_bias_correction_for_gcm_runs.py "$MAIN_OUTPUT_FOLDER/$RCP_CODE/2060-2099/$GCM_SMALL_LETTERS/gumbel_fits/channel_storage/" "/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/gumbel_fits/$GCM_SMALL_LETTERS_1960-1999/" "/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/gumbel_fits/watch_1960-1999/" "$MAIN_OUTPUT_FOLDER/$RCP_CODE/2060-2099/$GCM_SMALL_LETTERS/extreme_values/channel_storage/" 2060 2099 None channelStorage &
+python 5b_gumbel_fits_apply_gumbel_parameters_with_bias_correction_for_gcm_runs.py "$MAIN_OUTPUT_FOLDER/$RCP_CODE/2060-2099/$GCM_SMALL_LETTERS/gumbel_fits/channel_storage/" "/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/gumbel_fits/${GCM_SMALL_LETTERS}_1960-1999/" "/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/gumbel_fits/watch_1960-1999/" "$MAIN_OUTPUT_FOLDER/$RCP_CODE/2060-2099/$GCM_SMALL_LETTERS/extreme_values/channel_storage/" 2060 2099 None channelStorage &
 # 
 # gumbel fits for the annual flood maxima variable 'surfaceWaterLevel'
 # 2060-2099 (2080)
