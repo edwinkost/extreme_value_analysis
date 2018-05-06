@@ -212,6 +212,227 @@ def netcdf2PCRobjCloneWithoutTime(ncFile, varName,
     return (outPCR)
 
 
+def netcdf2PCRobjClonePCRGLOBWB(ncFile,varName,dateInput,\
+                                useDoy = None,
+                                cloneMapFileName  = None,\
+                                LatitudeLongitude = True,\
+                                specificFillValue = None):
+    # 
+    # EHS (19 APR 2013): To convert netCDF (tss) file to PCR file.
+    # --- with clone checking
+    #     Only works if cells are 'square'.
+    #     Only works if cellsizeClone <= cellsizeInput
+    # Get netCDF file and variable name:
+    
+    #~ print ncFile
+    
+    logger.debug('reading variable: '+str(varName)+' from the file: '+str(ncFile))
+    
+    if ncFile in filecache.keys():
+        f = filecache[ncFile]
+        #~ print "Cached: ", ncFile
+    else:
+        f = nc.Dataset(ncFile)
+        filecache[ncFile] = f
+        #~ print "New: ", ncFile
+    
+    varName = str(varName)
+    
+    if LatitudeLongitude == True:
+        try:
+            f.variables['lat'] = f.variables['latitude']
+            f.variables['lon'] = f.variables['longitude']
+        except:
+            pass
+    
+    if varName == "evapotranspiration":        
+        try:
+            f.variables['evapotranspiration'] = f.variables['referencePotET']
+        except:
+            pass
+
+    if varName == "kc":   # the variable name in PCR-GLOBWB     
+       try:
+           f.variables['kc'] = \
+                f.variables['Cropcoefficient']  # the variable name in the netcdf file
+       except:
+           pass
+
+    if varName == "interceptCapInput":   # the variable name in PCR-GLOBWB     
+       try:
+           f.variables['interceptCapInput'] = \
+                f.variables['Interceptioncapacity']  # the variable name in the netcdf file
+       except:
+           pass
+
+    if varName == "coverFractionInput":   # the variable name in PCR-GLOBWB     
+       try:
+           f.variables['coverFractionInput'] = \
+                f.variables['Coverfraction']  # the variable name in the netcdf file
+       except:
+           pass
+
+    if varName == "fracVegCover":   # the variable name in PCR-GLOBWB     
+       try:
+           f.variables['fracVegCover'] = \
+                f.variables['vegetation_fraction']  # the variable name in the netcdf file
+       except:
+           pass
+
+    if varName == "minSoilDepthFrac":   # the variable name in PCR-GLOBWB     
+       try:
+           f.variables['minSoilDepthFrac'] = \
+                f.variables['minRootDepthFraction']  # the variable name in the netcdf file
+       except:
+           pass
+
+    if varName == "maxSoilDepthFrac":   # the variable name in PCR-GLOBWB     
+       try:
+           f.variables['maxSoilDepthFrac'] = \
+                f.variables['maxRootDepthFraction']  # the variable name in the netcdf file
+       except:
+           pass
+
+    if varName == "arnoBeta":   # the variable name in PCR-GLOBWB     
+       try:
+           f.variables['arnoBeta'] = \
+                f.variables['arnoSchemeBeta']  # the variable name in the netcdf file
+       except:
+           pass
+
+    # date
+    date = dateInput
+    if useDoy == "Yes": 
+        logger.debug('Finding the date based on the given climatology doy index (1 to 366, or index 0 to 365)')
+        idx = int(dateInput) - 1
+    elif useDoy == "month":  # PS: WE NEED THIS ONE FOR NETCDF FILES that contain only 12 monthly values (e.g. cropCoefficientWaterNC).
+        logger.debug('Finding the date based on the given climatology month index (1 to 12, or index 0 to 11)')
+        # make sure that date is in the correct format
+        if isinstance(date, str) == True: date = \
+                        datetime.datetime.strptime(str(date),'%Y-%m-%d') 
+        idx = int(date.month) - 1
+    else:
+        # make sure that date is in the correct format
+        if isinstance(date, str) == True: date = \
+                        datetime.datetime.strptime(str(date),'%Y-%m-%d') 
+        date = datetime.datetime(date.year,date.month,date.day)
+        if useDoy == "yearly":
+            date  = datetime.datetime(date.year,int(1),int(1))
+        if useDoy == "monthly":
+            date = datetime.datetime(date.year,date.month,int(1))
+        if useDoy == "yearly" or useDoy == "monthly" or useDoy == "daily_seasonal":
+            # if the desired year is not available, use the first year or the last year that is available
+            first_year_in_nc_file = findFirstYearInNCTime(f.variables['time'])
+            last_year_in_nc_file  =  findLastYearInNCTime(f.variables['time'])
+            #
+            if date.year < first_year_in_nc_file:  
+                if date.day == 29 and date.month == 2 and calendar.isleap(date.year) and calendar.isleap(first_year_in_nc_file) == False:
+                    date = datetime.datetime(first_year_in_nc_file, date.month, 28)
+                else:
+                    date = datetime.datetime(first_year_in_nc_file, date.month, date.day)
+                msg  = "\n"
+                msg += "WARNING related to the netcdf file: "+str(ncFile)+" ; variable: "+str(varName)+" !!!!!!"+"\n"
+                msg += "The date "+str(dateInput)+" is NOT available. "
+                msg += "The date "+str(date.year)+"-"+str(date.month)+"-"+str(date.day)+" is used."
+                msg += "\n"
+                logger.warning(msg)
+            if date.year > last_year_in_nc_file:  
+                if date.day == 29 and date.month == 2 and calendar.isleap(date.year) and calendar.isleap(last_year_in_nc_file) == False:
+                    date = datetime.datetime(last_year_in_nc_file, date.month, 28)
+                else:
+                    date = datetime.datetime(last_year_in_nc_file, date.month, date.day)
+                msg  = "\n"
+                msg += "WARNING related to the netcdf file: "+str(ncFile)+" ; variable: "+str(varName)+" !!!!!!"+"\n"
+                msg += "The date "+str(dateInput)+" is NOT available. "
+                msg += "The date "+str(date.year)+"-"+str(date.month)+"-"+str(date.day)+" is used."
+                msg += "\n"
+                logger.warning(msg)
+        try:
+            idx = nc.date2index(date, f.variables['time'], calendar = f.variables['time'].calendar, \
+                                select ='exact')
+            msg = "The date "+str(date.year)+"-"+str(date.month)+"-"+str(date.day)+" is available. The 'exact' option is used while selecting netcdf time."
+            logger.debug(msg)
+        except:
+            msg = "The date "+str(date.year)+"-"+str(date.month)+"-"+str(date.day)+" is NOT available. The 'exact' option CANNOT be used while selecting netcdf time."
+            logger.debug(msg)
+            try:                                  
+                idx = nc.date2index(date, f.variables['time'], calendar = f.variables['time'].calendar, \
+                                    select = 'before')
+                msg  = "\n"
+                msg += "WARNING related to the netcdf file: "+str(ncFile)+" ; variable: "+str(varName)+" !!!!!!"+"\n"
+                msg += "The date "+str(date.year)+"-"+str(date.month)+"-"+str(date.day)+" is NOT available. The 'before' option is used while selecting netcdf time."
+                msg += "\n"
+            except:
+                idx = nc.date2index(date, f.variables['time'], calendar = f.variables['time'].calendar, \
+                                    select = 'after')
+                msg  = "\n"
+                msg += "WARNING related to the netcdf file: "+str(ncFile)+" ; variable: "+str(varName)+" !!!!!!"+"\n"
+                msg += "The date "+str(date.year)+"-"+str(date.month)+"-"+str(date.day)+" is NOT available. The 'after' option is used while selecting netcdf time."
+                msg += "\n"
+            logger.warning(msg)
+                                                  
+    idx = int(idx)                                                  
+    logger.debug('Using the date index '+str(idx))
+
+    sameClone = True
+    # check whether clone and input maps have the same attributes:
+    if cloneMapFileName != None:
+        # get the attributes of cloneMap
+        attributeClone = getMapAttributesALL(cloneMapFileName)
+        cellsizeClone = attributeClone['cellsize']
+        rowsClone = attributeClone['rows']
+        colsClone = attributeClone['cols']
+        xULClone = attributeClone['xUL']
+        yULClone = attributeClone['yUL']
+        # get the attributes of input (netCDF) 
+        cellsizeInput = f.variables['lat'][0]- f.variables['lat'][1]
+        cellsizeInput = float(cellsizeInput)
+        rowsInput = len(f.variables['lat'])
+        colsInput = len(f.variables['lon'])
+        xULInput = f.variables['lon'][0]-0.5*cellsizeInput
+        yULInput = f.variables['lat'][0]+0.5*cellsizeInput
+        # check whether both maps have the same attributes 
+        if cellsizeClone != cellsizeInput: sameClone = False
+        if rowsClone != rowsInput: sameClone = False
+        if colsClone != colsInput: sameClone = False
+        if xULClone != xULInput: sameClone = False
+        if yULClone != yULInput: sameClone = False
+
+    cropData = f.variables[varName][int(idx),:,:]       # still original data
+    factor = 1                          # needed in regridData2FinerGrid
+
+    if sameClone == False:
+        
+        logger.debug('Crop to the clone map with lower left corner (x,y): '+str(xULClone)+' , '+str(yULClone))
+        # crop to cloneMap:
+        #~ xIdxSta = int(np.where(f.variables['lon'][:] == xULClone + 0.5*cellsizeInput)[0])
+        minX    = min(abs(f.variables['lon'][:] - (xULClone + 0.5*cellsizeInput))) # ; print(minX)
+        xIdxSta = int(np.where(abs(f.variables['lon'][:] - (xULClone + 0.5*cellsizeInput)) == minX)[0])
+        xIdxEnd = int(math.ceil(xIdxSta + colsClone /(cellsizeInput/cellsizeClone)))
+        #~ yIdxSta = int(np.where(f.variables['lat'][:] == yULClone - 0.5*cellsizeInput)[0])
+        minY    = min(abs(f.variables['lat'][:] - (yULClone - 0.5*cellsizeInput))) # ; print(minY)
+        yIdxSta = int(np.where(abs(f.variables['lat'][:] - (yULClone - 0.5*cellsizeInput)) == minY)[0])
+        yIdxEnd = int(math.ceil(yIdxSta + rowsClone /(cellsizeInput/cellsizeClone)))
+        cropData = f.variables[varName][idx,yIdxSta:yIdxEnd,xIdxSta:xIdxEnd]
+
+        factor = int(round(float(cellsizeInput)/float(cellsizeClone)))
+        if factor > 1: logger.debug('Resample: input cell size = '+str(float(cellsizeInput))+' ; output/clone cell size = '+str(float(cellsizeClone)))
+
+    # convert to PCR object and close f
+    if specificFillValue != None:
+        outPCR = pcr.numpy2pcr(pcr.Scalar, \
+                  regridData2FinerGrid(factor,cropData,MV), \
+                  float(specificFillValue))
+    else:
+        outPCR = pcr.numpy2pcr(pcr.Scalar, \
+                  regridData2FinerGrid(factor,cropData,MV), \
+                  float(f.variables[varName]._FillValue))
+                  
+    #f.close();
+    f = None ; cropData = None 
+    # PCRaster object
+    return (outPCR)
+
 def netcdf2PCRobjClone(ncFile,varName,dateInput,\
                        useDoy = None,
                        cloneMapFileName  = None,\
@@ -878,7 +1099,7 @@ def writePCRmapToDir(v,outFileName,outDir):
     logger.debug('Writing a pcraster map to : '+str(fullFileName))
     pcr.report(v,fullFileName)
 
-def readPCRmapClone(v,cloneMapFileName,tmpDir,absolutePath=None,isLddMap=False,cover=None,isNomMap=False):
+def readPCRmapClone(v,cloneMapFileName,tmpDir,absolutePath=None,isLddMap=False,cover=None,isNomMap=False,isBooleanMap=False):
 	# v: inputMapFileName or floating values
 	# cloneMapFileName: If the inputMap and cloneMap have different clones,
 	#                   resampling will be done.   
@@ -895,13 +1116,14 @@ def readPCRmapClone(v,cloneMapFileName,tmpDir,absolutePath=None,isLddMap=False,c
         else:
             # resample using GDAL:
             output = tmpDir+'temp.map'
-            warp = gdalwarpPCR(v,output,cloneMapFileName,tmpDir,isLddMap,isNomMap)
+            warp = gdalwarpPCR(v,output,cloneMapFileName,tmpDir,isLddMap,isNomMap,isBooleanMap)
             # read from temporary file and delete the temporary file:
             PCRmap = pcr.readmap(output)
             if isLddMap == True: PCRmap = pcr.ifthen(pcr.scalar(PCRmap) < 10., PCRmap)
             if isLddMap == True: PCRmap = pcr.ldd(PCRmap)
             if isNomMap == True: PCRmap = pcr.ifthen(pcr.scalar(PCRmap) >  0., PCRmap)
             if isNomMap == True: PCRmap = pcr.nominal(PCRmap)
+            if isBooleanMap: PCRmap = pcr.ifthen(pcr.scalar(PCRmap) ==  1., pcr.boolean(1.0))
             if os.path.isdir(tmpDir):
                 shutil.rmtree(tmpDir)
             os.makedirs(tmpDir)
@@ -947,7 +1169,7 @@ def isSameClone(inputMapFileName,cloneMapFileName):
     if yULClone != yULInput: sameClone = False
     return sameClone
 
-def gdalwarpPCR(input,output,cloneOut,tmpDir,isLddMap=False,isNominalMap=False):
+def gdalwarpPCR(input,output,cloneOut,tmpDir,isLddMap=False,isNominalMap=False,isBooleanMap=False):
     # 19 Mar 2013 created by Edwin H. Sutanudjaja
     # all input maps must be in PCRaster maps
     # 
@@ -958,7 +1180,7 @@ def gdalwarpPCR(input,output,cloneOut,tmpDir,isLddMap=False,isNominalMap=False):
     # converting files to tif:
     co = 'gdal_translate -ot Float64 '+str(input)+' '+str(tmpDir)+'tmp_inp.tif'
     if isLddMap == True: co = 'gdal_translate -ot Int32 '+str(input)+' '+str(tmpDir)+'tmp_inp.tif'
-    if isNominalMap == True: co = 'gdal_translate -ot Int32 '+str(input)+' '+str(tmpDir)+'tmp_inp.tif'
+    if isNominalMap == True or isBooleanMap == True: co = 'gdal_translate -ot Int32 '+str(input)+' '+str(tmpDir)+'tmp_inp.tif'
     cOut,err = subprocess.Popen(co, stdout=subprocess.PIPE,stderr=open(os.devnull),shell=True).communicate()
     # 
     # get the attributes of PCRaster map:

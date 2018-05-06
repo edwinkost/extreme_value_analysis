@@ -53,6 +53,26 @@ output_folder_for_this_analysis = sys.argv[2]
 general_output_folder           = output_folder_for_this_analysis + "/" 
 
 
+# - type of files (options are: "normal"; "bias_corrected"; and "including_bias")
+type_of_files  = str(sys.argv[3])
+
+# - option for map types: *flood_inundation_volume.map or *channel_storage.map
+map_type_name  = "channel_storage.map"
+map_type_name  = str(sys.argv[4])
+
+# - option for strahler order number
+strahler_order_used = 6 # default
+try:
+    strahler_order_used = int(sys.argv[5])
+except:
+    pass
+
+# - option with first upscaling model results to 30 arc-min model
+try:
+    with_upscaling = str(sys.argv[6]) == "with_upscaling"
+except:
+    with_upscaling = False
+
 # clean any files exists on the ouput directory (this can be done for global runs)
 clean_previous_output = True
 if clean_previous_output and os.path.exists(general_output_folder): shutil.rmtree(general_output_folder)
@@ -70,6 +90,7 @@ logger.info(msg)
 #
 number_of_clone_maps = 53
 all_clone_codes = ['M%02d'%i for i in range(1,number_of_clone_maps+1,1)]
+#~ all_clone_codes = ['M09']
 #
 # - due to limited memory, we have to split the runs into several groups (assumption: a process takes maximum about 4.5 GB RAM and we will use normal nodes)
 num_of_clones_in_a_grp = np.int(np.floor(64.0 / 4.5))
@@ -86,7 +107,9 @@ for i_group in range(number_of_clone_groups):
     # - command lines for running the downscling script parallely
     cmd = ''
     for clone_code in clone_codes:
-       cmd += "python downscaling.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " "
+       cmd += "python downscaling_with_30min_option.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " " + type_of_files + " " + map_type_name + " " + str(strahler_order_used)
+       if with_upscaling:
+          cmd = cmd + " " + "with_upscaling"
        cmd = cmd + " & "
        i_clone += 1
     cmd = cmd + " wait "

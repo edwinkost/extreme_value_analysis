@@ -60,24 +60,10 @@ input_files['ldd_map_05min']    = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20
 #
 # - hydrological year type (based on the WATCH data)
 input_files['hydro_year_05min'] = "/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/hydrological_year/watch_1960-1999/hydrological_year_type.map"
+input_files['hydro_year_05min'] = sys.argv[2]
 
 # option to save/present results at the landmask region only:
 landmask_only = True
-
-# start and end years for this analysis:
-#~ # - for historical runs
-#~ str_year = 1960
-#~ end_year = 1999
-# - for the year 2030
-str_year = 2010
-end_year = 2049
-#~ # - for the year 2050
-#~ str_year = 2030
-#~ end_year = 2069
-#~ # - for the year 2080
-#~ str_year = 2060
-#~ end_year = 2099
-
 
 # output files
 output_files                    = {}
@@ -97,7 +83,7 @@ output_files                    = {}
 #~ output_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/maximum_events_merged/noresm1-m_1960-1999/"
 #
 # output folder based on the system argument
-output_folder_for_this_analysis      = sys.argv[2]
+output_folder_for_this_analysis      = sys.argv[3]
 output_files['folder']               = output_folder_for_this_analysis + "/" 
 #
 #
@@ -121,6 +107,23 @@ except:
     pass
 vos.initialize_logging(log_file_location)
 
+# start and end years for this analysis:
+#~ # - for historical runs
+#~ str_year = 1960
+#~ end_year = 1999
+#~ # - for the year 2030
+#~ str_year = 2010
+#~ end_year = 2049
+#~ # - for the year 2050
+#~ str_year = 2030
+#~ end_year = 2069
+#~ # - for the year 2080
+#~ str_year = 2060
+#~ end_year = 2099
+# - based on the system arguments:
+str_year = int(sys.argv[4])
+end_year = int(sys.argv[5])
+
 # netcdf general setup:
 netcdf_setup = {}
 netcdf_setup['format']          = "NETCDF4"
@@ -142,7 +145,8 @@ os.chdir(output_files['folder'])
 netcdf_report = outputNetCDF.OutputNetCDF()
 
 # - variables that will be reported:
-variable_names = ['channelStorage', 'floodVolume', 'dynamicFracWat']
+#~ variable_names = ['channelStorage', 'floodVolume', 'dynamicFracWat']
+variable_names = ['channelStorage', 'dynamicFracWat']
 for var_name in variable_names: 
     output_files[var_name] = {}
     # - attribute information for netcdf files
@@ -178,7 +182,7 @@ logger.info(msg)
 input_files['file_name']                           = {}
 for hydro_year in ["hydrological_year_1", "hydrological_year_2"]:
     input_files['file_name'][hydro_year]           = {} 
-    for var in ['channelStorage', 'dynamicFracWat', 'floodVolume']:
+    for var in variable_names:
         input_files['file_name'][hydro_year][var] = glob.glob(input_files['folder'] + "/" + str(hydro_year) + "/" + str(var) + "*" + str(str_year) + "_to_" + str(end_year) + "*.nc")[0]
         msg = input_files['file_name'][hydro_year][var]
         logger.info(msg)
@@ -225,7 +229,7 @@ logger.info(msg)
 #
 for i_year in range(str_year, end_year + 1):
     
-    for var in ['channelStorage', 'dynamicFracWat', 'floodVolume']:
+    for var in variable_names:
         
         msg = "Merging for the variable " + str(var) + " for the year " + str(i_year)
         logger.info(msg)
