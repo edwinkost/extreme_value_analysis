@@ -259,7 +259,7 @@ for var_name in variable_name_list:
         msg = "For the given future extreme values, obtain the return period based on the historical gumbel fit/parameters."
         logger.info(msg)
         max_return_period = 1000.
-        return_period_historical = glofris.get_return_period_gumbel(p_zero["historical"], location["historical"], scale["historical"], extreme_values["including_bias"][return_period], max_return_period)
+        return_period_historical = glofris.get_return_period_gumbel(p_zero["historical"], location["historical"], scale["historical"], extreme_values["including_bias"][return_period])
         extreme_values['return_period_historical'][return_period] = return_period_historical
         
         #~ pcr.report(return_period_historical, "return_period_historical.map")
