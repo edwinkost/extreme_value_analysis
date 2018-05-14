@@ -64,6 +64,8 @@ pcr.setclone(input_files['clone_map_05min'])
 # - cell area, ldd maps
 input_files['cell_area_05min'] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/cellsize05min.correct.map"
 input_files['ldd_map_05min'  ] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
+# - landmask
+landmask = pcr.defined(input_files['ldd_map_05min'  ])
 #
 # The gumbel fit parameters based on the annual flood maxima based on the BASELINE run: WATCH 1960-1999
 input_files["baseline"]  = {}
@@ -302,7 +304,7 @@ for var_name in variable_name_list:
             variable_name = str(return_period) + "_of_" + varDict.netcdf_short_name[var_name]
             
             # report to a pcraster map
-            pcr.report(extreme_values[bias_type][return_period], bias_type + "_" + variable_name + ".map")
+            pcr.report(pcr.ifthen(landmask, extreme_values[bias_type][return_period]), bias_type + "_" + variable_name + ".map")
         
             # put it into a dictionary
             data_dictionary[variable_name] = pcr.pcr2numpy(extreme_values[bias_type][return_period], vos.MV)
@@ -317,7 +319,7 @@ for var_name in variable_name_list:
     for return_period in return_periods:
 
         # report to a pcraster map
-        pcr.report(extreme_values['return_period_historical'][return_period], 'return_period_historical_corresponding_to' + "_" + str(return_period) + ".map")
+        pcr.report(pcr.ifthen(landmask, extreme_values['return_period_historical'][return_period]), 'return_period_historical_corresponding_to' + "_" + str(return_period) + ".map")
     
 
 
