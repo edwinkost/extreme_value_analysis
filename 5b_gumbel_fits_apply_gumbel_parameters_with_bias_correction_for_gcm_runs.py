@@ -201,6 +201,7 @@ return_periods = ["2-year", "5-year", "10-year", "25-year", "50-year", "100-year
 extreme_values = {}
 extreme_values["including_bias"] = {}
 extreme_values["bias_corrected"] = {}
+extreme_values['return_period_historical'] = {}
 #
 for var_name in variable_name_list: 
     
@@ -256,6 +257,7 @@ for var_name in variable_name_list:
         msg = "For the given future extreme values, obtain the return period based on the historical gumbel fit/parameters."
         logger.info(msg)
         return_period_historical = glofris.get_return_period_gumbel(p_zero["historical"], location["historical"], scale["historical"], extreme_values["including_bias"][return_period])
+        extreme_values['return_period_historical'][return_period] = return_period_historical
         
         #~ pcr.report(return_period_historical, "return_period_historical.map")
         #~ cmd = "aguila " + "return_period_historical.map"
@@ -271,6 +273,7 @@ for var_name in variable_name_list:
     upperTimeBound = datetime.datetime(end_year, 12, 31, 0)
     timeBounds = [lowerTimeBound, upperTimeBound]
     
+    # reporting/saving extreme values in netcdf and pcraster files
     for bias_type in ['including_bias', 'bias_corrected']:
     
         msg = "Writing extreme values to a netcdf file: " + str(netcdf_file[bias_type][var_name]['file_name'])
@@ -308,6 +311,14 @@ for var_name in variable_name_list:
         netcdf_report.dictionary_of_data_to_netcdf(netcdf_file[bias_type][var_name]['file_name'], \
                                                    data_dictionary, \
                                                    timeBounds)
+
+    # saving "return_period_historical":  the return period in present days (historical run) belonging to future extreme values
+    # - to pcraster files only
+    for return_period in return_periods:
+
+        # report to a pcraster map
+        pcr.report(extreme_values['return_period_historical'][return_period], 'return_period_historical_corresponding_to' + "_" + str(return_period) + ".map")
+    
 
 
 ###################################################################################
