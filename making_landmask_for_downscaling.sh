@@ -26,7 +26,7 @@ aguila catchment_merged_ldd_30sec.map
 # identify river basins with extreme value analysis - this will be the landmask for the downscaling process
 pcrcalc areatotal_scalar_landmask_extreme_value_analysis_catchment_merged_ldd_30sec.map = "areatotal(cover(scalar(landmask_extreme_value_analysis_05min_30sec.map), 0.0), catchment_merged_ldd_30sec.map)"
 # - only river basins with their 75% cells identified in the landmask of extreme value analysis
-pcrcalc areatotal_scalar_all_catchment_merged_ldd_30sec.map = "areatotal(scalar(1.0), catchment_merged_ldd_30sec.map)"
+pcrcalc areatotal_scalar_all_catchment_merged_ldd_30sec.map = "areatotal(cover(scalar(landmask_extreme_value_analysis_05min_30sec.map), 1.0), catchment_merged_ldd_30sec.map)"
 mapattr -p areatotal*
 aguila areatotal*
 pcrcalc landmask_downscaling_30sec.map = "if(areatotal_scalar_landmask_extreme_value_analysis_catchment_merged_ldd_30sec.map gt (0.75 * areatotal_scalar_all_catchment_merged_ldd_30sec.map), boolean(1.0))"
