@@ -28,8 +28,8 @@ aguila catchment_lddsound_05min.map
 
 # identify river basins with forcing - this will be the landmask for the extreme value analysis
 pcrcalc areatotal_scalar_landmask_forcing_catchment_lddsound_05min.map = "areatotal(cover(scalar(landmask_forcing_05min.map), 0.0), catchment_lddsound_05min.map)"
-# - only river basins with their 75% cells identified in the landmask 
-pcrcalc areatotal_scalar_all_catchment_lddsound_05min.map = "areatotal(scalar(1.0), catchment_lddsound_05min.map)"
+# - only river basins with their 75% cells identified in the landmask of forcing
+pcrcalc areatotal_scalar_all_catchment_lddsound_05min.map = "areatotal(cover(scalar(landmask_forcing_05min.map), 1.0), catchment_lddsound_05min.map)"
 mapattr -p areatotal*
 aguila areatotal*
 pcrcalc landmask_extreme_value_analysis_05min.map = "if(areatotal_scalar_landmask_forcing_catchment_lddsound_05min.map gt (0.75 * areatotal_scalar_all_catchment_lddsound_05min.map), boolean(1.0))"
