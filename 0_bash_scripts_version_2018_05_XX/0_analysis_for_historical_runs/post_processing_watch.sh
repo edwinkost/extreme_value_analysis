@@ -25,6 +25,7 @@ echo $PCRGLOBWB_OUTPUT_FOLDER
 # 1960-1999 (1980)
 python 1a_get_maximum_events.py ${PCRGLOBWB_OUTPUT_FOLDER} 1 ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/$GCM_CAPITAL_LETTERS/maximum_events/ 1960 1999 &
 python 1a_get_maximum_events.py ${PCRGLOBWB_OUTPUT_FOLDER} 2 ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/$GCM_CAPITAL_LETTERS/maximum_events/ 1960 1999 &
+wait
 #~ 
 #~ # derive hydro year type (only for the baseline run)
 #~ NOT YET
