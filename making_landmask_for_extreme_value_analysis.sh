@@ -33,6 +33,7 @@ pcrcalc areatotal_scalar_all_catchment_lddsound_05min.map = "areatotal(cover(sca
 mapattr -p areatotal*
 aguila areatotal*
 pcrcalc landmask_extreme_value_analysis_05min.map = "if(areatotal_scalar_landmask_forcing_catchment_lddsound_05min.map gt (0.75 * areatotal_scalar_all_catchment_lddsound_05min.map), boolean(1.0))"
+pcrcalc landmask_extreme_value_analysis_05min.map = "if(defined(lddsound_05min.map), landmask_extreme_value_analysis_05min.map) "
 mapattr -p landmask_extreme_value_analysis_05min.map
 aguila landmask_extreme_value_analysis_05min.map areatotal*
 

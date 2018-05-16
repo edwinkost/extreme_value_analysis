@@ -30,5 +30,6 @@ pcrcalc areatotal_scalar_all_catchment_merged_ldd_30sec.map = "areatotal(cover(s
 mapattr -p areatotal*
 aguila areatotal*
 pcrcalc landmask_downscaling_30sec.map = "if(areatotal_scalar_landmask_extreme_value_analysis_catchment_merged_ldd_30sec.map gt (0.75 * areatotal_scalar_all_catchment_merged_ldd_30sec.map), boolean(1.0))"
+pcrcalc landmask_downscaling_30sec.map = "if(defined(merged_ldd_30sec.map), landmask_downscaling_30sec.map)"
 mapattr -p landmask_downscaling_30sec.map
 aguila landmask_downscaling_30sec.map areatotal*
