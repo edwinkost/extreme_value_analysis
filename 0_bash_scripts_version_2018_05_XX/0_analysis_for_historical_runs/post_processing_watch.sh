@@ -27,25 +27,25 @@ python 1a_get_maximum_events.py ${PCRGLOBWB_OUTPUT_FOLDER} 1 ${MAIN_OUTPUT_FOLDE
 python 1a_get_maximum_events.py ${PCRGLOBWB_OUTPUT_FOLDER} 2 ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/$GCM_CAPITAL_LETTERS/maximum_events/ 1960 1999 &
 #~ 
 #~ # derive hydro year type (only for the baseline run)
-#~ DONE
+#~ NOT YET
 #~ 
 #~ 
 #~ ###################################################################################
 #~ 
 #~ # get annual maximum events based on a defined/given hydrological year tipe map
-#~ DONE 
+#~ NOT YET 
 #~ 
 #~ 
 #~ ###################################################################################
 #~ 
 #~ # calculate maximum surface water level (river depth)
-#~ DONE 
+#~ NOT YET 
 #~ 
 #~ 
 #~ ###################################################################################
 #~ 
 #~ # gumbel fits for annual flood maxima variables: ['channelStorage', 'surfaceWaterLevel']
-#~ DONE 
+#~ NOT YET 
 #~ 
 #~ 
 #~ ###################################################################################
