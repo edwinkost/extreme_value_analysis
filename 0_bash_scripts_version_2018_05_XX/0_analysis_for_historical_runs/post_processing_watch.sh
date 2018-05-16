@@ -23,8 +23,8 @@ echo $PCRGLOBWB_OUTPUT_FOLDER
 
 # get maximum events for the hydrological year types 1 and 2
 # 1960-1999 (1980)
-python 1a_get_maximum_events.py ${PCRGLOBWB_OUTPUT_FOLDER} 1 ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/$GCM_CAPITAL_LETTERS/maximum_events/ 1960 1999 &
-python 1a_get_maximum_events.py ${PCRGLOBWB_OUTPUT_FOLDER} 2 ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/$GCM_CAPITAL_LETTERS/maximum_events/ 1960 1999 &
+python 1a_get_maximum_events.py ${PCRGLOBWB_OUTPUT_FOLDER} 1 ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/$GCM_CAPITAL_LETTERS/maximum_events/ 1960 1999 channelStorage_monthMax_output_1958-01-31_to_2001-12-31.nc dynamicFracWat_monthMax_output_1958-01-31_to_2001-12-31.nc &
+python 1a_get_maximum_events.py ${PCRGLOBWB_OUTPUT_FOLDER} 2 ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/$GCM_CAPITAL_LETTERS/maximum_events/ 1960 1999 channelStorage_monthMax_output_1958-01-31_to_2001-12-31.nc dynamicFracWat_monthMax_output_1958-01-31_to_2001-12-31.nc &
 wait
 #~ 
 #~ # derive hydro year type (only for the baseline run)

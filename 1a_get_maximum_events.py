@@ -43,7 +43,7 @@ pcrglobwb_result_folder                  = os.path.abspath(sys.argv[1])
 input_files['folder']                    = pcrglobwb_result_folder + "/"
 input_files['channelStorageMonthMax']    = input_files['folder'] + "channelStorage_monthMax_output_2006-01-31_to_2099-12-31.nc"                                 # unit: m3
 input_files['dynamicFracWatMonthMax']    = input_files['folder'] + "dynamicFracWat_monthMax_output_2006-01-31_to_2099-12-31.nc"                                 # unit: dimensionless
-#~ input_files['floodVolumeMonthMax']       = input_files['folder'] + "floodVolume_monthMax_output_2006-01-31_to_2099-12-31.nc"                                    # unit: m3
+#~ input_files['floodVolumeMonthMax']    = input_files['folder'] + "floodVolume_monthMax_output_2006-01-31_to_2099-12-31.nc"                                    # unit: m3
 #
 #~ # - cru-ts3.23_era-20c_kinematicwave 
 #~ pcrglobwb_result_folder                  = os.path.abspath(sys.argv[1])
@@ -122,6 +122,11 @@ vos.initialize_logging(log_file_location)
 str_year = int(sys.argv[4])
 end_year = int(sys.argv[5])
 
+# for historical runs, you have to specify the input netcdf iles
+if str_year <= 2005:
+    input_files['channelStorageMonthMax']    = input_files['folder'] + sys.argv[6]                                                    # unit: m3
+    input_files['dynamicFracWatMonthMax']    = input_files['folder'] + sys.argv[7]                                                    # unit: dimensionless
+    #~ input_files['floodVolumeMonthMax']    = input_files['folder'] + "floodVolume_monthMax_output_2006-01-31_to_2099-12-31.nc"      # unit: m3
 
 # STEP 1: Using cdo shiftime to shift netcf file
 msg = "Shifting netcdf time series to match the hydrological year " + str(type_of_hydrological_year) + " "
