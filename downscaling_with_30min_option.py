@@ -30,17 +30,22 @@ type_of_files        = str(sys.argv[5])
 # - option for map types: *flood_inundation_volume.map or *channel_storage.map
 map_type_name        = "channel_storage.map"
 map_type_name        = str(sys.argv[6])
-
+#
+# - bankfull capacity (5 arcmin pcraster map, volume unit: m3) 
+#~ input_surface_water_bankfull_capacity_file_name = "/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/extreme_values/watch_1960-1999/2-year_of_channel_storage_used_as_bankfull_capacity.map"
+input_surface_water_bankfull_capacity_file_name    = str(sys.argv[7])
+#
 # - option for strahler order number
 strahler_order_number = 6 # default
 try:
-    strahler_order_number = int(sys.argv[7])
+    strahler_order_number = int(sys.argv[8])
 except:
     pass
-
+#
 # - option with first upscaling model results to 30 arc-min model
+with_upscaling = False
 try:
-    with_upscaling = str(sys.argv[8]) == "with_upscaling"
+    with_upscaling = str(sys.argv[9]) == "with_upscaling"
 except:
     with_upscaling = False
 
@@ -110,10 +115,10 @@ cell_area_file = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routin
 
 
 # bankfull capacity (5 arcmin, volume: m3)
-surface_water_bankfull_capacity_file_name = None
-surface_water_bankfull_capacity_file_name = "/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/extreme_values/watch_1960-1999/2-year_of_channel_storage.map"
-surface_water_bankfull_capacity_file_name = "/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/extreme_values/watch_1960-1999/2-year_of_channel_storage_used_as_bankfull_capacity.map"
-
+#~ surface_water_bankfull_capacity_file_name = None
+#~ surface_water_bankfull_capacity_file_name = "/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/extreme_values/watch_1960-1999/2-year_of_channel_storage.map"
+#~ surface_water_bankfull_capacity_file_name = "/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/extreme_values/watch_1960-1999/2-year_of_channel_storage_used_as_bankfull_capacity.map"
+surface_water_bankfull_capacity_file_name = input_surface_water_bankfull_capacity_file_name
 
 # read all extreme value maps (low resolution maps), resample them, and save them to the output folder
 msg = "Resampling extreme value maps."
@@ -382,11 +387,22 @@ logger.info(msg)
 pcr.setclone(clone_map_file)
  
 
-# using the landmask as defined from 5 arc-min model results:
-msg = "Set the (high resolution) landmask based on the file: " + str(landmask_map_file)
+#~ # using the landmask as defined from 5 arc-min model results:                                    - NOT USED, since May 2018
+#~ msg = "Set the (high resolution) landmask based on the file: " + str(landmask_map_file)
+#~ logger.info(msg)
+#~ landmask_30sec = pcr.cover(\
+                 #~ vos.readPCRmapClone(landmask_map_file, \
+                                     #~ clone_map_file, \
+                                     #~ tmp_folder, \
+                                     #~ None, False, None, False, True), pcr.boolean(0.0))
+
+
+# using the following landmask (defined to exclude river basins with limited output of PCR-GLOBWB / limited output of extreme value analyses)
+landmask_30sec_file = "/projects/0/aqueduct/users/edwinsut/data/landmasks_for_extreme_value_analysis_and_downscaling/landmask_downscaling/landmask_downscaling_30sec.map"
+msg = "Set the (high resolution) landmask based on the file: " + str(landmask_30sec_file)
 logger.info(msg)
 landmask_30sec = pcr.cover(\
-                 vos.readPCRmapClone(landmask_map_file, \
+                 vos.readPCRmapClone(landmask_30sec_file, \
                                      clone_map_file, \
                                      tmp_folder, \
                                      None, False, None, False, True), pcr.boolean(0.0))
@@ -426,7 +442,7 @@ ldd_map_high_resolution = vos.readPCRmapClone(ldd_map_high_resolution_file_name,
                                               clone_map_file, \
                                               tmp_folder, \
                                               None, True, None, False)
-#~ ldd_map_high_resolution = pcr.cover(ldd_map_high_resolution, pcr.ldd(5))	                                 # DON'T DO THIS
+#~ ldd_map_high_resolution = pcr.cover(ldd_map_high_resolution, pcr.ldd(5))	                        # NOT NEEDED and DON'T DO THIS (as this can make unrealistic flood transfer to neighbouring islands)
 ldd_map_high_resolution = pcr.ifthen(landmask_30sec, ldd_map_high_resolution)
 ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
 ldd_map_high_resolution = pcr.lddrepair(ldd_map_high_resolution)
@@ -439,7 +455,7 @@ if masking_out_reservoirs:
     ldd_map_high_resolution = pcr.ifthenelse(reservoirs_30sec, pcr.ldd(5), ldd_map_high_resolution)
     #
     #~ # alternative 2: just ignore ldd values at reservoirs
-    #~ non_reservoirs = pcr.ifthenelse(reservoirs_30sec, pcr.boolean(0.0), pcr.boolean(1.0))
+    #~ non_reservoirs = pcr.ifthenelse(reservoirs_30sec, pcr.boolean(0.0), pcr.boolean(1.0))        # NOT USED
     #~ ldd_map_high_resolution = pcr.ifthen(non_reservoirs, ldd_map_high_resolution)
     #
     ldd_map_high_resolution = pcr.lddrepair(pcr.ldd(ldd_map_high_resolution))
@@ -455,7 +471,7 @@ dem_map_high_resolution_file_name = "/projects/0/dfguu/users/edwinhs/data/HydroS
 #~ # -- using the gtopo30 dem
 #~ dem_map_high_resolution_file_name = "/projects/0/dfguu/data/hydroworld/basedata/hydrography/GTOPO30/edwin_process/gtopo30_full.map"
 #
-# TODO: using the merged DEMs from HydroSHEDS and Deltares/GTOPO30
+# TODO: using the DEMs shared by Prof. Lehner (including 30 arcsec file)
 #
 dem_map_high_resolution = vos.readPCRmapClone(dem_map_high_resolution_file_name, \
                                               clone_map_file, \
@@ -479,7 +495,7 @@ msg = "The strahler order number used for this downscaling method: " + str(strah
 logger.info(msg)
 pcr.report(stream_order_map, "high_resolution_stream_order.map")
 #
-# TODO: ignore smaller rivers (< 10 m)
+# TODO: Shall we ignore smaller rivers (< 10 m)?
 
 
 # execute downscaling scripts for every return period

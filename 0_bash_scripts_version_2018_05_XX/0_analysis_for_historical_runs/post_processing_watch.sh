@@ -35,10 +35,10 @@ echo $PCRGLOBWB_OUTPUT_FOLDER
 #~ ###################################################################################
 
 
-#~ # derive hydro year type (only for the baseline run)
+#~ # derive hydro year type (ONLY FOR WATCH (baseline) RUN)
 #~ # 
 #~ # based on the period 1960-1999
-#~ python 1b_for_baseline_only_derive_hydrological_year_type.py ${PCRGLOBWB_OUTPUT_FOLDER} discharge_monthAvg_output_1958-01-31_to_2001-12-31.nc 1960 1999 ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}//hydrological_year_types_1960-1999/ &
+#~ python 1b_for_baseline_only_derive_hydrological_year_type.py ${PCRGLOBWB_OUTPUT_FOLDER} discharge_monthAvg_output_1958-01-31_to_2001-12-31.nc 1960 1999 ${MAIN_OUTPUT_FOLDER}/historical/1960-1999/WATCH/hydrological_year_types_1960-1999/ &
 #~ # 
 #~ wait
 #~ # 
@@ -49,7 +49,7 @@ echo $PCRGLOBWB_OUTPUT_FOLDER
 #~ # get annual maximum events based on a defined/given hydrological year tipe map
 #~ #
 #~ # 1960-1999 (1980)
-#~ python 2_merge_two_hydrological_year_result.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}//hydrological_year_types_1960-1999/hydrological_year_type.map ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/merged/ 1960 1999 &
+#~ python 2_merge_two_hydrological_year_result.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/ ${MAIN_OUTPUT_FOLDER}/historical/1960-1999/WATCH/hydrological_year_types_1960-1999/hydrological_year_type.map ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/merged/ 1960 1999 &
 #~ # 
 #~ wait
 #~ # 
@@ -97,16 +97,21 @@ python 5a_gumbel_fits_apply_gumbel_parameters_without_bias_correction_for_histor
 ###################################################################################
 
 
-# set the bankfull capacity for extreme value analysis
+# set the (channel storage) bankfull capacity for downscaling (NOTE: FOR WATCH ONLY)	
+#
+cp -r ${MAIN_OUTPUT_FOLDER}/historical/1960-1999/WATCH/extreme_values/channel_storage/2-year_of_channel_storage.map ${MAIN_OUTPUT_FOLDER}/historical/1960-1999/WATCH/extreme_values/channel_storage/2-year_of_channel_storage_used_as_bankfull_capacity.map
+#
+#
+###################################################################################
 
 
-#~ # derive/downscale flood inundation maps at 30 arc-second resolution
+# derive/downscale flood inundation maps at 30 arc-second resolution
+#
+# 1960-1999 (1980) 
+python 6_downscaling_parallel.py $EXTREME_VALUE_INPUT_FOLDER $UNMERGED_MAP_OUTPUT_FOLDER $TYPE_OF_EXTREME_VALUE_FILE channel_storage.map ${MAIN_OUTPUT_FOLDER}/historical/1960-1999/WATCH/extreme_values/channel_storage/2-year_of_channel_storage_used_as_bankfull_capacity.map 6
+#~ # merging all downscaled maps
 #~ NOT YET
-
-#~ # merging all downscaled map
-#~ DONE
-
-
+#
 ###################################################################################
 
 
