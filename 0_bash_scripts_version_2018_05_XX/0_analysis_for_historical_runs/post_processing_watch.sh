@@ -85,24 +85,24 @@ echo $PCRGLOBWB_OUTPUT_FOLDER
 ###################################################################################
 
 
-# apply gumbel parameters without/with and with bias correction, for annual flood maxima variables: ['channelStorage', 'surfaceWaterLevel']
-#
-# 1960-1999 (1980) 
-# - without bias correction for the variables ['channelStorage'] - this should be without parallelization as this consumes huge memory
-python 5a_gumbel_fits_apply_gumbel_parameters_without_bias_correction_for_historical_and_baseline_runs.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/gumbel_fits/channel_storage/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/gumbel_fits/surface_water_level/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/extreme_values/channel_storage/ 1960 1999 None channelStorage
-# - without bias correction for the variables ['surfaceWaterLevel'] - this should be without parallelization as this consumes huge memory
-python 5a_gumbel_fits_apply_gumbel_parameters_without_bias_correction_for_historical_and_baseline_runs.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/gumbel_fits/channel_storage/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/gumbel_fits/surface_water_level/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/extreme_values/surface_water_level/ 1960 1999 surface_water_level_${RCP_CODE}_${GCM_CONVENTION_NAME}_1980 surfaceWaterLevel
-#
-#
-###################################################################################
+#~ # apply gumbel parameters without/with and with bias correction, for annual flood maxima variables: ['channelStorage', 'surfaceWaterLevel']
+#~ #
+#~ # 1960-1999 (1980) 
+#~ # - without bias correction for the variables ['channelStorage'] - this should be without parallelization as this consumes huge memory
+#~ python 5a_gumbel_fits_apply_gumbel_parameters_without_bias_correction_for_historical_and_baseline_runs.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/gumbel_fits/channel_storage/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/gumbel_fits/surface_water_level/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/extreme_values/channel_storage/ 1960 1999 None channelStorage
+#~ # - without bias correction for the variables ['surfaceWaterLevel'] - this should be without parallelization as this consumes huge memory
+#~ python 5a_gumbel_fits_apply_gumbel_parameters_without_bias_correction_for_historical_and_baseline_runs.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/gumbel_fits/channel_storage/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/gumbel_fits/surface_water_level/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/extreme_values/surface_water_level/ 1960 1999 surface_water_level_${RCP_CODE}_${GCM_CONVENTION_NAME}_1980 surfaceWaterLevel
+#~ #
+#~ #
+#~ ###################################################################################
 
 
-# set the (channel storage) bankfull capacity for downscaling (NOTE: FOR WATCH ONLY)	
-#
-cp -r ${MAIN_OUTPUT_FOLDER}/historical/1960-1999/WATCH/extreme_values/channel_storage/2-year_of_channel_storage.map ${MAIN_OUTPUT_FOLDER}/historical/1960-1999/WATCH/extreme_values/channel_storage/2-year_of_channel_storage_used_as_bankfull_capacity.map
-#
-#
-###################################################################################
+#~ # set the (channel storage) bankfull capacity for downscaling (NOTE: FOR WATCH ONLY)	
+#~ #
+#~ cp -r ${MAIN_OUTPUT_FOLDER}/historical/1960-1999/WATCH/extreme_values/channel_storage/2-year_of_channel_storage.map ${MAIN_OUTPUT_FOLDER}/historical/1960-1999/WATCH/extreme_values/channel_storage/2-year_of_channel_storage_used_as_bankfull_capacity.map
+#~ #
+#~ #
+#~ ###################################################################################
 
 
 # derive/downscale flood inundation maps at 30 arc-second resolution
