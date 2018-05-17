@@ -87,9 +87,8 @@ echo $PCRGLOBWB_OUTPUT_FOLDER
 
 # apply gumbel parameters without/with and with bias correction, for annual flood maxima variables: ['channelStorage', 'surfaceWaterLevel']
 #
-# 1960-1999 (1980) - without bias correction for the variables ['channelStorage', 'surfaceWaterLevel']
-#
-python 5a_gumbel_fits_apply_gumbel_parameters_without_bias_correction_for_historical_and_baseline_runs.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/gumbel_fits/channel_storage/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/gumbel_fits/surface_water_level/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/extreme_values/ 1960 1999 surface_water_level_historical_000000000WATCH_1980 &
+# 1960-1999 (1980) - without bias correction for the variables ['channelStorage'] - this should be without parallelization as this consumes huge memory
+python 5a_gumbel_fits_apply_gumbel_parameters_without_bias_correction_for_historical_and_baseline_runs.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/gumbel_fits/channel_storage/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/gumbel_fits/surface_water_level/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/extreme_values/ 1960 1999 None channelStorage
 #
 wait
 # 
