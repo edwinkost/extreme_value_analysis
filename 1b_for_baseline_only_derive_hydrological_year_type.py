@@ -96,7 +96,7 @@ logger.info(msg)
 # - cdo selyear
 inp_file = input_files['dischargeMonthAvg']
 out_file = output_files['folder'] + "/monthly_discharge" + "_" + str(str_year) + "_to_" + str(end_year) + ".nc"
-cmd = "cdo selyear," + str(str_year) + "/" + str(end_year) + " " + inp_file + " " + out_file
+cmd = "cdo -L -f nc4 -z zip -selyear," + str(str_year) + "/" + str(end_year) + " " + inp_file + " " + out_file
 print(""); print(cmd); os.system(cmd); print("")
 
 
@@ -106,7 +106,7 @@ logger.info(msg)
 # - cdo yearmax
 inp_file = out_file
 out_file = inp_file + "_climatology.nc"
-cmd = "cdo ymonavg " + inp_file + " " + out_file
+cmd = "cdo -L -f nc4 -z zip -ymonavg " + inp_file + " " + out_file
 print(""); print(cmd); os.system(cmd); print("")
 input_files['climatologyDischargeMonthAvg'] = out_file
 
@@ -117,13 +117,13 @@ logger.info(msg)
 # - cdo timmax
 inp_file = input_files['climatologyDischargeMonthAvg']
 out_file = inp_file + "_climatology_maximum.nc"
-cmd = "cdo timmax " + inp_file + " " + out_file
+cmd = "cdo -L -f nc4 -z zip timmax " + inp_file + " " + out_file
 print(""); print(cmd); os.system(cmd); print("")
 input_files['maximumClimatologyDischargeMonthAvg'] = out_file
 # - cdo timavg
 inp_file = input_files['climatologyDischargeMonthAvg']
 out_file = inp_file + "_climatology_average.nc"
-cmd = "cdo timavg " + inp_file + " " + out_file
+cmd = "cdo -L -f nc4 -z zip -timavg " + inp_file + " " + out_file
 print(""); print(cmd); os.system(cmd); print("")
 input_files['averageClimatologyDischargeMonthAvg'] = out_file
 
