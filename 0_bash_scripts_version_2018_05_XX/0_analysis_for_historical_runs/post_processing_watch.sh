@@ -108,7 +108,7 @@ cp -r ${MAIN_OUTPUT_FOLDER}/historical/1960-1999/WATCH/extreme_values/channel_st
 # derive/downscale flood inundation maps at 30 arc-second resolution
 #
 # 1960-1999 (1980) 
-python 6_downscaling_parallel.py $EXTREME_VALUE_INPUT_FOLDER $UNMERGED_MAP_OUTPUT_FOLDER $TYPE_OF_EXTREME_VALUE_FILE channel_storage.map ${MAIN_OUTPUT_FOLDER}/historical/1960-1999/WATCH/extreme_values/channel_storage/2-year_of_channel_storage_used_as_bankfull_capacity.map 6
+python 6_downscaling_parallel.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/extreme_values/channel_storage/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/inundation_30sec/before_merged/ channel_storage.map ${MAIN_OUTPUT_FOLDER}/historical/1960-1999/WATCH/extreme_values/channel_storage/2-year_of_channel_storage_used_as_bankfull_capacity.map 6
 #~ # merging all downscaled maps
 #~ NOT YET
 #
