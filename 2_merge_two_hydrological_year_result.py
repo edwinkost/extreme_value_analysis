@@ -156,11 +156,12 @@ for var_name in variable_names:
     output_files[var_name]['comment']           = varDict.comment[var_name]               
     output_files[var_name]['description']       = varDict.description[var_name]
     # - add more information 
-    if output_files[var_name]['long_name']   == None: output_files[var_name]['long_name']   = output_files[var_name]['short_name']
+    if output_files[var_name]['long_name']   == None: output_files[var_name]['long_name']  = output_files[var_name]['short_name']
     if output_files[var_name]['comment']     == None: output_files[var_name]['comment'] = ""
     output_files[var_name]['institution']       = netcdf_setup['institution']
     output_files[var_name]['title'      ]       = netcdf_setup['title'      ]
     output_files[var_name]['created by' ]       = netcdf_setup['created by' ]
+    output_files[var_name]['created on' ]       = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     if output_files[var_name]['description'] == None: output_files[var_name]['description'] = ""
     output_files[var_name]['description']       = netcdf_setup['description'] + " " + output_files[var_name]['description']
     output_files[var_name]['source'     ]       = netcdf_setup['source'     ]
