@@ -352,8 +352,8 @@ for i_return_period in range(0, len(return_periods)):
     #~ # masking out permanent water bodies
     #~ surface_water_level = pcr.ifthen(non_permanent_water_bodies, surface_water_level)
 
-    # report in pcraster maps
-    pcr.report(surface_water_level, surface_water_level_file_name + ".masked_out.map")
+    #~ # report in pcraster maps - this has been done above
+    #~ pcr.report(surface_water_level, surface_water_level_file_name + ".masked_out.map")
     
     # write to netcdf files
     netcdf_report.data_to_netcdf(file_name, variable_name, pcr.pcr2numpy(surface_water_level, vos.MV), timeBounds, timeStamp = None, posCnt = 0)
