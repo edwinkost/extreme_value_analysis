@@ -57,44 +57,45 @@ echo $PCRGLOBWB_OUTPUT_FOLDER
 #~ ###################################################################################
 
 
-# calculate maximum surface water level (river depth)
-#
-# 1960-1999 (1980)
-python 3_calculate_maximum_river_depth_without_upscaling.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/merged/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/surface_water_level_maximum/ 1960 1999 &
-# 
-wait
-#
-# 
-###################################################################################
-
-
-# gumbel fits for annual flood maxima variables: ['channelStorage', 'surfaceWaterLevel']
-#
-# 1960-1999 (1980)
-#
-# gumbel fits for the annual flood maxima variable 'channelStorage'
-python 4_gumbel_fits_get_gumbel_parameters.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/merged/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/surface_water_level_maximum/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-2099/${GCM_CAPITAL_LETTERS}/gumbel_fits/channel_storage/ 1960 1999 channelStorage &
-# 
-# gumbel fits for the annual flood maxima variable 'surfaceWaterLevel'
-python 4_gumbel_fits_get_gumbel_parameters.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/merged/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/surface_water_level_maximum/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-2099/${GCM_CAPITAL_LETTERS}/gumbel_fits/surface_water_level/ 1960 1999 surfaceWaterLevel &
-# 
-wait
-# 
-#
-# 
-#####################################################################################################
-
-
-#~ 
-#~ 
+#~ # calculate maximum surface water level (river depth)
+#~ #
+#~ # 1960-1999 (1980)
+#~ python 3_calculate_maximum_river_depth_without_upscaling.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/merged/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/surface_water_level_maximum/ 1960 1999 &
+#~ # 
+#~ wait
+#~ #
+#~ # 
 #~ ###################################################################################
 
 
-#~ # apply gumbel parameters without/with and with bias correction, for annual flood maxima variables: ['channelStorage', 'surfaceWaterLevel']
-#~ python  5a_gumbel_fits_apply_gumbel_parameters_without_bias_correction_for_historical_and_baseline_runs.py "/scratch-shared/edwinsut/flood_analyzer_analysis_june_2017/watch/1960-1999/gumbel_fits/" "/scratch-shared/edwinsut/flood_analyzer_analysis_may_2018/historical/1960-1999/WATCH/extreme_values/" 1960 1999 surface_water_level_historical_000000000WATCH_1980
-
-
+#~ # gumbel fits for annual flood maxima variables: ['channelStorage', 'surfaceWaterLevel']
+#~ #
+#~ # 1960-1999 (1980)
+#~ #
+#~ # gumbel fits for the annual flood maxima variable 'channelStorage'
+#~ python 4_gumbel_fits_get_gumbel_parameters.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/merged/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/surface_water_level_maximum/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/gumbel_fits/channel_storage/ 1960 1999 channelStorage &
+#~ # 
+#~ # gumbel fits for the annual flood maxima variable 'surfaceWaterLevel'
+#~ python 4_gumbel_fits_get_gumbel_parameters.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/merged/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/surface_water_level_maximum/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/gumbel_fits/surface_water_level/ 1960 1999 surfaceWaterLevel &
+#~ # 
+#~ wait
+#~ # 
+#~ #
+#~ # 
 ###################################################################################
+
+
+# apply gumbel parameters without/with and with bias correction, for annual flood maxima variables: ['channelStorage', 'surfaceWaterLevel']
+#
+# 1960-1999 (1980) - without bias correction for ['channelStorage', 'surfaceWaterLevel']
+#
+python 5a_gumbel_fits_apply_gumbel_parameters_without_bias_correction_for_historical_and_baseline_runs.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/gumbel_fits/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/gumbel_fits/extreme_values/ 1960 1999 surface_water_level_historical_000000000WATCH_1980 &
+#
+wait
+# 
+#
+###################################################################################
+
 
 #~ # derive/downscale flood inundation maps at 30 arc-second resolution
 #~ NOT YET
