@@ -34,21 +34,21 @@ echo $PCRGLOBWB_OUTPUT_FOLDER
 #~ ###################################################################################
 
 
-# derive hydro year type (only for the baseline run)
+#~ # derive hydro year type (only for the baseline run)
+#~ # 
+#~ # based on the period 1960-1999
+#~ python 1b_for_baseline_only_derive_hydrological_year_type.py ${PCRGLOBWB_OUTPUT_FOLDER} discharge_monthAvg_output_1958-01-31_to_2001-12-31.nc 1960 1999 ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}//hydrological_year_types_1960-1999/ &
+#~ wait
+#~ # 
+#~ # 
+#~ ###################################################################################
+
+
+# get annual maximum events based on a defined/given hydrological year tipe map
+# 1960-1999 (1980)
+python 2_merge_two_hydrological_year_result.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}//hydrological_year_types_1960-1999/hydrological_year_type.map ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/2060-2099/${GCM_CAPITAL_LETTERS}/maximum_events/merged/ 1960 1999 &
 # 
-# based on the period 1960-1999
-python 1b_for_baseline_only_derive_hydrological_year_type.py ${PCRGLOBWB_OUTPUT_FOLDER} discharge_monthAvg_output_1958-01-31_to_2001-12-31.nc 1960 1999 ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}//hydrological_year_types_1960-1999/ &
-wait
 # 
-# 
-###################################################################################
-
-
-#~ # get annual maximum events based on a defined/given hydrological year tipe map
-#~ # 1960-1999 (1980)
-#~ python 2_merge_two_hydrological_year_result.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/ "/projects/0/aqueduct/users/edwinsut/data/hydrological_year/watch_1960-1999/hydrological_year_type.map" ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/2060-2099/$GCM_CAPITAL_LETTERS/maximum_events/merged/ 1960 1999 &
-
-
 ###################################################################################
 
 
