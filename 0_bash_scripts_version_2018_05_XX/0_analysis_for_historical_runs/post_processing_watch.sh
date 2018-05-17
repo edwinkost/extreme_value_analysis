@@ -28,6 +28,7 @@ echo $PCRGLOBWB_OUTPUT_FOLDER
 #~ # 1960-1999 (1980)
 #~ python 1a_get_maximum_events.py ${PCRGLOBWB_OUTPUT_FOLDER} 1 ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/ 1960 1999 channelStorage_monthMax_output_1958-01-31_to_2001-12-31.nc dynamicFracWat_monthMax_output_1958-01-31_to_2001-12-31.nc &
 #~ python 1a_get_maximum_events.py ${PCRGLOBWB_OUTPUT_FOLDER} 2 ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/ 1960 1999 channelStorage_monthMax_output_1958-01-31_to_2001-12-31.nc dynamicFracWat_monthMax_output_1958-01-31_to_2001-12-31.nc &
+#~ # 
 #~ wait
 #~ # 
 #~ # 
@@ -38,33 +39,36 @@ echo $PCRGLOBWB_OUTPUT_FOLDER
 #~ # 
 #~ # based on the period 1960-1999
 #~ python 1b_for_baseline_only_derive_hydrological_year_type.py ${PCRGLOBWB_OUTPUT_FOLDER} discharge_monthAvg_output_1958-01-31_to_2001-12-31.nc 1960 1999 ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}//hydrological_year_types_1960-1999/ &
+#~ # 
 #~ wait
 #~ # 
 #~ # 
 #~ ###################################################################################
 
 
-# get annual maximum events based on a defined/given hydrological year tipe map
-# 1960-1999 (1980)
-python 2_merge_two_hydrological_year_result.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}//hydrological_year_types_1960-1999/hydrological_year_type.map ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/merged/ 1960 1999 &
-# 
-# 
-###################################################################################
+#~ # get annual maximum events based on a defined/given hydrological year tipe map
+#~ #
+#~ # 1960-1999 (1980)
+#~ python 2_merge_two_hydrological_year_result.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}//hydrological_year_types_1960-1999/hydrological_year_type.map ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/merged/ 1960 1999 &
+#~ # 
+#~ wait
+#~ # 
+#~ # 
+#~ ###################################################################################
 
 
-
-
-
-
-
-
-
-#~ 
 #~ # calculate maximum surface water level (river depth)
-#~ NOT YET 
-#~ 
+#~ #
+#~ # 1960-1999 (1980)
+python 3_calculate_maximum_river_depth_without_upscaling.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/merged/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/surface_water_level_maximum/ 1960 1999 &
+#~ # 
+wait
+#
 #~ 
 #~ ###################################################################################
+
+
+
 #~ 
 #~ # gumbel fits for annual flood maxima variables: ['channelStorage', 'surfaceWaterLevel']
 #~ NOT YET 
