@@ -57,21 +57,34 @@ echo $PCRGLOBWB_OUTPUT_FOLDER
 #~ ###################################################################################
 
 
-#~ # calculate maximum surface water level (river depth)
-#~ #
-#~ # 1960-1999 (1980)
+# calculate maximum surface water level (river depth)
+#
+# 1960-1999 (1980)
 python 3_calculate_maximum_river_depth_without_upscaling.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/merged/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/surface_water_level_maximum/ 1960 1999 &
-#~ # 
+# 
 wait
 #
-#~ 
-#~ ###################################################################################
+# 
+###################################################################################
 
 
+# gumbel fits for annual flood maxima variables: ['channelStorage', 'surfaceWaterLevel']
+#
+# 1960-1999 (1980)
+#
+# gumbel fits for the annual flood maxima variable 'channelStorage'
+python 4_gumbel_fits_get_gumbel_parameters.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/merged/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/surface_water_level_maximum/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-2099/${GCM_CAPITAL_LETTERS}/gumbel_fits/channel_storage/ 1960 1999 channelStorage &
+# 
+# gumbel fits for the annual flood maxima variable 'surfaceWaterLevel'
+python 4_gumbel_fits_get_gumbel_parameters.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/merged/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/maximum_events/surface_water_level_maximum/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-2099/${GCM_CAPITAL_LETTERS}/gumbel_fits/surface_water_level/ 1960 1999 surfaceWaterLevel &
+# 
+wait
+# 
+#
+# 
+#####################################################################################################
 
-#~ 
-#~ # gumbel fits for annual flood maxima variables: ['channelStorage', 'surfaceWaterLevel']
-#~ NOT YET 
+
 #~ 
 #~ 
 #~ ###################################################################################
