@@ -1,7 +1,7 @@
 
 set -x
 
-#####################################################################################################
+###################################################################################
 #
 # Set the following variables:
 #
@@ -17,8 +17,9 @@ GCM_CAPITAL_LETTERS=WATCH
 PCRGLOBWB_OUTPUT_FOLDER=/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_oct_nov/pcrglobwb_4_land_covers_edwin_parameter_set_watch_kinematicwave/no_correction/non-natural/merged_1958_to_2001/global/netcdf/
 #
 echo $PCRGLOBWB_OUTPUT_FOLDER
-#
-#####################################################################################################
+# 
+# 
+###################################################################################
 
 
 
