@@ -291,8 +291,11 @@ nrRows = int((latMax-latMin)/deltaLat)
 nrCols = int((lonMax-lonMin)/deltaLon)
 # - make and set the clone map
 tempCloneMap = outputDir+'/temp_clone.map'
-command = 'mapattr -s -R %d -C %d -P "yb2t"	-B -x %f -y %f -l %f %s' %\
-	(nrRows,nrCols,lonMin,latMax,deltaLat,tempCloneMap)
+#~ command = 'mapattr -s -R %d -C %d -P "yb2t"	-B -x %f -y %f -l %f %s' %\
+	#~ (nrRows,nrCols,lonMin,latMax,deltaLat,tempCloneMap)
+# - set manually cell size
+command = 'mapattr -s -R %d -C %d -P "yb2t"	-B -x %f -y %f -l %s %s' %\
+	(nrRows,nrCols,lonMin,latMax,"0.008333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333",tempCloneMap)
 vos.cmd_line(command, using_subprocess = False)
 # - set the clone map
 pcr.setclone(tempCloneMap)
