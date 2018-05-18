@@ -109,11 +109,11 @@ echo $PCRGLOBWB_OUTPUT_FOLDER
 
 # derive/downscale flood inundation maps at 30 arc-second resolution
 #
-# 1960-1999 (1980) 
-python 6_downscaling_parallel.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/extreme_values/channel_storage/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/inundation_30sec/before_merged/ ${TYPE_OF_EXTREME_VALUE_FILE} channel_storage.map ${MAIN_OUTPUT_FOLDER}/historical/1960-1999/WATCH/extreme_values/channel_storage/2-year_of_channel_storage_used_as_bankfull_capacity.map 6
-#~ # merging all downscaled maps
-#~ NOT YET
-#
-###################################################################################
-
+#~ # 1960-1999 (1980) 
+#~ python 6_downscaling_parallel.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/extreme_values/channel_storage/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/inundation_30sec/before_merged/ ${TYPE_OF_EXTREME_VALUE_FILE} channel_storage.map ${MAIN_OUTPUT_FOLDER}/historical/1960-1999/WATCH/extreme_values/channel_storage/2-year_of_channel_storage_used_as_bankfull_capacity.map 6
+# merging all downscaled maps
+python 7_merging_downscaled_maps_with_masking_out_and_following_name_convention.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/inundation_30sec/before_merged/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/1960-1999/${GCM_CAPITAL_LETTERS}/inundation_30sec/merged/ inunriver_${RCP_CODE}_${GCM_CONVENTION_NAME}_1980 1960 1999 channel_storage.map 06
+#~ #
+#~ #
+#~ ###################################################################################
 

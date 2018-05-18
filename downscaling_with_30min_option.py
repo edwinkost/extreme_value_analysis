@@ -241,9 +241,14 @@ for i_file in range(0, len(file_names)):
     # - cover the rests to zero (so they will not contribute to any flood/inundation)
     extreme_value_map = pcr.cover(extreme_value_map, 0.0)
     #
-    # - make sure that extreme value maps increasing over return period 
-    if i_file == 0: previous_return_period_map = extreme_value_map
+    # - make sure that we have positive extreme values - this is not necessary, but to make sure
+    extreme_value_map = pcr.max(extreme_value_map, 0.0)
+    #
+    # - make sure that extreme value maps increasing over return period - this is not necessary, but to make sure
     if i_file >  0: extreme_value_map = pcr.max(previous_return_period_map, extreme_value_map) 
+    previous_return_period_map = extreme_value_map
+    #
+    # - saving extreme values in a pcraster map
     pcr.report(extreme_value_map, file_name)
 
 

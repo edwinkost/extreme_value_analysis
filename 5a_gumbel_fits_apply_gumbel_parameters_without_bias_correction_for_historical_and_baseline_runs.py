@@ -188,7 +188,7 @@ for var_name in variable_name_list:
 msg = "Applying gumbel parameters."
 logger.info(msg)
 #
-# return periods
+# return periods (must be increasing)
 return_periods = ["2-year", "5-year", "10-year", "25-year", "50-year", "100-year", "250-year", "500-year", "1000-year"]
 #
 for var_name in variable_name_list: 
@@ -223,12 +223,25 @@ for var_name in variable_name_list:
     
     # applying gumbel parameters for every return period
     extreme_values = {}
-    for return_period in return_periods:
+
+    for i_return_period in range(0, len(return_periods)):
         
+        return_period = return_periods[i_return_period]
         return_period_in_year = float(return_period.split("-")[0]) 
         
-        extreme_values[return_period] = glofris.inverse_gumbel(p_zero, location, scale, return_period_in_year)
+        extreme_value_map = glofris.inverse_gumbel(p_zero, location, scale, return_period_in_year)
     
+        # - make sure that we have positive extreme values - this is not necessary, but to make sure
+        extreme_value_map = pcr.max(extreme_value_map, 0.0)
+        #
+        # - make sure that extreme value maps increasing over return period - this is not necessary, but to make sure
+        if i_return_period >  0: extreme_value_map = pcr.max(previous_return_period_map, extreme_value_map) 
+        previous_return_period_map = extreme_value_map
+
+        # - saving extreme values in the dictionary  
+        extreme_values[return_period] = extreme_value_map
+
+
     # time bounds in a netcdf file
     lowerTimeBound = datetime.datetime(str_year,  1,  1, 0)
     upperTimeBound = datetime.datetime(end_year, 12, 31, 0)

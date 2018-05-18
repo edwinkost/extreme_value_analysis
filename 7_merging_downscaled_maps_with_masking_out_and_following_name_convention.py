@@ -275,12 +275,12 @@ areas = ['M%02d'%i for i in range(1,number_of_clone_maps+1,1)]
 # change the working directory to the "maps folder"
 os.chdir(outputDir)
 
-# set the landmask of 5 arcmin model
-landmask_05_min_file = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
-landmask_05_min = pcr.defined(pcr.readmap(landmask_05_min_file))
-landmask_used = pcr.ifthen(landmask_05_min, landmask_05_min)
-landmask_used = pcr.boolean(pcr.windowmaximum(pcr.scalar(landmask_used), 0.5))
-pcr.report(landmask_used, "extended_landmask_5min.map")
+#~ # set the landmask of 5 arcmin model - NOT USED 
+#~ landmask_05_min_file = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
+#~ landmask_05_min = pcr.defined(pcr.readmap(landmask_05_min_file))
+#~ landmask_used = pcr.ifthen(landmask_05_min, landmask_05_min)
+#~ landmask_used = pcr.boolean(pcr.windowmaximum(pcr.scalar(landmask_used), 0.5))
+#~ pcr.report(landmask_used, "extended_landmask_5min.map")
 #~ pcr.aguila(landmask_used)
 
 # set the clone at high resolution 
@@ -298,23 +298,23 @@ vos.cmd_line(command, using_subprocess = False)
 pcr.setclone(tempCloneMap)
 clone_map_file = tempCloneMap
 
-# set the landmask
-landmask_05_min = pcr.defined(
-                  vos.readPCRmapClone("extended_landmask_5min.map", \
-                                      clone_map_file, \
-                                      tmp_folder, \
-                                      None, True, None, False))
-landmask_used = pcr.ifthen(landmask_05_min, landmask_05_min)
-landmask_30_sec_file = "/projects/0/dfguu/users/edwinhs/data/HydroSHEDS/hydro_basin_without_lakes/integrating_ldd/version_9_december_2016/merged_ldd.map"
-landmask_30_sec = pcr.defined(pcr.readmap(landmask_30_sec_file))
-landmask_used = pcr.ifthen(landmask_05_min, landmask_30_sec)
-#
-# added on 14 Feb 2018: make sure that the landmask includes the entire extent of HydroSHEDS 30sec 
-file_for_extent_of_hydrosheds = "/projects/0/dfguu/users/edwinhs/data/HydroSHEDS/hydro_basin_without_lakes/integrating_ldd/version_9_december_2016/SELECTED_worldHydroSHEDS.used.ldd"
-extent_of_hydrosheds = pcr.defined(pcr.readmap(file_for_extent_of_hydrosheds))
-extent_of_hydrosheds = pcr.ifthen(extent_of_hydrosheds, extent_of_hydrosheds)
-landmask_used = pcr.cover(extent_of_hydrosheds, landmask_used)
-landmask_used = pcr.ifthen(landmask_used, landmask_used)
+#~ # set the landmask - NOT USED 
+#~ landmask_05_min = pcr.defined(
+                  #~ vos.readPCRmapClone("extended_landmask_5min.map", \
+                                      #~ clone_map_file, \
+                                      #~ tmp_folder, \
+                                      #~ None, True, None, False))
+#~ landmask_used = pcr.ifthen(landmask_05_min, landmask_05_min)
+#~ landmask_30_sec_file = "/projects/0/dfguu/users/edwinhs/data/HydroSHEDS/hydro_basin_without_lakes/integrating_ldd/version_9_december_2016/merged_ldd.map"
+#~ landmask_30_sec = pcr.defined(pcr.readmap(landmask_30_sec_file))
+#~ landmask_used = pcr.ifthen(landmask_05_min, landmask_30_sec)
+#~ #
+#~ # added on 14 Feb 2018: make sure that the landmask includes the entire extent of HydroSHEDS 30sec 
+#~ file_for_extent_of_hydrosheds = "/projects/0/dfguu/users/edwinhs/data/HydroSHEDS/hydro_basin_without_lakes/integrating_ldd/version_9_december_2016/SELECTED_worldHydroSHEDS.used.ldd"
+#~ extent_of_hydrosheds = pcr.defined(pcr.readmap(file_for_extent_of_hydrosheds))
+#~ extent_of_hydrosheds = pcr.ifthen(extent_of_hydrosheds, extent_of_hydrosheds)
+#~ landmask_used = pcr.cover(extent_of_hydrosheds, landmask_used)
+#~ landmask_used = pcr.ifthen(landmask_used, landmask_used)
 #
 #~ pcr.aguila(landmask_used)
 
@@ -378,9 +378,17 @@ logger.info(msg)
 print
 print
 
-# set the global clone maps
+# set the global clone map
 clone_map_file = "/projects/0/dfguu/users/edwinhs/data/HydroSHEDS/hydro_basin_without_lakes/integrating_ldd/version_9_december_2016/merged_ldd.map"
 pcr.setclone(clone_map_file)
+
+# set the landmask
+# - using the following landmask (defined to exclude river basins with limited output of PCR-GLOBWB / limited output of extreme value analyses)
+landmask_30sec_file = "/projects/0/aqueduct/users/edwinsut/data/landmasks_for_extreme_value_analysis_and_downscaling/landmask_downscaling/landmask_downscaling_30sec.map"
+msg = "Set the (high resolution) landmask based on the file: " + str(landmask_30sec_file)
+logger.info(msg)
+landmask_30_sec = pcr.defined(pcr.readmap(landmask_30_sec_file))
+landmask_used = pcr.ifthen(landmask_30_sec, landmask_30_sec)
 
 # boolean maps to mask out permanent water bodies (lakes and reservoirs):
 reservoirs_30sec_file = "/projects/0/aqueduct/users/edwinsut/data/reservoirs_and_lakes_30sec/grand_reservoirs_v1_1.boolean.map"
@@ -501,23 +509,23 @@ for i_return_period in range(0, len(return_periods)):
     logger.info(msg)
     
     # read from pcraster files
+    #
     inundation_file_name = output_directory + "/global/maps/" + "inun_" + str(return_period) + "_of_flood_inundation_volume_catch_" + strahler_order_option + ".tif.map"
     if map_type_name == "channel_storage.map": inundation_file_name = output_directory + "/global/maps/" + "inun_" + str(return_period) + "_of_channel_storage_catch_" + strahler_order_option + ".tif.map"
     #
     inundation_map = pcr.readmap(inundation_file_name)
     inundation_map = pcr.cover(inundation_map, 0.0)
+    #
+    # - make sure that we have positive extreme values - this is not necessary, but to make sure
+    inundation_map = pcr.max(inundation_map, 0.0)
+    #
+    # - make sure that extreme value maps increasing over return period - this is not necessary, but to make sure
+    if i_return_period >  0: inundation_map = pcr.max(previous_return_period_map, inundation_map) 
+    previous_return_period_map = inundation_map
+    
+    # using values in the landmask only and masking out permanent water bodies
     inundation_map = pcr.ifthen(landmask_used, inundation_map)
-    
-    # masking out permanent water bodies
     inundation_map = pcr.ifthen(non_permanent_water_bodies, inundation_map)
-    
-#~ reservoirs_30sec = pcr.cover(pcr.readmap(reservoirs_30sec_file), pcr.boolean(0.0))
-#~ lakes_30sec_file      = "/projects/0/aqueduct/users/edwinsut/data/reservoirs_and_lakes_30sec/glwd1_lakes.boolean.map"
-#~ msg = "Set the (high resolution) lakes based on the file: " + str(lakes_30sec_file)
-#~ logger.info(msg)
-#~ lakes_30sec = pcr.cover(pcr.readmap(lakes_30sec_file), pcr.boolean(0.0))
-#~ 
-#~ 
     
     # report in pcraster maps
     pcr.report(inundation_map, inundation_file_name + ".masked_out.map")
