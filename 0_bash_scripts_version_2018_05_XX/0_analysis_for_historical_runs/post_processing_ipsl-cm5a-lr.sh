@@ -11,7 +11,7 @@
 #SBATCH --mail-user=edwinkost@gmail.com
 
 # job name
-#SBATCH -J historical_1980_gfdl-esm2m
+#SBATCH -J historical_1980_ipsl-cm5a-lr
 
 
 set -x
@@ -24,10 +24,10 @@ MAIN_OUTPUT_FOLDER=/scratch-shared/edwinsut/flood_analyzer_analysis_2018_05_XX/
 #
 RCP_CODE=historical
 #
-GCM_SMALL_LETTERS=gfdl-esm2m
+GCM_SMALL_LETTERS=ipsl-cm5a-lr
 #
-GCM_CONVENTION_NAME=0000GFDL-ESM2M
-GCM_CAPITAL_LETTERS=GFDL-ESM2M
+GCM_CONVENTION_NAME=00IPSL-CM5A-LR
+GCM_CAPITAL_LETTERS=IPSL-CM5A-LR
 #
 TYPE_OF_EXTREME_VALUE_FILE=normal
 #
