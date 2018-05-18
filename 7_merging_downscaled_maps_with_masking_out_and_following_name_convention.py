@@ -387,8 +387,8 @@ pcr.setclone(clone_map_file)
 landmask_30sec_file = "/projects/0/aqueduct/users/edwinsut/data/landmasks_for_extreme_value_analysis_and_downscaling/landmask_downscaling/landmask_downscaling_30sec.map"
 msg = "Set the (high resolution) landmask based on the file: " + str(landmask_30sec_file)
 logger.info(msg)
-landmask_30_sec = pcr.defined(pcr.readmap(landmask_30_sec_file))
-landmask_used = pcr.ifthen(landmask_30_sec, landmask_30_sec)
+landmask_30sec = pcr.defined(pcr.readmap(landmask_30sec_file))
+landmask_used  = pcr.ifthen(landmask_30sec, landmask_30sec)
 
 # boolean maps to mask out permanent water bodies (lakes and reservoirs):
 reservoirs_30sec_file = "/projects/0/aqueduct/users/edwinsut/data/reservoirs_and_lakes_30sec/grand_reservoirs_v1_1.boolean.map"
