@@ -11,7 +11,7 @@
 #SBATCH --mail-user=edwinkost@gmail.com
 
 # job name
-#SBATCH -J historical_1980_ipsl-cm5a-lr
+#SBATCH -J historical_1980_miroc-esm-chem
 
 
 set -x
