@@ -149,7 +149,7 @@ python 5b_gumbel_fits_apply_gumbel_parameters_with_bias_correction_for_gcm_runs.
 
 # derive/downscale flood inundation maps at 30 arc-second resolution
 # 
-# NOT NEEDED
+# NEEDED
 # 
 # 
 ###################################################################################
