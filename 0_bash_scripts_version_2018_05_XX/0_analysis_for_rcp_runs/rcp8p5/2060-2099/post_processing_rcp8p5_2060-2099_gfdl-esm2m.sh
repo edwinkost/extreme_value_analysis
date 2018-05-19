@@ -123,14 +123,14 @@ HYDRO_YEAR_TYPE_MAP=${MAIN_OUTPUT_FOLDER}/historical/1960-1999/WATCH/hydrologica
 # ${STA_PERIOD} - ${END_PERIOD} ( ${MID_PERIOD} )
 #
 FUTURE_RCP_GCM_FOLDER=${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/${STA_PERIOD}-${END_PERIOD}/${GCM_CAPITAL_LETTERS}/gumbel_fits/
-HISTORICAL_GCM_FOLDER=${MAIN_OUTPUT_FOLDER}/historical/${STA_PERIOD}-${END_PERIOD}/${GCM_CAPITAL_LETTERS}/gumbel_fits/
-BASELINE_WATCH_FOLDER=${MAIN_OUTPUT_FOLDER}/historical/${STA_PERIOD}-${END_PERIOD}/WATCH/gumbel_fits/
+HISTORICAL_GCM_FOLDER=${MAIN_OUTPUT_FOLDER}/historical/1960-1999/${GCM_CAPITAL_LETTERS}/gumbel_fits/
+BASELINE_WATCH_FOLDER=${MAIN_OUTPUT_FOLDER}/historical/1960-1999/WATCH/gumbel_fits/
 #
 # - with bias correction for the variables ['channelStorage'] - this should be without parallelization as this consumes huge memory
 python 5b_gumbel_fits_apply_gumbel_parameters_with_bias_correction_for_gcm_runs.py ${FUTURE_RCP_GCM_FOLDER}/channel_storage/ ${HISTORICAL_GCM_FOLDER}/channel_storage ${BASELINE_WATCH_FOLDER}/channel_storage/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/${STA_PERIOD}-${END_PERIOD}/${GCM_CAPITAL_LETTERS}/extreme_values/channel_storage/ ${STA_PERIOD} ${END_PERIOD} None channelStorage
 #
-#~ # - with bias correction for the variables ['surfaceWaterLevel'] - this should be without parallelization as this consumes huge memory
-#~ python 5b_gumbel_fits_apply_gumbel_parameters_with_bias_correction_for_gcm_runs.py ${FUTURE_RCP_GCM_FOLDER}/surface_water_level/ ${HISTORICAL_GCM_FOLDER}/surface_water_level ${BASELINE_WATCH_FOLDER}/surface_water_level/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/${STA_PERIOD}-${END_PERIOD}/${GCM_CAPITAL_LETTERS}/extreme_values/surface_water_level/ ${STA_PERIOD} ${END_PERIOD} surface_water_level_${RCP_CODE}_${GCM_CONVENTION_NAME} surfaceWaterLevel
+# - with bias correction for the variables ['surfaceWaterLevel'] - this should be without parallelization as this consumes huge memory
+python 5b_gumbel_fits_apply_gumbel_parameters_with_bias_correction_for_gcm_runs.py ${FUTURE_RCP_GCM_FOLDER}/surface_water_level/ ${HISTORICAL_GCM_FOLDER}/surface_water_level ${BASELINE_WATCH_FOLDER}/surface_water_level/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/${STA_PERIOD}-${END_PERIOD}/${GCM_CAPITAL_LETTERS}/extreme_values/surface_water_level/ ${STA_PERIOD} ${END_PERIOD} surface_water_level_${RCP_CODE}_${GCM_CONVENTION_NAME} surfaceWaterLevel
 #
 #
 ###################################################################################
