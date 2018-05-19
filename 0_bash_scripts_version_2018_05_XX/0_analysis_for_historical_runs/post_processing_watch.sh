@@ -16,6 +16,13 @@
 
 set -x
 
+# go to the main working folder (containing the scripts):
+cd /home/edwinsut/github/edwinkost/extreme_value_analysis/
+# 
+# 
+###################################################################################
+
+
 ###################################################################################
 #
 # Set the following variables:
