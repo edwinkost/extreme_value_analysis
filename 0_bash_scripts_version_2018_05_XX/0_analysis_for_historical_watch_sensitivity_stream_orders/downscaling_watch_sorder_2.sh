@@ -11,7 +11,7 @@
 #SBATCH --mail-user=edwinkost@gmail.com
 
 # job name
-#SBATCH -J watch_downscaling_sorder_1_edwinhs
+#SBATCH -J watch_downscaling_sorder_2_edwinhs
 
 
 set -x
