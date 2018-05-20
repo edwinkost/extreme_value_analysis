@@ -118,22 +118,22 @@ HYDRO_YEAR_TYPE_MAP=${MAIN_OUTPUT_FOLDER}/historical/1960-1999/WATCH/hydrologica
 
 
 
-# apply gumbel parameters without/with and with bias correction, for annual flood maxima variables: ['channelStorage', 'surfaceWaterLevel']
-#
-# ${STA_PERIOD} - ${END_PERIOD} ( ${MID_PERIOD} )
-#
-FUTURE_RCP_GCM_FOLDER=${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/${STA_PERIOD}-${END_PERIOD}/${GCM_CAPITAL_LETTERS}/gumbel_fits/
-HISTORICAL_GCM_FOLDER=${MAIN_OUTPUT_FOLDER}/historical/1960-1999/${GCM_CAPITAL_LETTERS}/gumbel_fits/
-BASELINE_WATCH_FOLDER=${MAIN_OUTPUT_FOLDER}/historical/1960-1999/WATCH/gumbel_fits/
-#
-# - with bias correction for the variables ['channelStorage'] - this should be without parallelization as this consumes huge memory
-python 5b_gumbel_fits_apply_gumbel_parameters_with_bias_correction_for_gcm_runs.py ${FUTURE_RCP_GCM_FOLDER}/channel_storage/ ${HISTORICAL_GCM_FOLDER}/channel_storage ${BASELINE_WATCH_FOLDER}/channel_storage/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/${STA_PERIOD}-${END_PERIOD}/${GCM_CAPITAL_LETTERS}/extreme_values/channel_storage/ ${STA_PERIOD} ${END_PERIOD} None channelStorage
-#
-# - with bias correction for the variables ['surfaceWaterLevel'] - this should be without parallelization as this consumes huge memory
-python 5b_gumbel_fits_apply_gumbel_parameters_with_bias_correction_for_gcm_runs.py ${FUTURE_RCP_GCM_FOLDER}/surface_water_level/ ${HISTORICAL_GCM_FOLDER}/surface_water_level ${BASELINE_WATCH_FOLDER}/surface_water_level/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/${STA_PERIOD}-${END_PERIOD}/${GCM_CAPITAL_LETTERS}/extreme_values/surface_water_level/ ${STA_PERIOD} ${END_PERIOD} surface_water_level_${RCP_CODE}_${GCM_CONVENTION_NAME} surfaceWaterLevel
-#
-#
-###################################################################################
+#~ # apply gumbel parameters without/with and with bias correction, for annual flood maxima variables: ['channelStorage', 'surfaceWaterLevel']
+#~ #
+#~ # ${STA_PERIOD} - ${END_PERIOD} ( ${MID_PERIOD} )
+#~ #
+#~ FUTURE_RCP_GCM_FOLDER=${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/${STA_PERIOD}-${END_PERIOD}/${GCM_CAPITAL_LETTERS}/gumbel_fits/
+#~ HISTORICAL_GCM_FOLDER=${MAIN_OUTPUT_FOLDER}/historical/1960-1999/${GCM_CAPITAL_LETTERS}/gumbel_fits/
+#~ BASELINE_WATCH_FOLDER=${MAIN_OUTPUT_FOLDER}/historical/1960-1999/WATCH/gumbel_fits/
+#~ #
+#~ # - with bias correction for the variables ['channelStorage'] - this should be without parallelization as this consumes huge memory
+#~ python 5b_gumbel_fits_apply_gumbel_parameters_with_bias_correction_for_gcm_runs.py ${FUTURE_RCP_GCM_FOLDER}/channel_storage/ ${HISTORICAL_GCM_FOLDER}/channel_storage ${BASELINE_WATCH_FOLDER}/channel_storage/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/${STA_PERIOD}-${END_PERIOD}/${GCM_CAPITAL_LETTERS}/extreme_values/channel_storage/ ${STA_PERIOD} ${END_PERIOD} None channelStorage
+#~ #
+#~ # - with bias correction for the variables ['surfaceWaterLevel'] - this should be without parallelization as this consumes huge memory
+#~ python 5b_gumbel_fits_apply_gumbel_parameters_with_bias_correction_for_gcm_runs.py ${FUTURE_RCP_GCM_FOLDER}/surface_water_level/ ${HISTORICAL_GCM_FOLDER}/surface_water_level ${BASELINE_WATCH_FOLDER}/surface_water_level/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/${STA_PERIOD}-${END_PERIOD}/${GCM_CAPITAL_LETTERS}/extreme_values/surface_water_level/ ${STA_PERIOD} ${END_PERIOD} surface_water_level_${RCP_CODE}_${GCM_CONVENTION_NAME} surfaceWaterLevel
+#~ #
+#~ #
+#~ ###################################################################################
 
 
 
@@ -149,7 +149,12 @@ python 5b_gumbel_fits_apply_gumbel_parameters_with_bias_correction_for_gcm_runs.
 
 # derive/downscale flood inundation maps at 30 arc-second resolution
 # 
-# NEEDED
+BANKFULL_CAPACITY=${MAIN_OUTPUT_FOLDER}/historical/1960-1999/WATCH/extreme_values/channel_storage/2-year_of_channel_storage_used_as_bankfull_capacity.map
+#
+# ${STA_PERIOD} - ${END_PERIOD} ( ${MID_PERIOD} )
+python 6_downscaling_parallel.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/${STA_PERIOD}-${END_PERIOD}/${GCM_CAPITAL_LETTERS}/extreme_values/channel_storage/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/${STA_PERIOD}-${END_PERIOD}/${GCM_CAPITAL_LETTERS}/inundation_30sec/before_merged/ ${TYPE_OF_EXTREME_VALUE_FILE} channel_storage.map ${BANKFULL_CAPACITY} 6
+# merging all downscaled maps
+python 7_merging_downscaled_maps_with_masking_out_and_following_name_convention.py ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/${STA_PERIOD}-${END_PERIOD}/${GCM_CAPITAL_LETTERS}/inundation_30sec/before_merged/ ${MAIN_OUTPUT_FOLDER}/${RCP_CODE}/${STA_PERIOD}-${END_PERIOD}${GCM_CAPITAL_LETTERS}/inundation_30sec/merged/ inunriver_${RCP_CODE}_${GCM_CONVENTION_NAME} 1960 1999 channel_storage.map 06
 # 
 # 
 ###################################################################################
