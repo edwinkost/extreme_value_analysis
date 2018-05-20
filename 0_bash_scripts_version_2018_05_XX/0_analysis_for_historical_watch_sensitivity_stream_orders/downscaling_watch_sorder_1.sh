@@ -31,7 +31,7 @@ STRAHLER_ORDER=1
 #
 MAIN_OUTPUT_FOLDER=/scratch-shared/edwinhs/flood_analyzer_sorder_sensitivity_analysis_2018_05_XX/strahler_order_${STRAHLER_ORDER}
 #
-MAIN_INPUT_FOLDER=/scratch-shared/edwinsut/flood_analyzer_sorder_sensitivity_analysis_2018_05_XX/
+MAIN_INPUT_FOLDER=/scratch-shared/edwinsut/flood_analyzer_analysis_2018_05_XX/
 #
 RCP_CODE=historical
 #
