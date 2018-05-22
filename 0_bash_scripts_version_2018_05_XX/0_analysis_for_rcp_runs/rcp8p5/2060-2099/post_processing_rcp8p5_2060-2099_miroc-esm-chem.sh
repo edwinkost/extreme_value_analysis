@@ -37,7 +37,7 @@ MID_PERIOD=2080
 #
 GCM_SMALL_LETTERS=miroc-esm-chem
 #
-GCM_CONVENTION_NAME=MIROC-ESM-CHEM
+GCM_CONVENTION_NAME=MIROC-ESM-CHEM_${MID_PERIOD}
 GCM_CAPITAL_LETTERS=MIROC-ESM-CHEM
 #
 TYPE_OF_EXTREME_VALUE_FILE=bias_corrected
@@ -120,9 +120,9 @@ wait
 #
 # 
 ###################################################################################
-#~ 
-#~ 
-#~ 
+
+
+
 # apply gumbel parameters without/with and with bias correction, for annual flood maxima variables: ['channelStorage', 'surfaceWaterLevel']
 #
 # ${STA_PERIOD} - ${END_PERIOD} ( ${MID_PERIOD} )

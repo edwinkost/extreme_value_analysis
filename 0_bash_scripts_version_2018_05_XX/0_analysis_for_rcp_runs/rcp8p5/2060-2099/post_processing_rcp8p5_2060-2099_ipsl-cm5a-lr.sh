@@ -37,7 +37,7 @@ MID_PERIOD=2080
 #
 GCM_SMALL_LETTERS=ipsl-cm5a-lr
 #
-GCM_CONVENTION_NAME=00IPSL-CM5A-LR
+GCM_CONVENTION_NAME=00IPSL-CM5A-LR_${MID_PERIOD}
 GCM_CAPITAL_LETTERS=IPSL-CM5A-LR
 #
 TYPE_OF_EXTREME_VALUE_FILE=bias_corrected
@@ -120,9 +120,9 @@ wait
 #
 # 
 ###################################################################################
-#~ 
-#~ 
-#~ 
+
+
+
 # apply gumbel parameters without/with and with bias correction, for annual flood maxima variables: ['channelStorage', 'surfaceWaterLevel']
 #
 # ${STA_PERIOD} - ${END_PERIOD} ( ${MID_PERIOD} )

@@ -11,7 +11,7 @@
 #SBATCH --mail-user=edwinkost@gmail.com
 
 # job name
-#SBATCH -J rcp8p5_2080_hadgem2-es
+#SBATCH -J rcp8p5_2030_hadgem2-es
 
 
 set -x
@@ -31,9 +31,9 @@ MAIN_OUTPUT_FOLDER=/scratch-shared/edwinsut/flood_analyzer_analysis_2018_05_XX/
 #
 RCP_CODE=rcp8p5
 #
-STA_PERIOD=2060
-END_PERIOD=2099
-MID_PERIOD=2080
+STA_PERIOD=2010
+END_PERIOD=2049
+MID_PERIOD=2030
 #
 GCM_SMALL_LETTERS=hadgem2-es
 #

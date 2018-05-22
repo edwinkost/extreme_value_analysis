@@ -37,7 +37,7 @@ MID_PERIOD=2080
 #
 GCM_SMALL_LETTERS=noresm1-m
 #
-GCM_CONVENTION_NAME=00000NorESM1-M
+GCM_CONVENTION_NAME=00000NorESM1-M_${MID_PERIOD}
 GCM_CAPITAL_LETTERS=NorESM1-M
 #
 TYPE_OF_EXTREME_VALUE_FILE=bias_corrected
@@ -120,9 +120,9 @@ wait
 #
 # 
 ###################################################################################
-#~ 
-#~ 
-#~ 
+
+
+
 # apply gumbel parameters without/with and with bias correction, for annual flood maxima variables: ['channelStorage', 'surfaceWaterLevel']
 #
 # ${STA_PERIOD} - ${END_PERIOD} ( ${MID_PERIOD} )
