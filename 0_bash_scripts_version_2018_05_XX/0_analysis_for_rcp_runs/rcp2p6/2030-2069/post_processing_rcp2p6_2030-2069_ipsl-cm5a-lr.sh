@@ -47,13 +47,13 @@ PCRGLOBWB_OUTPUT_FOLDER=/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2017_
 echo ${PCRGLOBWB_OUTPUT_FOLDER}
 # 
 # 
-HYDRO_YEAR_TYPE_MAP=${MAIN_OUTPUT_FOLDER}/historical/1960-1999/WATCH/hydrological_year_types_1960-1999/hydrological_year_type.map
+HYDRO_YEAR_TYPE_MAP=/scratch-shared/edwinsut/flood_analyzer_analysis_2018_05_XX//historical/1960-1999/WATCH/hydrological_year_types_1960-1999/hydrological_year_type.map
 # 
-HISTORICAL_GCM_FOLDER=${MAIN_OUTPUT_FOLDER}/historical/1960-1999/${GCM_CAPITAL_LETTERS}/gumbel_fits/
+HISTORICAL_GCM_FOLDER=/scratch-shared/edwinsut/flood_analyzer_analysis_2018_05_XX//historical/1960-1999/${GCM_CAPITAL_LETTERS}/gumbel_fits/
 #
-BASELINE_WATCH_FOLDER=${MAIN_OUTPUT_FOLDER}/historical/1960-1999/WATCH/gumbel_fits/
+BASELINE_WATCH_FOLDER=/scratch-shared/edwinsut/flood_analyzer_analysis_2018_05_XX/historical/1960-1999/WATCH/gumbel_fits/
 #
-BANKFULL_CAPACITY=${MAIN_OUTPUT_FOLDER}/historical/1960-1999/WATCH/extreme_values/channel_storage/2-year_of_channel_storage_used_as_bankfull_capacity.map
+BANKFULL_CAPACITY=/scratch-shared/edwinsut/flood_analyzer_analysis_2018_05_XX//historical/1960-1999/WATCH/extreme_values/channel_storage/2-year_of_channel_storage_used_as_bankfull_capacity.map
 #
 ###################################################################################
 
