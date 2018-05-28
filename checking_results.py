@@ -53,7 +53,10 @@ for i_return_period in range(0, len(return_periods)):
         minimum_value, maximum_value, average_value = vos.getMinMaxMean(check_map)
         
         msg  = ""
+        msg += "\n"
+        msg += "\n"
         msg += "Checkting that the values in the file %s are equal to or bigger than the file %s : Min %f Max %f Mean %f" %(selected_pcraster_file, previous_file, minimum_value, maximum_value, average_value)
+        msg += "\n"
         msg += "\n"
         print(msg)
     
