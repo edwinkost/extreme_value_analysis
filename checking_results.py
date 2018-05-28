@@ -32,7 +32,7 @@ input_pcraster_files = glob.glob(file_pattern)
 print input_pcraster_files
 
 # return periods
-return_periods      = [ "2-year",  "5-year", "10-year", "25-year", "50-year", "100-year", "250-year", "500-year", "1000-year"]
+return_periods      = [ "_2-year_",  "_5-year_", "_10-year_", "_25-year_", "_50-year_", "_100-year_", "_250-year_", "_500-year_", "_1000-year_"]
 
 
 for i_return_period in range(0, len(return_periods)):
