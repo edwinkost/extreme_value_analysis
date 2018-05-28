@@ -20,7 +20,7 @@ cd /home/edwinsut/github/edwinkost/extreme_value_analysis/
 
 echo historical
 cdo infon /scratch-shared/edwinsut/flood_analyzer_analysis_2018_05_XX/historical/1960-1999/GFDL-ESM2M/extreme_values/surface_water_level/*.nc
-python checking_results.py "/scratch-shared/edwinsut/flood_analyzer_analysis_2018_05_XX/historical/1960-1999/WATCH/extreme_values/surface_water_level/*mask*.map"
+python checking_results.py "/scratch-shared/edwinsut/flood_analyzer_analysis_2018_05_XX/historical/1960-1999/WATCH/extreme_values/surface_water_level/*mask*.map" historical
 
 
 echo rcp2p6
