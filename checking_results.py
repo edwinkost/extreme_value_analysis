@@ -48,6 +48,7 @@ for i_return_period in range(0, len(return_periods)):
     for pcraster_file in input_pcraster_files:
         if historical_results:
             if os.path.basename(pcraster_file).startswith(return_period):
+                echo
                 selected_pcraster_file = pcraster_file
         else:
             if return_period in pcraster_file:
