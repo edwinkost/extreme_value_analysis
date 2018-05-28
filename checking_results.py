@@ -32,8 +32,12 @@ input_pcraster_files = glob.glob(file_pattern)
 print input_pcraster_files
 
 # return periods
-return_periods      = [ "_2-year_",  "_5-year_", "_10-year_", "_25-year_", "_50-year_", "_100-year_", "_250-year_", "_500-year_", "_1000-year_"]
+return_periods = [ "_2-year_",  "_5-year_", "_10-year_", "_25-year_", "_50-year_", "_100-year_", "_250-year_", "_500-year_", "_1000-year_"]
 
+# for the historical results, we have to use the following;
+historical_results = False
+if len(sys.argv) > 1 and sys.argv[2] == historical: historical_results = False
+if historical_results: return_periods = [ "2-year_",  "5-year_", "10-year_", "25-year_", "50-year_", "100-year_", "250-year_", "500-year_", "1000-year_"]
 
 for i_return_period in range(0, len(return_periods)):
 
@@ -41,9 +45,12 @@ for i_return_period in range(0, len(return_periods)):
     
     # loop the file list to get the correct file
     for pcraster_file in input_pcraster_files:
-        if return_period in pcraster_file:
-            selected_pcraster_file = pcraster_file
-            map_for_this_return_period = pcr.readmap(pcraster_file)
+        if historical_results:
+            if os.path.basename(pcraster_file).startswith(return_period)
+        else:
+            if return_period in pcraster_file:
+                selected_pcraster_file = pcraster_file
+                map_for_this_return_period = pcr.readmap(pcraster_file)
     
     map_for_this_return_period = pcr.cover(map_for_this_return_period, 0.0)
     
