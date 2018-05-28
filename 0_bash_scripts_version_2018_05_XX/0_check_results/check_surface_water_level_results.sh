@@ -18,12 +18,12 @@ set -x
 
 cd /home/edwinsut/github/edwinkost/extreme_value_analysis/
 
-echo historical (WATCH only)
+echo "historical (WATCH only)"
 cdo infon /scratch-shared/edwinsut/flood_analyzer_analysis_2018_05_XX/historical/1960-1999/WATCH/extreme_values/surface_water_level/*.nc
 python checking_results.py "/scratch-shared/edwinsut/flood_analyzer_analysis_2018_05_XX/historical/1960-1999/WATCH/extreme_values/surface_water_level/*mask*.map" historical
 
 
-echo rcp2p6
+echo "rcp2p6"
 cdo infon /scratch-shared/edwinhs/flood_analyzer_analysis_2018_05_XX/rcp2p6/*/*/extreme_values/surface_water_level/*.nc
 
 python checking_results.py "/scratch-shared/edwinhs/flood_analyzer_analysis_2018_05_XX/rcp2p6/2010-*/GFDL*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
@@ -45,7 +45,7 @@ python checking_results.py "/scratch-shared/edwinhs/flood_analyzer_analysis_2018
 python checking_results.py "/scratch-shared/edwinhs/flood_analyzer_analysis_2018_05_XX/rcp2p6/2060-*/NorE*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
 
 
-echo rcp4p5
+echo "rcp4p5"
 cdo infon /scratch-shared/edwinsut/flood_analyzer_analysis_2018_05_XX/rcp4p5/*/*/extreme_values/surface_water_level/*.nc
 
 python checking_results.py "/scratch-shared/edwinsut/flood_analyzer_analysis_2018_05_XX/rcp4p5/2010-*/GFDL*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
@@ -67,7 +67,7 @@ python checking_results.py "/scratch-shared/edwinsut/flood_analyzer_analysis_201
 python checking_results.py "/scratch-shared/edwinsut/flood_analyzer_analysis_2018_05_XX/rcp4p5/2060-*/NorE*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
 
 
-echo rcp6p0
+echo "rcp6p0"
 cdo infon /scratch-shared/edwinsut/flood_analyzer_analysis_2018_05_XX/rcp6p0/*/*/extreme_values/surface_water_level/*.nc
 
 python checking_results.py "/scratch-shared/edwinsut/flood_analyzer_analysis_2018_05_XX/rcp6p0/2010-*/GFDL*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
@@ -89,7 +89,7 @@ python checking_results.py "/scratch-shared/edwinsut/flood_analyzer_analysis_201
 python checking_results.py "/scratch-shared/edwinsut/flood_analyzer_analysis_2018_05_XX/rcp6p0/2060-*/NorE*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
 
 
-echo rcp8p5
+echo "rcp8p5"
 cdo infon /scratch-shared/edwinsut/flood_analyzer_analysis_2018_05_XX/rcp8p5/*/*/extreme_values/surface_water_level/*.nc
 
 python checking_results.py "/scratch-shared/edwinsut/flood_analyzer_analysis_2018_05_XX/rcp8p5/2010-*/GFDL*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
