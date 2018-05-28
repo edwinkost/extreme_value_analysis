@@ -48,7 +48,7 @@ for i_return_period in range(0, len(return_periods)):
     map_for_this_return_period = pcr.cover(map_for_this_return_period, 0.0)
     
     if i_return_period > 0:
-        check_map = pcr.ifthenelse(pcraster_file_for_this_return_period >= previous_map, pcr.scalar(0.0), pcr.scalar(-1.0))
+        check_map = pcr.ifthenelse(map_for_this_return_period >= previous_map, pcr.scalar(0.0), pcr.scalar(-1.0))
         
         minimum_value, maximum_value, average_value = vos.getMinMaxMean(check_map)
         
