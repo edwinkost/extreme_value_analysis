@@ -46,6 +46,7 @@ for i_return_period in range(0, len(return_periods)):
     # loop the file list to get the correct file
     for pcraster_file in input_pcraster_files:
         if historical_results:
+            print os.path.basename(pcraster_file)
             if os.path.basename(pcraster_file).startswith(return_period):
                 selected_pcraster_file = pcraster_file
         else:
