@@ -47,12 +47,12 @@ for i_return_period in range(0, len(return_periods)):
     # loop the file list to get the correct file
     for pcraster_file in input_pcraster_files:
         if historical_results:
-            print os.path.basename(pcraster_file)
             if os.path.basename(pcraster_file).startswith(return_period):
                 selected_pcraster_file = pcraster_file
         else:
             if return_period in pcraster_file:
                 selected_pcraster_file = pcraster_file
+        print selected_pcraster_file
         map_for_this_return_period = pcr.readmap(pcraster_file)
     
     map_for_this_return_period = pcr.cover(map_for_this_return_period, 0.0)
