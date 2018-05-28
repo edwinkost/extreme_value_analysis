@@ -36,7 +36,7 @@ return_periods = [ "_2-year_",  "_5-year_", "_10-year_", "_25-year_", "_50-year_
 
 # for the historical results, we have to use the following;
 historical_results = False
-if len(sys.argv) > 2 and sys.argv[2] == historical: historical_results = False
+if len(sys.argv) > 1 and sys.argv[2] == "historical": historical_results = False
 if historical_results: return_periods = [ "2-year_",  "5-year_", "10-year_", "25-year_", "50-year_", "100-year_", "250-year_", "500-year_", "1000-year_"]
 
 for i_return_period in range(0, len(return_periods)):
