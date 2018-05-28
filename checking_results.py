@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 # the pattern of files and directories:
-file_pattern = sys.argv[1]
+file_pattern = str(sys.argv[1])
 
 # list of files
 input_pcraster_files = glob.glob(file_pattern)
