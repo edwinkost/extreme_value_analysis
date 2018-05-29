@@ -13,3 +13,6 @@ xargs mkdir -p < directory_structure_as_version_2017_05_XX.txt
 # uploading/making links for the rcp2p6
 cd /home/edwinsut/github/edwinkost/extreme_value_analysis/0_bash_scripts_version_2018_05_XX/0_uploading_results/
 bash uploading_with_structure_as_version_2017_05_XX_rcp2p6_inundation.sh
+cd /home/edwinsut/github/edwinkost/extreme_value_analysis/0_bash_scripts_version_2018_05_XX/0_uploading_results/
+bash uploading_with_structure_as_version_2017_05_XX_rcp2p6_water_level.sh
+
