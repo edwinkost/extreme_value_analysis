@@ -3,10 +3,8 @@ set -x
 
 TARGET_FOLDER=/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2018_05_29/river/surface_water_level_05min
 
-cp -rf directory_structure_for_surface_water_level.txt ${TARGET_FOLDER}
 cp -rf uploading_surface_water_level.sh ${TARGET_FOLDER}
 cd ${TARGET_FOLDER}
-xargs mkdir -p < directory_structure_for_surface_water_level.txt
 
 cp -r /scratch-shared/edwinsut/flood_analyzer_analysis_2018_05_XX/historical/1960-1999/WATCH/extreme_values/surface_water_level/surface_water_level_historical_000000000WATCH_1980_rp00002.nc         ${TARGET_FOLDER}/historical/1960-1999/WATCH///surface_water_level_historical_000000000WATCH_1980_rp00002.nc        
 cp -r /scratch-shared/edwinsut/flood_analyzer_analysis_2018_05_XX/historical/1960-1999/WATCH/extreme_values/surface_water_level/surface_water_level_historical_000000000WATCH_1980_rp00005.nc         ${TARGET_FOLDER}/historical/1960-1999/WATCH///surface_water_level_historical_000000000WATCH_1980_rp00005.nc        
