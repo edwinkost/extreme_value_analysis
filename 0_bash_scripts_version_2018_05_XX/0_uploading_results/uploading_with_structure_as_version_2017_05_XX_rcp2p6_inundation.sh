@@ -6,7 +6,7 @@ RCP_CODE=rcp2p6
 
 SOURCE_FOLDER=/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2018_05_29/river/inundation_30sec/${RCP_CODE}/
 
-TARGET_FOLDER=/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2018_05_29_structured_as_version_2017_05_XX/river/inundation/${RCP_CODE}
+TARGET_FOLDER=/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2018_05_29_structured_as_version_2017_05_XX/river/inundation/${RCP_CODE}/
 cd ${TARGET_FOLDER}
 
 # remove all "netcdf" folders as they will be replaced with links
