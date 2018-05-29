@@ -8,7 +8,7 @@ mkdir ${TARGET_FOLDER}
 cd /projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2018_02_XX_structured_as_version_2017_05_XX/
 find . -type d > ${TARGET_FOLDER}//directory_structure_as_version_2017_05_XX.txt
 cd ${TARGET_FOLDER}
-xargs mkdir -p < dirs.txt
+xargs mkdir -p < directory_structure_as_version_2017_05_XX.txt
 
 # uploading/making links for the rcp2p6
 cd /home/edwinsut/github/edwinkost/extreme_value_analysis/0_bash_scripts_version_2018_05_XX/0_uploading_results/
