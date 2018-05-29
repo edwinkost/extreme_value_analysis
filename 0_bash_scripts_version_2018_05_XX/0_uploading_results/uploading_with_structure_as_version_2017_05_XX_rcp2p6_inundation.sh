@@ -13,7 +13,7 @@ cd ${TARGET_FOLDER}
 rm -r */inundation_downscaled_from_bias_corrected_floods/*/global/netcdf
 
 # copy an important read me file
-cp -r important_read_me_for_2050-2099.txt ${TARGET_FOLDER}
+cp -r /home/edwinsut/github/edwinkost/extreme_value_analysis/0_bash_scripts_version_2018_05_XX/0_uploading_results/important_read_me_for_2050-2099.txt ${TARGET_FOLDER}
 
 # NOTE that we used the link/folder "2050-2099" to store the values for the time period 2060-2099 (2080 as its mid year), see the file important_read_me_for_2050-2099.txt. 
 
