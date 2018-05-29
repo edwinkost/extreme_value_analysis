@@ -10,7 +10,7 @@ TARGET_FOLDER=/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_result
 cd ${TARGET_FOLDER}
 
 # remove the all folders within the TARGET_FOLDER as they will be replaced with links
-rm -r */*
+rm -r *
 
 # copy an important read me file
 cp -r /home/edwinsut/github/edwinkost/extreme_value_analysis/0_bash_scripts_version_2018_05_XX/0_uploading_results/important_read_me_for_2050-2099.txt ${TARGET_FOLDER}
