@@ -1,0 +1,18 @@
+    -1 :       Date     Time   Level Gridsize    Miss :     Minimum        Mean     Maximum : Parameter name
+     1 : 1979-12-31 12:00:00       0 933120000 725364510 :      0.0000      0.0000      0.0000 : 2-year_of_inundation_depth
+    -2 :       Date     Time   Level Gridsize    Miss :     Minimum        Mean     Maximum : Parameter name
+     1 : 1979-12-31 12:00:00       0 933120000 725364510 :      0.0000   0.0091447      32.000 : 5-year_of_inundation_depth
+    -3 :       Date     Time   Level Gridsize    Miss :     Minimum        Mean     Maximum : Parameter name
+     1 : 1979-12-31 12:00:00       0 933120000 725364510 :      0.0000    0.017613      32.035 : 10-year_of_inundation_depth
+    -4 :       Date     Time   Level Gridsize    Miss :     Minimum        Mean     Maximum : Parameter name
+     1 : 1979-12-31 12:00:00       0 933120000 725364510 :      0.0000    0.029053      32.053 : 25-year_of_inundation_depth
+    -5 :       Date     Time   Level Gridsize    Miss :     Minimum        Mean     Maximum : Parameter name
+     1 : 1979-12-31 12:00:00       0 933120000 725364510 :      0.0000    0.037616      32.066 : 50-year_of_inundation_depth
+    -6 :       Date     Time   Level Gridsize    Miss :     Minimum        Mean     Maximum : Parameter name
+     1 : 1979-12-31 12:00:00       0 933120000 725364510 :      0.0000    0.046134      32.079 : 100-year_of_inundation_depth
+    -7 :       Date     Time   Level Gridsize    Miss :     Minimum        Mean     Maximum : Parameter name
+     1 : 1979-12-31 12:00:00       0 933120000 725364510 :      0.0000    0.057271      32.096 : 250-year_of_inundation_depth
+    -8 :       Date     Time   Level Gridsize    Miss :     Minimum        Mean     Maximum : Parameter name
+     1 : 1979-12-31 12:00:00       0 933120000 725364510 :      0.0000    0.065669      32.109 : 500-year_of_inundation_depth
+    -9 :       Date     Time   Level Gridsize    Miss :     Minimum        Mean     Maximum : Parameter name
+     1 : 1979-12-31 12:00:00       0 933120000 725364510 :      0.0000    0.073967      32.122 : 1000-year_of_inundation_depth

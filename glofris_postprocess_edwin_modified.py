@@ -737,7 +737,7 @@ def rp_gumbel_original(p_zero, loc, scale, flvol, max_return_period=1e9):
     test_p = p == 1    
     return return_period, test_p
 
-def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcraster, flvol_in_pcraster, max_return_period = np.longdouble(1e9)):
+def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcraster, flvol_in_pcraster, max_return_period = np.longdouble(1e9), max_return_period_that_can_be_assigned = 1000.):
     """
     Transforms a unique, or array of flood volumes into the belonging return
     periods, according to gumbel parameters (belonging to non-zero part of the
@@ -787,8 +787,8 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     #~ print np.amax(reduced_variate)
     
     # transform the reduced variate into a probability (residual after removing the zero volume probability)
-    #~ p_residual = np.minimum(np.maximum(np.exp(-np.exp(-np.longdouble(reduced_variate))), np.longdouble(0.0)), np.longdouble(1.0))
-    p_residual = np.minimum(np.maximum(np.exp(-np.exp(-np.longdouble(reduced_variate))), 0.0), 1.0)
+    p_residual = np.minimum(np.maximum(np.exp(-np.exp(-np.longdouble(reduced_variate))), np.longdouble(0.0)), np.longdouble(1.0))
+    #~ p_residual = np.minimum(np.maximum(np.exp(-np.exp(-np.longdouble(reduced_variate))), 0.0), 1.0)
 
     #~ print np.nanmin(p_residual)
     #~ print np.nanmax(p_residual)
@@ -814,6 +814,9 @@ def get_return_period_gumbel(p_zero_in_pcraster, loc_in_pcraster, scale_in_pcras
     
     # assign maximum return period for p_zero = 1.0 (value is always zero)
     return_period[p_zero == 1.0000] = max_return_period
+
+    # limit return period to maximum return period that can be assigned
+    return_period[return_period > max_return_period_that_can_be_assigned] = max_return_period_that_can_be_assigned
 
     # cell with mv will be still mv
     return_period[p_zero == vos.MV] = vos.MV

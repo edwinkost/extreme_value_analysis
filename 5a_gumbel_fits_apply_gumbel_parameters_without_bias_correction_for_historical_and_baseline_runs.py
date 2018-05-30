@@ -34,25 +34,15 @@ logger = logging.getLogger(__name__)
 input_files                    = {}
 # The gumbel fit parameters based on the annual flood maxima based on the PCR-GLOBWB 5 arcmin results:
 #
-#~ # - WATCH historical
-#~ input_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/watch_1960-1999/"
-#~ # - gfdl-esm2m historical
-#~ input_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/gfdl-esm2m_1960-1999/"
-#~ # - hadgem2-es historical
-#~ input_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/hadgem2-es_1960-1999/"
-#~ # - ipsl-cm5a-lr historical
-#~ input_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/ipsl-cm5a-lr_1960-1999/"
-#~ # - miroc-esm-chem historical
-#~ input_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/miroc-esm-chem_1960-1999/"
-#~ # - noresm1-m historical
-#~ input_files['folder']       = "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/noresm1-m_1960-1999/"
-#
-# - input folder based on the system argument
-input_files['folder']       = os.path.abspath(sys.argv[1]) + "/"
+# - input folders based on the system argument
+input_files['folder'] = {}
+input_files['folder']['channelStorage']    = os.path.abspath(sys.argv[1]) + "/"
+input_files['folder']['surfaceWaterLevel'] = os.path.abspath(sys.argv[2]) + "/"
+# -- an example: WATCH historical: "/scratch-shared/edwinhs-last/flood_analyzer_output/gumbel_fits/watch_1960-1999/"
 #
 input_files['file_name'] = {}
-input_files['file_name']['channelStorage']    = input_files['folder'] + "/" + "gumbel_analysis_output_for_channel_storage.nc" 
-input_files['file_name']['surfaceWaterLevel'] = input_files['folder'] + "/" + "gumbel_analysis_output_for_surface_water_level.nc" 
+input_files['file_name']['channelStorage']    = input_files['folder']['channelStorage']    + "/" + "gumbel_analysis_output_for_channel_storage.nc" 
+input_files['file_name']['surfaceWaterLevel'] = input_files['folder']['surfaceWaterLevel'] + "/" + "gumbel_analysis_output_for_surface_water_level.nc" 
 #
 # general input files
 # - clone map
@@ -61,6 +51,14 @@ pcr.setclone(input_files['clone_map_05min'])
 # - cell area, ldd maps
 input_files['cell_area_05min'] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/cellsize05min.correct.map"
 input_files['ldd_map_05min'  ] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
+# - landmask
+# -- default based on ldd
+landmask = pcr.defined(pcr.readmap(input_files['ldd_map_05min']))
+# -- additional landmask (to exclude river basins with limited meteo forcing coverage)
+input_files['landmask_file']   = "/projects/0/aqueduct/users/edwinsut/data/landmasks_for_extreme_value_analysis_and_downscaling/landmask_extreme_value_analysis/landmask_extreme_value_analysis_05min.map"
+if input_files['landmask_file'] != None:
+    landmask = pcr.ifthen(landmask, pcr.readmap(input_files['landmask_file']))
+#~ pcr.aguila(landmask)
 
 # output files
 output_files                   = {}
@@ -81,7 +79,7 @@ output_files                   = {}
 #~ output_files['folder']      = "/scratch-shared/edwinhs-last/flood_analyzer_output/extreme_values/noresm1-m_1960-1999/"
 #
 # output folder based on the system argument
-output_folder_for_this_analysis = sys.argv[2]
+output_folder_for_this_analysis = sys.argv[3]
 output_files['folder']          = output_folder_for_this_analysis + "/" 
 #
 #
@@ -120,17 +118,17 @@ vos.initialize_logging(log_file_location)
 #~ str_year = 2060
 #~ end_year = 2099
 # - based on the system arguments:
-str_year = int(sys.argv[3])
-end_year = int(sys.argv[4])
+str_year = int(sys.argv[4])
+end_year = int(sys.argv[5])
 
 # output netcdf file name (without extension) for the variable 'surfaceWaterLevel'
 output_netcdf_file_name = "surface_water_level_historical_000000000WATCH_1999"
-output_netcdf_file_name = str(sys.argv[5])
+output_netcdf_file_name = str(sys.argv[6])
 
 # option to limit only certain variables being processed
 option_to_limit_variables = "None"
 try:
-    option_to_limit_variables = sys.argv[6]
+    option_to_limit_variables = sys.argv[7]
 except:
     pass
 variable_name_list = ['channelStorage', 'surfaceWaterLevel']
@@ -147,7 +145,6 @@ netcdf_setup['created by' ] = "Edwin H. Sutanudjaja (E.H.Sutanudjaja@uu.nl)"
 netcdf_setup['description'] = "The extreme values based on the gumbel fits of the annual flood maxima."
 netcdf_setup['source'     ] = "Utrecht University, Department of Physical Geography - contact: Edwin H. Sutanudjaja (E.H.Sutanudjaja@uu.nl)"
 netcdf_setup['references' ] = "Sutanudjaja et al., in prep."
-
 
 # change to the output folder (use it as the working folder) 
 os.chdir(output_files['folder'])
@@ -172,6 +169,7 @@ for var_name in variable_name_list:
     netcdf_file[var_name]['institution'] = netcdf_setup['institution']
     netcdf_file[var_name]['title'      ] = netcdf_setup['title'      ]
     netcdf_file[var_name]['created by' ] = netcdf_setup['created by' ]
+    netcdf_file[var_name]['created on' ] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     netcdf_file[var_name]['source'     ] = netcdf_setup['source'     ]
     netcdf_file[var_name]['references' ] = netcdf_setup['references' ]
     #
@@ -190,7 +188,7 @@ for var_name in variable_name_list:
 msg = "Applying gumbel parameters."
 logger.info(msg)
 #
-# return periods
+# return periods (must be increasing)
 return_periods = ["2-year", "5-year", "10-year", "25-year", "50-year", "100-year", "250-year", "500-year", "1000-year"]
 #
 for var_name in variable_name_list: 
@@ -225,12 +223,25 @@ for var_name in variable_name_list:
     
     # applying gumbel parameters for every return period
     extreme_values = {}
-    for return_period in return_periods:
+
+    for i_return_period in range(0, len(return_periods)):
         
+        return_period = return_periods[i_return_period]
         return_period_in_year = float(return_period.split("-")[0]) 
         
-        extreme_values[return_period] = glofris.inverse_gumbel(p_zero, location, scale, return_period_in_year)
+        extreme_value_map = glofris.inverse_gumbel(p_zero, location, scale, return_period_in_year)
     
+        # - make sure that we have positive extreme values - this is not necessary, but to make sure
+        extreme_value_map = pcr.max(extreme_value_map, 0.0)
+        #
+        # - make sure that extreme value maps increasing over return period - this is not necessary, but to make sure
+        if i_return_period >  0: extreme_value_map = pcr.max(previous_return_period_map, extreme_value_map) 
+        previous_return_period_map = extreme_value_map
+
+        # - saving extreme values in the dictionary  
+        extreme_values[return_period] = extreme_value_map
+
+
     # time bounds in a netcdf file
     lowerTimeBound = datetime.datetime(str_year,  1,  1, 0)
     upperTimeBound = datetime.datetime(end_year, 12, 31, 0)
@@ -264,6 +275,10 @@ for var_name in variable_name_list:
         # report to a pcraster map
         pcr.report(extreme_values[return_period], variable_name + ".map")
 
+        # masking out based on the landmask
+        extreme_values[return_period] = pcr.ifthen(landmask, extreme_values[return_period])
+        pcr.report(extreme_values[return_period], variable_name + ".masked_out.map")
+        
         # put it into a dictionary
         data_dictionary[variable_name] = pcr.pcr2numpy(extreme_values[return_period], vos.MV)
 
@@ -281,8 +296,6 @@ if 'surfaceWaterLevel' not in variable_name_list: sys.exit()
 # masking out permanent water bodies
 msg = "Preparing final netcdf files, one for every return period, as requested by Philip."
 logger.info(msg)
-
-landmask           = pcr.defined(pcr.readmap(input_files['ldd_map_05min'  ]))
 
 #~ # permanent water bodies files (at 5 arc-minute resolution) 
 #~ fracwat_file            = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/reservoirs/waterBodiesFinal_version15Sept2013/maps/fracwat_2010.map"
@@ -346,14 +359,14 @@ for i_return_period in range(0, len(return_periods)):
     surface_water_level = pcr.readmap(surface_water_level_file_name)
     surface_water_level = pcr.cover(surface_water_level, 0.0)
     
-    # masking out ocean
+    # masking out based on the landmask
     surface_water_level = pcr.ifthen(landmask, surface_water_level)
 
     #~ # masking out permanent water bodies
     #~ surface_water_level = pcr.ifthen(non_permanent_water_bodies, surface_water_level)
 
-    # report in pcraster maps
-    pcr.report(surface_water_level, surface_water_level_file_name + ".masked_out.map")
+    #~ # report in pcraster maps - this has been done above
+    #~ pcr.report(surface_water_level, surface_water_level_file_name + ".masked_out.map")
     
     # write to netcdf files
     netcdf_report.data_to_netcdf(file_name, variable_name, pcr.pcr2numpy(surface_water_level, vos.MV), timeBounds, timeStamp = None, posCnt = 0)

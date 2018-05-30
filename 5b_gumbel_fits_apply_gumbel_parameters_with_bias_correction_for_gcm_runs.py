@@ -64,6 +64,8 @@ pcr.setclone(input_files['clone_map_05min'])
 # - cell area, ldd maps
 input_files['cell_area_05min'] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/cellsize05min.correct.map"
 input_files['ldd_map_05min'  ] = "/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/lddsound_05min.map"
+# - landmask
+landmask = pcr.defined(input_files['ldd_map_05min'  ])
 #
 # The gumbel fit parameters based on the annual flood maxima based on the BASELINE run: WATCH 1960-1999
 input_files["baseline"]  = {}
@@ -201,6 +203,7 @@ return_periods = ["2-year", "5-year", "10-year", "25-year", "50-year", "100-year
 extreme_values = {}
 extreme_values["including_bias"] = {}
 extreme_values["bias_corrected"] = {}
+extreme_values['return_period_historical'] = {}
 #
 for var_name in variable_name_list: 
     
@@ -236,7 +239,9 @@ for var_name in variable_name_list:
                                           input_files['clone_map_05min'])
     
     # compute future extreme values (including bias correction):
-    for return_period in return_periods:
+    for i_return_period in range(0, len(return_periods)):
+        
+        return_period = return_periods[i_return_period]
         
         msg  = "\n"
         msg += "\n"
@@ -256,6 +261,7 @@ for var_name in variable_name_list:
         msg = "For the given future extreme values, obtain the return period based on the historical gumbel fit/parameters."
         logger.info(msg)
         return_period_historical = glofris.get_return_period_gumbel(p_zero["historical"], location["historical"], scale["historical"], extreme_values["including_bias"][return_period])
+        extreme_values['return_period_historical'][return_period] = return_period_historical
         
         #~ pcr.report(return_period_historical, "return_period_historical.map")
         #~ cmd = "aguila " + "return_period_historical.map"
@@ -264,13 +270,25 @@ for var_name in variable_name_list:
         # bias corrected extreme values
         msg = "Calculate the bias corrected extreme values: Using the return period based on the historical gumbel fit/parameters and the gumbel fit/parameters of the baseline run."
         logger.info(msg)
-        extreme_values["bias_corrected"][return_period] = glofris.inverse_gumbel(p_zero["baseline"], location["baseline"], scale["baseline"], return_period_historical)
+        # 
+        extreme_value_map = glofris.inverse_gumbel(p_zero["baseline"], location["baseline"], scale["baseline"], return_period_historical)
+        #
+        # - make sure that we have positive extreme values - this is not necessary, but to make sure
+        extreme_value_map = pcr.max(extreme_value_map, 0.0)
+        #
+        # - make sure that extreme value maps increasing over return period - this is not necessary, but to make sure
+        if i_return_period >  0: extreme_value_map = pcr.max(previous_return_period_map, extreme_value_map) 
+        previous_return_period_map = extreme_value_map
+        #
+        # - saving extreme values in the dictionary  
+        extreme_values["bias_corrected"][return_period] = extreme_value_map
     
     # time bounds in a netcdf file
     lowerTimeBound = datetime.datetime(str_year,  1,  1, 0)
     upperTimeBound = datetime.datetime(end_year, 12, 31, 0)
     timeBounds = [lowerTimeBound, upperTimeBound]
     
+    # reporting/saving extreme values in netcdf and pcraster files
     for bias_type in ['including_bias', 'bias_corrected']:
     
         msg = "Writing extreme values to a netcdf file: " + str(netcdf_file[bias_type][var_name]['file_name'])
@@ -299,7 +317,7 @@ for var_name in variable_name_list:
             variable_name = str(return_period) + "_of_" + varDict.netcdf_short_name[var_name]
             
             # report to a pcraster map
-            pcr.report(extreme_values[bias_type][return_period], bias_type + "_" + variable_name + ".map")
+            pcr.report(pcr.ifthen(landmask, extreme_values[bias_type][return_period]), bias_type + "_" + variable_name + ".map")
         
             # put it into a dictionary
             data_dictionary[variable_name] = pcr.pcr2numpy(extreme_values[bias_type][return_period], vos.MV)
@@ -308,6 +326,14 @@ for var_name in variable_name_list:
         netcdf_report.dictionary_of_data_to_netcdf(netcdf_file[bias_type][var_name]['file_name'], \
                                                    data_dictionary, \
                                                    timeBounds)
+
+    # saving "return_period_historical":  the return period in present days (historical run) belonging to future extreme values
+    # - to pcraster files only
+    for return_period in return_periods:
+
+        # report to a pcraster map
+        pcr.report(pcr.ifthen(landmask, extreme_values['return_period_historical'][return_period]), 'return_period_historical_corresponding_to' + "_" + str(return_period) + ".map")
+    
 
 
 ###################################################################################

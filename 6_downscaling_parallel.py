@@ -60,16 +60,23 @@ type_of_files  = str(sys.argv[3])
 map_type_name  = "channel_storage.map"
 map_type_name  = str(sys.argv[4])
 
+# - bankfull_capacity map
+surface_water_bankfull_capacity_file_name = None
+surface_water_bankfull_capacity_file_name = "/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/extreme_values/watch_1960-1999/2-year_of_channel_storage.map"
+surface_water_bankfull_capacity_file_name = "/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2016_12_11/flood_analyzer_analysis/historical/extreme_values/watch_1960-1999/2-year_of_channel_storage_used_as_bankfull_capacity.map"
+surface_water_bankfull_capacity_file_name = str(sys.argv[5])
+
 # - option for strahler order number
 strahler_order_used = 6 # default
 try:
-    strahler_order_used = int(sys.argv[5])
+    strahler_order_used = int(sys.argv[6])
 except:
     pass
 
 # - option with first upscaling model results to 30 arc-min model
+with_upscaling = False # default 
 try:
-    with_upscaling = str(sys.argv[6]) == "with_upscaling"
+    with_upscaling = str(sys.argv[7]) == "with_upscaling"
 except:
     with_upscaling = False
 
@@ -107,7 +114,11 @@ for i_group in range(number_of_clone_groups):
     # - command lines for running the downscling script parallely
     cmd = ''
     for clone_code in clone_codes:
-       cmd += "python downscaling_with_30min_option.py " + input_folder  + " " + general_output_folder + " " + "downscaling.ini" + " " + clone_code + " " + type_of_files + " " + map_type_name + " " + str(strahler_order_used)
+       cmd += "python downscaling_with_30min_option.py " + input_folder  + " " + \
+                                                           general_output_folder + " " + "downscaling.ini" + " " + \
+                                                           clone_code + " " + type_of_files + " " + map_type_name + " " + \
+                                                           surface_water_bankfull_capacity_file_name  + " " + \
+                                                           str(strahler_order_used)
        if with_upscaling:
           cmd = cmd + " " + "with_upscaling"
        cmd = cmd + " & "
