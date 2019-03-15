@@ -158,7 +158,8 @@ netcdf_file = {}
 
 msg = "Preparing netcdf output files."
 logger.info(msg)
-for bias_type in ['including_bias', 'bias_corrected']:
+for bias_type in ['including_bias', 'bias_corrected', 'bias_corrected_additive', 'bias_corrected_multiplicative', \
+                                    'bias_corrected_above_2_year', 'bias_corrected_additive_above_2_year', 'bias_corrected_multiplicative_above_2_year']:
     netcdf_file[bias_type] = {}
     for var_name in variable_name_list: 
         #
@@ -176,8 +177,20 @@ for bias_type in ['including_bias', 'bias_corrected']:
         netcdf_file[bias_type][var_name]['source'     ] = netcdf_setup['source'     ]
         netcdf_file[bias_type][var_name]['references' ] = netcdf_setup['references' ]
         #
-        if bias_type == "bias_corrected": 
-            netcdf_file[bias_type][var_name]['description'] += " BIAS-CORRECTED based on the historical and baseline output."
+        if bias_type == "bias_corrected":
+            netcdf_file[bias_type][var_name]['description'] += " BIAS-CORRECTED based on the historical and baseline output, using the quantile matching method (Deltares bias correction procedure)"
+        if bias_type == "bias_corrected_additive":
+            netcdf_file[bias_type][var_name]['description'] += " BIAS-CORRECTED based on the historical and baseline output, using the additive correction method"
+        if bias_type == "bias_corrected_multiplicative":
+            netcdf_file[bias_type][var_name]['description'] += " BIAS-CORRECTED based on the historical and baseline output, using the multiplicative correction method"
+        #
+        if bias_type == "bias_corrected_above_2_year":
+            netcdf_file[bias_type][var_name]['description'] += " BIAS-CORRECTED based on the historical and baseline output, using the quantile matching method (Deltares bias correction procedure). Values shown are above 2 year return period values."
+        if bias_type == "bias_corrected_additive_above_2_year":
+            netcdf_file[bias_type][var_name]['description'] += " BIAS-CORRECTED based on the historical and baseline output, using the additive correction method. Values shown are above 2 year return period values."
+        if bias_type == "bias_corrected_multiplicative_above_2_year":
+            netcdf_file[bias_type][var_name]['description'] += " BIAS-CORRECTED based on the historical and baseline output, using the multiplicative correction method. Values shown are above 2 year return period values."
+        #
         # - resolution (unit: arc-minutes)
         netcdf_file[bias_type][var_name]['resolution_arcmin'] = 5. 
         #
@@ -201,9 +214,26 @@ return_periods = ["2-year", "5-year", "10-year", "25-year", "50-year", "100-year
 #
 # - dictionaries for extreme value:
 extreme_values = {}
+# - without bias correction
 extreme_values["including_bias"] = {}
+# - bias corrected using the quantile matching approach. 
 extreme_values["bias_corrected"] = {}
 extreme_values['return_period_historical'] = {}
+# 
+# - bias_corrected_additive
+extreme_values["bias_corrected_additive"] = {}
+# - bias_corrected_multiplicative
+extreme_values["bias_corrected_multiplicative"] = {}
+#
+# - bias_corrected_above_2_year
+extreme_values["bias_corrected_above_2_year"] = {}
+# - bias_corrected_additive_above_2_year
+extreme_values["bias_corrected_additive_above_2_year"] = {}
+# - bias_corrected_multiplicative_above_2_year
+extreme_values["bias_corrected_multiplicative_above_2_year"] = {}
+
+
+
 #
 for var_name in variable_name_list: 
     
@@ -238,7 +268,15 @@ for var_name in variable_name_list:
                                           "Yes",\
                                           input_files['clone_map_05min'])
     
-    # compute future extreme values (including bias correction):
+    
+    # UNTIL THIS PART
+    
+    # calculate/obtain extremes value for the 2-year return period of the baseline run (EUWATCH)
+    # - this is needed for getting the values   
+    s
+    
+    
+    # compute future extreme values (including bias correction - based on the quantile matching approach):
     for i_return_period in range(0, len(return_periods)):
         
         return_period = return_periods[i_return_period]
@@ -260,7 +298,14 @@ for var_name in variable_name_list:
         # lookup the return period in present days (historical run) belonging to future extreme values
         msg = "For the given future extreme values, obtain the return period based on the historical gumbel fit/parameters."
         logger.info(msg)
-        return_period_historical = glofris.get_return_period_gumbel(p_zero["historical"], location["historical"], scale["historical"], extreme_values["including_bias"][return_period])
+        #
+        # - set the maximum return period that can be assigned in order to avoid 
+        max_return_period_that_can_be_assigned = np.longdouble(1e9) 
+        #
+        return_period_historical = glofris.get_return_period_gumbel(p_zero["historical"], location["historical"], scale["historical"], \
+                                                                    extreme_values["including_bias"][return_period], \
+                                                                    max_return_period_that_can_be_assigned, \
+                                                                    max_return_period_that_can_be_assigned)
         extreme_values['return_period_historical'][return_period] = return_period_historical
         
         #~ pcr.report(return_period_historical, "return_period_historical.map")
@@ -273,7 +318,7 @@ for var_name in variable_name_list:
         # 
         extreme_value_map = glofris.inverse_gumbel(p_zero["baseline"], location["baseline"], scale["baseline"], return_period_historical)
         #
-        # - make sure that we have positive extreme values - this is not necessary, but to make sure
+        # - make sure that we have positive extreme values
         extreme_value_map = pcr.max(extreme_value_map, 0.0)
         #
         # - make sure that extreme value maps increasing over return period - this is not necessary, but to make sure
