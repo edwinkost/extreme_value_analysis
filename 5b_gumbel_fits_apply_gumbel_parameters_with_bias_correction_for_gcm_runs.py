@@ -302,11 +302,7 @@ for var_name in variable_name_list:
                                                                     extreme_values["including_bias"][return_period], \
                                                                     max_return_period_that_can_be_assigned, \
                                                                     max_return_period_that_can_be_assigned)
-        extreme_values['return_period_historical'][return_period] = return_period_historical
-        
-        #~ pcr.report(return_period_historical, "return_period_historical.map")
-        #~ cmd = "aguila " + "return_period_historical.map"
-        #~ os.system(cmd)
+        extreme_values['return_period_historical_deltares'][return_period] = return_period_historical
         
 
         # bias corrected extreme values - Deltares approach (quantile matching)
@@ -443,7 +439,7 @@ for var_name in variable_name_list:
     for return_period in return_periods:
 
         # report to pcraster maps
-        pcr.report(pcr.ifthen(landmask, extreme_values['return_period_historical'][return_period]), 'return_period_historical_corresponding_to' + "_" + str(return_period) + ".map")
+        pcr.report(pcr.ifthen(landmask, extreme_values['return_period_historical_deltares'][return_period]), 'return_period_historical_deltares_corresponding_to' + "_" + str(return_period) + ".map")
         pcr.report(pcr.ifthen(landmask, extreme_values['problematic_mult_with_zero_historical_gcm'][return_period]), 'problematic_mult_with_zero_historical_gcm_corresponding_to' + "_" + str(return_period) + ".map")
     
 
