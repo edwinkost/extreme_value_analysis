@@ -320,7 +320,7 @@ for var_name in variable_name_list:
         #
         # - make sure that extreme value maps increasing over return period - this is not necessary, but to make sure
         if i_return_period >  0: extreme_values["bias_corrected_deltares"][return_period] = pcr.max(extreme_values["bias_corrected_deltares"][return_period], \
-                                                                                                    extreme_values["bias_corrected_deltares"][i_return_period - 1]) 
+                                                                                                    extreme_values["bias_corrected_deltares"][return_period[i_return_period - 1]]) 
         #
         # - calculate values above 2 year
         extreme_values["bias_corrected_deltares_above_2_year"][return_period] = pcr.max(0.0, extreme_values["bias_corrected_deltares"][return_period] - reference_2_year_map)
@@ -347,7 +347,7 @@ for var_name in variable_name_list:
         #
         # - make sure that extreme value maps increasing over return period - this is not necessary, but to make sure
         if i_return_period >  0: extreme_values["bias_corrected_additive"][return_period] = pcr.max(extreme_values["bias_corrected_additive"][return_period], \
-                                                                                                    extreme_values["bias_corrected_additive"][i_return_period - 1]) 
+                                                                                                    extreme_values["bias_corrected_additive"][return_period[i_return_period - 1]]) 
         #
         # - calculate values above 2 year
         extreme_values["bias_corrected_additive_above_2_year"][return_period] = pcr.max(0.0, extreme_values["bias_corrected_additive"][return_period] - reference_2_year_map)
@@ -373,7 +373,7 @@ for var_name in variable_name_list:
         #
         # - make sure that extreme value maps increasing over return period - this is not necessary, but to make sure
         if i_return_period >  0: extreme_values["bias_corrected_multiplicative"][return_period] = pcr.max(extreme_values["bias_corrected_multiplicative"][return_period], \
-                                                                                                          extreme_values["bias_corrected_multiplicative"][i_return_period - 1]) 
+                                                                                                          extreme_values["bias_corrected_multiplicative"][return_period[i_return_period - 1]]) 
         #
         # - calculate values above 2 year
         extreme_values["bias_corrected_multiplicative_above_2_year"][return_period] = pcr.max(0.0, extreme_values["bias_corrected_multiplicative"][return_period] - reference_2_year_map)
