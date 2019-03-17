@@ -363,7 +363,7 @@ for var_name in variable_name_list:
         logger.info(msg)
         # 
         # - the bias corrected value - multiplicative approach
-        extreme_value_map = baseline_value * (future_gcm / historical_gcm))
+        extreme_value_map = baseline_value * (future_gcm / historical_gcm)
         #
         # - set it to zero if either baseline_value or future gcm is zero
         extreme_value_map = pcr.ifthenelse(baseline_value = 0., 0., extreme_value_map)
