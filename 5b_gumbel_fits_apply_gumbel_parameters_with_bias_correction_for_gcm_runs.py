@@ -366,8 +366,8 @@ for var_name in variable_name_list:
         extreme_value_map = baseline_value * (future_gcm / historical_gcm)
         #
         # - set it to zero if either baseline_value or future gcm is zero
-        extreme_value_map = pcr.ifthenelse(baseline_value = 0., 0., extreme_value_map)
-        extreme_value_map = pcr.ifthenelse(future_gcm = 0., 0., extreme_value_map)
+        extreme_value_map = pcr.ifthenelse(baseline_value == 0., 0., extreme_value_map)
+        extreme_value_map = pcr.ifthenelse(future_gcm == 0., 0., extreme_value_map)
         #
         # - make sure that we have positive extreme values
         extreme_value_map = pcr.max(extreme_value_map, 0.0)
