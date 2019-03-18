@@ -384,8 +384,10 @@ for var_name in variable_name_list:
         #
         # - problematic areas
         extreme_values["problematic_mult_with_zero_historical_gcm"][return_period]  = pcr.ifthenelse(historical_gcm == 0., pcr.boolean(1.0), pcr.boolean(0.0))
-        # -- exclude areas with zero extreme_value_map 
-        extreme_values["problematic_mult_with_zero_historical_gcm"][return_period]  = pcr.ifthenelse(extreme_value_map == 0., pcr.boolean(0.0), extreme_values["problematic_mult_with_zero_historical_gcm"][return_period])
+        # -- exclude areas with zero baseline_value 
+        extreme_values["problematic_mult_with_zero_historical_gcm"][return_period]  = pcr.ifthenelse(baseline_value == 0., pcr.boolean(0.0), extreme_values["problematic_mult_with_zero_historical_gcm"][return_period])
+        # -- exclude areas with zero future_gcm 
+        extreme_values["problematic_mult_with_zero_historical_gcm"][return_period]  = pcr.ifthenelse(future_gcm == 0., pcr.boolean(0.0), extreme_values["problematic_mult_with_zero_historical_gcm"][return_period])
 
         # THE CHOSEN bias corrected method  
         extreme_values["bias_corrected"][return_period] = extreme_values["bias_corrected_additive"][return_period]
