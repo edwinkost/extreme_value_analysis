@@ -399,7 +399,8 @@ for var_name in variable_name_list:
     # reporting/saving extreme values in netcdf and pcraster files
     #~ for bias_type in ['including_bias', 'bias_corrected']:
     for bias_type in ['including_bias', 'bias_corrected_deltares', 'bias_corrected_additive', 'bias_corrected_multiplicative', \
-                      'including_bias_above_2_year', 'bias_corrected_deltares_above_2_year', 'bias_corrected_additive_above_2_year', 'bias_corrected_multiplicative_above_2_year']:
+                      'including_bias_above_2_year', 'bias_corrected_deltares_above_2_year', 'bias_corrected_additive_above_2_year', 'bias_corrected_multiplicative_above_2_year', \
+                      'bias_corrected']:
     
         msg = "Writing extreme values to a netcdf file: " + str(netcdf_file[bias_type][var_name]['file_name'])
         logger.info(msg)
