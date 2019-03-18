@@ -366,8 +366,8 @@ for var_name in variable_name_list:
         extreme_value_map = baseline_value * (future_gcm / historical_gcm)
         #
         # - set it to zero if either baseline_value or future gcm is zero
-        extreme_value_map = pcr.ifthenelse(baseline_value == 0., 0., extreme_value_map)
-        extreme_value_map = pcr.ifthenelse(future_gcm == 0., 0., extreme_value_map)
+        extreme_value_map = pcr.ifthenelse(baseline_value == 0., pcr.scalar(0.0), extreme_value_map)
+        extreme_value_map = pcr.ifthenelse(future_gcm     == 0., pcr.scalar(0.0), extreme_value_map)
         #
         # - make sure that we have positive extreme values
         extreme_value_map = pcr.max(extreme_value_map, 0.0)
@@ -383,8 +383,9 @@ for var_name in variable_name_list:
         extreme_values["bias_corrected_multiplicative_above_2_year"][return_period] = pcr.max(0.0, extreme_values["bias_corrected_multiplicative"][return_period] - reference_2_year_map)
         #
         # - problematic areas
-        extreme_values["problematic_mult_with_zero_historical_gcm"][return_period]  = pcr.ifthenelse(historical_gcm == 0., \
-                                                                                      pcr.ifthenelse(extreme_value_map > 0.0, pcr.boolean(1.0), pcr.boolean(0.0)), pcr.boolean(0.0))
+        extreme_values["problematic_mult_with_zero_historical_gcm"][return_period]  = pcr.ifthenelse(historical_gcm == 0., pcr.boolean(1.0), pcr.boolean(0.0))
+        #~ extreme_values["problematic_mult_with_zero_historical_gcm"][return_period]  = pcr.ifthenelse(historical_gcm == 0., \
+                                                                                      #~ pcr.ifthenelse(extreme_value_map > 0.0, pcr.boolean(1.0), pcr.boolean(0.0)), pcr.boolean(0.0))
 
         # THE CHOSEN bias corrected method  
         extreme_values["bias_corrected"][return_period] = extreme_values["bias_corrected_additive"][return_period]
