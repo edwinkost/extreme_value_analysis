@@ -137,7 +137,7 @@ if option_to_limit_variables != "None": variable_name_list = [option_to_limit_va
 
 
 # cell area (m2) - for debugging
-cell_area = pcr.readmap()
+cell_area = pcr.readmap("/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/cellsize05min.correct.map")
 
 
 # netcdf general setup:
