@@ -351,6 +351,9 @@ for var_name in variable_name_list:
         # - the bias corrected value - additive approach
         extreme_value_map = pcr.max(0.0, baseline_value + (future_gcm - historical_gcm))
         #
+        # - set the minimum value to the 2 year baseline/reference value
+        extreme_value_map = pcr.max(reference_2_year_map, extreme_value_map)
+        #
         # - make sure that we have positive extreme values
         extreme_value_map = pcr.max(extreme_value_map, 0.0)
         #
