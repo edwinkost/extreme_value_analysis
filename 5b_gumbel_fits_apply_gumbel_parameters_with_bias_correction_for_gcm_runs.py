@@ -424,6 +424,8 @@ for var_name in variable_name_list:
             variable_name = str(return_period) + "_of_" + varDict.netcdf_short_name[var_name]
             
             # report to a pcraster map
+            print bias_type
+            print return_period
             pcr.report(pcr.ifthen(landmask, extreme_values[bias_type][return_period]), bias_type + "_" + variable_name + ".map")
         
             # put it into a dictionary
