@@ -290,7 +290,11 @@ for var_name in variable_name_list:
         msg = "Compute future/climate/gcm extreme values (biases are still included here)."
         logger.info(msg)
         extreme_values["including_bias"][return_period] = glofris.inverse_gumbel(p_zero["future"], location["future"], scale["future"], return_period_in_year)
-    
+        #
+        # - calculate values above 2 year
+        extreme_values["including_bias_above_2_year"][return_period] = pcr.max(0.0, extreme_values["including_bias_above_2_year"][return_period] - reference_2_year_map)
+
+        
         # lookup the return period in present days (historical run) belonging to future extreme values
         msg = "For the given future extreme values, obtain the return period based on the historical gumbel fit/parameters."
         logger.info(msg)
