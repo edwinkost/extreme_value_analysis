@@ -383,10 +383,9 @@ for var_name in variable_name_list:
         extreme_values["bias_corrected_multiplicative_above_2_year"][return_period] = pcr.max(0.0, extreme_values["bias_corrected_multiplicative"][return_period] - reference_2_year_map)
         #
         # - problematic areas
-        extreme_values["problematic_mult_with_zero_historical_gcm"] = pcr.ifthenelse(historical_gcm == 0., pcr.ifthenelse(extreme_value_map > 0.0, pcr.boolean(1.0), pcr.boolean(0.0)), \
-                                                                                                           pcr.boolean(0.0))
+        extreme_values["problematic_mult_with_zero_historical_gcm"][return_period]  = pcr.ifthenelse(historical_gcm == 0., \
+                                                                                      pcr.ifthenelse(extreme_value_map > 0.0, pcr.boolean(1.0), pcr.boolean(0.0)), pcr.boolean(0.0))
 
- 
         # THE CHOSEN bias corrected method  
         extreme_values["bias_corrected"][return_period] = extreme_values["bias_corrected_additive"]
 
