@@ -136,6 +136,10 @@ variable_name_list = ['channelStorage', 'surfaceWaterLevel']
 if option_to_limit_variables != "None": variable_name_list = [option_to_limit_variables]
 
 
+# cell area (m2) - for debugging
+cell_area = pcr.readmap()
+
+
 # netcdf general setup:
 netcdf_setup = {}
 netcdf_setup['format']      = "NETCDF4"
@@ -293,6 +297,8 @@ for var_name in variable_name_list:
         #
         # - calculate values above 2 year
         extreme_values["including_bias_above_2_year"][return_period] = pcr.max(0.0, extreme_values["including_bias"][return_period] - reference_2_year_map)
+        # - convert values to meter
+        if var_name == "channelStorage": extreme_values["including_bias_above_2_year"][return_period] = extreme_values["including_bias_above_2_year"][return_period] / cell_area
 
         
         # lookup the return period in present days (historical run) belonging to future extreme values
@@ -328,6 +334,8 @@ for var_name in variable_name_list:
         #~ #
         # - calculate values above 2 year
         extreme_values["bias_corrected_deltares_above_2_year"][return_period] = pcr.max(0.0, extreme_values["bias_corrected_deltares"][return_period] - reference_2_year_map)
+        # - convert values to meter
+        if var_name == "channelStorage": extreme_values["bias_corrected_deltares_above_2_year"][return_period] = extreme_values["bias_corrected_deltares_above_2_year"][return_period] / cell_area
 
 
         # additive correction approach
@@ -355,6 +363,8 @@ for var_name in variable_name_list:
         #
         # - calculate values above 2 year
         extreme_values["bias_corrected_additive_above_2_year"][return_period] = pcr.max(0.0, extreme_values["bias_corrected_additive"][return_period] - reference_2_year_map)
+        # - convert values to meter
+        if var_name == "channelStorage": extreme_values["bias_corrected_additive_above_2_year"][return_period] = extreme_values["bias_corrected_additive_above_2_year"][return_period] / cell_area
 
 
         # multiplicative correction approach
@@ -381,6 +391,8 @@ for var_name in variable_name_list:
         #
         # - calculate values above 2 year
         extreme_values["bias_corrected_multiplicative_above_2_year"][return_period] = pcr.max(0.0, extreme_values["bias_corrected_multiplicative"][return_period] - reference_2_year_map)
+        # - convert values to meter
+        if var_name == "channelStorage": extreme_values["bias_corrected_multiplicative_above_2_year"][return_period] = extreme_values["bias_corrected_multiplicative_above_2_year"][return_period] / cell_area
         #
         # - problematic areas
         extreme_values["problematic_mult_with_zero_historical_gcm"][return_period]  = pcr.ifthenelse(historical_gcm == 0., pcr.boolean(1.0), pcr.boolean(0.0))
@@ -388,6 +400,7 @@ for var_name in variable_name_list:
         extreme_values["problematic_mult_with_zero_historical_gcm"][return_period]  = pcr.ifthenelse(baseline_value == 0., pcr.boolean(0.0), extreme_values["problematic_mult_with_zero_historical_gcm"][return_period])
         # -- exclude areas with zero future_gcm 
         extreme_values["problematic_mult_with_zero_historical_gcm"][return_period]  = pcr.ifthenelse(future_gcm == 0., pcr.boolean(0.0), extreme_values["problematic_mult_with_zero_historical_gcm"][return_period])
+
 
         # THE CHOSEN bias corrected method  
         extreme_values["bias_corrected"][return_period] = extreme_values["bias_corrected_additive"][return_period]
@@ -413,6 +426,7 @@ for var_name in variable_name_list:
             # variable names and unit 
             variable_name = str(return_period) + "_of_" + varDict.netcdf_short_name[var_name]
             variable_unit = varDict.netcdf_unit[var_name]
+            if var_name == "channelStorage" and "above_2_year" in bias_type: variable_unit = "m"
             var_long_name = str(return_period) + "_of_" + varDict.netcdf_long_name[var_name]
             # 
             netcdf_report.create_variable(\
