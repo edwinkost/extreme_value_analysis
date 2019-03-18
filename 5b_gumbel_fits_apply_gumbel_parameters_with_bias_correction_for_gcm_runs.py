@@ -431,7 +431,10 @@ for var_name in variable_name_list:
             print bias_type
             print return_period
             if bias_type == "bias_corrected" and "surface_water_level" in variable_name: pcr.aguila(extreme_values[bias_type][return_period])
-            pcr.report(pcr.ifthen(landmask, extreme_values[bias_type][return_period]), bias_type + "_" + variable_name + ".map")
+            if bias_type == "bias_corrected" and "surface_water_level":
+                pcr.report(pcr.ifthen(landmask, extreme_values[bias_type][return_period]), "test.map")
+            else:
+                pcr.report(pcr.ifthen(landmask, extreme_values[bias_type][return_period]), bias_type + "_" + variable_name + ".map")
         
             # put it into a dictionary
             data_dictionary[variable_name] = pcr.pcr2numpy(extreme_values[bias_type][return_period], vos.MV)
