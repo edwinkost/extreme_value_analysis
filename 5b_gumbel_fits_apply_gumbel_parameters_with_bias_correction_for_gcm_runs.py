@@ -387,7 +387,7 @@ for var_name in variable_name_list:
                                                                                       pcr.ifthenelse(extreme_value_map > 0.0, pcr.boolean(1.0), pcr.boolean(0.0)), pcr.boolean(0.0))
 
         # THE CHOSEN bias corrected method  
-        extreme_values["bias_corrected"][return_period] = extreme_values["bias_corrected_additive"]
+        extreme_values["bias_corrected"][return_period] = extreme_values["bias_corrected_additive"][return_period]
 
 
 
@@ -428,13 +428,9 @@ for var_name in variable_name_list:
             variable_name = str(return_period) + "_of_" + varDict.netcdf_short_name[var_name]
             
             # report to a pcraster map
-            print bias_type
-            print return_period
-            if bias_type == "bias_corrected" and "surface_water_level" in variable_name: pcr.aguila(extreme_values[bias_type][return_period])
-            if bias_type == "bias_corrected" and "surface_water_level":
-                pcr.report(pcr.ifthen(landmask, extreme_values[bias_type][return_period]), "test.map")
-            else:
-                pcr.report(pcr.ifthen(landmask, extreme_values[bias_type][return_period]), bias_type + "_" + variable_name + ".map")
+            #~ print bias_type
+            #~ print return_period
+            pcr.report(pcr.ifthen(landmask, extreme_values[bias_type][return_period]), bias_type + "_" + variable_name + ".map")
         
             # put it into a dictionary
             data_dictionary[variable_name] = pcr.pcr2numpy(extreme_values[bias_type][return_period], vos.MV)
