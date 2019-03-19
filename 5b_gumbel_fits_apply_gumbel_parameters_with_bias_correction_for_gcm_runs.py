@@ -320,10 +320,23 @@ for var_name in variable_name_list:
         # - convert values to meter
         if var_name == "channelStorage": extreme_values["including_bias_above_2_year"][return_period] = extreme_values["including_bias_above_2_year"][return_period] / input_files['cell_area_05min']
         #
+        print("test")
+        print("test")
+        print("test")
+        print("test")
+        print("test")
+
         # - calculate values above reference
         extreme_values["including_bias_above_reference_at_the_same_return_period"][return_period] = extreme_values["including_bias"][return_period] - extreme_values["reference"][return_period]
         # - convert values to meter
         if var_name == "channelStorage": extreme_values["including_bias_above_reference_at_the_same_return_period"][return_period] = extreme_values["including_bias_above_reference_at_the_same_return_period"][return_period] / input_files['cell_area_05min']
+        #
+        print("test")
+        print("test")
+        print("test")
+        print("test")
+        print("test")
+        pcr.aguila(extreme_values["bias_corrected_multiplicative_above_reference_at_the_same_return_period"][return_period])
 
         
         # lookup the return period in present days (historical run) belonging to future extreme values
@@ -436,12 +449,6 @@ for var_name in variable_name_list:
         extreme_values["bias_corrected_multiplicative_above_reference_at_the_same_return_period"][return_period] = extreme_values["bias_corrected_multiplicative"][return_period] - extreme_values["reference"][return_period]
         # - convert values to meter
         if var_name == "channelStorage": extreme_values["bias_corrected_multiplicative_above_reference_at_the_same_return_period"][return_period] = extreme_values["bias_corrected_multiplicative_above_reference_at_the_same_return_period"][return_period] / input_files['cell_area_05min']
-        print("test")
-        print("test")
-        print("test")
-        print("test")
-        print("test")
-        pcr.aguila(extreme_values["bias_corrected_multiplicative_above_reference_at_the_same_return_period"][return_period])
         #
         # - problematic areas
         extreme_values["problematic_mult_with_zero_historical_gcm"][return_period]  = pcr.ifthenelse(historical_gcm == 0., pcr.boolean(1.0), pcr.boolean(0.0))
