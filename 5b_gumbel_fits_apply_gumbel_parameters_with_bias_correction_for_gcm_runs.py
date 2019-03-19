@@ -163,7 +163,7 @@ netcdf_file = {}
 msg = "Preparing netcdf output files."
 logger.info(msg)
 for bias_type in ['including_bias', 'bias_corrected_deltares', 'bias_corrected_additive', 'bias_corrected_multiplicative', \
-                  'including_bias_above_2_year', 'bias_corrected_deltares_above_2_year', 'bias_corrected_additive_above_2_year', \ 'bias_corrected_multiplicative_above_2_year', \
+                  'including_bias_above_2_year', 'bias_corrected_deltares_above_2_year', 'bias_corrected_additive_above_2_year',  'bias_corrected_multiplicative_above_2_year', \
                   'including_bias_above_reference_at_the_same_return_period', 'bias_corrected_deltares_above_reference_at_the_same_return_period', 'bias_corrected_additive_above_reference_at_the_same_return_period', 'bias_corrected_multiplicative_above_reference_at_the_same_return_period', \
                   'bias_corrected']:
     netcdf_file[bias_type] = {}
