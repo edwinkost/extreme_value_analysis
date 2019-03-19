@@ -27,7 +27,7 @@ cd /home/edwin/github/edwinkost/extreme_value_analysis/
 #
 # Set the following variables:
 #
-MAIN_OUTPUT_FOLDER=/scratch-shared/edwin/flood_analyzer_analysis_2019_03_XX/
+MAIN_OUTPUT_FOLDER=/scratch-shared/edwinhs/flood_analyzer_analysis_2019_03_XX/
 #
 RCP_CODE=rcp8p5
 #
