@@ -315,6 +315,14 @@ for var_name in variable_name_list:
         logger.info(msg)
         extreme_values["including_bias"][return_period] = glofris.inverse_gumbel(p_zero["future"], location["future"], scale["future"], return_period_in_year)
         #
+        #
+        print("test")
+        print("test")
+        print("test")
+        print("test")
+        print("test")
+
+
         # - calculate values above 2 year
         extreme_values["including_bias_above_2_year"][return_period] = pcr.max(0.0, extreme_values["including_bias"][return_period] - reference_2_year_map)
         # - convert values to meter
