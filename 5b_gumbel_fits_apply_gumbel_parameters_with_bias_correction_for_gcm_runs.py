@@ -349,6 +349,9 @@ for var_name in variable_name_list:
         # 
         extreme_value_map = glofris.inverse_gumbel(p_zero["baseline"], location["baseline"], scale["baseline"], return_period_historical)
         #
+        # - set the minimum value to the 2 year baseline/reference value
+        extreme_value_map = pcr.max(reference_2_year_map, extreme_value_map)
+        #
         # - make sure that we have positive extreme values
         extreme_value_map = pcr.max(extreme_value_map, 0.0)
         #
@@ -418,6 +421,9 @@ for var_name in variable_name_list:
         # - set it to zero if either baseline_value or future gcm is zero
         extreme_value_map = pcr.ifthenelse(baseline_value == 0., pcr.scalar(0.0), extreme_value_map)
         extreme_value_map = pcr.ifthenelse(future_gcm     == 0., pcr.scalar(0.0), extreme_value_map)
+        #
+        # - set the minimum value to the 2 year baseline/reference value
+        extreme_value_map = pcr.max(reference_2_year_map, extreme_value_map)
         #
         # - make sure that we have positive extreme values
         extreme_value_map = pcr.max(extreme_value_map, 0.0)
