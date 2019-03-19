@@ -471,6 +471,7 @@ for var_name in variable_name_list:
             variable_name = str(return_period) + "_of_" + varDict.netcdf_short_name[var_name]
             variable_unit = varDict.netcdf_unit[var_name]
             if var_name == "channelStorage" and "above_2_year" in bias_type: variable_unit = "m"
+            if var_name == "channelStorage" and "above_reference_at_the_same_return_period" in bias_type: variable_unit = "m"
             var_long_name = str(return_period) + "_of_" + varDict.netcdf_long_name[var_name]
             # 
             netcdf_report.create_variable(\
@@ -489,9 +490,10 @@ for var_name in variable_name_list:
             variable_name = str(return_period) + "_of_" + varDict.netcdf_short_name[var_name]
             
             # report to a pcraster map
-            #~ print bias_type
-            #~ print return_period
+            print bias_type
+            print return_period
             pcr.report(pcr.ifthen(landmask, extreme_values[bias_type][return_period]), bias_type + "_" + variable_name + ".map")
+            if "above_reference_at_the_same_return_period" in bias_type: pcr.aguila(pcr.ifthen(landmask, extreme_values[bias_type][return_period]))
         
             # put it into a dictionary
             data_dictionary[variable_name] = pcr.pcr2numpy(extreme_values[bias_type][return_period], vos.MV)
