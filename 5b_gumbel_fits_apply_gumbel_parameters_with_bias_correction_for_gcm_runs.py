@@ -436,6 +436,11 @@ for var_name in variable_name_list:
         extreme_values["bias_corrected_multiplicative_above_reference_at_the_same_return_period"][return_period] = extreme_values["bias_corrected_multiplicative"][return_period] - extreme_values["reference"][return_period]
         # - convert values to meter
         if var_name == "channelStorage": extreme_values["bias_corrected_multiplicative_above_reference_at_the_same_return_period"][return_period] = extreme_values["bias_corrected_multiplicative_above_reference_at_the_same_return_period"][return_period] / input_files['cell_area_05min']
+        print("test")
+        print("test")
+        print("test")
+        print("test")
+        print("test")
         pcr.aguila(extreme_values["bias_corrected_multiplicative_above_reference_at_the_same_return_period"][return_period])
         #
         # - problematic areas
