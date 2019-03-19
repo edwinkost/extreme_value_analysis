@@ -305,6 +305,13 @@ for var_name in variable_name_list:
         logger.info(msg)
         return_period_in_year = float(return_period.split("-")[0]) 
 
+        print("test")
+        print("test")
+        print("test")
+        print("test")
+        print("test")
+
+
 
         # reference/baseline values
         extreme_values["reference"][return_period] = glofris.inverse_gumbel(p_zero["baseline"], location["baseline"], scale["baseline"], return_period_in_year)
