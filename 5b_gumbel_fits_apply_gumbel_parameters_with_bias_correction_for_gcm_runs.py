@@ -343,6 +343,7 @@ for var_name in variable_name_list:
         # - convert values to meter
         if var_name == "channelStorage": extreme_values["including_bias_above_2_year"][return_period] = extreme_values["including_bias_above_2_year"][return_period] / input_files['cell_area_05min']
         #
+        pietje
         print("test")
         print("test")
         print("test")
