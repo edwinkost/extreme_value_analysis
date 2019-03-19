@@ -316,6 +316,7 @@ for var_name in variable_name_list:
         extreme_values["including_bias"][return_period] = glofris.inverse_gumbel(p_zero["future"], location["future"], scale["future"], return_period_in_year)
         #
         #
+        sys.exit()
         print("test")
         print("test")
         print("test")
