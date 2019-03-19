@@ -17,7 +17,7 @@
 set -x
 
 # go to the main working folder (containing the scripts):
-cd /home/edwin/github/edwinkost/extreme_value_analysis/
+cd /home/edwinhs/github/edwinkost/extreme_value_analysis/
 # 
 # 
 ###################################################################################

@@ -295,7 +295,12 @@ for var_name in variable_name_list:
     for i_return_period in range(0, len(return_periods)):
         
         return_period = return_periods[i_return_period]
+        return_period_in_year = float(return_period.split("-")[0]) 
         
+        # reference/baseline values
+        extreme_values["reference"][return_period] = glofris.inverse_gumbel(p_zero["baseline"], location["baseline"], scale["baseline"], return_period_in_year)
+
+
         msg  = "\n"
         msg += "\n"
         msg += "\n"
@@ -303,64 +308,24 @@ for var_name in variable_name_list:
         msg += "\n"
         msg += "\n"
         logger.info(msg)
-        return_period_in_year = float(return_period.split("-")[0]) 
-
-        logger.info("test")
-        logger.info("test")
-        logger.info("test")
-        print("test")
-        print("test")
-
-
-
-        # reference/baseline values
-        extreme_values["reference"][return_period] = glofris.inverse_gumbel(p_zero["baseline"], location["baseline"], scale["baseline"], return_period_in_year)
         
-
-        print("test")
-        print("test")
-        print("test")
-        print("test")
-        print("test")
-
         
         # compute future extreme values (with bias): applying gumbel parameters
         msg = "Compute future/climate/gcm extreme values (biases are still included here)."
         logger.info(msg)
         extreme_values["including_bias"][return_period] = glofris.inverse_gumbel(p_zero["future"], location["future"], scale["future"], return_period_in_year)
         #
-        #
-        sys.exit()
-        print("test")
-        print("test")
-        print("test")
-        print("test")
-        print("test")
-
-
         # - calculate values above 2 year
         extreme_values["including_bias_above_2_year"][return_period] = pcr.max(0.0, extreme_values["including_bias"][return_period] - reference_2_year_map)
         # - convert values to meter
         if var_name == "channelStorage": extreme_values["including_bias_above_2_year"][return_period] = extreme_values["including_bias_above_2_year"][return_period] / input_files['cell_area_05min']
         #
-        pietje
-        print("test")
-        print("test")
-        print("test")
-        print("test")
-        print("test")
-
         # - calculate values above reference
         extreme_values["including_bias_above_reference_at_the_same_return_period"][return_period] = extreme_values["including_bias"][return_period] - extreme_values["reference"][return_period]
         # - convert values to meter
         if var_name == "channelStorage": extreme_values["including_bias_above_reference_at_the_same_return_period"][return_period] = extreme_values["including_bias_above_reference_at_the_same_return_period"][return_period] / input_files['cell_area_05min']
         #
-        print("test")
-        print("test")
-        print("test")
-        print("test")
-        print("test")
-        pcr.aguila(extreme_values["bias_corrected_multiplicative_above_reference_at_the_same_return_period"][return_period])
+        #~ pcr.aguila(extreme_values["bias_corrected_multiplicative_above_reference_at_the_same_return_period"][return_period])
 
         
         # lookup the return period in present days (historical run) belonging to future extreme values
@@ -527,10 +492,10 @@ for var_name in variable_name_list:
             variable_name = str(return_period) + "_of_" + varDict.netcdf_short_name[var_name]
             
             # report to a pcraster map
-            print bias_type
-            print return_period
+            #~ print bias_type
+            #~ print return_period
             pcr.report(pcr.ifthen(landmask, extreme_values[bias_type][return_period]), bias_type + "_" + variable_name + ".map")
-            if "above_reference_at_the_same_return_period" in bias_type: pcr.aguila(pcr.ifthen(landmask, extreme_values[bias_type][return_period]))
+            #~ if "above_reference_at_the_same_return_period" in bias_type: pcr.aguila(pcr.ifthen(landmask, extreme_values[bias_type][return_period]))
         
             # put it into a dictionary
             data_dictionary[variable_name] = pcr.pcr2numpy(extreme_values[bias_type][return_period], vos.MV)
