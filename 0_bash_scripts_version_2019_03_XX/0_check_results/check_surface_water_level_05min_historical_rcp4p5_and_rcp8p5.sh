@@ -25,7 +25,7 @@ python checking_results.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_a
 
 
 echo "rcp4p5"
-cdo infon /scratch-shared/edwin/flood_analyzer_analysis_2019_03_XX/rcp4p5/*/*/extreme_values/surface_water_level/*.nc
+cdo infon /scratch-shared/edwin/flood_analyzer_analysis_2019_03_XX/rcp4p5/*/*/extreme_values/surface_water_level/*rp*.nc
 
 python checking_results.py "/scratch-shared/edwin/flood_analyzer_analysis_2019_03_XX/rcp4p5/2010-*/GFDL*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
 python checking_results.py "/scratch-shared/edwin/flood_analyzer_analysis_2019_03_XX/rcp4p5/2010-*/HadG*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
@@ -48,7 +48,7 @@ python checking_results.py "/scratch-shared/edwin/flood_analyzer_analysis_2019_0
 
 
 echo "rcp8p5"
-cdo infon /scratch-shared/edwin/flood_analyzer_analysis_2019_03_XX/rcp8p5/*/*/extreme_values/surface_water_level/*.nc
+cdo infon /scratch-shared/edwin/flood_analyzer_analysis_2019_03_XX/rcp8p5/*/*/extreme_values/surface_water_level/*rp*.nc
 
 python checking_results.py "/scratch-shared/edwin/flood_analyzer_analysis_2019_03_XX/rcp8p5/2010-*/GFDL*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
 python checking_results.py "/scratch-shared/edwin/flood_analyzer_analysis_2019_03_XX/rcp8p5/2010-*/HadG*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
