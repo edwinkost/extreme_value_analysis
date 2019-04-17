@@ -282,3 +282,4 @@ cp -r ${SOURCE_FOLDER}/rcp8p5/2060-2099/NorESM1-M/inundation_30sec/merged/global
 cp -r ${SOURCE_FOLDER}/rcp8p5/2060-2099/NorESM1-M/inundation_30sec/merged/global/netcdf/inunriver_rcp8p5_00000NorESM1-M_2080_rp00500.nc             ${TARGET_FOLDER}/rcp8p5/2060-2099/NorESM1-M///inunriver_rcp8p5_00000NorESM1-M_2080_rp00500.nc            
 cp -r ${SOURCE_FOLDER}/rcp8p5/2060-2099/NorESM1-M/inundation_30sec/merged/global/netcdf/inunriver_rcp8p5_00000NorESM1-M_2080_rp01000.nc             ${TARGET_FOLDER}/rcp8p5/2060-2099/NorESM1-M///inunriver_rcp8p5_00000NorESM1-M_2080_rp01000.nc            
 
+set +x
