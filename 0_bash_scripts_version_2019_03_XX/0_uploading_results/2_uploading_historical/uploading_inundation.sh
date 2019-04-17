@@ -1,5 +1,5 @@
 
-# PS: There are no changes in the historical output, between the versions 2018_05_29 and 2019_03_XX.
+# PS: There are no changes in the historical output, from the versions 2018_05_29 to 2019_03_XX.
 
 set -x
 

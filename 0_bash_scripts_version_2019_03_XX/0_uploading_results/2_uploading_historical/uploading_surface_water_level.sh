@@ -1,4 +1,6 @@
 
+# PS: There are no changes in the historical output, from the versions 2018_05_29 to 2019_03_XX.
+
 set -x
 
 TARGET_FOLDER=/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2019_03_XX/river/surface_water_level_05min
