@@ -4,7 +4,7 @@ Edwin H. Sutanudjaja kept and used the folder name 2050-2099 in order to preserv
 
 In the previous/old version (version_2017_05_XX), Edwin somehow used the period 2050-2099 (2075 as its mid year) for representing the year 2080. This was not correct and this was also not consistent to the previous flood analyzer results (see the SI of Winsemius et al., 2016 - Global drivers of future river flood risk - nclimate2893). 
 
-In the new result (version_2018_05_29), Edwin corrected this issue. Yet, Philip asked Edwin to upload the results/files to the same folder and make sure that they have exactly the same format, names, folder structure, and variable names as the previous version (version_2017_05_XX).
+In the new result (version_2019_03_XX), Edwin corrected this issue. Yet, Philip asked Edwin to upload the results/files to the same folder and make sure that they have exactly the same format, names, folder structure, and variable names as the previous version (version_2017_05_XX).
 
 
 -----------------------------------------------------------------------------------------------------------
