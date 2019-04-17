@@ -9,3 +9,4 @@ cp -rf directory_structure.txt ${TARGET_FOLDER}
 cd ${TARGET_FOLDER}
 xargs mkdir -p < directory_structure.txt
 
+cd -
