@@ -5,7 +5,7 @@ set -x
 
 TARGET_FOLDER=/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2019_03_XX/river/inundation_30sec/
 
-cp -rf uploading_inundation.sh ${TARGET_FOLDER}
+cp -rf uploading_inundation_historical.sh ${TARGET_FOLDER}
 cd ${TARGET_FOLDER}
 
 cp -r /projects/0/aqueduct/users/edwinsut/flood_analyzer_analysis_2018_05_XX/historical/1960-1999/WATCH/inundation_30sec/merged/global/netcdf/inunriver_historical_000000000WATCH_1980_rp00002.nc         ${TARGET_FOLDER}/historical/1960-1999/WATCH///inunriver_historical_000000000WATCH_1980_rp00002.nc        
