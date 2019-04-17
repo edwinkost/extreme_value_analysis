@@ -7,5 +7,5 @@ TARGET_FOLDER=/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_result
 bash uploading_with_structure_as_version_2017_05_XX_historical_inundation.sh
 bash uploading_with_structure_as_version_2017_05_XX_historical_surface_water_level.sh
 
-set +
+set +x
 
