@@ -2,7 +2,7 @@ set -x
 pwd
 
 
-SOURCE_FOLDER=/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2019_03_XX/river/inundation_30sec/1960-1999/WATCH
+SOURCE_FOLDER=/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2019_03_XX/river/inundation_30sec/historical/1960-1999/WATCH
 
 TARGET_FOLDER=/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2019_03_XX_structured_as_version_2017_05_XX/river/inundation/historical/inundation_downscaled/WATCH/1960-1999/global/
 cd ${TARGET_FOLDER}
