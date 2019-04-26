@@ -24,6 +24,43 @@ python checking_results.py "/projects/0/aqueduct/users/edwinsut/flood_analyzer_a
 
 
 
+echo "rcp2p6"
+
+echo "rcp2p6 - checking channel storage"
+cdo infon /projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp2p6/*/*/extreme_values/channel_storage/bias_corrected_additive_extreme_values_*.nc
+
+echo "rcp2p6 - checking channel storage, comparing to the reference values at the same return period"
+cdo infon /projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp2p6/*/*/extreme_values/channel_storage/bias_corrected_additive_above_reference_at_the_same_return_period_extreme_values_*.nc
+
+echo "rcp2p6 - checking surface water level"
+cdo infon /projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp2p6/*/*/extreme_values/surface_water_level/bias_corrected_additive_extreme_values_*.nc
+
+echo "rcp2p6 - checking surface water level, comparing to the reference values at the same return period"
+cdo infon /projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp2p6/*/*/extreme_values/surface_water_level/bias_corrected_additive_above_reference_at_the_same_return_period_extreme_values_*.nc
+
+echo "rcp2p6 - checking surface water level, per return period map"
+cdo infon /projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp2p6/*/*/extreme_values/surface_water_level/*rp*.nc
+
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp2p6/2010-*/GFDL*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp2p6/2010-*/HadG*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp2p6/2010-*/IPSL*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp2p6/2010-*/MIRO*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp2p6/2010-*/NorE*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp2p6/2030-*/GFDL*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp2p6/2030-*/HadG*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp2p6/2030-*/IPSL*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp2p6/2030-*/MIRO*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp2p6/2030-*/NorE*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp2p6/2060-*/GFDL*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp2p6/2060-*/HadG*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp2p6/2060-*/IPSL*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp2p6/2060-*/MIRO*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp2p6/2060-*/NorE*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+
+
+
 echo "rcp4p5"
 
 echo "rcp4p5 - checking channel storage"
@@ -60,3 +97,75 @@ python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysi
 python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp4p5/2060-*/NorE*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
 
 
+
+echo "rcp6p0"
+
+echo "rcp6p0 - checking channel storage"
+cdo infon /projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp6p0/*/*/extreme_values/channel_storage/bias_corrected_additive_extreme_values_*.nc
+
+echo "rcp6p0 - checking channel storage, comparing to the reference values at the same return period"
+cdo infon /projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp6p0/*/*/extreme_values/channel_storage/bias_corrected_additive_above_reference_at_the_same_return_period_extreme_values_*.nc
+
+echo "rcp6p0 - checking surface water level"
+cdo infon /projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp6p0/*/*/extreme_values/surface_water_level/bias_corrected_additive_extreme_values_*.nc
+
+echo "rcp6p0 - checking surface water level, comparing to the reference values at the same return period"
+cdo infon /projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp6p0/*/*/extreme_values/surface_water_level/bias_corrected_additive_above_reference_at_the_same_return_period_extreme_values_*.nc
+
+echo "rcp6p0 - checking surface water level, per return period map"
+cdo infon /projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp6p0/*/*/extreme_values/surface_water_level/*rp*.nc
+
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp6p0/2010-*/GFDL*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp6p0/2010-*/HadG*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp6p0/2010-*/IPSL*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp6p0/2010-*/MIRO*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp6p0/2010-*/NorE*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp6p0/2030-*/GFDL*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp6p0/2030-*/HadG*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp6p0/2030-*/IPSL*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp6p0/2030-*/MIRO*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp6p0/2030-*/NorE*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp6p0/2060-*/GFDL*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp6p0/2060-*/HadG*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp6p0/2060-*/IPSL*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp6p0/2060-*/MIRO*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp6p0/2060-*/NorE*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+
+
+
+echo "rcp8p5"
+
+echo "rcp8p5 - checking channel storage"
+cdo infon /projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp8p5/*/*/extreme_values/channel_storage/bias_corrected_additive_extreme_values_*.nc
+
+echo "rcp8p5 - checking channel storage, comparing to the reference values at the same return period"
+cdo infon /projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp8p5/*/*/extreme_values/channel_storage/bias_corrected_additive_above_reference_at_the_same_return_period_extreme_values_*.nc
+
+echo "rcp8p5 - checking surface water level"
+cdo infon /projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp8p5/*/*/extreme_values/surface_water_level/bias_corrected_additive_extreme_values_*.nc
+
+echo "rcp8p5 - checking surface water level, comparing to the reference values at the same return period"
+cdo infon /projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp8p5/*/*/extreme_values/surface_water_level/bias_corrected_additive_above_reference_at_the_same_return_period_extreme_values_*.nc
+
+echo "rcp8p5 - checking surface water level, per return period map"
+cdo infon /projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp8p5/*/*/extreme_values/surface_water_level/*rp*.nc
+
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp8p5/2010-*/GFDL*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp8p5/2010-*/HadG*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp8p5/2010-*/IPSL*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp8p5/2010-*/MIRO*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp8p5/2010-*/NorE*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp8p5/2030-*/GFDL*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp8p5/2030-*/HadG*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp8p5/2030-*/IPSL*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp8p5/2030-*/MIRO*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp8p5/2030-*/NorE*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp8p5/2060-*/GFDL*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp8p5/2060-*/HadG*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp8p5/2060-*/IPSL*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp8p5/2060-*/MIRO*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
+python checking_results.py "/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/rcp8p5/2060-*/NorE*/extreme_values/surface_water_level/bias_corrected_*mask*.map"
