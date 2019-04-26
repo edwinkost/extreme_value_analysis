@@ -3,7 +3,7 @@ set -x
 
 TARGET_FOLDER=/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2019_03_XX/river/surface_water_level_05min
 
-cp -rf uploading_surface_water_level_rcp2p6_and_rcp8p5.sh ${TARGET_FOLDER}
+cp -rf uploading_surface_water_level_rcp2p6.sh ${TARGET_FOLDER}
 cd ${TARGET_FOLDER}
 
 SOURCE_FOLDER=/projects/0/dfguu/users/edwin/flood_analyzer_analysis_2019_03_XX/
