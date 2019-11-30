@@ -48,7 +48,7 @@ class OutputNetCDF():
         attributeDictionary['institution' ]  = netcdf_setup_dictionary['institution']
         attributeDictionary['title'       ]  = netcdf_setup_dictionary['title'      ]
         attributeDictionary['source'      ]  = netcdf_setup_dictionary['source'     ]
-        attributeDictionary['references'   ] = netcdf_setup_dictionary['references' ]
+        attributeDictionary['references'  ]  = netcdf_setup_dictionary['references' ]
         attributeDictionary['description' ]  = netcdf_setup_dictionary['description']
         attributeDictionary['created by'  ]  = netcdf_setup_dictionary['created by' ]
                                              
@@ -56,6 +56,8 @@ class OutputNetCDF():
         attributeDictionary["date_created"]  = datetime.datetime.today().isoformat(' ')
                                              
         attributeDictionary["Conventions" ]  = self.cf_convention
+        
+        attributeDictionary["projection" ]   = "wgs84 ; EPSG:4326 ; +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs ; latitude_longitude"
         
         return attributeDictionary
 

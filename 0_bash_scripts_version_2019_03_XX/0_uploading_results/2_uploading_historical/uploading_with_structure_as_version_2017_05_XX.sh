@@ -1,0 +1,11 @@
+set -x 
+pwd
+
+TARGET_FOLDER=/projects/0/aqueduct/users/edwinsut/aqueduct_flood_analyzer_results/version_2019_03_XX_structured_as_version_2017_05_XX/
+
+# uploading/making links for the historical
+bash uploading_with_structure_as_version_2017_05_XX_historical_inundation.sh
+bash uploading_with_structure_as_version_2017_05_XX_historical_surface_water_level.sh
+
+set +x
+

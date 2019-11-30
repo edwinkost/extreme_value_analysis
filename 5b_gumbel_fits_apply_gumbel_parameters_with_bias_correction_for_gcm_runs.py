@@ -136,6 +136,10 @@ variable_name_list = ['channelStorage', 'surfaceWaterLevel']
 if option_to_limit_variables != "None": variable_name_list = [option_to_limit_variables]
 
 
+# cell area (m2) - for debugging
+cell_area = pcr.readmap("/projects/0/dfguu/data/hydroworld/PCRGLOBWB20/input5min/routing/cellsize05min.correct.map")
+
+
 # netcdf general setup:
 netcdf_setup = {}
 netcdf_setup['format']      = "NETCDF4"
@@ -158,7 +162,10 @@ netcdf_file = {}
 
 msg = "Preparing netcdf output files."
 logger.info(msg)
-for bias_type in ['including_bias', 'bias_corrected']:
+for bias_type in ['including_bias', 'bias_corrected_deltares', 'bias_corrected_additive', 'bias_corrected_multiplicative', \
+                  'including_bias_above_2_year', 'bias_corrected_deltares_above_2_year', 'bias_corrected_additive_above_2_year',  'bias_corrected_multiplicative_above_2_year', \
+                  'including_bias_above_reference_at_the_same_return_period', 'bias_corrected_deltares_above_reference_at_the_same_return_period', 'bias_corrected_additive_above_reference_at_the_same_return_period', 'bias_corrected_multiplicative_above_reference_at_the_same_return_period', \
+                  'bias_corrected']:
     netcdf_file[bias_type] = {}
     for var_name in variable_name_list: 
         #
@@ -176,8 +183,23 @@ for bias_type in ['including_bias', 'bias_corrected']:
         netcdf_file[bias_type][var_name]['source'     ] = netcdf_setup['source'     ]
         netcdf_file[bias_type][var_name]['references' ] = netcdf_setup['references' ]
         #
-        if bias_type == "bias_corrected": 
-            netcdf_file[bias_type][var_name]['description'] += " BIAS-CORRECTED based on the historical and baseline output."
+        if "bias_corrected_deltares" in bias_type:
+            netcdf_file[bias_type][var_name]['description'] += " BIAS-CORRECTED based on the historical and baseline output, using the quantile matching method (Deltares bias correction procedure)"
+        if "bias_corrected_additive" in bias_type:
+            netcdf_file[bias_type][var_name]['description'] += " BIAS-CORRECTED based on the historical and baseline output, using the additive correction method"
+        if "bias_corrected_multiplicative" in bias_type:
+            netcdf_file[bias_type][var_name]['description'] += " BIAS-CORRECTED based on the historical and baseline output, using the multiplicative correction method"
+        #
+        if "above_2_year" in bias_type:
+            netcdf_file[bias_type][var_name]['description'] += " Values shown are above 2 year return period values of the baseline output."
+        #
+        if "reference_at_the_same_return_period" in bias_type:
+            netcdf_file[bias_type][var_name]['description'] += " Values shown are differences to baseline/reference values at the same return period. Positive values indicate reference ones are lower."
+        #
+        # THE CHOSEN ONE:
+        if bias_type == "bias_corrected":
+            netcdf_file[bias_type][var_name]['description'] = netcdf_file["bias_corrected_additive"][var_name]['description']
+        #
         # - resolution (unit: arc-minutes)
         netcdf_file[bias_type][var_name]['resolution_arcmin'] = 5. 
         #
@@ -201,9 +223,35 @@ return_periods = ["2-year", "5-year", "10-year", "25-year", "50-year", "100-year
 #
 # - dictionaries for extreme value:
 extreme_values = {}
+#
+# - reference/baseline (WATCH)
+extreme_values["reference"] = {}
+#
+# - without bias correction
 extreme_values["including_bias"] = {}
+extreme_values["including_bias_above_2_year"] = {}
+extreme_values["including_bias_above_reference_at_the_same_return_period"] = {}
+#
+# - bias corrected using the quantile matching approach. 
+extreme_values["bias_corrected_deltares"] = {}
+extreme_values["bias_corrected_deltares_above_2_year"] = {}
+extreme_values["bias_corrected_deltares_above_reference_at_the_same_return_period"] = {}
+extreme_values['return_period_historical_deltares'] = {}
+# 
+# - bias_corrected_additive
+extreme_values["bias_corrected_additive"] = {}
+extreme_values["bias_corrected_additive_above_2_year"] = {}
+extreme_values["bias_corrected_additive_above_reference_at_the_same_return_period"] = {}
+#
+# - bias_corrected_multiplicative
+extreme_values["bias_corrected_multiplicative"] = {}
+extreme_values["bias_corrected_multiplicative_above_2_year"] = {}
+extreme_values["bias_corrected_multiplicative_above_reference_at_the_same_return_period"] = {}
+extreme_values["problematic_mult_with_zero_historical_gcm"] = {}
+#
+# - the chosen/suggested bias corrected method
 extreme_values["bias_corrected"] = {}
-extreme_values['return_period_historical'] = {}
+
 #
 for var_name in variable_name_list: 
     
@@ -238,11 +286,21 @@ for var_name in variable_name_list:
                                           "Yes",\
                                           input_files['clone_map_05min'])
     
-    # compute future extreme values (including bias correction):
+    
+    # calculate/obtain extremes value for the 2-year return period of the baseline run (EUWATCH)
+    reference_2_year_map = glofris.inverse_gumbel(p_zero["baseline"], location["baseline"], scale["baseline"], 2.0)  
+    
+    
+    # compute future extreme values (including bias correction - based on the quantile matching approach):
     for i_return_period in range(0, len(return_periods)):
         
         return_period = return_periods[i_return_period]
+        return_period_in_year = float(return_period.split("-")[0]) 
         
+        # reference/baseline values
+        extreme_values["reference"][return_period] = glofris.inverse_gumbel(p_zero["baseline"], location["baseline"], scale["baseline"], return_period_in_year)
+
+
         msg  = "\n"
         msg += "\n"
         msg += "\n"
@@ -250,46 +308,167 @@ for var_name in variable_name_list:
         msg += "\n"
         msg += "\n"
         logger.info(msg)
-        return_period_in_year = float(return_period.split("-")[0]) 
-
+        
+        
         # compute future extreme values (with bias): applying gumbel parameters
         msg = "Compute future/climate/gcm extreme values (biases are still included here)."
         logger.info(msg)
         extreme_values["including_bias"][return_period] = glofris.inverse_gumbel(p_zero["future"], location["future"], scale["future"], return_period_in_year)
-    
+        #
+        # - calculate values above 2 year
+        extreme_values["including_bias_above_2_year"][return_period] = pcr.max(0.0, extreme_values["including_bias"][return_period] - reference_2_year_map)
+        # - convert values to meter
+        if var_name == "channelStorage": extreme_values["including_bias_above_2_year"][return_period] = extreme_values["including_bias_above_2_year"][return_period] / input_files['cell_area_05min']
+        #
+        # - calculate values above reference
+        extreme_values["including_bias_above_reference_at_the_same_return_period"][return_period] = extreme_values["including_bias"][return_period] - extreme_values["reference"][return_period]
+        # - convert values to meter
+        if var_name == "channelStorage": extreme_values["including_bias_above_reference_at_the_same_return_period"][return_period] = extreme_values["including_bias_above_reference_at_the_same_return_period"][return_period] / input_files['cell_area_05min']
+        #
+        #~ pcr.aguila(extreme_values["bias_corrected_multiplicative_above_reference_at_the_same_return_period"][return_period])
+
+        
         # lookup the return period in present days (historical run) belonging to future extreme values
         msg = "For the given future extreme values, obtain the return period based on the historical gumbel fit/parameters."
         logger.info(msg)
-        return_period_historical = glofris.get_return_period_gumbel(p_zero["historical"], location["historical"], scale["historical"], extreme_values["including_bias"][return_period])
-        extreme_values['return_period_historical'][return_period] = return_period_historical
+        #
+        # - set the maximum return period that can be assigned in order to avoid 
+        max_return_period_that_can_be_assigned = np.longdouble(1e9) 
+        #
+        return_period_historical = glofris.get_return_period_gumbel(p_zero["historical"], location["historical"], scale["historical"], \
+                                                                    extreme_values["including_bias"][return_period], \
+                                                                    max_return_period_that_can_be_assigned, \
+                                                                    max_return_period_that_can_be_assigned)
+        extreme_values['return_period_historical_deltares'][return_period] = return_period_historical
         
-        #~ pcr.report(return_period_historical, "return_period_historical.map")
-        #~ cmd = "aguila " + "return_period_historical.map"
-        #~ os.system(cmd)
-        
-        # bias corrected extreme values
-        msg = "Calculate the bias corrected extreme values: Using the return period based on the historical gumbel fit/parameters and the gumbel fit/parameters of the baseline run."
+
+        # bias corrected extreme values - Deltares approach (quantile matching)
+        extreme_value_map = None
+        msg = "Calculate the bias corrected extreme values, based on the DELTARES (quantile matching) method: Using the return period based on the historical gumbel fit/parameters and the gumbel fit/parameters of the baseline run."
         logger.info(msg)
         # 
         extreme_value_map = glofris.inverse_gumbel(p_zero["baseline"], location["baseline"], scale["baseline"], return_period_historical)
         #
-        # - make sure that we have positive extreme values - this is not necessary, but to make sure
+        # - set the minimum value to the 2 year baseline/reference value
+        extreme_value_map = pcr.max(reference_2_year_map, extreme_value_map)
+        #
+        # - make sure that we have positive extreme values
         extreme_value_map = pcr.max(extreme_value_map, 0.0)
         #
+        # - saving extreme values in the dictionary  
+        extreme_values["bias_corrected_deltares"][return_period] = extreme_value_map
+        #
         # - make sure that extreme value maps increasing over return period - this is not necessary, but to make sure
-        if i_return_period >  0: extreme_value_map = pcr.max(previous_return_period_map, extreme_value_map) 
-        previous_return_period_map = extreme_value_map
+        if i_return_period >  0: extreme_values["bias_corrected_deltares"][return_period] = pcr.max(extreme_values["bias_corrected_deltares"][return_period], \
+                                                                                                    extreme_values["bias_corrected_deltares"][return_periods[i_return_period - 1]]) 
+        #
+        # - calculate values above 2 year
+        extreme_values["bias_corrected_deltares_above_2_year"][return_period] = pcr.max(0.0, extreme_values["bias_corrected_deltares"][return_period] - reference_2_year_map)
+        # - convert values to meter
+        if var_name == "channelStorage": extreme_values["bias_corrected_deltares_above_2_year"][return_period] = extreme_values["bias_corrected_deltares_above_2_year"][return_period] / input_files['cell_area_05min']
+        #
+        # - calculate values above reference
+        extreme_values["bias_corrected_deltares_above_reference_at_the_same_return_period"][return_period] = extreme_values["bias_corrected_deltares"][return_period] - extreme_values["reference"][return_period]
+        # - convert values to meter
+        if var_name == "channelStorage": extreme_values["bias_corrected_deltares_above_reference_at_the_same_return_period"][return_period] = extreme_values["bias_corrected_deltares_above_reference_at_the_same_return_period"][return_period] / input_files['cell_area_05min']
+
+
+        # additive correction approach
+        extreme_value_map = None
+        msg = "Calculate the bias corrected extreme values, based on the ADDITIVE correction method"
+        logger.info(msg)
+        # 
+        # - obtain baseline, historical and future values for the current return period analyzed
+        baseline_value = glofris.inverse_gumbel(p_zero["baseline"]  , location["baseline"],   scale["baseline"],   return_period_in_year)
+        historical_gcm = glofris.inverse_gumbel(p_zero["historical"], location["historical"], scale["historical"], return_period_in_year)
+        future_gcm     = glofris.inverse_gumbel(p_zero["future"]    , location["future"],     scale["future"],     return_period_in_year)
+        # 
+        # - the bias corrected value - additive approach
+        extreme_value_map = pcr.max(0.0, baseline_value + (future_gcm - historical_gcm))
+        #
+        # - set the minimum value to the 2 year baseline/reference value
+        extreme_value_map = pcr.max(reference_2_year_map, extreme_value_map)
+        #
+        # - make sure that we have positive extreme values
+        extreme_value_map = pcr.max(extreme_value_map, 0.0)
         #
         # - saving extreme values in the dictionary  
-        extreme_values["bias_corrected"][return_period] = extreme_value_map
-    
+        extreme_values["bias_corrected_additive"][return_period] = extreme_value_map
+        #
+        # - make sure that extreme value maps increasing over return period - this is not necessary, but to make sure
+        if i_return_period >  0: extreme_values["bias_corrected_additive"][return_period] = pcr.max(extreme_values["bias_corrected_additive"][return_period], \
+                                                                                                    extreme_values["bias_corrected_additive"][return_periods[i_return_period - 1]]) 
+        #
+        # - calculate values above 2 year
+        extreme_values["bias_corrected_additive_above_2_year"][return_period] = pcr.max(0.0, extreme_values["bias_corrected_additive"][return_period] - reference_2_year_map)
+        # - convert values to meter
+        if var_name == "channelStorage": extreme_values["bias_corrected_additive_above_2_year"][return_period] = extreme_values["bias_corrected_additive_above_2_year"][return_period] / input_files['cell_area_05min']
+        #
+        # - calculate values above reference
+        extreme_values["bias_corrected_additive_above_reference_at_the_same_return_period"][return_period] = extreme_values["bias_corrected_additive"][return_period] - extreme_values["reference"][return_period]
+        # - convert values to meter
+        if var_name == "channelStorage": extreme_values["bias_corrected_additive_above_reference_at_the_same_return_period"][return_period] = extreme_values["bias_corrected_additive_above_reference_at_the_same_return_period"][return_period] / input_files['cell_area_05min']
+
+
+        # multiplicative correction approach
+        extreme_value_map = None
+        msg = "Calculate the bias corrected extreme values, based on the MULTIPLICATIVE correction method"
+        logger.info(msg)
+        # 
+        # - the bias corrected value - multiplicative approach
+        extreme_value_map = baseline_value * (future_gcm / historical_gcm)
+        #
+        # - set it to zero if either baseline_value or future gcm is zero
+        extreme_value_map = pcr.ifthenelse(baseline_value == 0., pcr.scalar(0.0), extreme_value_map)
+        extreme_value_map = pcr.ifthenelse(future_gcm     == 0., pcr.scalar(0.0), extreme_value_map)
+        #
+        # - set the minimum value to the 2 year baseline/reference value
+        extreme_value_map = pcr.max(reference_2_year_map, extreme_value_map)
+        #
+        # - make sure that we have positive extreme values
+        extreme_value_map = pcr.max(extreme_value_map, 0.0)
+        #
+        # - saving extreme values in the dictionary  
+        extreme_values["bias_corrected_multiplicative"][return_period] = extreme_value_map
+        #
+        # - make sure that extreme value maps increasing over return period - this is not necessary, but to make sure
+        if i_return_period >  0: extreme_values["bias_corrected_multiplicative"][return_period] = pcr.max(extreme_values["bias_corrected_multiplicative"][return_period], \
+                                                                                                          extreme_values["bias_corrected_multiplicative"][return_periods[i_return_period - 1]]) 
+        #
+        # - calculate values above 2 year
+        extreme_values["bias_corrected_multiplicative_above_2_year"][return_period] = pcr.max(0.0, extreme_values["bias_corrected_multiplicative"][return_period] - reference_2_year_map)
+        # - convert values to meter
+        if var_name == "channelStorage": extreme_values["bias_corrected_multiplicative_above_2_year"][return_period] = extreme_values["bias_corrected_multiplicative_above_2_year"][return_period] / input_files['cell_area_05min']
+        #
+        # - calculate values above reference
+        extreme_values["bias_corrected_multiplicative_above_reference_at_the_same_return_period"][return_period] = extreme_values["bias_corrected_multiplicative"][return_period] - extreme_values["reference"][return_period]
+        # - convert values to meter
+        if var_name == "channelStorage": extreme_values["bias_corrected_multiplicative_above_reference_at_the_same_return_period"][return_period] = extreme_values["bias_corrected_multiplicative_above_reference_at_the_same_return_period"][return_period] / input_files['cell_area_05min']
+        #
+        # - problematic areas
+        extreme_values["problematic_mult_with_zero_historical_gcm"][return_period]  = pcr.ifthenelse(historical_gcm == 0., pcr.boolean(1.0), pcr.boolean(0.0))
+        # -- exclude areas with zero baseline_value 
+        extreme_values["problematic_mult_with_zero_historical_gcm"][return_period]  = pcr.ifthenelse(baseline_value == 0., pcr.boolean(0.0), extreme_values["problematic_mult_with_zero_historical_gcm"][return_period])
+        # -- exclude areas with zero future_gcm 
+        extreme_values["problematic_mult_with_zero_historical_gcm"][return_period]  = pcr.ifthenelse(future_gcm == 0., pcr.boolean(0.0), extreme_values["problematic_mult_with_zero_historical_gcm"][return_period])
+
+
+        # THE CHOSEN bias corrected method  
+        extreme_values["bias_corrected"][return_period] = extreme_values["bias_corrected_additive"][return_period]
+
+
+
     # time bounds in a netcdf file
     lowerTimeBound = datetime.datetime(str_year,  1,  1, 0)
     upperTimeBound = datetime.datetime(end_year, 12, 31, 0)
     timeBounds = [lowerTimeBound, upperTimeBound]
     
     # reporting/saving extreme values in netcdf and pcraster files
-    for bias_type in ['including_bias', 'bias_corrected']:
+    #~ for bias_type in ['including_bias', 'bias_corrected']:
+    for bias_type in ['including_bias', 'bias_corrected_deltares', 'bias_corrected_additive', 'bias_corrected_multiplicative', \
+                      'including_bias_above_2_year', 'bias_corrected_deltares_above_2_year', 'bias_corrected_additive_above_2_year', 'bias_corrected_multiplicative_above_2_year', \
+                      'including_bias_above_reference_at_the_same_return_period', 'bias_corrected_deltares_above_reference_at_the_same_return_period', 'bias_corrected_additive_above_reference_at_the_same_return_period', 'bias_corrected_multiplicative_above_reference_at_the_same_return_period', \
+                      'bias_corrected']:
     
         msg = "Writing extreme values to a netcdf file: " + str(netcdf_file[bias_type][var_name]['file_name'])
         logger.info(msg)
@@ -299,6 +478,8 @@ for var_name in variable_name_list:
             # variable names and unit 
             variable_name = str(return_period) + "_of_" + varDict.netcdf_short_name[var_name]
             variable_unit = varDict.netcdf_unit[var_name]
+            if var_name == "channelStorage" and "above_2_year" in bias_type: variable_unit = "m"
+            if var_name == "channelStorage" and "above_reference_at_the_same_return_period" in bias_type: variable_unit = "m"
             var_long_name = str(return_period) + "_of_" + varDict.netcdf_long_name[var_name]
             # 
             netcdf_report.create_variable(\
@@ -317,7 +498,10 @@ for var_name in variable_name_list:
             variable_name = str(return_period) + "_of_" + varDict.netcdf_short_name[var_name]
             
             # report to a pcraster map
+            #~ print bias_type
+            #~ print return_period
             pcr.report(pcr.ifthen(landmask, extreme_values[bias_type][return_period]), bias_type + "_" + variable_name + ".map")
+            #~ if "above_reference_at_the_same_return_period" in bias_type: pcr.aguila(pcr.ifthen(landmask, extreme_values[bias_type][return_period]))
         
             # put it into a dictionary
             data_dictionary[variable_name] = pcr.pcr2numpy(extreme_values[bias_type][return_period], vos.MV)
@@ -327,12 +511,13 @@ for var_name in variable_name_list:
                                                    data_dictionary, \
                                                    timeBounds)
 
-    # saving "return_period_historical":  the return period in present days (historical run) belonging to future extreme values
+    # saving "return_period_historical" and "problematic_mult_with_zero_historical_gcm"
     # - to pcraster files only
     for return_period in return_periods:
 
-        # report to a pcraster map
-        pcr.report(pcr.ifthen(landmask, extreme_values['return_period_historical'][return_period]), 'return_period_historical_corresponding_to' + "_" + str(return_period) + ".map")
+        # report to pcraster maps
+        pcr.report(pcr.ifthen(landmask, extreme_values['return_period_historical_deltares'][return_period]), 'return_period_historical_deltares_corresponding_to' + "_" + str(return_period) + ".map")
+        pcr.report(pcr.ifthen(landmask, extreme_values['problematic_mult_with_zero_historical_gcm'][return_period]), 'problematic_mult_with_zero_historical_gcm_corresponding_to' + "_" + str(return_period) + ".map")
     
 
 
