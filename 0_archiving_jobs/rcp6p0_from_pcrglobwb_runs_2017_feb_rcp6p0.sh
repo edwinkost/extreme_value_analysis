@@ -10,7 +10,7 @@
 #SBATCH --mail-user=edwinkost@gmail.com
 
 #SBATCH -J rcp6p0_from_pcrglobwb_runs_2017_feb_rcp6p0
-#SBATCH --nodelist=srv2
+#SBATCH --nodelist=srv4
 
 set -x 
 
