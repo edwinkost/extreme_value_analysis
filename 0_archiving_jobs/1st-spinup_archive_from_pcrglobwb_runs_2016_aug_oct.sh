@@ -10,7 +10,7 @@
 #SBATCH --mail-user=edwinkost@gmail.com
 
 #SBATCH -J 1st-spinup_archive_from_pcrglobwb_runs_2016_aug_oct
-#SBATCH --nodelist=srv5
+#SBATCH --nodelist=srv1
 
 set -x 
 
