@@ -10,7 +10,7 @@
 # send mail to this address
 #SBATCH --mail-user=edwinkost@gmail.com
 
-#SBATCH -J historical-and-baseline_archive_from_pcrglobwb_runs_2016_oct_nov
+#SBATCH -J hist-base_archive_from_pcrglobwb_runs_2016_oct_nov
 #~ #SBATCH --nodelist=srv1
 
 set -x 
