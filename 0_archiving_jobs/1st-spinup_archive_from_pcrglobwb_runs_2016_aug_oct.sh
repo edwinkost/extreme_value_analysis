@@ -9,7 +9,7 @@
 # send mail to this address
 #SBATCH --mail-user=edwinkost@gmail.com
 
-#SBATCH -J 1st-spinup_archive
+#SBATCH -J 1st-spinup_archive_from_pcrglobwb_runs_2016_aug_oct
 #SBATCH --nodelist=srv5
 
 set -x 
@@ -24,12 +24,13 @@ mkdir -p /archive/edwin/1st-spinup/spinup_from_pcrglobwb_runs_2016_aug_oct/
 cd /archive/edwin/1st-spinup/spinup_from_pcrglobwb_runs_2016_aug_oct/
 
 # archiving 
-7za a /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_aug_oct/pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m.7z           /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_aug_oct/pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m
-7za a /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_aug_oct/pcrglobwb_4_land_covers_edwin_parameter_set_hadgem2-es.7z           /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_aug_oct/pcrglobwb_4_land_covers_edwin_parameter_set_hadgem2-es
-7za a /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_aug_oct/pcrglobwb_4_land_covers_edwin_parameter_set_ipsl-cm5a-lr.7z         /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_aug_oct/pcrglobwb_4_land_covers_edwin_parameter_set_ipsl-cm5a-lr
-7za a /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_aug_oct/pcrglobwb_4_land_covers_edwin_parameter_set_miroc-esm-chem.7z       /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_aug_oct/pcrglobwb_4_land_covers_edwin_parameter_set_miroc-esm-chem
-7za a /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_aug_oct/pcrglobwb_4_land_covers_edwin_parameter_set_noresm1-m.7z            /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_aug_oct/pcrglobwb_4_land_covers_edwin_parameter_set_noresm1-m
-7za a /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_aug_oct/pcrglobwb_4_land_covers_edwin_parameter_set_watch_kinematicwave.7z  /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_aug_oct/pcrglobwb_4_land_covers_edwin_parameter_set_watch_kinematicwave
+7za a /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_aug_oct/pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m.7z           /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_aug_oct/pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m          & 
+7za a /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_aug_oct/pcrglobwb_4_land_covers_edwin_parameter_set_hadgem2-es.7z           /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_aug_oct/pcrglobwb_4_land_covers_edwin_parameter_set_hadgem2-es          & 
+7za a /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_aug_oct/pcrglobwb_4_land_covers_edwin_parameter_set_ipsl-cm5a-lr.7z         /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_aug_oct/pcrglobwb_4_land_covers_edwin_parameter_set_ipsl-cm5a-lr        & 
+7za a /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_aug_oct/pcrglobwb_4_land_covers_edwin_parameter_set_miroc-esm-chem.7z       /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_aug_oct/pcrglobwb_4_land_covers_edwin_parameter_set_miroc-esm-chem      & 
+7za a /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_aug_oct/pcrglobwb_4_land_covers_edwin_parameter_set_noresm1-m.7z            /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_aug_oct/pcrglobwb_4_land_covers_edwin_parameter_set_noresm1-m           & 
+7za a /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_aug_oct/pcrglobwb_4_land_covers_edwin_parameter_set_watch_kinematicwave.7z  /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_aug_oct/pcrglobwb_4_land_covers_edwin_parameter_set_watch_kinematicwave & 
+wait
 
 # test acrhive
 7za l /projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_aug_oct/pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m.7z           > list_7za-l_pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m.txt
