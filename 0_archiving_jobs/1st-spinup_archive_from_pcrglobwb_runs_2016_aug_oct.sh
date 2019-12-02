@@ -19,7 +19,7 @@ module load p7zip
 # go to the correct folder where the script is stored
 cd /home/edwin/github/edwinkost/extreme_value_analysis/0_archiving_jobs/
 
-# preparing the target directory and go ther
+# preparing the target directory and go there
 mkdir -p /archive/edwin/1st-spinup/spinup_from_pcrglobwb_runs_2016_aug_oct/
 cd /archive/edwin/1st-spinup/spinup_from_pcrglobwb_runs_2016_aug_oct/
 
