@@ -1,0 +1,11 @@
+
+tar -cvf /archive/edwinsut/aqueduct_flood_analyzer/pcrglobwb_runs/baseline_historical_incl_additional_spinup/pcrglobwb_4_land_covers_edwin_parameter_set_cru-ts3.23_era-20c_accutraveltime.tar pcrglobwb_4_land_covers_edwin_parameter_set_cru-ts3.23_era-20c_accutraveltime/no_correction/n* &
+tar -cvf /archive/edwinsut/aqueduct_flood_analyzer/pcrglobwb_runs/baseline_historical_incl_additional_spinup/pcrglobwb_4_land_covers_edwin_parameter_set_cru-ts3.23_era-20c_kinematicwave.tar  pcrglobwb_4_land_covers_edwin_parameter_set_cru-ts3.23_era-20c_kinematicwave/no_correction/n*  &
+tar -cvf /archive/edwinsut/aqueduct_flood_analyzer/pcrglobwb_runs/baseline_historical_incl_additional_spinup/pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m.tar                        pcrglobwb_4_land_covers_edwin_parameter_set_gfdl-esm2m/no_correction/n*                        &
+tar -cvf /archive/edwinsut/aqueduct_flood_analyzer/pcrglobwb_runs/baseline_historical_incl_additional_spinup/pcrglobwb_4_land_covers_edwin_parameter_set_hadgem2-es.tar                        pcrglobwb_4_land_covers_edwin_parameter_set_hadgem2-es/no_correction/n*                        &
+tar -cvf /archive/edwinsut/aqueduct_flood_analyzer/pcrglobwb_runs/baseline_historical_incl_additional_spinup/pcrglobwb_4_land_covers_edwin_parameter_set_ipsl-cm5a-lr.tar                      pcrglobwb_4_land_covers_edwin_parameter_set_ipsl-cm5a-lr/no_correction/n*                      &
+tar -cvf /archive/edwinsut/aqueduct_flood_analyzer/pcrglobwb_runs/baseline_historical_incl_additional_spinup/pcrglobwb_4_land_covers_edwin_parameter_set_miroc-esm-chem.tar                    pcrglobwb_4_land_covers_edwin_parameter_set_miroc-esm-chem/no_correction/n*                    &
+tar -cvf /archive/edwinsut/aqueduct_flood_analyzer/pcrglobwb_runs/baseline_historical_incl_additional_spinup/pcrglobwb_4_land_covers_edwin_parameter_set_noresm1-m.tar                         pcrglobwb_4_land_covers_edwin_parameter_set_noresm1-m/no_correction/n*                         &
+tar -cvf /archive/edwinsut/aqueduct_flood_analyzer/pcrglobwb_runs/baseline_historical_incl_additional_spinup/pcrglobwb_4_land_covers_edwin_parameter_set_watch_kinematicwave.tar               pcrglobwb_4_land_covers_edwin_parameter_set_watch_kinematicwave/no_correction/n*               &
+wait
+
