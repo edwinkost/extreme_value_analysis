@@ -21,8 +21,8 @@ module load p7zip
 cd /home/edwin/github/edwinkost/extreme_value_analysis/0_archiving_jobs/
 
 # preparing the target directory and go there
-TARGET_FOLDER="/archive/edwin/aqueduct_projects/pcrglobwb_runs/for_flood_analyzer/baseline_historical_incl_additional_spinup/pcrglobwb_runs_2016_aug_oct/"
-TARGET_FOLDER="/projects/0/wtrcycle/users/edwin/temporary_aqueduct/baseline_historical_incl_additional_spinup/pcrglobwb_runs_2016_aug_oct/"
+TARGET_FOLDER="/archive/edwin/aqueduct_projects/pcrglobwb_runs/for_flood_analyzer/baseline_historical_incl_additional_spinup/pcrglobwb_runs_2016_oct_nov/"
+TARGET_FOLDER="/projects/0/wtrcycle/users/edwin/temporary_aqueduct/baseline_historical_incl_additional_spinup/pcrglobwb_runs_2016_oct_nov/"
 mkdir -p ${TARGET_FOLDER}
 cd ${TARGET_FOLDER}
 
