@@ -24,10 +24,10 @@ dmget -a ${INP_FILE_NAME}
 mkdir -p ${OUT_DIRECTORY}
 cd ${OUT_DIRECTORY}
 
-rsync -r --size-only --progress ${OUT_DIRECTORY}/${OUT_FILE_NAME} .
+rsync -r --size-only --progress ${INP_DIRECTORY}/${INP_FILE_NAME} .
 
 # for double checking
-rsync -r --size-only --progress ${OUT_DIRECTORY}/${OUT_FILE_NAME} .
+rsync -r --size-only --progress ${INP_DIRECTORY}/${INP_FILE_NAME} .
 
 # make the list of tar file
 module load p7zip
