@@ -29,8 +29,8 @@ rsync -r --size-only --progress ${INP_DIRECTORY}/${INP_FILE_NAME} .
 # for double checking
 rsync -r --size-only --progress ${INP_DIRECTORY}/${INP_FILE_NAME} .
 
-# make the list of tar file
-module load p7zip
-7za l ${OUT_FILE_NAME} > 7za-l_${OUT_FILE_NAME}.txt
+#~ # make the list of tar file
+#~ module load p7zip
+#~ 7za l ${OUT_FILE_NAME} > 7za-l_${OUT_FILE_NAME}.txt
 
 set +x
