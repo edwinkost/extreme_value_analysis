@@ -11,7 +11,7 @@
 
 #SBATCH -J rcp8p5_archive_from_pcrglobwb_runs_2016_oct_nov
 
-TARGET_DIRECTORY="/projects/0/dfguu2/users/edwinhs/temporary_aqueduct/rcp8p5/pcrglobwb_runs_2016_oct_nov/"
+TARGET_DIRECTORY="/scratch-shared/edwinsut/temporary_aqueduct/rcp8p5/pcrglobwb_runs_2016_oct_nov/"
 SOURCE_DIRECTORY="/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_oct_nov/"
 
 set -x 
