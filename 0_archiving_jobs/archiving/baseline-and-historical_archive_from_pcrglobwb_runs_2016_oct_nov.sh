@@ -9,7 +9,7 @@
 # send mail to this address
 #SBATCH --mail-user=edwinkost@gmail.com
 
-#SBATCH -J baseline-and-historical_archive_from_pcrglobwb_runs_2016_aug_oct
+#SBATCH -J baseline-and-historical_archive_from_pcrglobwb_runs_2016_oct_nov
 
 TARGET_DIRECTORY="/projects/0/wtrcycle/users/edwinhs/temporary_aqueduct/baseline_historical_incl_additional_spinup/pcrglobwb_runs_2016_oct_nov/"
 SOURCE_DIRECTORY="/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2016_oct_nov/"
