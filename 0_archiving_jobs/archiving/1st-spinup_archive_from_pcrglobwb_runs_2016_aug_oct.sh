@@ -18,9 +18,6 @@ set -x
 
 module load p7zip
 
-# go to the correct folder where the script is stored
-cd /home/edwin/github/edwinkost/extreme_value_analysis/0_archiving_jobs/archiving/
-
 # preparing the target directory and go there
 mkdir -p ${TARGET_DIRECTORY}
 cd ${TARGET_DIRECTORY}
