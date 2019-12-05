@@ -9,7 +9,7 @@
 # send mail to this address
 #SBATCH --mail-user=edwinkost@gmail.com
 
-#SBATCH -J pcrglobwb_runs_2017_may_jun_rcp2p6
+#SBATCH -J rcp2p6_archive_from_pcrglobwb_runs_2017_may_jun_rcp2p6
 
 TARGET_DIRECTORY="/projects/0/aqueduct/users/edwinhs/temporary_aqueduct/rcp2p6/pcrglobwb_runs_2017_may_jun_rcp2p6/"
 SOURCE_DIRECTORY="/projects/0/aqueduct/users/edwinsut/pcrglobwb_runs_2017_may_jun_rcp2p6/"
@@ -37,7 +37,6 @@ cd ${TARGET_DIRECTORY}
 7za l pcrglobwb_4_land_covers_edwin_parameter_set_ipsl-cm5a-lr.7z                      > list_7za-l_pcrglobwb_4_land_covers_edwin_parameter_set_ipsl-cm5a-lr.txt
 7za l pcrglobwb_4_land_covers_edwin_parameter_set_miroc-esm-chem.7z                    > list_7za-l_pcrglobwb_4_land_covers_edwin_parameter_set_miroc-esm-chem.txt
 7za l pcrglobwb_4_land_covers_edwin_parameter_set_noresm1-m.7z                         > list_7za-l_pcrglobwb_4_land_covers_edwin_parameter_set_noresm1-m.txt
-7za l pcrglobwb_4_land_covers_edwin_parameter_set_watch_kinematicwave.7z               > list_7za-l_pcrglobwb_4_land_covers_edwin_parameter_set_watch_kinematicwave.txt
 
 set +x
 

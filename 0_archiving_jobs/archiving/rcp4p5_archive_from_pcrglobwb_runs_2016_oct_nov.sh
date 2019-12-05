@@ -37,7 +37,6 @@ cd ${TARGET_DIRECTORY}
 7za l pcrglobwb_4_land_covers_edwin_parameter_set_ipsl-cm5a-lr.7z                      > list_7za-l_pcrglobwb_4_land_covers_edwin_parameter_set_ipsl-cm5a-lr.txt
 7za l pcrglobwb_4_land_covers_edwin_parameter_set_miroc-esm-chem.7z                    > list_7za-l_pcrglobwb_4_land_covers_edwin_parameter_set_miroc-esm-chem.txt
 7za l pcrglobwb_4_land_covers_edwin_parameter_set_noresm1-m.7z                         > list_7za-l_pcrglobwb_4_land_covers_edwin_parameter_set_noresm1-m.txt
-7za l pcrglobwb_4_land_covers_edwin_parameter_set_watch_kinematicwave.7z               > list_7za-l_pcrglobwb_4_land_covers_edwin_parameter_set_watch_kinematicwave.txt
 
 set +x
 
